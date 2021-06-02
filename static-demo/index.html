@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Static SiteButton demo</title>
+</head>
+<body>
+  <h1>Static site demo!!</h1>
+  <script>
+    const script = document.createElement('script');
+    script.src = './site-button/SiteButton.umd.js';
+    script.onload = function () {
+      const body = document.querySelector('body');
+      const siteButtonEl = document.createElement('div');
+      siteButtonEl.setAttribute('id', 'wt-site-button');
+      body.appendChild(siteButtonEl);
+      const config = {};
+      const app = new SiteButton('#wt-site-button', config);
+    };
+    document.head.appendChild(script);
+
+    const link = document.createElement('link');
+    link.href = './site-button/SiteButton.css';
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+    link.media = 'screen,print';
+    document.head.appendChild(link);
+  </script>
+</body>
+</html>
