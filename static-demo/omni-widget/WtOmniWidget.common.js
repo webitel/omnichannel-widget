@@ -11537,8 +11537,8 @@ var Instance = new vue_runtime_esm["a" /* default */]({
   }
 });
 
-var install_SiteButton = function SiteButton(selector, config) {
-  _classCallCheck(this, SiteButton);
+var install_WtOmniWidget = function WtOmniWidget(selector, config) {
+  _classCallCheck(this, WtOmniWidget);
 
   vue_runtime_esm["a" /* default */].set(Instance, 'config', _objectSpread2({}, config));
   Instance.$mount(selector);
@@ -11549,7 +11549,7 @@ var install_SiteButton = function SiteButton(selector, config) {
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
 
-/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (install_SiteButton);
+/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (install_WtOmniWidget);
 
 
 
@@ -11625,4 +11625,3 @@ module.exports = NATIVE_SYMBOL
 /***/ })
 
 /******/ })["default"];
-//# sourceMappingURL=SiteButton.common.js.map

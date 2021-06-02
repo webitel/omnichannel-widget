@@ -1,4 +1,4 @@
-# site-button
+# wt-onmi-widget
 
 ## Project setup
 ```

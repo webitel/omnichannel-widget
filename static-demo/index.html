@@ -2,25 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Static SiteButton demo</title>
+  <title>Static omni-widget demo</title>
 </head>
 <body>
   <h1>Static site demo!!</h1>
   <script>
     const script = document.createElement('script');
-    script.src = './site-button/SiteButton.umd.js';
+    script.src = './omni-widget/WtOmniWidget.umd.js';
     script.onload = function () {
       const body = document.querySelector('body');
-      const siteButtonEl = document.createElement('div');
-      siteButtonEl.setAttribute('id', 'wt-site-button');
-      body.appendChild(siteButtonEl);
+      const widgetEl = document.createElement('div');
+      widgetEl.setAttribute('id', 'wt-omni-widget');
+      body.appendChild(widgetEl);
       const config = {};
-      const app = new SiteButton('#wt-site-button', config);
+      const app = new WtOmniWidget('#wt-omni-widget', config);
     };
     document.head.appendChild(script);
 
     const link = document.createElement('link');
-    link.href = './site-button/SiteButton.css';
+    link.href = './omni-widget/WtOmniWidget.css';
     link.type = 'text/css';
     link.rel = 'stylesheet';
     link.media = 'screen,print';

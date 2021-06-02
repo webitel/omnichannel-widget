@@ -1,13 +1,13 @@
 {
-  "name": "site-button",
+  "name": "omnichannel-widget",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name SiteButton --inline-css --inline-vue src/install.js",
+    "build": "vue-cli-service build --target lib --name WtOmniWidget --inline-css --inline-vue src/install.js",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "cp-dist-to-static": "rm -rf static-demo/site-button/* || true && cp -r dist/* static-demo/site-button"
+    "cp-dist-to-static": "rm -rf static-demo/omni-widget/* || true && cp -r dist/* static-demo/omni-widget"
   },
   "dependencies": {
     "core-js": "^3.6.5",

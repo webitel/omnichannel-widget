@@ -10,7 +10,7 @@ const Instance = new Vue({
   render: (h) => h(App),
 });
 
-export default class SiteButton {
+export default class WtOmniWidget {
   constructor(selector, config) {
     Vue.set(Instance, 'config', {
       ...config,
