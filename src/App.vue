@@ -1,17 +1,40 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div
+      v-for="{ id, data } of messages"
+      :key="id"
+    >{{ data.text }}</div>
+    <form id="form" @submit.prevent="sendMessage">
+      <input type="submit" value="Send" />
+      <input v-model="draft" type="text" size="64" autofocus />
+    </form>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import { postMessageToWSServer, addMsgCallback } from './workers/websocket-shared-worker/install';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld,
+  data: () => ({
+    draft: '',
+    messages: [],
+  }),
+  created() {
+    addMsgCallback(this.receiveMessage);
+  },
+  methods: {
+    sendMessage() {
+      postMessageToWSServer(this.draft);
+      this.draft = '';
+    },
+    receiveMessage(msg) {
+      this.addMessage(msg);
+    },
+    addMessage(msg) {
+      this.messages.push(msg);
+    },
   },
 };
 </script>
