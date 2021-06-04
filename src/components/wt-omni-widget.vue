@@ -3,22 +3,22 @@
     <wt-omni-widget-window
       v-show="true || isWidgetOpened"
     ></wt-omni-widget-window>
-    <wt-omni-widget-button
+    <wt-omni-widget-buttons-menu
       v-show="true || !isWidgetOpened"
       @click="openWidget"
-    ></wt-omni-widget-button>
+    ></wt-omni-widget-buttons-menu>
   </aside>
 </template>
 
 <script>
 import WtOmniWidgetWindow from './wt-omni-widget-window/wt-omni-widget-window.vue';
-import WtOmniWidgetButton from './wt-omni-widget-button/wt-omni-widget-button.vue';
+import WtOmniWidgetButtonsMenu from './wt-omni-widget-button/wt-omni-widget-buttons-menu.vue';
 
 export default {
   name: 'wt-omni-widget',
   components: {
     WtOmniWidgetWindow,
-    WtOmniWidgetButton,
+    WtOmniWidgetButtonsMenu,
   },
   data: () => ({
     isWidgetOpened: false,
