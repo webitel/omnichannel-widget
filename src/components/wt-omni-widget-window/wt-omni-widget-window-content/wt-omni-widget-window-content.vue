@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { addMsgCallback } from '../../../workers/websocket-shared-worker/install';
+import { addMsgCallback } from '../../../app/workers/websocket-shared-worker/install';
 
 export default {
   name: 'wt-omni-widget-window-content',

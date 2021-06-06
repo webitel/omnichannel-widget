@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { postMessageToWSServer } from '../../../workers/websocket-shared-worker/install';
+import { postMessageToWSServer } from '../../../app/workers/websocket-shared-worker/install';
 import WtOmniWidgetChatInput from './wt-omni-widget-chat-input.vue';
 
 export default {

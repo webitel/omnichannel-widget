@@ -1,7 +1,7 @@
 <template>
   <header class="wt-omni-widget-window-header">
     <div class="logo">
-      <img src="../../../assets/img/logo.svg" alt="Webitel logo">
+      <img src="../../../app/assets/img/logo.svg" alt="Webitel logo">
     </div>
   </header>
 </template>
