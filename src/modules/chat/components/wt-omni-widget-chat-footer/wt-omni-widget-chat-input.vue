@@ -7,10 +7,10 @@
       id="wt-omni-widget-chat-input"
       class="wt-omni-widget-chat-input__textarea"
       v-model="draft"
-      placeholder="$t('Message')"
+      :placeholder="$t('chat.inputPlaceholder')"
       @keypress.enter.prevent="send"
     ></textarea>
-    <button type="submit">send</button>
+    <button type="submit">{{ $t('reusable.send') }}</button>
   </form>
 </template>
 
