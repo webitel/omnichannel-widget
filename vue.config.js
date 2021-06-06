@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
@@ -41,5 +43,17 @@ module.exports = {
         },
       ],
     },
+  },
+  chainWebpack: (config) => {
+    config.module
+      .rule('fonts')
+      .use('url-loader')
+      .loader('url-loader')
+      .tap((options) => {
+        options.limit = false;
+        options.fallback = 'file-loader';
+        // изменение настроек...
+        return options;
+      });
   },
 };
