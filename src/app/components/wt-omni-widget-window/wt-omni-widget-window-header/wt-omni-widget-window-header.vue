@@ -3,19 +3,20 @@
     <div class="logo">
       <img src="../../../assets/img/logo.svg" alt="Webitel logo">
     </div>
-    <button
-      class="wt-omni-widget-window-header__close-btn"
-      type="button"
-      @click.prevent="$emit('close')"
-    >
-      close
-    </button>
+    <wt-icon-btn
+      icon="close"
+      size="sm"
+      @click="$emit('close')"
+    ></wt-icon-btn>
   </header>
 </template>
 
 <script>
+import WtIconBtn from '../../utils/wt-icon-btn.vue';
+
 export default {
   name: 'wt-omni-widget-window-header',
+  components: { WtIconBtn },
 };
 </script>
 

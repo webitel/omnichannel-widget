@@ -4,20 +4,17 @@
     :class="`wt-omni-widget-btn--${type}`"
     @click.prevent="$emit('click')"
   >
-    <div class="wt-omni-widget-btn__icon">
-      <wt-icon
-        icon="chat"
-        color="contrast"
-      ></wt-icon>
-    </div>
+    <wt-icon
+      icon="chat"
+      color="contrast"
+    ></wt-icon>
   </button>
 </template>
 
 <script>
 export default {
   name: 'wt-omni-widget-button',
-  data: () => ({
-  }),
+  data: () => ({}),
   props: {
     type: {
       type: String,
@@ -45,16 +42,6 @@ export default {
 
   &--chat {
     background: var(--accent-color);
-  }
-}
-
-.wt-omni-widget-btn__icon {
-  width: 24px;
-  height: 24px;
-
-  &__img {
-    width: 100%;
-    height: 100%;
   }
 }
 </style>

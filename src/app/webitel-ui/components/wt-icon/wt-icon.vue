@@ -28,10 +28,6 @@ export default {
       default: 'main',
       options: ['main', 'contrast'],
     },
-    iconPrefix: {
-      type: String,
-      default: '',
-    },
   },
   computed: {
     iconName() {
@@ -83,9 +79,9 @@ svg {
     height: 24px;
   }
 
-  //&--sm {
-  //  width: var(--icon-sm-size);
-  //  height: var(--icon-sm-size);
-  //}
+  &--sm {
+    width: 16px;
+    height: 16px;
+  }
 }
 </style>
