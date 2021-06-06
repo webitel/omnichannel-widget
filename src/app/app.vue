@@ -6,7 +6,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import WtOmniWidget from '../components/wt-omni-widget.vue';
+import WtOmniWidget from './components/wt-omni-widget.vue';
 
 export default {
   name: 'app',

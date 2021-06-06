@@ -1,10 +1,11 @@
 <template>
   <aside class="wt-omni-widget">
     <wt-omni-widget-window
-      v-show="true || isWidgetOpened"
+      v-show="isWidgetOpened"
+      @close="closeWidget"
     ></wt-omni-widget-window>
     <wt-omni-widget-buttons-menu
-      v-show="true || !isWidgetOpened"
+      v-show="!isWidgetOpened"
       @click="openWidget"
     ></wt-omni-widget-buttons-menu>
   </aside>
@@ -21,7 +22,7 @@ export default {
     WtOmniWidgetButtonsMenu,
   },
   data: () => ({
-    isWidgetOpened: false,
+    isWidgetOpened: true,
   }),
   methods: {
     openWidget() {

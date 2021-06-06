@@ -7,16 +7,24 @@
 </template>
 
 <script>
-import { postMessageToWSServer } from '../../../app/workers/websocket-shared-worker/install';
+import { mapActions } from 'vuex';
 import WtOmniWidgetChatInput from './wt-omni-widget-chat-input.vue';
 
 export default {
   name: 'wt-omni-widget-window-footer',
   components: { WtOmniWidgetChatInput },
-  methods: {
-    sendMessage(draft) {
-      postMessageToWSServer(draft);
+  props: {
+    namespace: {
+      type: String,
+      required: true,
     },
+  },
+  methods: {
+    ...mapActions({
+      sendMessage(dispatch, payload) {
+        return dispatch(`${this.namespace}/SEND_MESSAGE`, payload);
+      },
+    }),
   },
 };
 </script>

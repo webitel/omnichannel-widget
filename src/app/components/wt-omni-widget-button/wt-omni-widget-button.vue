@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import chatIcon from '../../app/assets/icons/icon-chat--md.svg';
+import chatIcon from '../../assets/icons/icon-chat--md.svg';
 
 export default {
   name: 'wt-omni-widget-button',

@@ -8,23 +8,23 @@
 </template>
 
 <script>
-import { addMsgCallback } from '../../../app/workers/websocket-shared-worker/install';
+import { mapState } from 'vuex';
+import getNamespacedState from '../../../../app/webitel-ui/store/helpers/getNamespacedState';
 
 export default {
   name: 'wt-omni-widget-window-content',
-  data: () => ({
-    messages: [],
-  }),
-  created() {
-    addMsgCallback(this.receiveMessage);
+  props: {
+    namespace: {
+      type: String,
+      required: true,
+    },
   },
-  methods: {
-    receiveMessage(msg) {
-      this.addMessage(msg);
-    },
-    addMessage(msg) {
-      this.messages.push(msg);
-    },
+  computed: {
+    ...mapState({
+      messages(state) {
+        return getNamespacedState(state, this.namespace).messages;
+      },
+    }),
   },
 };
 </script>

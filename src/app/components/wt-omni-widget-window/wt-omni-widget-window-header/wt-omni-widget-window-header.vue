@@ -1,8 +1,15 @@
 <template>
   <header class="wt-omni-widget-window-header">
     <div class="logo">
-      <img src="../../../app/assets/img/logo.svg" alt="Webitel logo">
+      <img src="../../../assets/img/logo.svg" alt="Webitel logo">
     </div>
+    <button
+      class="wt-omni-widget-window-header__close-btn"
+      type="button"
+      @click.prevent="$emit('close')"
+    >
+      close
+    </button>
   </header>
 </template>
 
