@@ -1,4 +1,9 @@
+@import './typography/typography';
 @import './variables/index';
+
+body {
+  @extend %typo-body-md;
+}
 
 button {
   border: none;

@@ -1,6 +1,15 @@
 module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
+  css: {
+    loaderOptions: {
+      sass: {
+        additionalData: `
+          @import "@/css/main.scss";
+        `,
+      },
+    },
+  },
   configureWebpack: {
     output: {
       libraryExport: 'default',

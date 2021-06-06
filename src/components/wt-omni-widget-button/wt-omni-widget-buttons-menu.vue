@@ -22,7 +22,7 @@ export default {
 .wt-omni-widget-buttons-menu {
   width: fit-content;
   padding: 10px;
-  border-radius: 50%;
+  border-radius: var(--border-radius--circular-btn);
   background: hsla(0, 0%, 100%, 1);
   transition: var(--transition);
 

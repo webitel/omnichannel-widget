@@ -5,7 +5,6 @@
     @click.prevent="$emit('click')"
   >
     <div class="wt-omni-widget-btn__icon">
-      <svg></svg>
       <img
         class="wt-omni-widget-btn__icon__img"
         :src="iconSrc[type]"

@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import WtOmniWidgetHeader from './wt-omni-widget-window-header.vue';
-import WtOmniWidgetContent from './wt-omni-widget-window-content.vue';
-import WtOmniWidgetFooter from './wt-omni-widget-window-footer.vue';
+import WtOmniWidgetHeader from './wt-omni-widget-window-header/wt-omni-widget-window-header.vue';
+import WtOmniWidgetContent from './wt-omni-widget-window-content/wt-omni-widget-window-content.vue';
+import WtOmniWidgetFooter from './wt-omni-widget-window-footer/wt-omni-widget-window-footer.vue';
 
 export default {
   name: 'wt-omni-widget-window',
@@ -29,18 +29,12 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  border: 1px solid red;
-}
-
-.wt-omni-widget-window-header {
-  flex: 0 0 44px;
+  padding: 10px;
+  border-radius: var(--border-radius--circular);
+  box-shadow: var(--morf-style-font);
 }
 
 .wt-omni-widget-window-content {
   flex-grow: 1;
 }
-
-//.wt-omni-widget-window-footer {
-//  flex: 0 0 44px;
-//}
 </style>
