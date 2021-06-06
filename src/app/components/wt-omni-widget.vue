@@ -22,7 +22,7 @@ export default {
     WtOmniWidgetButtonsMenu,
   },
   data: () => ({
-    isWidgetOpened: true,
+    isWidgetOpened: false,
   }),
   methods: {
     openWidget() {

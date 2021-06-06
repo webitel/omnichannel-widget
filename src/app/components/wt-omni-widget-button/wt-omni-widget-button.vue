@@ -5,24 +5,18 @@
     @click.prevent="$emit('click')"
   >
     <div class="wt-omni-widget-btn__icon">
-      <img
-        class="wt-omni-widget-btn__icon__img"
-        :src="iconSrc[type]"
-        :alt="`${type} icon`"
-      >
+      <wt-icon
+        icon="chat"
+        color="contrast"
+      ></wt-icon>
     </div>
   </button>
 </template>
 
 <script>
-import chatIcon from '../../assets/icons/icon-chat--md.svg';
-
 export default {
   name: 'wt-omni-widget-button',
   data: () => ({
-    iconSrc: {
-      chat: chatIcon,
-    },
   }),
   props: {
     type: {

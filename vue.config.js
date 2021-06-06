@@ -1,4 +1,6 @@
 /* eslint-disable */
+const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   lintOnSave: false,
@@ -55,5 +57,35 @@ module.exports = {
         // изменение настроек...
         return options;
       });
+
+    config
+      .plugin('copy-webpack-plugin')
+      .use(CopyWebpackPlugin, [{
+        patterns:
+          [{
+            from: 'src/app/assets/img/svg-sprites/wt-icon.svg',
+            to: 'img/svg-sprites',
+          }],
+      },
+      ]);
+
+    const svgRule = config.module.rule('svg');
+    svgRule.uses.clear();
+
+    svgRule
+      .test(/\.svg/)
+      .exclude
+      .add(path.resolve(__dirname, 'src/app/assets/img/svg-sprites/wt-icon.svg'))
+      .end()
+      .use('svg-url-loader')
+      .loader('svg-url-loader');
+
+    config.module
+      .rule('svg-sprite')
+      .test(/^(.*sprites).*\.svg/)
+      // .test(/\.svg/)
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({ symbolId: () => '' });
   },
 };
