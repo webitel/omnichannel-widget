@@ -30,7 +30,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wt-omni-widget-window-footer {
-  padding: 5px 10px;
-}
+
 </style>
