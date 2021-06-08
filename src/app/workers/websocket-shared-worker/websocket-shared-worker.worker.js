@@ -52,12 +52,24 @@ self.onconnect = (event) => {
   // Get the MessagePort from the event. This will be the
   // communication channel between SharedWorker and the Tab
   const port = event.ports[0];
-  port.onmessage = (msg) => {
+  port.onmessage = async (msg) => {
     // Collect port information in the map
     idToPortMap[msg.data.from] = port;
 
-    // Forward this message to the ws connection.
-    ws.send(JSON.stringify({ data: msg.data }));
+    const wsMsg = JSON.stringify({ data: msg.data });
+    try {
+      // Forward this message to the ws connection.
+      await ws.send(wsMsg);
+      port.postMessage({
+        type: 'info',
+        data: `${wsMsg} is sent to ws`,
+      });
+    } catch (err) {
+      port.postMessage({
+        type: 'error',
+        data: err,
+      });
+    }
   };
 
   // We need this to notify the newly connected context to know

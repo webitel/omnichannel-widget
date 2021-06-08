@@ -70,5 +70,6 @@ export default {
 
 .wt-omni-widget-window-content-wrapper {
   flex-grow: 1;
+  min-height: 0;
 }
 </style>

@@ -3,7 +3,7 @@
     class="wt-omni-widget-chat-message"
     :class="{ 'wt-omni-widget-chat-message--my': message.my }"
   >
-    {{ message.data.text }}
+    {{ message.data }}
   </div>
 </template>
 

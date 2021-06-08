@@ -12,11 +12,8 @@
 </template>
 
 <script>
-import WtIconBtn from '../../utils/wt-icon-btn.vue';
-
 export default {
   name: 'wt-omni-widget-window-header',
-  components: { WtIconBtn },
 };
 </script>
 

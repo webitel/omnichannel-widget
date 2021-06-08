@@ -48,6 +48,12 @@ worker.port.onmessage = (event) => {
     case 'message':
       handleMessageFromPort(event.data);
       break;
+    case 'error':
+      handleMessageFromPort(event.data);
+      break;
+    case 'info':
+      handleMessageFromPort(event.data);
+      break;
     default:
       console.warn('unknown WS WORKER event type', event);
   }
@@ -63,6 +69,12 @@ broadcastChannel.addEventListener('message', (event) => {
       wsState = event.data.state;
       break;
     case 'message':
+      handleBroadcast(event.data);
+      break;
+    case 'error':
+      handleBroadcast(event.data);
+      break;
+    case 'info':
       handleBroadcast(event.data);
       break;
     default:

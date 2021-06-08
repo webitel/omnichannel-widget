@@ -1,6 +1,8 @@
 @import 'typography/typography';
 @import 'variables/index';
 
+@import '../webitel-ui/css/scroll';
+
 body {
   @extend %typo-body-md;
 }

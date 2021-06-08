@@ -6,6 +6,7 @@ import i18n from './app/locale/i18n';
 import './app/assets/img/svg-sprites/wt-icon.svg';
 import './app/css/fonts/_fonts.scss';
 
+import './app/components/utils';
 import './app/webitel-ui/components';
 
 Vue.config.productionTip = false;

@@ -34,6 +34,9 @@ export default {
 
 <style lang="scss" scoped>
 .wt-omni-widget-window-content {
+  @extend %wt-scrollbar;
+  max-height: 100%;
+  overflow-y: scroll;
 }
 .wt-omni-widget-chat-message {
   margin-top: 10px;

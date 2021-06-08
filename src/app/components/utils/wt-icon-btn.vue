@@ -6,6 +6,7 @@
       :color="color"
       @click.native="$emit('click', $event)"
     ></wt-icon>
+    <slot></slot>
   </button>
 </template>
 
