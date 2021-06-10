@@ -17,6 +17,7 @@
         size="md"
         icon-size="sm"
         color="contrast"
+        :permanent-shadow="false"
         @click="send"
       ></wt-icon-btn>
     </div>
@@ -50,6 +51,8 @@ export default {
 .wt-omni-widget-chat-input__textarea__wrapper {
  // @extend %wt-scrollbar;
   position: relative;
+  height: fit-content;
+  line-height: 0; // remove extra height from wrapper
 
   .wt-omni-widget-chat-input__send-btn {
     position: absolute;
@@ -64,16 +67,20 @@ export default {
 
   box-sizing: border-box;
   width: 100%;
-  min-height: 32px;
+  min-height: 52px;
   max-height: 120px;
-  padding: 10px 15px;
+  padding: var(--message-input-padding);
   background: var(--main-color);
   border: none;
-  border-radius: var(--border-radius--circular);
+  border-radius: var(--border-radius--square);
   box-shadow: var(--morf-style-down-50);
   transition: var(--transition);
   resize: none;
   overflow: auto;
+
+  .wt-omni-widget--rounded & {
+    border-radius: var(--border-radius--rounded);
+  }
 
   &:hover, &:focus, &:active {
     box-shadow: var(--morf-style-down-100);

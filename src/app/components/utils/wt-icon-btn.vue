@@ -3,9 +3,10 @@
     class="wt-icon-btn"
     :class="[
       `wt-icon-btn--${size}`,
+      { 'wt-icon-btn--permanent-shadow': permanentShadow },
     ]"
     type="button"
-    @click.prevent="$emit('click', $event)"
+    @click="$emit('click', $event)"
   >
     <div class="wt-icon-btn__wrapper">
       <wt-icon
@@ -38,6 +39,10 @@ export default {
     color: {
       type: String,
     },
+    permanentShadow: {
+      type: Boolean,
+      default: true,
+    },
   },
 };
 </script>
@@ -45,26 +50,37 @@ export default {
 <style lang="scss" scoped>
 .wt-icon-btn {
   position: relative;
-  padding: 10px;
+  padding: var(--icon-btn-padding--md);
   background: var(--main-color);
-  border-radius: var(--border-radius--circular);
-  box-shadow: var(--morf-style-up-50);
+  border-radius: var(--border-radius--square);
   transition: var(--transition);
 
+  .wt-omni-widget--rounded & {
+    border-radius: var(--border-radius--rounded);
+  }
+
   &:hover {
-    box-shadow: var(--morf-style-up-100);
+    box-shadow: var(--morf-style-up-50);
   }
 
   &--sm {
-    padding: 6px;
+    padding: var(--icon-btn-padding--sm);
   }
 
   &--md {
-    padding: 10px;
+    padding: var(--icon-btn-padding--md);
   }
 
   &--xl {
-    padding: 18px;
+    padding: var(--icon-btn-padding--xl);
+  }
+
+  &--permanent-shadow {
+    box-shadow: var(--morf-style-up-50);
+
+    &:hover {
+      box-shadow: var(--morf-style-up-100);
+    }
   }
 
   &__wrapper {

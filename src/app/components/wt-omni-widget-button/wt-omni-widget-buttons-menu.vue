@@ -21,12 +21,16 @@ export default {
 <style lang="scss" scoped>
 .wt-omni-widget-buttons-menu {
   width: fit-content;
-  padding: 10px;
-  border-radius: var(--border-radius--circular-btn);
-  background: hsla(0, 0%, 100%, 1);
+  padding: var(--buttons-menu-padding);
+  border-radius: var(--border-radius--square);
+  background: var(--main-color);
   transition: var(--transition);
 // https://stackoverflow.com/a/30104683
   pointer-events: none; // apply hover styles only on child hover
+
+  .wt-omni-widget--rounded & {
+    border-radius: var(--border-radius--rounded-btn);
+  }
 
   &:hover {
     box-shadow: var(--morf-style-up-100);

@@ -32,10 +32,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: var(--border-radius--square);
   transition: var(--transition);
   cursor: pointer;
   pointer-events: auto; // cause its wrapper p-events is none
+
+  .wt-omni-widget--rounded & {
+    border-radius: var(--border-radius--rounded);
+  }
 
   &:hover {
     box-shadow: var(--morf-style-up-50);

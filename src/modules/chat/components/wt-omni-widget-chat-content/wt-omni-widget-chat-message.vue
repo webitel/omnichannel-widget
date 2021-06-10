@@ -26,16 +26,24 @@ export default {
   width: fit-content;
   max-width: 100%;
   min-height: 44px;
-  padding: 15px;
+  padding: var(--message-padding);
   color: var(--contrast-color);
-  background: var(--client-message-color);
-  border-radius: 30px 30px 30px 0;
+  background: var(--agent-message-color);
+  border-radius: var(--agent-message-border-radius--square);
 
   &--my {
     text-align: right;
-    background: var(--agent-message-color);
     margin-left: auto;
-    border-radius: 30px 30px 0 30px;
+    background: var(--client-message-color);
+    border-radius: var(--client-message-border-radius--square);
+  }
+
+  .wt-omni-widget--rounded & {
+    border-radius: var(--agent-message-border-radius--rounded);
+
+    &--my {
+      border-radius: var(--client-message-border-radius--rounded);
+    }
   }
 }
 </style>

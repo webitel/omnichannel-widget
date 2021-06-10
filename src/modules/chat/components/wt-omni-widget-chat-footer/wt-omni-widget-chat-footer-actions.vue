@@ -47,7 +47,7 @@ export default {
 
 <style lang="scss" scoped>
 .wt-omni-widget-chat-footer-actions {
-  padding: 5px 10px;
+  padding: var(--footer-padding);
   margin-top: 10px;
 }
 

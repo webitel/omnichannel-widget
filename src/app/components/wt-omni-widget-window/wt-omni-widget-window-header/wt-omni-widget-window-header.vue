@@ -22,9 +22,13 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 15px;
+  padding: var(--header-padding);
   background: var(--accent-color);
-  border-radius: var(--border-radius--circular);
+  border-radius: var(--border-radius--square);
+
+  .wt-omni-widget--rounded & {
+    border-radius: var(--border-radius--rounded);
+  }
 
   .logo {
     width: 24px;

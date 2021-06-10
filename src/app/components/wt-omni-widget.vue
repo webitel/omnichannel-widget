@@ -1,11 +1,11 @@
 <template>
-  <aside class="wt-omni-widget">
+  <aside class="wt-omni-widget" :class="{'wt-omni-widget--rounded': false }">
     <wt-omni-widget-window
-      v-show="isWidgetOpened"
+      :class="{ 'hidden': !isWidgetOpened }"
       @close="closeWidget"
     ></wt-omni-widget-window>
     <wt-omni-widget-buttons-menu
-      v-show="!isWidgetOpened"
+      :class="{ 'hidden': isWidgetOpened }"
       @click="openWidget"
     ></wt-omni-widget-buttons-menu>
   </aside>
@@ -41,5 +41,18 @@ export default {
   z-index: 11;
   bottom: 100px;
   right: 100px;
+
+  .wt-omni-widget-window,
+  .wt-omni-widget-buttons-menu {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transition: var(--transition);
+  }
+
+  .hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 </style>

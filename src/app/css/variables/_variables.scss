@@ -1,5 +1,45 @@
 :root {
   --transition: 0.2s all;
-  --border-radius--circular: 30px;
-  --border-radius--circular-btn: 40px;
+
+  // BORDER RADIUS
+  --border-radius--square: 5px;
+  --border-radius--rounded: 30px;
+  --border-radius--rounded-btn: 40px;
+}
+
+.wt-omni-widget-chat-message {
+  --client-message-border-radius--square: 5px 5px 0px 5px;
+  --client-message-border-radius--rounded: 30px 30px 0px 30px;
+
+  --agent-message-border-radius--square: 5px 5px 5px 0px;
+  --agent-message-border-radius--rounded: 30px 30px 30px 0px;
+}
+
+// PADDING
+.wt-omni-widget-buttons-menu {
+  --buttons-menu-padding: 10px;
+}
+
+.wt-omni-widget-window {
+  --main-app-padding: 15px;
+
+  .wt-omni-widget-window-header {
+    --header-padding: 10px 10px 10px 15px;
+  }
+
+  --footer-padding: 5px 10px;
+}
+
+.wt-omni-widget-chat-input__textarea {
+  --message-input-padding: 10px 15px;
+}
+
+.wt-omni-widget-chat-message {
+  --message-padding: 15px;
+}
+
+.wt-icon-btn {
+  --icon-btn-padding--sm: 6px;
+  --icon-btn-padding--md: 10px;
+  --icon-btn-padding--xl: 18px;
 }
