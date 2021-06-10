@@ -35,6 +35,7 @@ export default {
   border-radius: 50%;
   transition: var(--transition);
   cursor: pointer;
+  pointer-events: auto; // cause its wrapper p-events is none
 
   &:hover {
     box-shadow: var(--morf-style-up-50);

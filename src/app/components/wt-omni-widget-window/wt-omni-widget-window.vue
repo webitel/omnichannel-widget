@@ -63,7 +63,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  padding: 10px;
+  padding: 15px;
   border-radius: var(--border-radius--circular);
   box-shadow: var(--morf-style-font);
 }

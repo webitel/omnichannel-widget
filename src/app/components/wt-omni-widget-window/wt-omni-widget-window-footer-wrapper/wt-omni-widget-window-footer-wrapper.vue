@@ -12,6 +12,5 @@ export default {
 
 <style lang="scss" scoped>
 .wt-omni-widget-window-footer-wrapper {
-  padding: 5px 10px;
 }
 </style>

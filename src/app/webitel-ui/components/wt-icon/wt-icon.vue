@@ -80,8 +80,8 @@ svg {
   }
 
   &--sm {
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
   }
 }
 </style>

@@ -1,12 +1,20 @@
 <template>
-  <button class="wt-icon-btn" type="button">
-    <wt-icon
-      :icon="icon"
-      :size="size"
-      :color="color"
-      @click.native="$emit('click', $event)"
-    ></wt-icon>
-    <slot></slot>
+  <button
+    class="wt-icon-btn"
+    :class="[
+      `wt-icon-btn--${size}`,
+    ]"
+    type="button"
+    @click.prevent="$emit('click', $event)"
+  >
+    <div class="wt-icon-btn__wrapper">
+      <wt-icon
+        :icon="icon"
+        :size="iconSize || size"
+        :color="color"
+      ></wt-icon>
+      <slot></slot>
+    </div>
   </button>
 </template>
 
@@ -20,6 +28,12 @@ export default {
     },
     size: {
       type: String,
+      default: 'md',
+      options: ['sm', 'md', 'xl'],
+      description: 'BUTTON SIZE!',
+    },
+    iconSize: {
+      type: String,
     },
     color: {
       type: String,
@@ -31,11 +45,7 @@ export default {
 <style lang="scss" scoped>
 .wt-icon-btn {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
+  padding: 10px;
   background: var(--main-color);
   border-radius: var(--border-radius--circular);
   box-shadow: var(--morf-style-up-50);
@@ -43,6 +53,25 @@ export default {
 
   &:hover {
     box-shadow: var(--morf-style-up-100);
+  }
+
+  &--sm {
+    padding: 6px;
+  }
+
+  &--md {
+    padding: 10px;
+  }
+
+  &--xl {
+    padding: 18px;
+  }
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
   }
 }
 

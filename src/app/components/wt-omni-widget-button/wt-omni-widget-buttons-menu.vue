@@ -25,6 +25,8 @@ export default {
   border-radius: var(--border-radius--circular-btn);
   background: hsla(0, 0%, 100%, 1);
   transition: var(--transition);
+// https://stackoverflow.com/a/30104683
+  pointer-events: none; // apply hover styles only on child hover
 
   &:hover {
     box-shadow: var(--morf-style-up-100);

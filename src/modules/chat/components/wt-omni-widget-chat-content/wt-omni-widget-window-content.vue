@@ -1,9 +1,9 @@
 <template>
   <article class="wt-omni-widget-window-content">
     <message
-      v-for="message of messages"
+      v-for="(message, key) of messages"
       :message="message"
-      :key="message.id"
+      :key="key"
     ></message>
   </article>
 </template>

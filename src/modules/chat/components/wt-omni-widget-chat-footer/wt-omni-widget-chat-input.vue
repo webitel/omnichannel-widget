@@ -14,7 +14,9 @@
       <wt-icon-btn
         class="wt-omni-widget-chat-input__send-btn"
         icon="send-arrow"
-        size="sm"
+        size="md"
+        icon-size="sm"
+        color="contrast"
         @click="send"
       ></wt-icon-btn>
     </div>
@@ -53,6 +55,7 @@ export default {
     position: absolute;
     right: 10px;
     bottom: 10px;
+    background: var(--accent-color);
   }
 }
 
@@ -61,7 +64,7 @@ export default {
 
   box-sizing: border-box;
   width: 100%;
-  min-height: 52px;
+  min-height: 32px;
   max-height: 120px;
   padding: 10px 15px;
   background: var(--main-color);

@@ -4,6 +4,7 @@
       class="wt-omni-widget-chat-footer-actions__attach"
       icon="attach"
       size="sm"
+      @click="openFileSelect"
     >
       <input
         ref="attachment-input"
@@ -33,6 +34,9 @@ export default {
         return dispatch(`${this.namespace}/SEND_FILE`, payload);
       },
     }),
+    openFileSelect() {
+      this.$refs['attachment-input'].click();
+    },
     async handleAttachments(event) {
       const files = Array.from(event.target.files);
       await this.sendFile(files);
@@ -49,13 +53,9 @@ export default {
 
 .wt-omni-widget-chat-footer-actions__attach__input {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  width: 0;
+  height: 0;
   opacity: 0;
-  cursor: pointer;
+  pointer-events: none;
 }
 </style>
