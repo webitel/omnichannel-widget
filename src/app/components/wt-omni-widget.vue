@@ -1,5 +1,5 @@
 <template>
-  <aside class="wt-omni-widget" :class="{'wt-omni-widget--rounded': false }">
+  <aside class="wt-omni-widget" :class="{'wt-omni-widget--rounded': true }">
     <wt-omni-widget-window
       :class="{ 'hidden': !isWidgetOpened }"
       @close="closeWidget"

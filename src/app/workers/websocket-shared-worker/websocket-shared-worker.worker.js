@@ -57,6 +57,7 @@ self.onconnect = (event) => {
     idToPortMap[msg.data.from] = port;
 
     const wsMsg = JSON.stringify({ data: msg.data });
+    console.info('msg', wsMsg);
     try {
       // Forward this message to the ws connection.
       await ws.send(wsMsg);

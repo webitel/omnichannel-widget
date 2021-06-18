@@ -49,15 +49,19 @@ export default {
 
 <style lang="scss" scoped>
 .wt-omni-widget-chat-input__textarea__wrapper {
- // @extend %wt-scrollbar;
+  @extend %wt-scrollbar;
+
   position: relative;
-  height: fit-content;
+  display: flex;
+  min-height: 52px;
+  max-height: 120px;
   line-height: 0; // remove extra height from wrapper
+  overflow: scroll;
 
   .wt-omni-widget-chat-input__send-btn {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
+    //position: absolute;
+    //right: 10px;
+    //bottom: 10px;
     background: var(--accent-color);
   }
 }
@@ -65,10 +69,9 @@ export default {
 .wt-omni-widget-chat-input__textarea {
   @extend %typo-body-md;
 
+  flex-grow: 1;
   box-sizing: border-box;
-  width: 100%;
-  min-height: 52px;
-  max-height: 120px;
+  width: calc(100% - 40px);
   padding: var(--message-input-padding);
   background: var(--main-color);
   border: none;
@@ -76,7 +79,7 @@ export default {
   box-shadow: var(--morf-style-down-50);
   transition: var(--transition);
   resize: none;
-  overflow: auto;
+  overflow: scroll;
 
   .wt-omni-widget--rounded & {
     border-radius: var(--border-radius--rounded);

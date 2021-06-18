@@ -3,86 +3,16 @@ import { postMessageToWSServer, addMsgCallback } from '../../../app/workers/webs
 const state = {
   // draft: '',
   messages: [
-    {
-      data: { text: 'Hello there!' },
-      id: 1,
-      my: false,
-    },
-    {
-      data: { text: 'KENOBUS' },
-      id: 2,
-      my: true,
-    },
-    {
-      data: { text: 'Hello there!' },
-      id: 1,
-      my: false,
-    },
-    {
-      data: { text: 'KENOBUS' },
-      id: 2,
-      my: true,
-    },
-    {
-      data: { text: 'Hello there!' },
-      id: 1,
-      my: false,
-    },
-    {
-      data: { text: 'KENOBUS' },
-      id: 2,
-      my: true,
-    },
-    {
-      data: { text: 'Hello there!' },
-      id: 1,
-      my: false,
-    },
-    {
-      data: { text: 'KENOBUS' },
-      id: 2,
-      my: true,
-    },
-    {
-      data: { text: 'Hello there!' },
-      id: 1,
-      my: false,
-    },
-    {
-      data: { text: 'KENOBUS' },
-      id: 2,
-      my: true,
-    },
-    {
-      data: { text: 'Hello there!' },
-      id: 1,
-      my: false,
-    },
-    {
-      data: { text: 'KENOBUS' },
-      id: 2,
-      my: true,
-    },
-    {
-      data: { text: 'Hello there!' },
-      id: 1,
-      my: false,
-    },
-    {
-      data: { text: 'KENOBUS' },
-      id: 2,
-      my: true,
-    },
-    {
-      data: { text: 'Hello there!' },
-      id: 1,
-      my: false,
-    },
-    {
-      data: { text: 'KENOBUS' },
-      id: 2,
-      my: true,
-    },
+    // {
+    //   data: { text: 'Hello there!' },
+    //   id: 1,
+    //   my: false,
+    // },
+    // {
+    //   data: { text: 'KENOBUS' },
+    //   id: 2,
+    //   my: true,
+    // },
   ],
 };
 
