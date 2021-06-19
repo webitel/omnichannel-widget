@@ -1,42 +1,45 @@
 <template>
   <form
     class="wt-omni-widget-chat-input"
-    @submit.prevent="send"
+    @submit.prevent="sendMessage"
   >
-    <div class="wt-omni-widget-chat-input__textarea__wrapper">
     <textarea
       id="wt-omni-widget-chat-input"
       class="wt-omni-widget-chat-input__textarea"
-      v-model="draft"
+      :value="draft"
       :placeholder="$t('chat.inputPlaceholder')"
-      @keypress.enter.prevent="send"
+      @input="setDraft($event.target.value)"
+      @keypress.enter.prevent="sendMessage"
     ></textarea>
-      <wt-icon-btn
-        class="wt-omni-widget-chat-input__send-btn"
-        icon="send-arrow"
-        size="md"
-        icon-size="sm"
-        color="contrast"
-        :permanent-shadow="false"
-        @click="send"
-      ></wt-icon-btn>
-    </div>
   </form>
 </template>
 
 <script>
 import autosize from 'autosize';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'wt-omni-widget-chat-input',
-  data: () => ({
-    draft: '',
-  }),
-  methods: {
-    send() {
-      this.$emit('send', this.draft);
-      this.draft = '';
+  props: {
+    namespace: {
+      type: String,
+      required: true,
     },
+  },
+  computed: {
+    ...mapState('chat', {
+      draft: (state) => state.draft,
+    }),
+  },
+  methods: {
+    ...mapActions({
+      sendMessage(dispatch, payload) {
+        return dispatch(`${this.namespace}/SEND_MESSAGE`, payload);
+      },
+      setDraft(dispatch, payload) {
+        return dispatch(`${this.namespace}/SET_DRAFT`, payload);
+      },
+    }),
     setupAutosize() {
       autosize(document.getElementById('wt-omni-widget-chat-input'));
     },
@@ -48,46 +51,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wt-omni-widget-chat-input__textarea__wrapper {
-  @extend %wt-scrollbar;
-
-  position: relative;
-  display: flex;
-  min-height: 52px;
-  max-height: 120px;
+.wt-omni-widget-chat-input {
+  padding: var(--message-input-padding);
+  background: var(--main-color);
+  border-radius: var(--border-radius--square);
+  box-shadow: var(--morf-style-down-50);
+  transition: var(--transition);
+  cursor: text;
   line-height: 0; // remove extra height from wrapper
-  overflow: scroll;
 
-  .wt-omni-widget-chat-input__send-btn {
-    //position: absolute;
-    //right: 10px;
-    //bottom: 10px;
-    background: var(--accent-color);
+  .wt-omni-widget--rounded & {
+    border-radius: var(--border-radius--rounded);
+  }
+
+  &:hover, &:focus-within, &:active {
+    box-shadow: var(--morf-style-down-100);
   }
 }
 
 .wt-omni-widget-chat-input__textarea {
   @extend %typo-body-md;
 
-  flex-grow: 1;
   box-sizing: border-box;
-  width: calc(100% - 40px);
-  padding: var(--message-input-padding);
-  background: var(--main-color);
+  @extend %wt-scrollbar;
+  min-height: 52px;
+  max-height: 120px;
+  width: 100%;
+  overflow-y: scroll;
   border: none;
-  border-radius: var(--border-radius--square);
-  box-shadow: var(--morf-style-down-50);
-  transition: var(--transition);
   resize: none;
-  overflow: scroll;
-
-  .wt-omni-widget--rounded & {
-    border-radius: var(--border-radius--rounded);
-  }
-
-  &:hover, &:focus, &:active {
-    box-shadow: var(--morf-style-down-100);
-  }
 
   &:focus {
     outline: none;

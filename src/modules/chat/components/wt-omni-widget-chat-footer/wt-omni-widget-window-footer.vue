@@ -1,7 +1,7 @@
 <template>
   <footer class="wt-omni-widget-window-footer">
     <wt-omni-widget-chat-input
-      @send="sendMessage"
+      :namespace="namespace"
     ></wt-omni-widget-chat-input>
     <wt-omni-widget-chat-footer-actions
       :namespace="namespace"
@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 import WtOmniWidgetChatInput from './wt-omni-widget-chat-input.vue';
 import WtOmniWidgetChatFooterActions from './wt-omni-widget-chat-footer-actions.vue';
 
@@ -22,13 +21,6 @@ export default {
       type: String,
       required: true,
     },
-  },
-  methods: {
-    ...mapActions({
-      sendMessage(dispatch, payload) {
-        return dispatch(`${this.namespace}/SEND_MESSAGE`, payload);
-      },
-    }),
   },
 };
 </script>

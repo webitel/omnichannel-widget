@@ -14,6 +14,15 @@
         @change="handleAttachments"
       >
     </wt-icon-btn>
+    <wt-icon-btn
+      class="wt-omni-widget-chat-footer-actions__send-btn"
+      icon="send-arrow"
+      size="md"
+      icon-size="sm"
+      color="contrast"
+      :permanent-shadow="false"
+      @click="sendMessage"
+    ></wt-icon-btn>
   </div>
 </template>
 
@@ -30,6 +39,9 @@ export default {
   },
   methods: {
     ...mapActions({
+      sendMessage(dispatch, payload) {
+        return dispatch(`${this.namespace}/SEND_MESSAGE`, payload);
+      },
       sendFile(dispatch, payload) {
         return dispatch(`${this.namespace}/SEND_FILE`, payload);
       },
@@ -47,12 +59,18 @@ export default {
 
 <style lang="scss" scoped>
 .wt-omni-widget-chat-footer-actions {
+  display: flex;
+  align-items: center;
   padding: var(--footer-padding);
   margin-top: 10px;
+
+  .wt-omni-widget-chat-footer-actions__send-btn { // bump specificity
+    margin-left: auto;
+    background: var(--accent-color);
+  }
 }
 
 .wt-omni-widget-chat-footer-actions__attach__input {
-  position: absolute;
   width: 0;
   height: 0;
   opacity: 0;

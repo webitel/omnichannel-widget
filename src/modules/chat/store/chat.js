@@ -1,7 +1,7 @@
 import { postMessageToWSServer, addMsgCallback } from '../../../app/workers/websocket-shared-worker/install';
 
 const state = {
-  // draft: '',
+  draft: '',
   messages: [
     // {
     //   data: { text: 'Hello there!' },
@@ -23,22 +23,25 @@ const actions = {
     const msgHandler = (context) => (msg) => context.dispatch('RECEIVE_MESSAGE', msg);
     addMsgCallback(msgHandler(context));
   },
-  SEND_MESSAGE: (context, draft) => {
-    postMessageToWSServer(draft);
-    // context.commit('SET_DRAFT', '');
-  },
   RECEIVE_MESSAGE: (context, message) => {
     context.commit('PUSH_MESSAGE', message);
+  },
+  SEND_MESSAGE: (context, draft) => {
+    postMessageToWSServer(draft);
+    context.dispatch('SET_DRAFT', '');
   },
   SEND_FILE: (context, file) => {
     console.info('send file action called with', file);
   },
+  SET_DRAFT: (context, draft) => {
+    context.commit('SET_DRAFT', draft);
+  },
 };
 
 const mutations = {
-  // SET_DRAFT: (state, draft) => {
-  //   state.draft = draft;
-  // },
+  SET_DRAFT: (state, draft) => {
+    state.draft = draft;
+  },
   PUSH_MESSAGE: (state, message) => {
     state.messages.push(message);
   },
