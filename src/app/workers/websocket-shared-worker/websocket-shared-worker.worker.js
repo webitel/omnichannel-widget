@@ -1,6 +1,7 @@
 // https://dev.to/ayushgp/scaling-websocket-connections-using-shared-workers-14mj
 
-const url = 'wss://dev.webitel.com/chat/ws';
+// const url = 'wss://dev.webitel.com/chat/ws';
+const url = 'ws://10.10.10.8:10028/chat/ws';
 
 // conn = new WebSocket("ws://" + document.location.host + "/ws");
 
