@@ -11,7 +11,7 @@
 <script>
 import { mapState } from 'vuex';
 import getNamespacedState from '../../../../app/webitel-ui/store/helpers/getNamespacedState';
-import Message from './wt-omni-widget-chat-message.vue';
+import Message from './messages/wt-omni-widget-chat-text-message.vue';
 
 export default {
   name: 'wt-omni-widget-window-content',

@@ -3,13 +3,13 @@
     class="wt-omni-widget-chat-message"
     :class="{ 'wt-omni-widget-chat-message--my': message.my }"
   >
-    {{ message.data }}
+    file message
   </div>
 </template>
 
 <script>
 export default {
-  name: 'wt-omni-widget-chat-message',
+  name: 'wt-omni-widget-chat-file-message',
   props: {
     message: {
       type: Object,
