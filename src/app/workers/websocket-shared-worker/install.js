@@ -15,6 +15,9 @@ const id = uuidv4();
 
 const msgCallbacks = [];
 const addMsgCallback = (callback) => msgCallbacks.push(callback);
+const replaceMsgCallback = (oldCallback, newCallback) => {
+  msgCallbacks.splice(msgCallbacks.indexOf(oldCallback), 1, newCallback);
+};
 
 // Listen to broadcasts from server
 const handleBroadcast = (data) => {
@@ -102,4 +105,5 @@ export {
   postMessageToWSServer,
   handleBroadcast,
   addMsgCallback,
+  replaceMsgCallback,
 };

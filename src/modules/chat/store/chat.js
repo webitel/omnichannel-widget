@@ -1,9 +1,9 @@
 import { objSnakeToCamel } from '../../../app/webitel-ui/scripts/caseConverters';
-import { postMessageToWSServer, addMsgCallback } from '../../../app/workers/websocket-shared-worker/install';
+import { postMessageToWSServer, addMsgCallback, replaceMsgCallback } from '../../../app/workers/websocket-shared-worker/install';
 import MessageType from '../enums/MessageType.enum';
 
 const parseMessage = (_message) => {
-  const message = objSnakeToCamel(_message);
+  const { message } = objSnakeToCamel(_message);
   switch (message.type) {
     case MessageType.TEXT:
       return message;
@@ -25,37 +25,38 @@ const parseMessage = (_message) => {
 const state = {
   draft: '',
   messages: [],
+  user: {},
   seq: 1,
 };
 
-const getters = {};
+const getters = {
+  IS_MY_MESSAGE: (state) => (message) => message.from?.contact === state.user?.contact,
+};
 
 const actions = {
   SUBSCRIBE_TO_MESSAGES: (context) => {
     const msgHandler = (context) => (msg) => {
       context.dispatch('ON_SESSION_INFO_MESSAGE', msg);
-      return (msg) => context.dispatch('ON_MESSAGE', msg);
+      replaceMsgCallback(this, (msg) => context.dispatch('ON_MESSAGE', msg));
     };
     addMsgCallback(msgHandler(context));
   },
 
   // process chat session data, received as 1st msg
   ON_SESSION_INFO_MESSAGE: (context, data) => {
-    console.info('here hoes session data!', data);
-    if (data.messages) {
-      context.commit('SET_MESSAGES', data.messages);
-      const lastSeqMessage = data.messages.findLast((msg) => msg.seq);
-      if (lastSeqMessage) {
-        context.commit('INCREMENT_SEQ', lastSeqMessage.seq);
-      }
+    console.warn('here hoes session data!', data);
+    const { user, msgs } = data.data;
+    context.commit('SET_USER', user);
+    if (msgs) {
+      context.commit('SET_MESSAGES', msgs);
     }
   },
 
   ON_MESSAGE: (context, _message) => {
     const message = parseMessage(_message.data);
     return message.seq
-      ? context.dispatch('REPLACE_MESSAGE')
-      : context.dispatch('ADD_MESSAGE');
+      ? context.dispatch('REPLACE_MESSAGE', message)
+      : context.dispatch('ADD_MESSAGE', message);
   },
 
   REPLACE_MESSAGE: (context, message) => {
@@ -68,7 +69,7 @@ const actions = {
 
   SEND_MESSAGE: (context) => {
     const { draft, seq } = context.state;
-    const message = { seq, text: draft };
+    const message = { seq, message: { text: draft, type: 'text' } };
     postMessageToWSServer(message);
     context.commit('INCREMENT_SEQ');
     context.dispatch('SET_DRAFT', '');
@@ -86,6 +87,9 @@ const actions = {
 const mutations = {
   SET_MESSAGES: (state, messages) => {
     state.messages = messages;
+  },
+  SET_USER: (state, user) => {
+    state.user = user;
   },
   SET_DRAFT: (state, draft) => {
     state.draft = draft;
