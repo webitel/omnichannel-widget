@@ -24,6 +24,7 @@ export default {
   padding: var(--buttons-menu-padding);
   border-radius: var(--border-radius--square);
   background: var(--main-color);
+  opacity: var(--buttons-menu-opacity); // configured style
   transition: var(--transition);
 // https://stackoverflow.com/a/30104683
   pointer-events: none; // apply hover styles only on child hover
@@ -34,6 +35,7 @@ export default {
 
   &:hover {
     box-shadow: var(--morf-style-up-100);
+    opacity: 1;
   }
 }
 </style>

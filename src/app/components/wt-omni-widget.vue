@@ -1,5 +1,9 @@
 <template>
-  <aside class="wt-omni-widget" :class="{'wt-omni-widget--rounded': false }">
+  <aside
+    class="wt-omni-widget"
+    :class="[`wt-omni-widget--${borderRadiusStyle}`]"
+    :style="widgetStyle"
+  >
     <wt-omni-widget-window
       :class="{ 'hidden': !isWidgetOpened }"
       @close="closeWidget"
@@ -22,15 +26,38 @@ export default {
     WtOmniWidgetButtonsMenu,
   },
   data: () => ({
-    isWidgetOpened: true,
+    isWidgetOpened: false,
   }),
+  computed: {
+    borderRadiusStyle() {
+      switch (this.$config.borderRadiusStyle) {
+        case 'square': return this.$config.borderRadiusStyle;
+        case 'rounded': return this.$config.borderRadiusStyle;
+        default: return 'square';
+      }
+    },
+    widgetStyle() {
+      return `
+       bottom: ${this.$config.position.bottom}px;
+       right: ${this.$config.position.right}px;
+       `;
+    },
+  },
   methods: {
+    applyGlobalConfig() {
+      this.$i18n.locale = this.$config.lang;
+      document.documentElement.style.setProperty('--accent-color', this.$config.accentColor);
+      document.documentElement.style.setProperty('--buttons-menu-opacity', this.$config.btnOpacity);
+    },
     openWidget() {
       this.isWidgetOpened = true;
     },
     closeWidget() {
       this.isWidgetOpened = false;
     },
+  },
+  created() {
+    this.applyGlobalConfig();
   },
 };
 </script>

@@ -1,5 +1,7 @@
 :root {
+  // configured values
   --brand-color-hue: 45;
+  --buttons-menu-opacity: 1;
 
   --accent-color: hsla(var(--brand-color-hue), 100%, 50%, 1);
   --subaccent-color: hsla(var(--brand-color-hue), 100%, 50%, 0.3);

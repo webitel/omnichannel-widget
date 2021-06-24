@@ -38,7 +38,7 @@ export default {
   pointer-events: auto; // cause its wrapper p-events is none
 
   .wt-omni-widget--rounded & {
-    border-radius: var(--border-radius--rounded);
+    border-radius: var(--border-radius--rounded-btn);
   }
 
   &:hover {
