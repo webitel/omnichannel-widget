@@ -10,4 +10,3 @@ Object.keys(Components).forEach((name) => {
 });
 
 export default Components;
-

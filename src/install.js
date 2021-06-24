@@ -14,13 +14,24 @@ Vue.config.productionTip = false;
 const Instance = new Vue({
   store,
   i18n,
-  data: () => ({ config: {} }),
   render: (h) => h(App),
 });
 
+const myConfig = {
+  borderRadiusStyle: 'rounded', // ['square', 'rounded'],
+  lang: 'ua', // ['en', 'ru', 'ua'],
+  position: {
+    bottom: 100,
+    right: 100,
+  },
+  accentColor: 'hsl(32, 100%, 50%)',
+  btnOpacity: 0.9,
+  baseUrl: 'wss://dev.webitel.com/chat/ws',
+};
+
 export default class WtOmniWidget {
   constructor(selector, config) {
-    Vue.set(Instance, 'config', {
+    config = myConfig;
     Vue.prototype.$config = config;
     Instance.$mount(selector);
     return Instance;
