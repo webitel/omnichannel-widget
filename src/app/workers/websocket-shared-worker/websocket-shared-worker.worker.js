@@ -38,12 +38,15 @@ ws.onmessage = ({ data }) => {
   };
   // Get the port to post to using the uuid, ie send to
   // expected tab only.
-  if (parsed.data.from) idToPortMap[parsed.data.from].postMessage(parsed);
-  // Broadcast to all contexts(tabs). This is because
-  // no particular id was set on the from field here.
-  // We're using this field to identify which tab sent
+  if (parsed.data.from) {
+    idToPortMap[parsed.data.from].postMessage(parsed);
+  }// Broadcast to all contexts(tabs). This is because
+    // no particular id was set on the from field here.
+    // We're using this field to identify which tab sent
   // the message
-  else broadcastChannel.postMessage(parsed);
+  else {
+    broadcastChannel.postMessage(parsed);
+  }
 };
 
 // Event handler called when a tab tries to connect to this worker.
@@ -56,8 +59,7 @@ self.onconnect = (event) => {
     // Collect port information in the map
     idToPortMap[msg.data.from] = port;
 
-    const wsMsg = JSON.stringify({ data: msg.data });
-    console.info('msg', wsMsg);
+    const wsMsg = JSON.stringify(msg.data.data);
     try {
       // Forward this message to the ws connection.
       await ws.send(wsMsg);

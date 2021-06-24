@@ -47,6 +47,8 @@ module.exports = {
     },
   },
   chainWebpack: (config) => {
+    config.module.rule('js').exclude.add(/\.worker\.js$/);
+
     config.module
       .rule('fonts')
       .use('url-loader')

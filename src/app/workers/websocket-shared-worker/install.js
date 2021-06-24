@@ -15,6 +15,9 @@ const id = uuidv4();
 
 const msgCallbacks = [];
 const addMsgCallback = (callback) => msgCallbacks.push(callback);
+const replaceMsgCallback = (oldCallback, newCallback) => {
+  msgCallbacks.splice(msgCallbacks.indexOf(oldCallback), 1, newCallback);
+};
 
 // Listen to broadcasts from server
 const handleBroadcast = (data) => {
@@ -40,7 +43,7 @@ worker.port.start();
 // Set an event listener that either sets state of the web socket
 // Or handles data coming in for ONLY this tab.
 worker.port.onmessage = (event) => {
-  console.info('message', event);
+  console.info('message', event.data);
   switch (event.data.type) {
     case 'WSState':
       wsState = event.data.state;
@@ -102,4 +105,5 @@ export {
   postMessageToWSServer,
   handleBroadcast,
   addMsgCallback,
+  replaceMsgCallback,
 };

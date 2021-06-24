@@ -1,0 +1,114 @@
+{
+  // Unique message identifier inside this chat
+  "id": 1,
+  // This message sender, end-user account
+  "from": {
+    // Unique IDentifier
+    "id": 1,
+    // Channel communication type
+    "channel": "bot|user|webchat", // e.g.: bot, user, phone, telegram, facebook, viber, skype ...
+    // Channel specific contact string
+    "contact": "string", // optional: channel specific contact string
+
+    "first_name": "", // required
+    "last_name": "", // optional
+    "username": "" // optional
+  },
+  // Required. Type of this Message to notify
+  "type": "text|file|contact|joined|left|closed",
+  // {"type": "text"} Text of the message to be sent, 1-4096
+  "text": "How are you ?",
+  // {"type": "file"} Sent file document. 
+  // Pass an HTTP .URL as a string for Webitel to get a file from the Internet,
+  // or upload a new one using storage.FileService.UploadFile()
+  "file": {
+    "id":   1,
+    "url":  "string",
+    "mime": "string",
+    "name": "string",
+    "size": 42926427 // bytes
+  },
+  // Optional. This Message extra properties
+  "variables": {"key": "value"},
+  // {"type": "contact"} End-User extra contact info
+  "contact": {
+    // Unique IDentifier
+    "id": 0,
+    // Channel communication type
+    "channel": "webchat|phone|email",
+    // Channel specific contact string
+    "contact": "string", // optional: channel specific contact string
+
+    "first_name": "", // optional
+    "last_name": "", // optional
+    "username": "" // optional
+  },
+
+  // Optional. Send message date (epochtime ms) Generates by the service.
+  "created_at": 1623401403657,
+  // Optional. Edit message date (epochtime ms) Generates by the service.
+  // For "read" messages, you can specify the date the last READ message was created_at
+  "updated_at": 0,
+  // Optional. If the message is a reply,
+  // this is the ID of the original message
+  "reply_to_message_id": 0,
+  // Message identifier in the chat specified in from_chat_id
+  "forward_from_message_id": 0,
+  // Reply Markup Buttons SET
+  "buttons": [
+    {
+      "button": [
+        {
+          "caption": "string",
+          "text": "string",
+          "type": "string",
+          "url": "string",
+          "code": "string"
+        }
+      ]
+    }
+  ],
+  // Inline Keyboard Buttons SET
+  "inline": [
+    {
+      "button": [
+        {
+          "caption": "string",
+          "text": "string",
+          "type": "string",
+          "url": "string",
+          "code": "string"
+        }
+      ]
+    }
+  ],
+
+  // NewChatMembers description for {"type":"joined"} notification
+  "new_chat_members": [
+    {
+      // Unique IDentifier
+      "id": 1,
+      // Channel communication type
+      "channel": "bot|user",
+      // Channel specific contact string
+      "contact": "string", // optional: channel specific contact string
+  
+      "first_name": "", // required
+      "last_name": "", // optional
+      "username": "" // optional
+    }
+  ],
+  // LeftChatMember description for {"type": "left"} notification
+  "left_chat_member": {
+    // Unique IDentifier
+    "id": 1,
+    // Channel communication type
+    "channel": "bot|user",
+    // Channel specific contact string
+    "contact": "string", // optional: channel specific contact string
+
+    "first_name": "", // required
+    "last_name": "", // optional
+    "username": "" // optional
+  }
+}

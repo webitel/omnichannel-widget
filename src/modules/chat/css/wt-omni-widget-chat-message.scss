@@ -1,24 +1,3 @@
-<template>
-  <div
-    class="wt-omni-widget-chat-message"
-    :class="{ 'wt-omni-widget-chat-message--my': message.my }"
-  >
-    {{ message.data }}
-  </div>
-</template>
-
-<script>
-export default {
-  name: 'wt-omni-widget-chat-message',
-  props: {
-    message: {
-      type: Object,
-    },
-  },
-};
-</script>
-
-<style lang="scss" scoped>
 .wt-omni-widget-chat-message {
   @extend %typo-body-md;
 
@@ -46,4 +25,3 @@ export default {
     }
   }
 }
-</style>
