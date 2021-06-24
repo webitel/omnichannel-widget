@@ -4,16 +4,24 @@
     :class="{ 'wt-omni-widget-chat-message--my': my }"
     @click="downloadDocument"
   >
-    <div class="wt-omni-widget-chat-message--file__icon__wrapper">
-      <wt-icon
-        icon="attach"
-        size="sm"
-        color="contrast"
-      ></wt-icon>
+    <div v-if="isImage" class="wt-omni-widget-chat-message__image">
+      <img
+        class="wt-omni-widget-chat-message__image__img"
+        :src="file.url"
+        :alt="file.name">
     </div>
-    <div class="wt-omni-widget-chat-message--file__info__wrapper">
-      <strong class="wt-omni-widget-chat-message--file__info__name">{{ file.name }}</strong>
-      <span class="wt-omni-widget-chat-message--file__info__size">{{ fileSize }}</span>
+    <div class="wt-omni-widget-chat-message__file-wrapper">
+      <div class="wt-omni-widget-chat-message__icon">
+        <wt-icon
+          icon="attach"
+          size="sm"
+          color="contrast"
+        ></wt-icon>
+      </div>
+      <div class="wt-omni-widget-chat-message__info">
+        <strong class="wt-omni-widget-chat-message__info__name">{{ file.name }}</strong>
+        <span class="wt-omni-widget-chat-message__info__size">{{ fileSize }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +36,9 @@ export default {
   computed: {
     file() {
       return this.message.file;
+    },
+    isImage() {
+      return this.file.mime.includes('image');
     },
     fileSize() {
       return prettifyFileSize(this.file.size);
@@ -50,39 +61,52 @@ export default {
 
 .wt-omni-widget-chat-message--file {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   cursor: pointer;
+}
 
-  &__icon__wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: var(--accent-color);
-    border-radius: var(--border-radius--square);
+.wt-omni-widget-chat-message__image {
+  max-width: 100%;
+  margin-bottom: 10px;
 
-    .wt-omni-widget--rounded & {
-      border-radius: var(--border-radius--rounded);
-    }
+  &__img {
+    width: 100%;
+  }
+}
+
+.wt-omni-widget-chat-message__file-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.wt-omni-widget-chat-message__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--accent-color);
+  border-radius: var(--border-radius--square);
+
+  .wt-omni-widget--rounded & {
+    border-radius: var(--border-radius--rounded);
+  }
+}
+
+.wt-omni-widget-chat-message__info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+
+  &__name {
+    @extend %typo-strong-md;
+
+    margin-bottom: 5px;
   }
 
-  &__info {
-    &__wrapper {
-      display: flex;
-      flex-direction: column;
-      margin-left: 10px;
-    }
-
-    &__name {
-      @extend %typo-strong-md;
-
-      margin-bottom: 5px;
-    }
-
-    &__size {
-      @extend %typo-body-md;
-    }
+  &__size {
+    @extend %typo-body-md;
   }
 }
 </style>
