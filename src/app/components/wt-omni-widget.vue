@@ -38,7 +38,7 @@ export default {
 <style lang="scss" scoped>
 .wt-omni-widget {
   position: fixed;
-  z-index: 11;
+  z-index: 2147483646; // int32 - 1 -- for preview pic popup
   bottom: 100px;
   right: 100px;
 
