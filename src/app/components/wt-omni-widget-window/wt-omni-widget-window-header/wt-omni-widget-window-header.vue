@@ -18,21 +18,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wt-omni-widget-window-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--header-padding);
-  background: var(--accent-color);
-  border-radius: var(--border-radius--square);
+#wt-omni-widget {
+  .wt-omni-widget-window-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--header-padding);
+    background: var(--accent-color);
+    border-radius: var(--border-radius--square);
 
-  .wt-omni-widget--rounded & {
-    border-radius: var(--border-radius--rounded);
-  }
+    .wt-omni-widget--rounded & {
+      border-radius: var(--border-radius--rounded);
+    }
 
-  .logo {
-    width: 24px;
-    height: 24px;
+    .logo {
+      width: 24px;
+      height: 24px;
+    }
   }
 }
 </style>

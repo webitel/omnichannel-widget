@@ -59,54 +59,56 @@ export default {
 <style lang="scss" scoped>
 @import '../../../css/wt-omni-widget-chat-message';
 
-.wt-omni-widget-chat-message--file {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.wt-omni-widget-chat-message__image {
-  max-width: 100%;
-  margin-bottom: 10px;
-
-  &__img {
-    width: 100%;
-  }
-}
-
-.wt-omni-widget-chat-message__file-wrapper {
-  display: flex;
-  align-items: center;
-}
-
-.wt-omni-widget-chat-message__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: var(--accent-color);
-  border-radius: var(--border-radius--square);
-
-  .wt-omni-widget--rounded & {
-    border-radius: var(--border-radius--rounded);
-  }
-}
-
-.wt-omni-widget-chat-message__info {
-  display: flex;
-  flex-direction: column;
-  margin-left: 10px;
-
-  &__name {
-    @extend %typo-strong-md;
-
-    margin-bottom: 5px;
+#wt-omni-widget {
+  .wt-omni-widget-chat-message--file {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
   }
 
-  &__size {
-    @extend %typo-body-md;
+  .wt-omni-widget-chat-message__image {
+    max-width: 100%;
+    margin-bottom: 10px;
+
+    &__img {
+      width: 100%;
+    }
+  }
+
+  .wt-omni-widget-chat-message__file-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .wt-omni-widget-chat-message__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--accent-color);
+    border-radius: var(--border-radius--square);
+
+    .wt-omni-widget--rounded & {
+      border-radius: var(--border-radius--rounded);
+    }
+  }
+
+  .wt-omni-widget-chat-message__info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+
+    &__name {
+      @extend %typo-strong-md;
+
+      margin-bottom: 5px;
+    }
+
+    &__size {
+      @extend %typo-body-md;
+    }
   }
 }
 </style>

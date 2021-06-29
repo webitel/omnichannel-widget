@@ -17,5 +17,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../css/wt-omni-widget-chat-message';
+  @import '../../../css/wt-omni-widget-chat-message';
 </style>

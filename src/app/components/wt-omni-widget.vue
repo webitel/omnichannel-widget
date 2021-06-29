@@ -1,5 +1,6 @@
 <template>
   <aside
+    id="wt-omni-widget"
     class="wt-omni-widget--reset-styles wt-omni-widget"
     :class="[`wt-omni-widget--${borderRadiusStyle}`]"
     :style="widgetStyle"
@@ -16,8 +17,8 @@
 </template>
 
 <script>
-import WtOmniWidgetWindow from './wt-omni-widget-window/wt-omni-widget-window.vue';
 import WtOmniWidgetButtonsMenu from './wt-omni-widget-button/wt-omni-widget-buttons-menu.vue';
+import WtOmniWidgetWindow from './wt-omni-widget-window/wt-omni-widget-window.vue';
 
 export default {
   name: 'wt-omni-widget',
@@ -31,9 +32,12 @@ export default {
   computed: {
     borderRadiusStyle() {
       switch (this.$config.borderRadiusStyle) {
-        case 'square': return this.$config.borderRadiusStyle;
-        case 'rounded': return this.$config.borderRadiusStyle;
-        default: return 'square';
+        case 'square':
+          return this.$config.borderRadiusStyle;
+        case 'rounded':
+          return this.$config.borderRadiusStyle;
+        default:
+          return 'square';
       }
     },
     widgetStyle() {
@@ -63,11 +67,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wt-omni-widget--reset-styles, * {
-  all: revert;
-}
-
-.wt-omni-widget {
+#wt-omni-widget.wt-omni-widget {
   position: fixed;
   z-index: 2147483646; // int32 - 1 -- for preview pic popup
   bottom: 100px;

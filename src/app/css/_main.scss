@@ -3,13 +3,21 @@
 
 @import '../webitel-ui/css/scroll';
 
-body {
-  @extend %typo-body-md;
+.wt-omni-widget--reset-styles,
+.wt-omni-widget--reset-styles * {
+  all: revert;
 }
 
-button {
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-  border: none;
+#wt-omni-widget {
+  body {
+    @extend %typo-body-md;
+  }
+
+  button {
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    border: none;
+  }
+
 }

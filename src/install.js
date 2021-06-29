@@ -32,7 +32,7 @@ const defaultConfig = {
 };
 
 export default class WtOmniWidget {
-  constructor(selector, _config) {
+  constructor(selector, _config = {}) {
     const config = merge(defaultConfig, _config);
     Vue.set(Instance, 'config', config);
     Vue.prototype.$config = config;
