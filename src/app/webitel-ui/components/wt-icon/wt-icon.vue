@@ -45,43 +45,45 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wt-icon {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  transition: var(--transition);
-}
-
-/*svg instead of .icon to override styles by .icon-icon-name-size without any other selectors*/
-svg {
-  display: flex;
-  width: 24px;
-  height: 24px;
-  stroke-width: 0;
-  fill: var(--icon-color);
-  stroke: var(--icon-color);
-  transition: var(--transition);
-}
-
-.wt-icon__icon {
-  //&--xl {
-  //  width: var(--icon-xl-size);
-  //  height: var(--icon-xl-size);
-  //}
-  //
-  //&--lg {
-  //  width: var(--icon-lg-size);
-  //  height: var(--icon-lg-size);
-  //}
-
-  &--md {
-    width: 24px;
-    height: 24px;
+#wt-omni-widget {
+  .wt-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
   }
 
-  &--sm {
-    width: 12px;
-    height: 12px;
+  /*svg instead of .icon to override styles by .icon-icon-name-size without any other selectors*/
+  svg {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    stroke-width: 0;
+    fill: var(--icon-color);
+    stroke: var(--icon-color);
+    transition: var(--transition);
+  }
+
+  .wt-icon__icon {
+    //&--xl {
+    //  width: var(--icon-xl-size);
+    //  height: var(--icon-xl-size);
+    //}
+    //
+    //&--lg {
+    //  width: var(--icon-lg-size);
+    //  height: var(--icon-lg-size);
+    //}
+
+    &--md {
+      width: 24px;
+      height: 24px;
+    }
+
+    &--sm {
+      width: 12px;
+      height: 12px;
+    }
   }
 }
 </style>

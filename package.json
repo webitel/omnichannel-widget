@@ -7,12 +7,14 @@
     "build": "vue-cli-service build --target lib --name WtOmniWidget --inline-css --inline-vue src/install.js",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint --fix",
-    "cp-dist-to-static": "rm -rf static-demo/omni-widget/* || true && cp -r dist/* static-demo/omni-widget"
+    "cp-dist-to-static": "npm run build && rm -rf static-demo/omni-widget/* || true && cp -r dist/* static-demo/omni-widget"
   },
   "dependencies": {
     "autosize": "^5.0.0",
+    "bamboo-jest-reporter": "^1.0.3",
     "copy-webpack-plugin": "^6.4.1",
     "core-js": "^3.6.5",
+    "deepmerge": "^4.2.2",
     "svg-sprite-loader": "^6.0.7",
     "svg-url-loader": "^7.1.1",
     "uuid": "^8.3.2",

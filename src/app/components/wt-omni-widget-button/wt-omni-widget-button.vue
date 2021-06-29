@@ -26,27 +26,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wt-omni-widget-btn {
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--border-radius--square);
-  transition: var(--transition);
-  cursor: pointer;
-  pointer-events: auto; // cause its wrapper p-events is none
+#wt-omni-widget {
+  .wt-omni-widget-btn {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius--square);
+    transition: var(--transition);
+    cursor: pointer;
+    pointer-events: auto; // cause its wrapper p-events is none
 
-  .wt-omni-widget--rounded & {
-    border-radius: var(--border-radius--rounded-btn);
-  }
+    .wt-omni-widget--rounded & {
+      border-radius: var(--border-radius--rounded-btn);
+    }
 
-  &:hover {
-    box-shadow: var(--morf-style-up-50);
-  }
+    &:hover {
+      box-shadow: var(--morf-style-up-50);
+    }
 
-  &--chat {
-    background: var(--accent-color);
+    &--chat {
+      background: var(--accent-color);
+    }
   }
 }
 </style>

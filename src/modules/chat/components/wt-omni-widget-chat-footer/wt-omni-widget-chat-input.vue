@@ -51,38 +51,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wt-omni-widget-chat-input {
-  padding: var(--message-input-padding);
-  background: var(--main-color);
-  border-radius: var(--border-radius--square);
-  box-shadow: var(--morf-style-down-50);
-  transition: var(--transition);
-  cursor: text;
-  line-height: 0; // remove extra height from wrapper
+#wt-omni-widget {
+  .wt-omni-widget-chat-input {
+    padding: var(--message-input-padding);
+    background: var(--main-color);
+    border-radius: var(--border-radius--square);
+    box-shadow: var(--morf-style-down-50);
+    transition: var(--transition);
+    cursor: text;
+    line-height: 0; // remove extra height from wrapper
 
-  .wt-omni-widget--rounded & {
-    border-radius: var(--border-radius--rounded);
+    .wt-omni-widget--rounded & {
+      border-radius: var(--border-radius--rounded);
+    }
+
+    &:hover, &:focus-within, &:active {
+      box-shadow: var(--morf-style-down-100);
+    }
   }
 
-  &:hover, &:focus-within, &:active {
-    box-shadow: var(--morf-style-down-100);
-  }
-}
+  .wt-omni-widget-chat-input__textarea {
+    @extend %typo-body-md;
 
-.wt-omni-widget-chat-input__textarea {
-  @extend %typo-body-md;
+    box-sizing: border-box;
+    @extend %wt-scrollbar;
+    min-height: 52px;
+    max-height: 120px;
+    width: 100%;
+    overflow-y: scroll;
+    border: none;
+    resize: none;
 
-  box-sizing: border-box;
-  @extend %wt-scrollbar;
-  min-height: 52px;
-  max-height: 120px;
-  width: 100%;
-  overflow-y: scroll;
-  border: none;
-  resize: none;
-
-  &:focus {
-    outline: none;
+    &:focus {
+      outline: none;
+    }
   }
 }
 </style>

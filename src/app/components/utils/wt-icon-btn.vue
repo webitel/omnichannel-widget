@@ -48,51 +48,53 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wt-icon-btn {
-  position: relative;
-  padding: var(--icon-btn-padding--md);
-  background: var(--main-color);
-  border-radius: var(--border-radius--square);
-  transition: var(--transition);
-
-  .wt-omni-widget--rounded & {
-    border-radius: var(--border-radius--rounded);
-  }
-
-  &:hover {
-    box-shadow: var(--morf-style-up-50);
-  }
-
-  &--sm {
-    padding: var(--icon-btn-padding--sm);
-  }
-
-  &--md {
+#wt-omni-widget {
+  .wt-icon-btn {
+    position: relative;
     padding: var(--icon-btn-padding--md);
-  }
+    background: var(--main-color);
+    border-radius: var(--border-radius--square);
+    transition: var(--transition);
 
-  &--xl {
-    padding: var(--icon-btn-padding--xl);
-  }
-
-  &--permanent-shadow {
-    box-shadow: var(--morf-style-up-50);
+    .wt-omni-widget--rounded & {
+      border-radius: var(--border-radius--rounded);
+    }
 
     &:hover {
-      box-shadow: var(--morf-style-up-100);
+      box-shadow: var(--morf-style-up-50);
+    }
+
+    &--sm {
+      padding: var(--icon-btn-padding--sm);
+    }
+
+    &--md {
+      padding: var(--icon-btn-padding--md);
+    }
+
+    &--xl {
+      padding: var(--icon-btn-padding--xl);
+    }
+
+    &--permanent-shadow {
+      box-shadow: var(--morf-style-up-50);
+
+      &:hover {
+        box-shadow: var(--morf-style-up-100);
+      }
+    }
+
+    &__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
     }
   }
 
-  &__wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+  .wt-icon-btn,
+  .wt-icon-btn__button {
+    line-height: 0;
   }
-}
-
-.wt-icon-btn,
-.wt-icon-btn__button {
-  line-height: 0;
 }
 </style>

@@ -19,23 +19,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wt-omni-widget-buttons-menu {
-  width: fit-content;
-  padding: var(--buttons-menu-padding);
-  border-radius: var(--border-radius--square);
-  background: var(--main-color);
-  opacity: var(--buttons-menu-opacity); // configured style
-  transition: var(--transition);
-// https://stackoverflow.com/a/30104683
-  pointer-events: none; // apply hover styles only on child hover
+#wt-omni-widget {
+  .wt-omni-widget-buttons-menu {
+    width: fit-content;
+    padding: var(--buttons-menu-padding);
+    border-radius: var(--border-radius--square);
+    background: var(--main-color);
+    opacity: var(--buttons-menu-opacity); // configured style
+    transition: var(--transition);
+    // https://stackoverflow.com/a/30104683
+    pointer-events: none; // apply hover styles only on child hover
 
-  .wt-omni-widget--rounded & {
-    border-radius: var(--border-radius--rounded-btn);
-  }
+    .wt-omni-widget--rounded & {
+      border-radius: var(--border-radius--rounded-btn);
+    }
 
-  &:hover {
-    box-shadow: var(--morf-style-up-100);
-    opacity: 1;
+    &:hover {
+      box-shadow: var(--morf-style-up-100);
+      opacity: 1;
+    }
   }
 }
 </style>

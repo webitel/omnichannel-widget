@@ -59,22 +59,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wt-omni-widget-chat-footer-actions {
-  display: flex;
-  align-items: center;
-  padding: var(--footer-padding);
-  margin-top: 10px;
+#wt-omni-widget {
+  .wt-omni-widget-chat-footer-actions {
+    display: flex;
+    align-items: center;
+    padding: var(--footer-padding);
+    margin-top: 10px;
 
-  .wt-omni-widget-chat-footer-actions__send-btn { // bump specificity
-    margin-left: auto;
-    background: var(--accent-color);
+    .wt-omni-widget-chat-footer-actions__send-btn { // bump specificity
+      margin-left: auto;
+      background: var(--accent-color);
+    }
   }
-}
 
-.wt-omni-widget-chat-footer-actions__attach__input {
-  width: 0;
-  height: 0;
-  opacity: 0;
-  pointer-events: none;
+  .wt-omni-widget-chat-footer-actions__attach__input {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 </style>

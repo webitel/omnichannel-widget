@@ -56,31 +56,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wt-omni-widget-window {
-  box-sizing: border-box;
-  width: 390px;
-  height: 560px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  background: var(--background-color);
-  padding: var(--main-app-padding);
-  border-radius: var(--border-radius--square);
-  box-shadow: var(--morf-style-font);
+#wt-omni-widget {
+  .wt-omni-widget-window {
+    box-sizing: border-box;
+    width: 390px;
+    height: 560px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    background: var(--background-color);
+    padding: var(--main-app-padding);
+    border-radius: var(--border-radius--square);
+    box-shadow: var(--morf-style-font);
 
-  .wt-omni-widget--rounded & {
-    border-radius: var(--border-radius--rounded);
+    .wt-omni-widget--rounded & {
+      border-radius: var(--border-radius--rounded);
+    }
   }
-}
 
-.wt-omni-widget-window-content-wrapper {
-  flex-grow: 1;
-  min-height: 0;
-}
+  .wt-omni-widget-window-content-wrapper {
+    flex-grow: 1;
+    min-height: 0;
+  }
 
-.wt-omni-widget-window-header,
-.wt-omni-widget-window-content-wrapper {
-  margin-bottom: 10px;
+  .wt-omni-widget-window-header,
+  .wt-omni-widget-window-content-wrapper {
+    margin-bottom: 10px;
+  }
 }
 </style>

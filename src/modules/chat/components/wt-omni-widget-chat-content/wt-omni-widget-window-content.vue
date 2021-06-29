@@ -61,12 +61,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wt-omni-widget-window-content {
-  @extend %wt-scrollbar;
-  height: 100%;
-  overflow-y: scroll;
-}
-.wt-omni-widget-chat-message {
-  margin-top: 10px;
+#wt-omni-widget {
+  .wt-omni-widget-window-content {
+    @extend %wt-scrollbar;
+    height: 100%;
+    overflow-y: scroll;
+  }
+
+  .wt-omni-widget-chat-message {
+    margin-top: 10px;
+  }
 }
 </style>
