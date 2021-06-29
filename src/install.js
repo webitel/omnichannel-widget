@@ -20,7 +20,7 @@ const Instance = new Vue({
 
 export default class WtOmniWidget {
   constructor(selector, config) {
-    Vue.set(Instance, 'config', {
+    Vue.set(Instance, 'config', config);
     Vue.prototype.$config = config;
     Instance.$mount(selector);
     return Instance;
