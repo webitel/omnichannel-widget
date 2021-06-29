@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="wt-omni-widget"
+    class="wt-omni-widget--reset-styles wt-omni-widget"
     :class="[`wt-omni-widget--${borderRadiusStyle}`]"
     :style="widgetStyle"
   >
@@ -63,6 +63,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wt-omni-widget--reset-styles, * {
+  all: revert;
+}
+
 .wt-omni-widget {
   position: fixed;
   z-index: 2147483646; // int32 - 1 -- for preview pic popup
