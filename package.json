@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "autosize": "^5.0.0",
+    "bamboo-jest-reporter": "^1.0.3",
     "copy-webpack-plugin": "^6.4.1",
     "core-js": "^3.6.5",
     "svg-sprite-loader": "^6.0.7",
