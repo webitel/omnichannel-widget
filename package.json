@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name WtOmniWidget --inline-css --inline-vue src/install.js",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint",
+    "lint": "vue-cli-service lint --fix",
     "cp-dist-to-static": "npm run build && rm -rf static-demo/omni-widget/* || true && cp -r dist/* static-demo/omni-widget"
   },
   "dependencies": {

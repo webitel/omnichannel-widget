@@ -1,5 +1,5 @@
 import { objSnakeToCamel } from '../../../app/webitel-ui/scripts/caseConverters';
-import { postMessageToWSServer, addMsgCallback, replaceMsgCallback } from '../../../app/workers/websocket-shared-worker/install';
+import workerController from '../../../app/workers/websocket-shared-worker/install';
 import MessageType from '../enums/MessageType.enum';
 
 const parseMessage = (_message) => {
@@ -37,9 +37,10 @@ const actions = {
   SUBSCRIBE_TO_MESSAGES: (context) => {
     const msgHandler = (context) => (msg) => {
       context.dispatch('ON_SESSION_INFO_MESSAGE', msg);
-      replaceMsgCallback(this, (msg) => context.dispatch('ON_MESSAGE', msg));
+      workerController.removeEventListener('message', this);
+      workerController.addEventListener('message', (msg) => context.dispatch('ON_MESSAGE', msg));
     };
-    addMsgCallback(msgHandler(context));
+    workerController.addEventListener('message', msgHandler(context));
   },
 
   // process chat session data, received as 1st msg
@@ -70,7 +71,7 @@ const actions = {
   SEND_MESSAGE: (context) => {
     const { draft, seq } = context.state;
     const message = { seq, message: { text: draft, type: 'text' } };
-    postMessageToWSServer(message);
+    workerController.postMessageToWSServer(message);
     context.commit('INCREMENT_SEQ');
     context.dispatch('SET_DRAFT', '');
   },
