@@ -1,7 +1,7 @@
 import Channels from '../enums/MessageChannels.enum';
 import MessageEvents from '../enums/MessageEvents.enum';
 
-export default class WorkerMessageController {
+export default class WorkerMessageClient {
   constructor({ broadcast, port }) {
     this._broadcastChannel = broadcast;
     this._port = port;

@@ -1,6 +1,6 @@
 // https://dev.to/ayushgp/scaling-websocket-connections-using-shared-workers-14mj
 import Channels from './enums/MessageChannels.enum';
-import WorkerMessageController from './classes/WorkerMessageController';
+import WorkerMessageClient from './classes/WorkerMessageClient';
 
 // Event handler called when a tab tries to connect to this worker.
 // eslint-disable-next-line no-restricted-globals
@@ -11,20 +11,20 @@ self.onconnect = (event) => {
 // Create a broadcast channel to notify about state changes
   const broadcast = new BroadcastChannel('WSChannel');
 
-  const msgController = new WorkerMessageController({ broadcast, port });
+  const msgClient = new WorkerMessageClient({ broadcast, port });
 
   let ws;
 
 // Let all connected contexts(tabs) know about state changes
-  const wsOnOpen = () => msgController.sendWSState(Channels.BROADCAST, ws.readyState);
-  const wsOnClose = () => msgController.sendWSState(Channels.BROADCAST, ws.readyState);
-  const wsOnError = (error) => msgController.sendError(Channels.BROADCAST, { error });
+  const wsOnOpen = () => msgClient.sendWSState(Channels.BROADCAST, ws.readyState);
+  const wsOnClose = (event) => msgClient.sendWSState(Channels.BROADCAST, { code: event.code, reason: event.reason });
+  const wsOnError = () => msgClient.sendError(Channels.BROADCAST, { error: 'WebSocket error have occurred' });
 
 // When we receive data from the server.
   const wsOnMessage = ({ data }) => {
     // Construct object to be passed to handlers
     const message = JSON.parse(data);
-    msgController.sendMessage(Channels.BROADCAST, message);
+    msgClient.sendMessage(Channels.BROADCAST, message);
   };
 
   const openWS = (url) => {
@@ -38,7 +38,7 @@ self.onconnect = (event) => {
 
     // We need this to notify the newly connected context to know
     // the current state of WS connection.
-    // msgController.sendWSState(Channels.BROADCAST, ws.readyState);
+    // msgClient.sendWSState(Channels.BROADCAST, ws.readyState);
   };
 
   const sendToWS = (message) => {
@@ -56,13 +56,13 @@ self.onconnect = (event) => {
       case 'message':
         try {
           await sendToWS(msg.data.data);
-          msgController.sendInfo(Channels.PORT, `${msg.data.data} is sent to ws`);
+          msgClient.sendInfo(Channels.PORT, `${JSON.stringify(msg.data.data)} is sent to ws`);
         } catch (error) {
-          msgController.sendError(Channels.PORT, { error });
+          msgClient.sendError(Channels.PORT, { error });
         }
         break;
       default:
-        msgController.sendError(Channels.PORT, {
+        msgClient.sendError(Channels.PORT, {
           error: 'Unknown message type',
           params: [msg.data.type, msg],
         });
