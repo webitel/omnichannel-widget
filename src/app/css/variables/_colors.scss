@@ -1,10 +1,13 @@
-#wt-omni-widget {
+:root {
   // configured values
-  --brand-color-hue: 45;
-  --buttons-menu-opacity: 1;
+  --wt-omni-widget__brand-color-hue: 45;
+  --wt-omni-widget__buttons-menu-opacity: 1;
 
-  --accent-color: hsla(var(--brand-color-hue), 100%, 50%, 1);
-  --subaccent-color: hsla(var(--brand-color-hue), 100%, 50%, 0.3);
+  --wt-omni-widget__accent-color: hsla(var(--wt-omni-widget__brand-color-hue), 100%, 50%, 1);
+}
+
+#wt-omni-widget {
+  --subaccent-color: hsla(var(--wt-omni-widget__brand-color-hue), 100%, 50%, 0.3);
 
   --main-color: hsla(0, 0%, 100%, 1);
   --contrast-color: hsla(0, 0%, 20%, 1);
@@ -14,7 +17,7 @@
   --negative-color: hsla(11, 80%, 50%, 1);
 
   --agent-message-color: hsla(202, 20%, 90%, 0.5);
-  --client-message-color: hsla(var(--brand-color-hue), 100%, 50%, 0.5);
+  --client-message-color: hsla(var(--wt-omni-widget__brand-color-hue), 100%, 50%, 0.5);
   --event-message-color: hsla(0, 0%, 100%, 1);
 
   --icon-main-color: hsla(202, 100%, 15%, 1);

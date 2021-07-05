@@ -87,7 +87,7 @@ export default {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: var(--accent-color);
+    background: var(--wt-omni-widget__accent-color);
     border-radius: var(--border-radius--square);
   }
 

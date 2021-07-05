@@ -24,7 +24,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: var(--header-padding);
-    background: var(--accent-color);
+    background: var(--wt-omni-widget__accent-color);
     border-radius: var(--border-radius--square);
 
     .logo {

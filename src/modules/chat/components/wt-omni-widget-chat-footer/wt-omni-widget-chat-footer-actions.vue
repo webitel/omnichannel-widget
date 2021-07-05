@@ -68,7 +68,7 @@ export default {
 
     .wt-omni-widget-chat-footer-actions__send-btn { // bump specificity
       margin-left: auto;
-      background: var(--accent-color);
+      background: var(--wt-omni-widget__accent-color);
     }
   }
 

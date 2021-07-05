@@ -43,7 +43,7 @@ export default {
     }
 
     &--chat {
-      background: var(--accent-color);
+      background: var(--wt-omni-widget__accent-color);
     }
   }
 

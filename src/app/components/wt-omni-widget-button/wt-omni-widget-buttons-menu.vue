@@ -25,7 +25,7 @@ export default {
     padding: var(--buttons-menu-padding);
     border-radius: var(--border-radius--square);
     background: var(--main-color);
-    opacity: var(--buttons-menu-opacity); // configured style
+    opacity: var(--wt-omni-widget__buttons-menu-opacity); // configured style
     transition: var(--transition);
     // https://stackoverflow.com/a/30104683
     pointer-events: none; // apply hover styles only on child hover

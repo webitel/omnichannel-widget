@@ -50,8 +50,8 @@ export default {
   methods: {
     applyGlobalConfig() {
       this.$i18n.locale = this.$config.lang;
-      document.documentElement.style.setProperty('--accent-color', this.$config.accentColor);
-      document.documentElement.style.setProperty('--buttons-menu-opacity', this.$config.btnOpacity);
+      document.documentElement.style.setProperty('--wt-omni-widget__accent-color', this.$config.accentColor);
+      document.documentElement.style.setProperty('--wt-omni-widget__buttons-menu-opacity', this.$config.btnOpacity);
     },
     openWidget() {
       this.isWidgetOpened = true;
