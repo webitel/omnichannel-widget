@@ -89,10 +89,6 @@ export default {
     height: 40px;
     background: var(--accent-color);
     border-radius: var(--border-radius--square);
-
-    .wt-omni-widget--rounded & {
-      border-radius: var(--border-radius--rounded);
-    }
   }
 
   .wt-omni-widget-chat-message__info {
@@ -108,6 +104,12 @@ export default {
 
     &__size {
       @extend %typo-body-md;
+    }
+  }
+
+  &.wt-omni-widget--rounded {
+    .wt-omni-widget-chat-message__icon {
+      border-radius: var(--border-radius--rounded);
     }
   }
 }

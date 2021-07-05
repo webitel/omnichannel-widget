@@ -17,8 +17,10 @@
       background: var(--client-message-color);
       border-radius: var(--client-message-border-radius--square);
     }
+  }
 
-    .wt-omni-widget--rounded & {
+  &.wt-omni-widget--rounded {
+    .wt-omni-widget-chat-message {
       border-radius: var(--agent-message-border-radius--rounded);
 
       &--my {

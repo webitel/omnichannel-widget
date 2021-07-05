@@ -38,16 +38,18 @@ export default {
     cursor: pointer;
     pointer-events: auto; // cause its wrapper p-events is none
 
-    .wt-omni-widget--rounded & {
-      border-radius: var(--border-radius--rounded-btn);
-    }
-
     &:hover {
       box-shadow: var(--morf-style-up-50);
     }
 
     &--chat {
       background: var(--accent-color);
+    }
+  }
+
+  &.wt-omni-widget--rounded {
+    .wt-omni-widget-btn {
+      border-radius: var(--border-radius--rounded-btn);
     }
   }
 }

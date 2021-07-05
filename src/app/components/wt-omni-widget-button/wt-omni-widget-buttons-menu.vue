@@ -30,13 +30,15 @@ export default {
     // https://stackoverflow.com/a/30104683
     pointer-events: none; // apply hover styles only on child hover
 
-    .wt-omni-widget--rounded & {
-      border-radius: var(--border-radius--rounded-btn);
-    }
-
     &:hover {
       box-shadow: var(--morf-style-up-100);
       opacity: 1;
+    }
+  }
+
+  &.wt-omni-widget--rounded {
+    .wt-omni-widget-buttons-menu {
+      border-radius: var(--border-radius--rounded-btn);
     }
   }
 }

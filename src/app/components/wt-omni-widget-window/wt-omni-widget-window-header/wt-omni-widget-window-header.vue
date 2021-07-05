@@ -27,13 +27,15 @@ export default {
     background: var(--accent-color);
     border-radius: var(--border-radius--square);
 
-    .wt-omni-widget--rounded & {
-      border-radius: var(--border-radius--rounded);
-    }
-
     .logo {
       width: 24px;
       height: 24px;
+    }
+  }
+
+  &.wt-omni-widget--rounded {
+    .wt-omni-widget-window-header {
+      border-radius: var(--border-radius--rounded);
     }
   }
 }

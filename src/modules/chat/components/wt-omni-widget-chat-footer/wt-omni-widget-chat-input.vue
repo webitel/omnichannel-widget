@@ -61,10 +61,6 @@ export default {
     cursor: text;
     line-height: 0; // remove extra height from wrapper
 
-    .wt-omni-widget--rounded & {
-      border-radius: var(--border-radius--rounded);
-    }
-
     &:hover, &:focus-within, &:active {
       box-shadow: var(--morf-style-down-100);
     }
@@ -84,6 +80,12 @@ export default {
 
     &:focus {
       outline: none;
+    }
+  }
+
+  &.wt-omni-widget--rounded {
+    .wt-omni-widget-chat-input {
+      border-radius: var(--border-radius--rounded);
     }
   }
 }

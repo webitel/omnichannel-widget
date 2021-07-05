@@ -69,10 +69,6 @@ export default {
     padding: var(--main-app-padding);
     border-radius: var(--border-radius--square);
     box-shadow: var(--morf-style-font);
-
-    .wt-omni-widget--rounded & {
-      border-radius: var(--border-radius--rounded);
-    }
   }
 
   .wt-omni-widget-window-content-wrapper {
@@ -83,6 +79,12 @@ export default {
   .wt-omni-widget-window-header,
   .wt-omni-widget-window-content-wrapper {
     margin-bottom: 10px;
+  }
+
+  &.wt-omni-widget--rounded {
+    .wt-omni-widget-window {
+      border-radius: var(--border-radius--rounded);
+    }
   }
 }
 </style>

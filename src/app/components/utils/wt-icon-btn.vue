@@ -56,10 +56,6 @@ export default {
     border-radius: var(--border-radius--square);
     transition: var(--transition);
 
-    .wt-omni-widget--rounded & {
-      border-radius: var(--border-radius--rounded);
-    }
-
     &:hover {
       box-shadow: var(--morf-style-up-50);
     }
@@ -95,6 +91,12 @@ export default {
   .wt-icon-btn,
   .wt-icon-btn__button {
     line-height: 0;
+  }
+
+  &.wt-omni-widget--rounded {
+    .wt-icon-btn {
+      border-radius: var(--border-radius--rounded);
+    }
   }
 }
 </style>
