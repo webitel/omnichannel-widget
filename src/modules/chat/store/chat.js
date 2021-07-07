@@ -70,6 +70,7 @@ const actions = {
 
   SEND_MESSAGE: (context) => {
     const { draft, seq } = context.state;
+    if (!draft) return;
     const message = { seq, message: { text: draft, type: 'text' } };
     workerController.postMessageToWSServer(message);
     context.commit('INCREMENT_SEQ');
