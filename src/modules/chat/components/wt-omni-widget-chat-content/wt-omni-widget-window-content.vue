@@ -49,13 +49,6 @@ export default {
         return getNamespacedState(state, this.namespace).messages;
       },
     }),
-    messageComponent() {
-      return ({ type }) => {
-        console.info('recompute component type');
-        if (type === MessageType.TEXT || type === MessageType.FILE) return `${type}-message`;
-        return 'event-message';
-      };
-    },
   },
 };
 </script>

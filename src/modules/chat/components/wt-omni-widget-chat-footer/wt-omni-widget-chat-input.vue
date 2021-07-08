@@ -76,7 +76,7 @@ export default {
     width: 100%;
     overflow-y: scroll;
     border: none;
-    resize: none;
+    resize: none !important; // !important prevents autosize "horizontal" in el style
 
     &:focus {
       outline: none;

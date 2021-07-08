@@ -10,6 +10,7 @@
     color: var(--contrast-color);
     background: var(--agent-message-color);
     border-radius: var(--agent-message-border-radius--square);
+    overflow-wrap: break-word;
 
     &--my {
       text-align: right;
