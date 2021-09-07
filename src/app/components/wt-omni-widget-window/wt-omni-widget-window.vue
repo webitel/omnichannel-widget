@@ -59,8 +59,10 @@ export default {
 #wt-omni-widget {
   .wt-omni-widget-window {
     box-sizing: border-box;
-    width: 390px;
-    height: 560px;
+    width: calc(100vw - var(--chat-offset) * 2);
+    height: calc(100vh - var(--chat-offset) * 2);
+    max-width: 390px;
+    max-height: 560px;
     display: flex;
     flex-direction: column;
     justify-content: center;
