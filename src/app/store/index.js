@@ -7,8 +7,8 @@ import chat from '../../modules/chat/store/chat';
 Vue.use(Vuex);
 
 const actions = {
-  OPEN_SESSION: (context) => Promise.allSettled([
-      context.dispatch('chat/SUBSCRIBE_TO_MESSAGES'),
+  OPEN_SESSION: (context, payload) => Promise.allSettled([
+      context.dispatch('chat/SUBSCRIBE_TO_MESSAGES', payload),
     ]),
   CLOSE_SESSION: () => {
     throw new Error('HOW TO CLOSE SESSION?');

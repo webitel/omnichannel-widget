@@ -7,6 +7,7 @@
 <script>
 import { mapActions } from 'vuex';
 import WtOmniWidget from './components/wt-omni-widget.vue';
+import MessageClient from './websocket/MessageClient';
 
 export default {
   name: 'app',
@@ -20,7 +21,9 @@ export default {
     }),
   },
   created() {
-    this.openSession();
+    const workerSupport = !!window.SharedWorker && !!window.BroadcastChannel;
+    const messageClient = new MessageClient({ url: this.$config.wsUrl, workerSupport });
+    this.openSession({ messageClient });
   },
   destroyed() {
     this.closeSession();

@@ -1,5 +1,4 @@
 import { objSnakeToCamel } from '../../../app/webitel-ui/scripts/caseConverters';
-import workerController from '../../../app/workers/websocket-shared-worker/install';
 import MessageType from '../enums/MessageType.enum';
 
 const parseMessage = (_message) => {
@@ -23,6 +22,7 @@ const parseMessage = (_message) => {
 };
 
 const state = {
+  messageClient: null,
   draft: '',
   messages: [],
   user: {},
@@ -34,13 +34,14 @@ const getters = {
 };
 
 const actions = {
-  SUBSCRIBE_TO_MESSAGES: (context) => {
+  SUBSCRIBE_TO_MESSAGES: (context, { messageClient }) => {
     const msgHandler = (context) => (msg) => {
       context.dispatch('ON_SESSION_INFO_MESSAGE', msg);
-      workerController.removeEventListener('message', this);
-      workerController.addEventListener('message', (msg) => context.dispatch('ON_MESSAGE', msg));
+      messageClient.removeEventListener('message', this);
+      messageClient.addEventListener('message', (msg) => context.dispatch('ON_MESSAGE', msg));
     };
-    workerController.addEventListener('message', msgHandler(context));
+    messageClient.addEventListener('message', msgHandler(context));
+    context.commit('SET_MESSAGE_CLIENT', messageClient);
   },
 
   // process chat session data, received as 1st msg
@@ -54,6 +55,7 @@ const actions = {
   },
 
   ON_MESSAGE: (context, _message) => {
+    console.info(_message);
     const message = parseMessage(_message.data);
     return message.seq
       ? context.dispatch('REPLACE_MESSAGE', message)
@@ -72,7 +74,7 @@ const actions = {
     const { draft, seq } = context.state;
     if (!draft) return;
     const message = { seq, message: { text: draft, type: 'text' } };
-    workerController.postMessageToWSServer(message);
+    state.messageClient.send(message);
     context.commit('INCREMENT_SEQ');
     context.dispatch('SET_DRAFT', '');
   },
@@ -87,6 +89,9 @@ const actions = {
 };
 
 const mutations = {
+  SET_MESSAGE_CLIENT: (state, messageClient) => {
+    state.messageClient = messageClient;
+  },
   SET_MESSAGES: (state, messages) => {
     state.messages = messages;
   },
