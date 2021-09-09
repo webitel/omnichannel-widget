@@ -26,7 +26,12 @@ export default class WorkerMessagingStrategy extends AbstractMessagingStrategy {
   }
 
   _subscribeToMessages() {
-    this._worker.onmessage = this._msgCallback.bind(this);
-    this._broadcastChannel.addEventListener('message', this._msgCallback.bind(this));
+    this._worker.onmessage = this._handleWorkerMessage.bind(this);
+    this._broadcastChannel.addEventListener('message', this._handleWorkerMessage.bind(this));
+  }
+
+  _handleWorkerMessage(msg) {
+    const { data } = msg;
+    return this._msgCallback(data);
   }
 }

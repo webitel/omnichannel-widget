@@ -40,8 +40,7 @@ export default class MessageClient {
     });
   }
 
-  _handleMessage(msgEvent) {
-    const { data } = msgEvent;
+  _handleMessage(data) {
     const listeners = this._listeners[data.type];
     if (listeners) listeners.forEach((callback) => callback(data));
     else console.warn('there is no listeners for websocket event type: ', data.type);
