@@ -3,7 +3,6 @@ import merge from 'deepmerge';
 import App from './app/app.vue';
 import store from './app/store';
 import i18n from './app/locale/i18n';
-import workerController from './app/workers/websocket-shared-worker/install';
 
 import './app/assets/img/svg-sprites/wt-icon.svg';
 import './app/css/fonts/_fonts.scss';
@@ -31,7 +30,6 @@ const defaultConfig = {
 export default class WtOmniWidget {
   constructor(selector, _config = {}) {
     const config = merge(defaultConfig, _config);
-    workerController.openWebSocket(config.wsUrl);
     Vue.prototype.$config = config;
     Instance.$mount(selector);
     return Instance;
