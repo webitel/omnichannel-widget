@@ -2,8 +2,10 @@
   <aside
     id="wt-omni-widget"
     class="wt-omni-widget--reset-styles wt-omni-widget"
-    :class="[`wt-omni-widget--${borderRadiusStyle}`]"
-    :style="widgetStyle"
+    :class="[
+      `wt-omni-widget--${borderRadiusStyleClass}`,
+      `wt-omni-widget--position-${positionClass}`,
+      ]"
   >
     <wt-omni-widget-window
       :class="{ 'hidden': !isWidgetOpened }"
@@ -30,7 +32,7 @@ export default {
     isWidgetOpened: false,
   }),
   computed: {
-    borderRadiusStyle() {
+    borderRadiusStyleClass() {
       switch (this.$config.borderRadiusStyle) {
         case 'square':
           return this.$config.borderRadiusStyle;
@@ -40,11 +42,15 @@ export default {
           return 'square';
       }
     },
-    widgetStyle() {
-      return `
-       bottom: ${this.$config.position.bottom}px;
-       right: ${this.$config.position.right}px;
-       `;
+    positionClass() {
+      switch (this.$config.position) {
+        case 'right':
+          return this.$config.position;
+        case 'left':
+          return this.$config.position;
+        default:
+          return 'right';
+      }
     },
   },
   methods: {
@@ -70,8 +76,18 @@ export default {
 #wt-omni-widget.wt-omni-widget {
   position: fixed;
   z-index: 2147483646; // int32 - 1 -- for preview pic popup
-  bottom: 100px;
-  right: 100px;
+
+  &--position {
+    &-right {
+      right: var(--chat-offset);
+      bottom: var(--chat-offset);
+    }
+
+    &-left {
+      left: var(--chat-offset);
+      bottom: var(--chat-offset);
+    }
+  }
 
   .wt-omni-widget-window,
   .wt-omni-widget-buttons-menu {

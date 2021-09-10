@@ -22,19 +22,16 @@ const Instance = new Vue({
 const defaultConfig = {
   borderRadiusStyle: 'square', // ['square', 'rounded'],
   lang: 'en', // ['en', 'ru', 'ua'],
-  position: {
-    bottom: 100,
-    right: 100,
-  },
+  position: 'right', // ['right', 'left']
   accentColor: 'hsl(42, 100%, 50%)',
   btnOpacity: 1,
-  baseUrl: 'wss://dev.webitel.com/chat/ws',
+  wsUrl: 'wss://dev.webitel.com/chat/ws',
 };
 
 export default class WtOmniWidget {
   constructor(selector, _config = {}) {
     const config = merge(defaultConfig, _config);
-    workerController.openWebSocket(config.baseUrl);
+    workerController.openWebSocket(config.wsUrl);
     Vue.prototype.$config = config;
     Instance.$mount(selector);
     return Instance;
