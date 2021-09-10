@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Existing bugs:
 - on worker mode, each tab creates new worker
-- on worker mode, 
+- on worker mode, messages are drawn as many times as there's opened tabs
 
 ## [0.1.0] - 24.06.2021
 
