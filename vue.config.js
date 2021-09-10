@@ -32,7 +32,7 @@ module.exports = {
                     name: 'wt-omni-widget-shared-worker',
                   },
                 },
-                inline: 'fallback',
+                inline: 'no-fallback',
               },
             },
             {

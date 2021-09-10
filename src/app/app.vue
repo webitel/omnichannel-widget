@@ -21,7 +21,8 @@ export default {
     }),
   },
   created() {
-    const workerSupport = !!window.SharedWorker && !!window.BroadcastChannel;
+    // FIXME
+    const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel;
     const messageClient = new MessageClient({ url: this.$config.wsUrl, workerSupport });
     this.openSession({ messageClient });
   },
