@@ -34,6 +34,14 @@ export default {
       box-shadow: var(--morf-style-up-100);
       opacity: 1;
     }
+
+    /*
+     cause .wt-omni-widget-btn overrides p-events: none on buttons-menu (see line-30 stackoverflow link).
+     so that, on hidden state, we should set p-events: none to widget-btn manually
+     */
+    &.hidden .wt-omni-widget-btn {
+      pointer-events: none;
+    }
   }
 
   &.wt-omni-widget--rounded {

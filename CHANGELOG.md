@@ -15,7 +15,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Persistent session (keep chat history even if all tabs closed *Service Worker*)
 - Client input forms (Форми по типу "передзвоніть мені на такий-то номер", "Мене звати так-то", етц)
 
+### Existing bugs:
+- on worker mode, each tab creates new worker
+- on worker mode, messages are drawn as many times as there's opened tabs
+
 ## [Unreleased]
+
+## [0.2.1] - 13.09.2021
+# Added:
+- message text links linkifying
+- chat input newline on ctrl+enter and shift+enter
+
+# Fixed:
+- fixed representation of linebreaks in text messages
+- fixed "send message" button
 
 ## [0.2.0] - 10.09.2021
 ### Breaking changes:
@@ -26,10 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **NOW CHAT WORKS ONLY IN MAIN THREAD MODE** (check Existing bugs section)
 - responsive mobile layouts
 - main thread socket fallback, if SharedWorker() or BroadcastChannel() is not supported
-
-### Existing bugs:
-- on worker mode, each tab creates new worker
-- on worker mode, messages are drawn as many times as there's opened tabs
 
 ## [0.1.0] - 24.06.2021
 
