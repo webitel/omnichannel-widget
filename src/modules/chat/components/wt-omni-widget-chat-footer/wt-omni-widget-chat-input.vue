@@ -9,7 +9,7 @@
       :value="draft"
       :placeholder="$t('chat.inputPlaceholder')"
       @input="setDraft($event.target.value)"
-      @keypress.enter.prevent="sendMessage"
+      @keypress.enter.prevent="handleEnter"
     ></textarea>
   </form>
 </template>
@@ -40,6 +40,10 @@ export default {
         return dispatch(`${this.namespace}/SET_DRAFT`, payload);
       },
     }),
+    handleEnter(event) {
+      if (event.shiftKey || event.ctrlKey) this.setDraft(this.draft.concat('\n'));
+      else this.sendMessage(event);
+    },
     setupAutosize() {
       autosize(document.getElementById('wt-omni-widget-chat-input'));
     },
