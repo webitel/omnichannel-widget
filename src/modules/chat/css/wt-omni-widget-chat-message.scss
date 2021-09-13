@@ -11,9 +11,9 @@
     background: var(--agent-message-color);
     border-radius: var(--agent-message-border-radius--square);
     overflow-wrap: break-word;
+    white-space: pre-line; // read \n as "new line"
 
     &--my {
-      text-align: right;
       margin-left: auto;
       background: var(--client-message-color);
       border-radius: var(--client-message-border-radius--square);
