@@ -1,6 +1,6 @@
 `
 const script = document.createElement('script');
-script.src = 'wss://cloud.webitel.ua/omni-widget/WtOmniWidget.umd.js';
+script.src = 'https://cloud.webitel.ua/omni-widget/WtOmniWidget.umd.js';
 script.onload = function () {
   const body = document.querySelector('body');
   const widgetEl = document.createElement('div');
@@ -16,7 +16,7 @@ script.onload = function () {
 document.head.appendChild(script);
 
 const link = document.createElement('link');
-link.href = 'wss://cloud.webitel.ua/omni-widget/WtOmniWidget.css';
+link.href = 'https://cloud.webitel.ua/omni-widget/WtOmniWidget.css';
 link.type = 'text/css';
 link.rel = 'stylesheet';
 link.media = 'screen,print';
