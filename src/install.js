@@ -19,7 +19,7 @@ const Instance = new Vue({
 });
 
 const devConfig = {
-  _previewMode: 'window',
+  _previewMode: 'chat', // [false, 'chat', 'button']
 };
 
 const defaultConfig = {
