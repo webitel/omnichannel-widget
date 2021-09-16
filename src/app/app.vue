@@ -49,6 +49,8 @@ export default {
     ...mapActions({
       openSession: 'OPEN_SESSION',
       closeSession: 'CLOSE_SESSION',
+    }),
+    ...mapActions({
       onMessage: 'chat/ON_MESSAGE',
     }),
     initSession() {

@@ -12,7 +12,7 @@
       @close="closeWidget"
     ></wt-omni-widget-window>
     <wt-omni-widget-buttons-menu
-      :class="{ 'hidden': isWidgetOpened, 'preview': isPreviewMode === 'button' }"
+      :class="{ 'hidden': isWidgetOpened }"
       @click="openWidget"
     ></wt-omni-widget-buttons-menu>
   </aside>
@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     applyGlobalConfig() {
+      this.isWidgetOpened = this.isPreviewMode === 'chat'; // Open chat preview if configuration contains chat preview property
       this.$i18n.locale = this.$config.lang;
       document.documentElement.style.setProperty('--wt-omni-widget__accent-color', this.$config.accentColor);
       document.documentElement.style.setProperty('--wt-omni-widget__buttons-menu-opacity', this.$config.btnOpacity);
@@ -73,7 +74,6 @@ export default {
   },
   created() {
     this.applyGlobalConfig();
-    this.isWidgetOpened = this.isPreviewMode === 'chat';
   },
 };
 </script>
@@ -107,6 +107,7 @@ export default {
     opacity: 0;
     pointer-events: none;
   }
+
   .preview {
     pointer-events: none;
   }
