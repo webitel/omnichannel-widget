@@ -9,6 +9,35 @@ import { mapActions } from 'vuex';
 import WtOmniWidget from './components/wt-omni-widget.vue';
 import MessageClient from './websocket/MessageClient';
 
+const firstMessage = {
+  type: 'message',
+  data: {
+    seq: 1,
+    id: 4690,
+    message: {
+      type: 'text',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid amet dicta dolores et expedita ipsa magnam magni, officia quos repellat, repellendus tempora! Aperiam dicta dolore, fuga hic non temporibus?',
+      from: {
+        channel: 'bot',
+        contact: '99',
+        firstName: 'website',
+        id: 99,
+      },
+    },
+  },
+};
+const secondMessage = {
+  type: 'message',
+  data: {
+    id: 507,
+    seq: 2,
+    message: {
+      type: 'text',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid amet dicta dolores et expedita ipsa magnam magni, officia quos repellat, repellendus tempora! Aperiam dicta dolore, fuga hic non temporibus?',
+    },
+  },
+};
+
 export default {
   name: 'app',
   components: {
@@ -18,13 +47,25 @@ export default {
     ...mapActions({
       openSession: 'OPEN_SESSION',
       closeSession: 'CLOSE_SESSION',
+      onMessage: 'chat/ON_MESSAGE',
     }),
+    startSocket() {
+      // FIXME
+      const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel;
+      const messageClient = new MessageClient({
+        url: this.$config.wsUrl,
+        workerSupport,
+      });
+      this.openSession({ messageClient });
+    },
   },
   created() {
-    // FIXME
-    const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel;
-    const messageClient = new MessageClient({ url: this.$config.wsUrl, workerSupport });
-    this.openSession({ messageClient });
+    if (!this.$config._previewMode) {
+      this.startSocket();
+    } else {
+      this.onMessage(firstMessage);
+      this.onMessage(secondMessage);
+    }
   },
   destroyed() {
     this.closeSession();

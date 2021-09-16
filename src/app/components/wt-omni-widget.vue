@@ -32,6 +32,9 @@ export default {
     isWidgetOpened: false,
   }),
   computed: {
+    isPreviewMode() {
+      return this.$config._previewMode;
+    },
     borderRadiusStyleClass() {
       switch (this.$config.borderRadiusStyle) {
         case 'square':
@@ -60,14 +63,19 @@ export default {
       document.documentElement.style.setProperty('--wt-omni-widget__buttons-menu-opacity', this.$config.btnOpacity);
     },
     openWidget() {
-      this.isWidgetOpened = true;
+      if (!this.isPreviewMode) {
+        this.isWidgetOpened = true;
+      }
     },
     closeWidget() {
-      this.isWidgetOpened = false;
+      if (!this.isPreviewMode) {
+        this.isWidgetOpened = false;
+      }
     },
   },
   created() {
     this.applyGlobalConfig();
+    this.isWidgetOpened = this.isPreviewMode === 'window';
   },
 };
 </script>
@@ -99,6 +107,9 @@ export default {
 
   .hidden {
     opacity: 0;
+    pointer-events: none;
+  }
+  .preview {
     pointer-events: none;
   }
 }

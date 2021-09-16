@@ -7,4 +7,4 @@
     btnOpacity: 1,
     wsUrl: 'wss://cloud.webitel.ua/chat/ws',
   };
-`
+`;
