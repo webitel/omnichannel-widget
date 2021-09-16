@@ -8,7 +8,7 @@
       ]"
   >
     <wt-omni-widget-window
-      :class="{ 'hidden': !isWidgetOpened, 'preview': isPreviewMode === 'chat' }"
+      :class="{ 'hidden': !isWidgetOpened, 'wt-omni-widget-window--preview-mode': isPreviewMode === 'chat' }"
       @close="closeWidget"
     ></wt-omni-widget-window>
     <wt-omni-widget-buttons-menu
@@ -103,12 +103,12 @@ export default {
     transition: var(--transition);
   }
 
-  .hidden {
-    opacity: 0;
+  .wt-omni-widget-window--preview-mode {
     pointer-events: none;
   }
 
-  .preview {
+  .hidden {
+    opacity: 0;
     pointer-events: none;
   }
 }

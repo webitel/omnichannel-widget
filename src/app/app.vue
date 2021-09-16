@@ -50,8 +50,8 @@ export default {
       openSession: 'OPEN_SESSION',
       closeSession: 'CLOSE_SESSION',
     }),
-    ...mapActions({
-      onMessage: 'chat/ON_MESSAGE',
+    ...mapActions('chat', {
+      onMessage: 'ON_MESSAGE',
     }),
     initSession() {
       // FIXME
