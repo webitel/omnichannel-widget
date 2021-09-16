@@ -23,7 +23,7 @@ export default {
           id: 1,
           message: {
             type: 'text',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid amet dicta dolores et expedita ipsa magnam magni, officia quos repellat, repellendus tempora! Aperiam dicta dolore, fuga hic non temporibus?',
+            text: this.$t('chat.previewChatMessage1'),
             from: {
               channel: 'bot',
               contact: '99',
@@ -39,7 +39,7 @@ export default {
           seq: 2,
           message: {
             type: 'text',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid amet dicta dolores et expedita ipsa magnam magni, officia quos repellat, repellendus tempora! Aperiam dicta dolore, fuga hic non temporibus?',
+            text: this.$t('chat.previewChatMessage2'),
           },
         },
       }];
