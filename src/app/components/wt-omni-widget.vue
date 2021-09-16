@@ -8,11 +8,11 @@
       ]"
   >
     <wt-omni-widget-window
-      :class="{ 'hidden': !isWidgetOpened }"
+      :class="{ 'hidden': !isWidgetOpened, 'preview': isPreviewMode === 'chat' }"
       @close="closeWidget"
     ></wt-omni-widget-window>
     <wt-omni-widget-buttons-menu
-      :class="{ 'hidden': isWidgetOpened }"
+      :class="{ 'hidden': isWidgetOpened, 'preview': isPreviewMode === 'button' }"
       @click="openWidget"
     ></wt-omni-widget-buttons-menu>
   </aside>
@@ -63,19 +63,17 @@ export default {
       document.documentElement.style.setProperty('--wt-omni-widget__buttons-menu-opacity', this.$config.btnOpacity);
     },
     openWidget() {
-      if (!this.isPreviewMode) {
-        this.isWidgetOpened = true;
-      }
+      if (this.isPreviewMode) return;
+      this.isWidgetOpened = true;
     },
     closeWidget() {
-      if (!this.isPreviewMode) {
-        this.isWidgetOpened = false;
-      }
+      if (this.isPreviewMode) return;
+      this.isWidgetOpened = false;
     },
   },
   created() {
     this.applyGlobalConfig();
-    this.isWidgetOpened = this.isPreviewMode === 'window';
+    this.isWidgetOpened = this.isPreviewMode === 'chat';
   },
 };
 </script>
