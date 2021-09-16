@@ -22,7 +22,9 @@
     const widgetEl = document.createElement('div');
     widgetEl.setAttribute('id', 'wt-omnichannel-widget');
     body.appendChild(widgetEl);
-    const config = {};
+    const config = {
+      logoUrl: 'https://storge.pic2.me/cm/2560x1600/891/5da31677b9809.jpg',
+    };
     const app = new WtOmniWidget('#wt-omnichannel-widget', config);
   };
   document.head.appendChild(script);

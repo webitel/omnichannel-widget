@@ -1,7 +1,7 @@
 <template>
   <header class="wt-omni-widget-window-header">
     <div class="logo">
-      <img src="../../../assets/img/logo.svg" alt="Webitel logo">
+      <img :src="logoUrl" alt="Webitel logo">
     </div>
     <wt-icon-btn
       icon="close"
@@ -12,8 +12,16 @@
 </template>
 
 <script>
+import WebitelLogo from '../../../assets/img/logo.svg';
+
 export default {
   name: 'wt-omni-widget-window-header',
+  computed: {
+    logoUrl() {
+      const { logoUrl } = this.$config;
+      return logoUrl || WebitelLogo;
+    },
+  },
 };
 </script>
 
@@ -30,6 +38,11 @@ export default {
     .logo {
       width: 24px;
       height: 24px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 
