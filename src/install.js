@@ -18,7 +18,12 @@ const Instance = new Vue({
   render: (h) => h(App),
 });
 
+const devConfig = {
+  _previewMode: false, // [false, 'chat', 'button']
+};
+
 const defaultConfig = {
+  ...devConfig,
   borderRadiusStyle: 'square', // ['square', 'rounded'],
   lang: 'en', // ['en', 'ru', 'ua'],
   position: 'right', // ['right', 'left']

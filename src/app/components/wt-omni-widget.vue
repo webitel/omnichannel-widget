@@ -8,7 +8,7 @@
       ]"
   >
     <wt-omni-widget-window
-      :class="{ 'hidden': !isWidgetOpened }"
+      :class="{ 'hidden': !isWidgetOpened, 'wt-omni-widget-window--preview-mode': isPreviewMode === 'chat' }"
       @close="closeWidget"
     ></wt-omni-widget-window>
     <wt-omni-widget-buttons-menu
@@ -32,6 +32,9 @@ export default {
     isWidgetOpened: false,
   }),
   computed: {
+    isPreviewMode() {
+      return this.$config._previewMode;
+    },
     borderRadiusStyleClass() {
       switch (this.$config.borderRadiusStyle) {
         case 'square':
@@ -55,14 +58,17 @@ export default {
   },
   methods: {
     applyGlobalConfig() {
+      this.isWidgetOpened = this.isPreviewMode === 'chat'; // Open chat preview if configuration contains chat preview property
       this.$i18n.locale = this.$config.lang;
       document.documentElement.style.setProperty('--wt-omni-widget__accent-color', this.$config.accentColor);
       document.documentElement.style.setProperty('--wt-omni-widget__buttons-menu-opacity', this.$config.btnOpacity);
     },
     openWidget() {
+      if (this.isPreviewMode) return;
       this.isWidgetOpened = true;
     },
     closeWidget() {
+      if (this.isPreviewMode) return;
       this.isWidgetOpened = false;
     },
   },
@@ -95,6 +101,10 @@ export default {
     right: 0;
     bottom: 0;
     transition: var(--transition);
+  }
+
+  .wt-omni-widget-window--preview-mode {
+    pointer-events: none;
   }
 
   .hidden {

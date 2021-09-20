@@ -21,4 +21,4 @@ link.type = 'text/css';
 link.rel = 'stylesheet';
 link.media = 'screen,print';
 document.head.appendChild(link);
-`
+`;
