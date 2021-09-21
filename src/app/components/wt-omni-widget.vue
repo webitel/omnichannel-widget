@@ -87,18 +87,27 @@ export default {
     &-right {
       right: var(--chat-offset);
       bottom: var(--chat-offset);
+
+      .wt-omni-widget-window,
+      .wt-omni-widget-buttons-menu {
+        right: 0;
+      }
     }
 
     &-left {
       left: var(--chat-offset);
       bottom: var(--chat-offset);
+
+      .wt-omni-widget-window,
+      .wt-omni-widget-buttons-menu {
+        left: 0;
+      }
     }
   }
 
   .wt-omni-widget-window,
   .wt-omni-widget-buttons-menu {
     position: absolute;
-    right: 0;
     bottom: 0;
     transition: var(--transition);
   }
