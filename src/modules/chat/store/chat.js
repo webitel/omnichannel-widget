@@ -55,7 +55,6 @@ const actions = {
   },
 
   ON_MESSAGE: (context, _message) => {
-    console.info(_message);
     const message = parseMessage(_message.data);
     return message.seq
       ? context.dispatch('REPLACE_MESSAGE', message)

@@ -1,14 +1,6 @@
 // solution is based on https://github.com/theomessin/vue-chat-scroll/blob/1.x/src/directives/v-chat-scroll.js
 // plus (images) https://github.com/SamuelLin/vue-chat-scroll-image/blob/master/src/directives/v-chat-scroll-image.js
-
-const scrollToBottom = (el) => {
-  if (typeof el.scroll === 'function') {
-    el.scroll({ top: el.scrollHeight });
-  } else {
-    // eslint-disable-next-line no-param-reassign
-    el.scrollTop = el.scrollHeight;
-  }
-};
+import scrollToBottom from './scripts/scrollToBottom';
 
 const onImageLoaded = (src, callback) => {
   const image = new Image();

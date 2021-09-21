@@ -1,5 +1,9 @@
 <template>
-  <article class="wt-omni-widget-window-content" v-chat-scroll>
+  <article
+    class="wt-omni-widget-window-content"
+    ref="chat-messages-container"
+    v-chat-scroll
+  >
     <component
       v-for="(message, key) of messages"
       :message="message"
@@ -16,7 +20,8 @@ import getNamespacedState from '../../../../app/webitel-ui/store/helpers/getName
 import TextMessage from './messages/wt-omni-widget-chat-text-message.vue';
 import FileMessage from './messages/wt-omni-widget-chat-file-message.vue';
 import EventMessage from './messages/wt-omni-widget-chat-event-message.vue';
-import chatScroll from '../../../../app/directives/chatScroll';
+import chatScroll from '../../../../app/directives/chat-scroll/chatScroll';
+import scrollToBottom from '../../../../app/directives/chat-scroll/scripts/scrollToBottom';
 import MessageType from '../../enums/MessageType.enum';
 
 export default {
@@ -49,6 +54,17 @@ export default {
         return getNamespacedState(state, this.namespace).messages;
       },
     }),
+    isMyMessage() {
+      return this.$store.getters[`${this.namespace}/IS_MY_MESSAGE`];
+    },
+  },
+  watch: {
+    async messages(messages) {
+      if (messages.length && this.isMyMessage(messages[messages.length - 1])) {
+        await this.$nextTick(); // handles message echo
+        scrollToBottom(this.$refs['chat-messages-container']);
+      }
+    },
   },
 };
 </script>
