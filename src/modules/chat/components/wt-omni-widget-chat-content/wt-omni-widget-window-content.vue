@@ -61,7 +61,7 @@ export default {
   watch: {
     async messages(messages) {
       if (messages.length && this.isMyMessage(messages[messages.length - 1])) {
-        await this.$nextTick(); // handles message echo
+        await this.$nextTick(); // wait for message to draw
         scrollToBottom(this.$refs['chat-messages-container']);
       }
     },

@@ -21,12 +21,21 @@ const parseMessage = (_message) => {
   }
 };
 
+const ChatEvent = Object.freeze({
+  MESSAGE: 'message',
+});
+
+const triggerListeners = ({ listeners, event }) => Promise.all(listeners[event].map((callback) => callback()));
+
 const state = {
   messageClient: null,
   draft: '',
   messages: [],
   user: {},
   seq: 1,
+  _listeners: {
+    [ChatEvent.MESSAGE]: [],
+  },
 };
 
 const getters = {
@@ -54,11 +63,11 @@ const actions = {
     }
   },
 
-  ON_MESSAGE: (context, _message) => {
+  ON_MESSAGE: async (context, _message) => {
     const message = parseMessage(_message.data);
-    return message.seq
-      ? context.dispatch('REPLACE_MESSAGE', message)
-      : context.dispatch('ADD_MESSAGE', message);
+    if (message.seq) await context.dispatch('REPLACE_MESSAGE', message);
+    else await context.dispatch('ADD_MESSAGE', message);
+    await triggerListeners({ event: ChatEvent.MESSAGE, listeners: state._listeners });
   },
 
   REPLACE_MESSAGE: (context, message) => {
@@ -85,6 +94,10 @@ const actions = {
   SET_DRAFT: (context, draft) => {
     context.commit('SET_DRAFT', draft);
   },
+
+  LISTEN_ON_MESSAGE: (context, callback) => {
+    context.commit('ADD_LISTENER', { event: ChatEvent.MESSAGE, callback });
+  },
 };
 
 const mutations = {
@@ -109,6 +122,9 @@ const mutations = {
   },
   INCREMENT_SEQ: (state, seq) => {
     state.seq = (seq || state.seq) + 1;
+  },
+  ADD_LISTENER: (state, { event, callback }) => {
+    state._listeners[event].push(callback);
   },
 };
 
