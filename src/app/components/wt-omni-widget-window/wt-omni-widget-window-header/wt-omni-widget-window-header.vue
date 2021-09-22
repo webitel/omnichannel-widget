@@ -12,13 +12,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import WebitelLogo from '../../../assets/img/logo.svg';
 
 export default {
   name: 'wt-omni-widget-window-header',
   computed: {
+    ...mapState({
+      config: (state) => state.config,
+    }),
     logoUrl() {
-      const { logoUrl } = this.$config;
+      const { logoUrl } = this.config;
       return logoUrl || WebitelLogo;
     },
   },
