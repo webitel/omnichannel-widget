@@ -54,13 +54,10 @@ export default {
         return getNamespacedState(state, this.namespace).messages;
       },
     }),
-    isMyMessage() {
-      return this.$store.getters[`${this.namespace}/IS_MY_MESSAGE`];
-    },
   },
   watch: {
     async messages(messages) {
-      if (messages.length && this.isMyMessage(messages[messages.length - 1])) {
+      if (messages.length) {
         await this.$nextTick(); // wait for message to draw
         scrollToBottom(this.$refs['chat-messages-container']);
       }
