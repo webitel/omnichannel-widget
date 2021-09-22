@@ -35,8 +35,16 @@ const defaultConfig = {
 export default class WtOmniWidget {
   constructor(selector, _config = {}) {
     const config = merge(defaultConfig, _config);
-    Vue.prototype.$config = config;
+    this.mountApp({ selector, config });
+  }
+
+  async mountApp({ selector, config }) {
+    await this.setConfig(config);
     Instance.$mount(selector);
-    return Instance;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async setConfig(config) {
+    return store.dispatch('SET_CONFIG', config);
   }
 }

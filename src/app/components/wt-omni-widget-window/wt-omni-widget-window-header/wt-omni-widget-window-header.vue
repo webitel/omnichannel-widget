@@ -18,7 +18,7 @@ export default {
   name: 'wt-omni-widget-window-header',
   computed: {
     logoUrl() {
-      const { logoUrl } = this.$config;
+      const { logoUrl } = this.$store.state.config;
       return logoUrl || WebitelLogo;
     },
   },
