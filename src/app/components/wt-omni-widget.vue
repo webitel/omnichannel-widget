@@ -57,6 +57,8 @@ export default {
           return this.config.position;
         case 'left':
           return this.config.position;
+        case 'static':
+          return this.config.position;
         default:
           return 'right';
       }
@@ -179,6 +181,10 @@ export default {
       .wt-omni-widget-buttons-menu {
         left: 0;
       }
+    }
+
+    &-static {
+      position: static;
     }
   }
 
