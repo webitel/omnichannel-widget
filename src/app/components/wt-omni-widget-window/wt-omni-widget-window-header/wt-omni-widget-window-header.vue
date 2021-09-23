@@ -1,8 +1,16 @@
 <template>
   <header class="wt-omni-widget-window-header">
     <div class="logo">
-      <img :src="logoUrl" alt="Webitel logo">
+      <img
+        :src="logoUrl"
+        alt="Webitel logo"
+        @dblclick="showVersionInfo"
+      >
     </div>
+    <div
+      v-if="isBuildInfo"
+      class="version-info"
+    >v{{buildInfo.release}}--{{buildInfo.build}}</div>
     <wt-icon-btn
       icon="close"
       size="sm"
@@ -17,6 +25,13 @@ import WebitelLogo from '../../../assets/img/logo.svg';
 
 export default {
   name: 'wt-omni-widget-window-header',
+  data: () => ({
+    isBuildInfo: false,
+    buildInfo: {
+      release: process.env.VUE_APP_PACKAGE_VERSION,
+      build: process.env.VUE_APP_BUILD_NUMBER,
+    },
+  }),
   computed: {
     ...mapState({
       config: (state) => state.config,
@@ -24,6 +39,11 @@ export default {
     logoUrl() {
       const { logoUrl } = this.config;
       return logoUrl || WebitelLogo;
+    },
+  },
+  methods: {
+    showVersionInfo() {
+      this.isBuildInfo = true;
     },
   },
 };
@@ -54,6 +74,11 @@ export default {
     .wt-omni-widget-window-header {
       border-radius: var(--border-radius--rounded);
     }
+  }
+
+  .version-info {
+    @extend %typo-body-md;
+    color: var(--main-color);
   }
 }
 </style>
