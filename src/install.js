@@ -26,7 +26,7 @@ const defaultConfig = {
   ...devConfig,
   borderRadiusStyle: 'square', // ['square', 'rounded'],
   lang: 'en', // ['en', 'ru', 'ua'],
-  position: 'right', // ['right', 'left']
+  position: 'right', // ['right', 'left', 'static']
   accentColor: 'hsl(42, 100%, 50%)',
   btnOpacity: 1,
   wsUrl: 'wss://dev.webitel.com/chat/ws',
