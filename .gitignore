@@ -2,6 +2,7 @@
 node_modules
 /dist
 /coverage
+static-demo/omni-widget
 
 # local env files
 .env.local

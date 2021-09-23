@@ -57,11 +57,8 @@ export default {
   },
   watch: {
     messages: {
-      async handler(messages) {
-        if (messages.length) {
-          await this.$nextTick(); // wait for message to draw
-          scrollToBottom(this.$refs['chat-messages-container']);
-        }
+      handler() {
+        scrollToBottom(this.$refs['chat-messages-container']);
       },
       immediate: true,
     },

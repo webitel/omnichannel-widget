@@ -20,6 +20,7 @@ const scrollAfterImageLoad = (root, node = root) => {
   });
 };
 
+// eslint-disable-next-line no-unused-vars
 let isScrolled = false;
 let mutationObserver = null;
 
@@ -38,12 +39,14 @@ const chatScroll = {
       const config = binding.value || {};
 
       event.forEach((mutation) => {
+        console.info(mutation.addedNodes);
         if (!mutation.addedNodes.length) return;
         mutation.addedNodes.forEach((node) => {
           scrollAfterImageLoad(el, node);
         });
       });
-      if (!isScrolled) scrollToBottom(el);
+      // if (!isScrolled) scrollToBottom(el);
+      setTimeout(() => scrollToBottom(el), 1); // wait for this node to render
     });
     mutationObserver.observe(el, { childList: true, subtree: true });
   },
