@@ -16,13 +16,13 @@
 
 <script>
 import { mapState } from 'vuex';
-import getNamespacedState from '../../../../app/webitel-ui/store/helpers/getNamespacedState';
-import TextMessage from './messages/wt-omni-widget-chat-text-message.vue';
-import FileMessage from './messages/wt-omni-widget-chat-file-message.vue';
-import EventMessage from './messages/wt-omni-widget-chat-event-message.vue';
 import chatScroll from '../../../../app/directives/chat-scroll/chatScroll';
 import scrollToBottom from '../../../../app/directives/chat-scroll/scripts/scrollToBottom';
+import getNamespacedState from '../../../../app/webitel-ui/store/helpers/getNamespacedState';
 import MessageType from '../../enums/MessageType.enum';
+import EventMessage from './messages/wt-omni-widget-chat-event-message.vue';
+import FileMessage from './messages/wt-omni-widget-chat-file-message.vue';
+import TextMessage from './messages/wt-omni-widget-chat-text-message.vue';
 
 export default {
   name: 'wt-omni-widget-window-content',
@@ -56,11 +56,14 @@ export default {
     }),
   },
   watch: {
-    async messages(messages) {
-      if (messages.length) {
-        await this.$nextTick(); // wait for message to draw
-        scrollToBottom(this.$refs['chat-messages-container']);
-      }
+    messages: {
+      async handler(messages) {
+        if (messages.length) {
+          await this.$nextTick(); // wait for message to draw
+          scrollToBottom(this.$refs['chat-messages-container']);
+        }
+      },
+      immediate: true,
     },
   },
 };
