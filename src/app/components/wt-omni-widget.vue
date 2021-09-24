@@ -162,7 +162,7 @@ export default {
   position: fixed;
   z-index: 2147483646; // int32 - 1 -- for preview pic popup
 
-  &--position {
+  &--position  {
     &-right {
       right: var(--chat-offset);
       bottom: var(--chat-offset);
@@ -183,7 +183,7 @@ export default {
       }
     }
 
-    &-static {
+    &-static  {
       position: static;
     }
   }
@@ -203,5 +203,10 @@ export default {
     opacity: 0;
     pointer-events: none;
   }
+}
+
+#wt-omni-widget.wt-omni-widget--position-static .wt-omni-widget-window,
+#wt-omni-widget.wt-omni-widget--position-static .wt-omni-widget-buttons-menu {
+  position: static;
 }
 </style>
