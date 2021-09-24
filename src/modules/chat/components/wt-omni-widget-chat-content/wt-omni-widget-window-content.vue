@@ -58,10 +58,16 @@ export default {
   watch: {
     messages: {
       handler() {
-        scrollToBottom(this.$refs['chat-messages-container']);
+        const container = this.$refs['chat-messages-container'];
+        console.info('container from watcher', container);
+        scrollToBottom(container);
       },
-      immediate: true,
     },
+  },
+  mounted() {
+    const container = this.$refs['chat-messages-container'];
+    console.info('container from mounted', container);
+    scrollToBottom(container);
   },
 };
 </script>

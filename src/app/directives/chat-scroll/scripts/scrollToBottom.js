@@ -1,5 +1,5 @@
 const scrollToBottom = (el) => {
-  console.info('scroll to bottom');
+  console.info('scroll to bottom', el.scrollHeight);
   if (typeof el.scroll === 'function') {
     el.scroll({ top: el.scrollHeight });
   } else {

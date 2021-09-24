@@ -8,11 +8,14 @@
       ]"
   >
     <wt-omni-widget-window
-      :class="{ 'hidden': !isWidgetOpened, 'wt-omni-widget-window--preview-mode': isPreviewMode === 'chat' }"
+      :class="{
+        'hhhiden': !isWidgetOpened,
+        'wt-omni-widget-window--preview-mode': isPreviewMode === 'chat',
+      }"
       @close="closeWidget"
     ></wt-omni-widget-window>
     <wt-omni-widget-buttons-menu
-      :class="{ 'hidden': isWidgetOpened }"
+      :class="{ 'hhhiden': isWidgetOpened }"
       @click="openWidget"
     ></wt-omni-widget-buttons-menu>
   </aside>
@@ -131,8 +134,8 @@ export default {
       this.isWidgetOpened = false;
     },
     setOnMessageListener() {
-      const callback = () => this.openWidget();
-      this.listenOnMessage(callback);
+      // const callback = () => this.openWidget();
+      // this.listenOnMessage(callback);
     },
   },
 
@@ -199,7 +202,7 @@ export default {
     pointer-events: none;
   }
 
-  .hidden {
+  .hhhiden {
     opacity: 0;
     pointer-events: none;
   }
