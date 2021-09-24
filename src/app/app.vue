@@ -1,7 +1,5 @@
 <template>
-  <div id="app">
-    <wt-omni-widget/>
-  </div>
+  <wt-omni-widget/>
 </template>
 
 <script>

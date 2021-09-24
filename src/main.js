@@ -1,3 +1,3 @@
 import WtOmniWidget from './install';
 
-export default new WtOmniWidget('#app', {});
+export default new WtOmniWidget('#wt-omni-widget', {});
