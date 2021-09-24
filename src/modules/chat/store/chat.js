@@ -55,7 +55,6 @@ const actions = {
 
   // process chat session data, received as 1st msg
   ON_SESSION_INFO_MESSAGE: (context, data) => {
-    console.warn('here hoes session data!', data);
     const { user, msgs } = data.data;
     context.commit('SET_USER', user);
     if (msgs) {
@@ -88,7 +87,6 @@ const actions = {
   },
 
   SEND_FILE: (context, file) => {
-    console.info('send file action called with', file);
   },
 
   SET_DRAFT: (context, draft) => {

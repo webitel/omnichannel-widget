@@ -6,7 +6,7 @@ process.env.VUE_APP_PACKAGE_VERSION = require('./package.json').version;
 
 module.exports = {
   lintOnSave: false,
-  // productionSourceMap: false,
+  productionSourceMap: false,
   css: {
     loaderOptions: {
       sass: {

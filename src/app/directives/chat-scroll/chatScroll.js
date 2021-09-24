@@ -39,7 +39,6 @@ const chatScroll = {
       const config = binding.value || {};
 
       event.forEach((mutation) => {
-        console.info(mutation.addedNodes);
         if (!mutation.addedNodes.length) return;
         mutation.addedNodes.forEach((node) => {
           scrollAfterImageLoad(el, node);
