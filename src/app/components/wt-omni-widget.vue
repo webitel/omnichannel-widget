@@ -7,7 +7,7 @@
       `wt-omni-widget--position-${positionClass}`,
       ]"
   >
-    <transition name="widget">
+    <transition name="widget-appearance-transition">
       <wt-omni-widget-window
         v-if="isWidgetOpened"
         :class="{
@@ -199,13 +199,13 @@ export default {
     bottom: 0;
   }
 
-  .widget-enter-active,
-  .widget-leave-active {
+  .widget-appearance-transition-enter-active,
+  .widget-appearance-transition-leave-active {
     transition: var(--transition)
   }
 
-  .widget-enter,
-  .widget-leave-to {
+  .widget-appearance-transition-enter,
+  .widget-appearance-transition-leave-to {
     opacity: 0;
   }
 
