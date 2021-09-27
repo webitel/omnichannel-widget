@@ -7,17 +7,19 @@
       `wt-omni-widget--position-${positionClass}`,
       ]"
   >
-    <wt-omni-widget-window
-      :class="{
-        'wt-omni-widget-content--hidden': !isWidgetOpened,
+    <transition name="widget">
+      <wt-omni-widget-window
+        v-if="isWidgetOpened"
+        :class="{
         'wt-omni-widget-window--preview-mode': isPreviewMode === 'chat',
       }"
-      @close="closeWidget"
-    ></wt-omni-widget-window>
-    <wt-omni-widget-buttons-menu
-      :class="{ 'wt-omni-widget-content--hidden': isWidgetOpened }"
-      @click="openWidget"
-    ></wt-omni-widget-buttons-menu>
+        @close="closeWidget"
+      ></wt-omni-widget-window>
+      <wt-omni-widget-buttons-menu
+        v-else
+        @click="openWidget"
+      ></wt-omni-widget-buttons-menu>
+    </transition>
   </aside>
 </template>
 
@@ -195,21 +197,26 @@ export default {
   .wt-omni-widget-buttons-menu {
     position: absolute;
     bottom: 0;
-    transition: var(--transition);
+  }
+
+  .widget-enter-active,
+  .widget-leave-active {
+    transition: var(--transition)
+  }
+
+  .widget-enter,
+  .widget-leave-to {
+    opacity: 0;
   }
 
   .wt-omni-widget-window--preview-mode {
-    pointer-events: none;
-  }
-
-  .wt-omni-widget-content--hidden {
-    opacity: 0;
     pointer-events: none;
   }
 }
 
 #wt-omni-widget.wt-omni-widget--position-static .wt-omni-widget-window,
 #wt-omni-widget.wt-omni-widget--position-static .wt-omni-widget-buttons-menu {
-  position: absolute;
+  position: static;
 }
+
 </style>
