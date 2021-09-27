@@ -4,6 +4,8 @@ import App from './app/app.vue';
 import store from './app/store';
 import i18n from './app/locale/i18n';
 
+import globalConfigMixin from './app/mixins/globalConfigMixin';
+
 import './app/assets/img/svg-sprites/wt-icon.svg';
 import './app/css/fonts/_fonts.scss';
 
@@ -11,6 +13,8 @@ import './app/components/utils';
 import './app/webitel-ui/components';
 
 Vue.config.productionTip = false;
+
+Vue.mixin(globalConfigMixin);
 
 const Instance = new Vue({
   store,
@@ -30,6 +34,7 @@ const defaultConfig = {
   accentColor: 'hsl(42, 100%, 50%)',
   btnOpacity: 1,
   wsUrl: 'wss://dev.webitel.com/chat/ws',
+  openTimeout: false, // numeric value in sec
 };
 
 export default class WtOmniWidget {

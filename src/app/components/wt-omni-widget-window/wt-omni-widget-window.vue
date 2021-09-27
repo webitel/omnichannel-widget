@@ -19,10 +19,12 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import ChatContent
   from '../../../modules/chat/components/wt-omni-widget-chat-content/wt-omni-widget-window-content.vue';
 import ChatFooter from '../../../modules/chat/components/wt-omni-widget-chat-footer/wt-omni-widget-window-footer.vue';
 import Type from '../../enum/Type.enum';
+import MessageClient from '../../websocket/MessageClient';
 import WtOmniWidgetContentWrapper
   from './wt-omni-widget-window-content-wrapper/wt-omni-widget-window-content-wrapper.vue';
 import WtOmniWidgetFooterWrapper from './wt-omni-widget-window-footer-wrapper/wt-omni-widget-window-footer-wrapper.vue';
@@ -51,6 +53,68 @@ export default {
           return '';
       }
     },
+  },
+  methods: {
+    ...mapActions({
+      openSession: 'OPEN_SESSION',
+      closeSession: 'CLOSE_SESSION',
+    }),
+    ...mapActions('chat', {
+      listenOnMessage: 'LISTEN_ON_MESSAGE',
+      onMessage: 'ON_MESSAGE',
+    }),
+    initSession() {
+      // FIXME
+      const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel;
+      const messageClient = new MessageClient({
+        url: this.config.wsUrl,
+        workerSupport,
+      });
+      this.openSession({ messageClient });
+      this.setOnMessageListener();
+    },
+    initPreviewMode() {
+      const messages = [{
+        type: 'message',
+        data: {
+          seq: 1,
+          id: 1,
+          message: {
+            type: 'text',
+            text: this.$t('chat.previewChatMessage1'),
+            from: {
+              channel: 'bot',
+              contact: '99',
+              firstName: 'website',
+              id: 99,
+            },
+          },
+        },
+      }, {
+        type: 'message',
+        data: {
+          id: 2,
+          seq: 2,
+          message: {
+            type: 'text',
+            text: this.$t('chat.previewChatMessage2'),
+          },
+        },
+      }];
+      messages.forEach((message) => this.onMessage(message));
+    },
+    setOnMessageListener() {
+      const callback = () => this.openWidget();
+      this.listenOnMessage(callback);
+    },
+  },
+
+  created() {
+    if (this.isPreviewMode) {
+      this.initPreviewMode();
+    } else {
+      this.initSession();
+    }
   },
 };
 </script>

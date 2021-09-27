@@ -24,10 +24,10 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import MessageClient from '../websocket/MessageClient';
 import WtOmniWidgetButtonsMenu from './wt-omni-widget-button/wt-omni-widget-buttons-menu.vue';
 import WtOmniWidgetWindow from './wt-omni-widget-window/wt-omni-widget-window.vue';
+
+let openTimeoutContainer = null;
 
 export default {
   name: 'wt-omni-widget',
@@ -40,12 +40,6 @@ export default {
   }),
 
   computed: {
-    ...mapState({
-      config: (state) => state.config,
-    }),
-    isPreviewMode() {
-      return this.config._previewMode;
-    },
     borderRadiusStyleClass() {
       switch (this.config.borderRadiusStyle) {
         case 'square':
@@ -71,62 +65,21 @@ export default {
   },
 
   methods: {
-    ...mapActions({
-      openSession: 'OPEN_SESSION',
-      closeSession: 'CLOSE_SESSION',
-    }),
-    ...mapActions('chat', {
-      listenOnMessage: 'LISTEN_ON_MESSAGE',
-      onMessage: 'ON_MESSAGE',
-    }),
-    initSession() {
-      // FIXME
-      const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel;
-      const messageClient = new MessageClient({
-        url: this.config.wsUrl,
-        workerSupport,
-      });
-      this.openSession({ messageClient });
-      this.setOnMessageListener();
-    },
-    initPreviewMode() {
-      const messages = [{
-        type: 'message',
-        data: {
-          seq: 1,
-          id: 1,
-          message: {
-            type: 'text',
-            text: this.$t('chat.previewChatMessage1'),
-            from: {
-              channel: 'bot',
-              contact: '99',
-              firstName: 'website',
-              id: 99,
-            },
-          },
-        },
-      }, {
-        type: 'message',
-        data: {
-          id: 2,
-          seq: 2,
-          message: {
-            type: 'text',
-            text: this.$t('chat.previewChatMessage2'),
-          },
-        },
-      }];
-      messages.forEach((message) => this.onMessage(message));
-    },
-
     applyGlobalConfig() {
       this.isWidgetOpened = this.isPreviewMode === 'chat'; // Open chat preview if configuration contains chat preview property
       this.$i18n.locale = this.config.lang;
       document.documentElement.style.setProperty('--wt-omni-widget__accent-color', this.config.accentColor);
       document.documentElement.style.setProperty('--wt-omni-widget__buttons-menu-opacity', this.config.btnOpacity);
-    },
 
+      this.setupOpenTimeout();
+    },
+    setupOpenTimeout() {
+      const { openTimeout } = this.config;
+      if (openTimeoutContainer) openTimeoutContainer = clearTimeout(openTimeoutContainer);
+      if (typeof openTimeout === 'number' && openTimeout >= 0) {
+        openTimeoutContainer = setTimeout(() => this.openWidget(), openTimeout * 1000); // sec -> msec
+      }
+    },
     openWidget() {
       if (this.isPreviewMode) return;
       this.isWidgetOpened = true;
@@ -134,10 +87,6 @@ export default {
     closeWidget() {
       if (this.isPreviewMode) return;
       this.isWidgetOpened = false;
-    },
-    setOnMessageListener() {
-      const callback = () => this.openWidget();
-      this.listenOnMessage(callback);
     },
   },
 
@@ -149,15 +98,6 @@ export default {
 
   created() {
     this.applyGlobalConfig();
-    if (this.config._previewMode) {
-      this.initPreviewMode();
-    } else {
-      this.initSession();
-    }
-  },
-
-  destroyed() {
-    this.closeSession();
   },
 };
 </script>

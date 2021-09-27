@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import WebitelLogo from '../../../assets/img/logo.svg';
 
 export default {
@@ -33,9 +32,6 @@ export default {
     },
   }),
   computed: {
-    ...mapState({
-      config: (state) => state.config,
-    }),
     logoUrl() {
       const { logoUrl } = this.config;
       return logoUrl || WebitelLogo;
