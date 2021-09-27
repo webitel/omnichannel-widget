@@ -216,7 +216,7 @@ export default {
 
 #wt-omni-widget.wt-omni-widget--position-static .wt-omni-widget-window,
 #wt-omni-widget.wt-omni-widget--position-static .wt-omni-widget-buttons-menu {
-  position: static;
+  position: relative;
 }
 
 </style>
