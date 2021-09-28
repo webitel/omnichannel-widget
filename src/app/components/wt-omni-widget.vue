@@ -8,17 +8,20 @@
       ]"
   >
     <transition name="widget-appearance-transition">
-      <wt-omni-widget-window
-        v-if="isWidgetOpened"
-        :class="{
+      <keep-alive>
+        <wt-omni-widget-window
+          v-if="isWidgetOpened"
+          :class="{
         'wt-omni-widget-window--preview-mode': isPreviewMode === 'chat',
       }"
-        @close="closeWidget"
-      ></wt-omni-widget-window>
-      <wt-omni-widget-buttons-menu
-        v-else
-        @click="openWidget"
-      ></wt-omni-widget-buttons-menu>
+          @open="openWidget"
+          @close="closeWidget"
+        ></wt-omni-widget-window>
+        <wt-omni-widget-buttons-menu
+          v-else
+          @click="openWidget"
+        ></wt-omni-widget-buttons-menu>
+      </keep-alive>
     </transition>
   </aside>
 </template>

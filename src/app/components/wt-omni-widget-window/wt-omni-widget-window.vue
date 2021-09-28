@@ -107,6 +107,9 @@ export default {
       const callback = () => this.openWidget();
       this.listenOnMessage(callback);
     },
+    openWidget() {
+      this.$emit('open');
+    },
   },
 
   created() {
