@@ -110,6 +110,12 @@ export default {
   position: fixed;
   z-index: 2147483646; // int32 - 1 -- for preview pic popup
 
+  .wt-omni-widget-window,
+  .wt-omni-widget-buttons-menu {
+    position: absolute;
+    bottom: 0;
+  }
+
   &--position {
     &-right {
       right: var(--chat-offset);
@@ -133,13 +139,12 @@ export default {
 
     &-static {
       position: static;
-    }
-  }
 
-  .wt-omni-widget-window,
-  .wt-omni-widget-buttons-menu {
-    position: absolute;
-    bottom: 0;
+      .wt-omni-widget-window,
+      .wt-omni-widget-buttons-menu {
+        position: static;
+      }
+    }
   }
 
   .widget-appearance-transition-enter-active,
@@ -155,11 +160,6 @@ export default {
   .wt-omni-widget-window--preview-mode {
     pointer-events: none;
   }
-}
-
-#wt-omni-widget.wt-omni-widget--position-static .wt-omni-widget-window,
-#wt-omni-widget.wt-omni-widget--position-static .wt-omni-widget-buttons-menu {
-  position: relative;
 }
 
 </style>
