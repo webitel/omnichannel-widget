@@ -14,6 +14,10 @@ export default class MessageClient {
     [MessageEvents.WS_STATE]: [],
   };
 
+  openSocket() {
+    return this._msgStrategy.openSocket();
+  }
+
   send(data) {
     return this._msgStrategy.sendMessage(data);
   }

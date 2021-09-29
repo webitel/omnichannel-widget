@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      openSession: 'OPEN_SESSION',
+      initializeSession: 'INITIALIZE_SESSION',
       closeSession: 'CLOSE_SESSION',
     }),
     ...mapActions('chat', {
@@ -64,13 +64,12 @@ export default {
       onMessage: 'ON_MESSAGE',
     }),
     initSession() {
-      // FIXME
-      const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel;
+      const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel; // FIXME
       const messageClient = new MessageClient({
         url: this.config.wsUrl,
         workerSupport,
       });
-      this.openSession({ messageClient });
+      this.initializeSession({ messageClient });
       this.setOnMessageListener();
     },
     initPreviewMode() {

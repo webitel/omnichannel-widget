@@ -2,6 +2,7 @@ import { objSnakeToCamel } from '../../../app/webitel-ui/scripts/caseConverters'
 import MessageType from '../enums/MessageType.enum';
 
 const parseMessage = (_message) => {
+  if (!_message.message && !_message.type) return { ..._message, type: MessageType.INIT }; // 1st message of session without type - init
   const { message } = objSnakeToCamel(_message);
   switch (message.type) {
     case MessageType.TEXT:
@@ -21,11 +22,7 @@ const parseMessage = (_message) => {
   }
 };
 
-const ChatEvent = Object.freeze({
-  MESSAGE: 'message',
-});
-
-const triggerListeners = ({ listeners, event }) => Promise.all(listeners[event].map((callback) => callback()));
+const triggerListeners = ({ listeners, event, payload }) => Promise.all(listeners[event].map((callback) => callback(payload)));
 
 const state = {
   messageClient: null,
@@ -33,8 +30,15 @@ const state = {
   messages: [],
   user: {},
   seq: 1,
+  isConnectionClosed: false,
   _listeners: {
-    [ChatEvent.MESSAGE]: [],
+    [MessageType.INIT]: [],
+    [MessageType.TEXT]: [],
+    [MessageType.FILE]: [],
+    [MessageType.CONTACT]: [],
+    [MessageType.JOINED]: [],
+    [MessageType.LEFT]: [],
+    [MessageType.CLOSED]: [],
   },
 };
 
@@ -44,18 +48,34 @@ const getters = {
 
 const actions = {
   SUBSCRIBE_TO_MESSAGES: (context, { messageClient }) => {
-    const msgHandler = (context) => (msg) => {
-      context.dispatch('ON_SESSION_INFO_MESSAGE', msg);
-      messageClient.removeEventListener('message', this);
-      messageClient.addEventListener('message', (msg) => context.dispatch('ON_MESSAGE', msg));
-    };
-    messageClient.addEventListener('message', msgHandler(context));
+    messageClient.addEventListener('message', (msg) => context.dispatch('ON_MESSAGE', msg));
     context.commit('SET_MESSAGE_CLIENT', messageClient);
+
+    context.commit('ADD_LISTENER', {
+      event: MessageType.INIT,
+      callback: (data) => context.dispatch('ON_SESSION_INFO_MESSAGE', data),
+    });
+
+    context.commit('ADD_LISTENER', {
+      event: MessageType.CLOSED,
+      callback: () => context.dispatch('SET_CONNECTION_STATUS', true), // set "true" to isConnectionClosed
+    });
+
+    return context.dispatch('OPEN_SESSION');
+  },
+
+  OPEN_SESSION: async (context) => {
+    try {
+      await context.state.messageClient.openSocket();
+      await context.dispatch('SET_CONNECTION_STATUS', false); // set "false" to isConnectionClosed
+    } catch (err) {
+      throw err;
+    }
   },
 
   // process chat session data, received as 1st msg
   ON_SESSION_INFO_MESSAGE: (context, data) => {
-    const { user, msgs } = data.data;
+    const { user, msgs } = data;
     context.commit('SET_USER', user);
     if (msgs) {
       context.commit('SET_MESSAGES', msgs);
@@ -66,7 +86,11 @@ const actions = {
     const message = parseMessage(_message.data);
     if (message.seq) await context.dispatch('REPLACE_MESSAGE', message);
     else await context.dispatch('ADD_MESSAGE', message);
-    await triggerListeners({ event: ChatEvent.MESSAGE, listeners: state._listeners });
+    await triggerListeners({
+      event: message.type,
+      listeners: state._listeners,
+      payload: message,
+    });
   },
 
   REPLACE_MESSAGE: (context, message) => {
@@ -93,8 +117,17 @@ const actions = {
     context.commit('SET_DRAFT', draft);
   },
 
+  SET_CONNECTION_STATUS: (context, status) => {
+    context.commit('SET_CONNECTION_STATUS', status);
+  },
+
   LISTEN_ON_MESSAGE: (context, callback) => {
-    context.commit('ADD_LISTENER', { event: ChatEvent.MESSAGE, callback });
+    context.commit('ADD_LISTENER', { event: MessageType.TEXT, callback });
+    context.commit('ADD_LISTENER', { event: MessageType.FILE, callback });
+    context.commit('ADD_LISTENER', { event: MessageType.CONTACT, callback });
+    context.commit('ADD_LISTENER', { event: MessageType.JOINED, callback });
+    context.commit('ADD_LISTENER', { event: MessageType.LEFT, callback });
+    context.commit('ADD_LISTENER', { event: MessageType.CLOSED, callback });
   },
 };
 
@@ -120,6 +153,9 @@ const mutations = {
   },
   INCREMENT_SEQ: (state, seq) => {
     state.seq = (seq || state.seq) + 1;
+  },
+  SET_CONNECTION_STATUS: (state, status) => {
+    state.isConnectionClosed = status;
   },
   ADD_LISTENER: (state, { event, callback }) => {
     state._listeners[event].push(callback);

@@ -10,6 +10,7 @@ export default {
       left: '{member} покинув чат',
       closed: 'Чат закритий',
     },
+    reopenSession: 'Розпочати новий чат',
     previewChatMessage1: 'Добрий день!\nЯ - Ваш чат-бот.\n\nЧим можу допомогти?',
     previewChatMessage2: 'Добрий день,\nхочу дізнатись детальніше про ваші послуги.',
   },

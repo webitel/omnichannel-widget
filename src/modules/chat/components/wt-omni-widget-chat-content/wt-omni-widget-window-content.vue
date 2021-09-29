@@ -55,6 +55,14 @@ export default {
       },
     }),
   },
+  methods: {
+    scrollToBottom() {
+      return scrollToBottom(this.$refs['chat-messages-container']);
+    },
+  },
+  activated() {
+    this.scrollToBottom();
+  },
 };
 </script>
 

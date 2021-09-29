@@ -9,6 +9,10 @@ export default class MainThreadMessagingStrategy extends AbstractMessagingStrate
     return this;
   }
 
+  openSocket() {
+    this._ws.openWS();
+  }
+
   sendMessage(data) {
     return this._ws.send(data);
   }
