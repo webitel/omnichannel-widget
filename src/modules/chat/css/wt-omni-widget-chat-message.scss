@@ -9,24 +9,35 @@
     padding: var(--message-padding);
     color: var(--contrast-color);
     background: var(--agent-message-color);
-    border-radius: var(--agent-message-border-radius--square);
     overflow-wrap: break-word;
     white-space: pre-line; // read \n as "new line"
 
-    &--my {
-      margin-left: auto;
-      background: var(--client-message-color);
-      border-radius: var(--client-message-border-radius--square);
+    &--text {
+      border-radius: var(--agent-message-border-radius--square);
+
+      &.wt-omni-widget-chat-message--my {
+        margin-left: auto;
+        background: var(--client-message-color);
+        border-radius: var(--client-message-border-radius--square);
+      }
+    }
+
+    &--event {
+      border-radius: var(--event-message-border-radius--square);
     }
   }
 
   &.wt-omni-widget--rounded {
-    .wt-omni-widget-chat-message {
+    .wt-omni-widget-chat-message--text {
       border-radius: var(--agent-message-border-radius--rounded);
 
-      &--my {
+      &.wt-omni-widget-chat-message--my {
         border-radius: var(--client-message-border-radius--rounded);
       }
+    }
+
+    .wt-omni-widget-chat-message--event {
+      border-radius: var(--event-message-border-radius--rounded);
     }
   }
 }
