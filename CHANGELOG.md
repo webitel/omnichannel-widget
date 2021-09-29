@@ -21,16 +21,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.3] - 29.09.2021
+### Added:
+- openTimeout config prop
+- previewMode dev config prop
+- chat window opening on message
+- chat scroll to bottom on message, after refresh, after open
+- "Reopen session" Button
+
+### Refactor:
+- refactored main thread websocket strategy
+- refactored chat.js store
+
+### Fixed:
+- some small bugfixes
+
 ## [0.2.2] - 16.09.2021
 # Added:
 - logoUrl config prop
 
 ## [0.2.1] - 13.09.2021
-# Added:
+### Added:
 - message text links linkifying
 - chat input newline on ctrl+enter and shift+enter
 
-# Fixed:
+### Fixed:
 - fixed representation of linebreaks in text messages
 - fixed "send message" button
 
