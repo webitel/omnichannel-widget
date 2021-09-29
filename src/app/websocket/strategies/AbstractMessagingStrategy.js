@@ -1,3 +1,5 @@
+// FIXME IMPLEMENT "openSocket()" METHOD
+
 export default class AbstractMessagingStrategy {
   _msgCallback = null;
 
