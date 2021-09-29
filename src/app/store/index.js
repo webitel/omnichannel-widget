@@ -11,7 +11,7 @@ const state = {
 };
 
 const actions = {
-  OPEN_SESSION: (context, payload) => Promise.allSettled([
+  INITIALIZE_SESSION: (context, payload) => Promise.allSettled([
     context.dispatch('chat/SUBSCRIBE_TO_MESSAGES', payload),
   ]),
   CLOSE_SESSION: () => {

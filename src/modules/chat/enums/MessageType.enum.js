@@ -1,4 +1,5 @@
 const MessageType = {
+  INIT: 'init',
   TEXT: 'text',
   FILE: 'file',
   CONTACT: 'contact',
