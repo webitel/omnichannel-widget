@@ -102,12 +102,18 @@ const actions = {
   },
 
   SEND_MESSAGE: (context) => {
-    const { draft, seq } = context.state;
-    if (!draft) return;
-    const message = { seq, message: { text: draft, type: 'text' } };
-    state.messageClient.send(message);
-    context.commit('INCREMENT_SEQ');
-    context.dispatch('SET_DRAFT', '');
+    try {
+      const { seq } = context.state;
+      const draft = context.state.draft.trim();
+      if (draft) {
+        const message = { seq, message: { text: draft, type: 'text' } };
+        state.messageClient.send(message);
+        context.commit('INCREMENT_SEQ');
+      }
+      context.dispatch('SET_DRAFT', '');
+    } catch (err) {
+      throw err;
+    }
   },
 
   SEND_FILE: (context, file) => {
