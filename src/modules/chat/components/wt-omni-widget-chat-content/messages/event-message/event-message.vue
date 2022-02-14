@@ -9,7 +9,7 @@ import MessageType from '../../../../enums/MessageType.enum';
 import chatMessageMixin from '../../../../mixins/chatMessageMixin';
 
 export default {
-  name: 'wt-omni-widget-chat-event-message',
+  name: 'event-message',
   mixins: [chatMessageMixin],
   computed: {
     eventMessage() {

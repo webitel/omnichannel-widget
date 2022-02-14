@@ -101,12 +101,12 @@ const actions = {
     context.commit('PUSH_MESSAGE', message);
   },
 
-  SEND_MESSAGE: (context) => {
+  SEND_MESSAGE: (context, { text } = {}) => {
     try {
-      const { seq } = context.state;
-      const draft = context.state.draft.trim();
-      if (draft) {
-        const message = { seq, message: { text: draft, type: 'text' } };
+      const { seq, draft } = context.state;
+      const _text = (text || draft).trim();
+      if (_text) {
+        const message = { seq, message: { text: _text, type: 'text' } };
         state.messageClient.send(message);
         context.commit('INCREMENT_SEQ');
       }

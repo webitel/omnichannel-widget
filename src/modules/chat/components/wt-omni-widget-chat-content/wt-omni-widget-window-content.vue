@@ -4,7 +4,6 @@
     ref="chat-messages-container"
     v-chat-scroll
   >
-    <wt-button>Contents!</wt-button>
     <component
       v-for="(message, key) of messages"
       :message="message"
@@ -21,16 +20,14 @@ import chatScroll from '../../../../app/directives/chat-scroll/chatScroll';
 import scrollToBottom from '../../../../app/directives/chat-scroll/scripts/scrollToBottom';
 import getNamespacedState from '../../../../app/webitel-ui/store/helpers/getNamespacedState';
 import MessageType from '../../enums/MessageType.enum';
+import Message from './messages/message/message.vue';
 import EventMessage from './messages/event-message/event-message.vue';
-import FileMessage from './messages/file-message/file-message.vue';
-import TextMessage from './messages/text-message/text-message.vue';
 
 export default {
   name: 'wt-omni-widget-window-content',
   directives: { chatScroll },
   components: {
-    TextMessage,
-    FileMessage,
+    Message,
     EventMessage,
   },
   props: {
@@ -41,8 +38,8 @@ export default {
   },
   data: () => ({
     componentMap: {
-      [MessageType.TEXT]: 'text-message',
-      [MessageType.FILE]: 'file-message',
+      [MessageType.TEXT]: 'message',
+      [MessageType.FILE]: 'message',
       [MessageType.JOINED]: 'event-message',
       [MessageType.LEFT]: 'event-message',
       [MessageType.CLOSED]: 'event-message',
@@ -73,6 +70,7 @@ export default {
     @extend %wt-scrollbar;
     height: 100%;
     overflow-y: scroll;
+    padding-right: 5px; // prevent "my" messages sticking to scrollbar
   }
 
   .wt-omni-widget-chat-message {
