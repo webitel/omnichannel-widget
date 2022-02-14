@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import MessageType from '../../../enums/MessageType.enum';
-import chatMessageMixin from '../../../mixins/chatMessageMixin';
+import MessageType from '../../../../enums/MessageType.enum';
+import chatMessageMixin from '../../../../mixins/chatMessageMixin';
 
 export default {
   name: 'wt-omni-widget-chat-event-message',
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../css/wt-omni-widget-chat-message';
+@import '../../../../css/wt-omni-widget-chat-message';
 
 #wt-omni-widget {
   .wt-omni-widget-chat-message--event {

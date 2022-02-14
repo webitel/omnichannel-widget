@@ -8,7 +8,7 @@
 
 <script>
 import linkifyHtml from 'linkifyjs/html';
-import chatMessageMixin from '../../../mixins/chatMessageMixin';
+import chatMessageMixin from '../../../../mixins/chatMessageMixin';
 
 export default {
   name: 'wt-omni-widget-chat-text-message',
@@ -24,5 +24,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../css/wt-omni-widget-chat-message';
+  @import '../../../../css/wt-omni-widget-chat-message';
 </style>

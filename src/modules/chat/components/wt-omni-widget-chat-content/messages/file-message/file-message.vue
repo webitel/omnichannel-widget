@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import prettifyFileSize from '../../../../../app/webitel-ui/scripts/prettifyFileSize';
-import chatMessageMixin from '../../../mixins/chatMessageMixin';
+import prettifyFileSize from '../../../../../../app/webitel-ui/scripts/prettifyFileSize';
+import chatMessageMixin from '../../../../mixins/chatMessageMixin';
 
 export default {
   name: 'wt-omni-widget-chat-file-message',
@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../css/wt-omni-widget-chat-message';
+@import '../../../../css/wt-omni-widget-chat-message';
 
 #wt-omni-widget {
   .wt-omni-widget-chat-message--file {
