@@ -48,27 +48,24 @@ export default {
   },
   methods: {
     ...mapActions({
-      sendMessage(dispatch, payload) {
-        return dispatch(`${this.namespace}/SEND_MESSAGE`, payload);
+      sendMenu(dispatch, payload) {
+        return dispatch(`${this.namespace}/SEND_MENU`, payload);
       },
     }),
     handleMenuInput(button) {
       switch (button.type) {
         case MenuButtonType.REPLY:
         case MenuButtonType.POSTBACK:
-          this.sendMenu(button.code);
+          this.sendMenu(button);
           break;
         case MenuButtonType.URL:
-          this.openLink(button.url);
+          this.openLink(button);
           break;
         default:
           console.error('Not supported button type handle error', button);
       }
     },
-    sendMenu(code) {
-      this.sendMessage({ text: code });
-    },
-    openLink(url) {
+    openLink({ url }) {
       window.open(url, '_blank').focus();
     },
   },

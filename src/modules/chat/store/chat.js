@@ -101,16 +101,29 @@ const actions = {
     context.commit('PUSH_MESSAGE', message);
   },
 
-  SEND_MESSAGE: (context, { text } = {}) => {
+  SEND_MENU: (context, { code }) => {
+    const message = { text: code, type: MessageType.TEXT };
+    return context.dispatch('SEND_MESSAGE', message);
+  },
+
+  SEND_DRAFT: async (context) => {
+    const { draft } = context.state;
+    if (!draft) return; // DO NOT send empty message
     try {
-      const { seq, draft } = context.state;
-      const _text = (text || draft).trim();
-      if (_text) {
-        const message = { seq, message: { text: _text, type: 'text' } };
-        state.messageClient.send(message);
-        context.commit('INCREMENT_SEQ');
-      }
-      context.dispatch('SET_DRAFT', '');
+      const message = { text: draft.trim(), type: MessageType.TEXT };
+      await context.dispatch('SEND_MESSAGE', message);
+      await context.dispatch('SET_DRAFT', '');
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  SEND_MESSAGE: (context, message) => {
+    try {
+      const { seq } = context.state;
+      const _message = { seq, message };
+      state.messageClient.send(_message);
+      context.commit('INCREMENT_SEQ');
     } catch (err) {
       throw err;
     }

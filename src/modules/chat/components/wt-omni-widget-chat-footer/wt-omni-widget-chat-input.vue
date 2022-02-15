@@ -1,13 +1,13 @@
 <template>
   <form
     class="wt-omni-widget-chat-input"
-    @submit.prevent="sendMessage"
+    @submit.prevent="sendDraft"
   >
     <textarea
       id="wt-omni-widget-chat-input"
-      class="wt-omni-widget-chat-input__textarea"
-      :value="draft"
       :placeholder="$t('chat.inputPlaceholder')"
+      :value="draft"
+      class="wt-omni-widget-chat-input__textarea"
       @input="setDraft($event.target.value)"
       @keypress.enter.prevent="handleEnter"
     ></textarea>
@@ -16,7 +16,7 @@
 
 <script>
 import autosize from 'autosize';
-import { mapState, mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'wt-omni-widget-chat-input',
@@ -33,16 +33,19 @@ export default {
   },
   methods: {
     ...mapActions({
-      sendMessage(dispatch, payload) {
-        return dispatch(`${this.namespace}/SEND_MESSAGE`, payload);
+      sendDraft(dispatch, payload) {
+        return dispatch(`${this.namespace}/SEND_DRAFT`, payload);
       },
       setDraft(dispatch, payload) {
         return dispatch(`${this.namespace}/SET_DRAFT`, payload);
       },
     }),
     handleEnter(event) {
-      if (event.shiftKey || event.ctrlKey) this.setDraft(this.draft.concat('\n'));
-      else this.sendMessage(event);
+      if (event.shiftKey || event.ctrlKey) {
+        this.setDraft(this.draft.concat('\n'));
+      } else {
+        this.sendDraft(event);
+      }
     },
     setupAutosize() {
       autosize(document.getElementById('wt-omni-widget-chat-input'));
