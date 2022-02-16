@@ -29,7 +29,7 @@ export default {
   props: {
     buttons: {
       type: Array,
-      default: () => [],
+      required: true,
     },
     namespace: {
       type: String,

@@ -10,20 +10,11 @@
 
 <script>
 export default {
-  name: 'message-attachment',
+  name: 'message-gallery',
   props: {
     file: {
       type: Object,
-      default: () => ({}),
-    },
-  },
-  methods: {
-    downloadDocument() {
-      const a = document.createElement('a');
-      a.href = this.file.url;
-      a.target = '_blank';
-      a.download = this.file.name;
-      a.click();
+      required: true,
     },
   },
 };

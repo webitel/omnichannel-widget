@@ -40,9 +40,18 @@ export default {
     MessageFile,
     MessageMenu,
   },
+  props: {
+    namespace: {
+      type: String,
+      required: true,
+    },
+  },
   computed: {
+    my() {
+      return this.$store.getters[`${this.namespace}/IS_MY_MESSAGE`](this.message);
+    },
     isGallery() {
-      return this.message.file && this.message.file.mime.includes('image');
+      return this.message.file?.mime?.includes('image');
     },
   },
 };

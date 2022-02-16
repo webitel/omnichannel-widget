@@ -25,13 +25,10 @@ export default {
   props: {
     file: {
       type: Object,
-      default: () => ({}),
+      required: true,
     },
   },
   computed: {
-    isImage() {
-      return this.file.mime.includes('image');
-    },
     fileSize() {
       return prettifyFileSize(this.file.size);
     },
