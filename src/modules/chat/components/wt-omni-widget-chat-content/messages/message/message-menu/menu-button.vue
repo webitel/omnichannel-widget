@@ -7,6 +7,7 @@
     <wt-icon
       v-if="type === MenuButtonType.URL"
       icon="link"
+      size="sm"
       icon-prefix="wt-omni-widget"
     ></wt-icon>
     <slot></slot>

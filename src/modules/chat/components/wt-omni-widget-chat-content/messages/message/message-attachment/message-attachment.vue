@@ -8,6 +8,7 @@
           icon="attach"
           size="sm"
           color="contrast"
+          icon-prefix="wt-omni-widget"
         ></wt-icon>
       </div>
     <div class="wt-omni-widget-chat-message-attachment-info">

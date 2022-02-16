@@ -28,6 +28,7 @@ export default {
 
     &__img {
       width: 100%;
+      border-radius: var(--border-radius--square);
     }
   }
 }
