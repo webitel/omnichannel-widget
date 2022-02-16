@@ -3,6 +3,9 @@ module.exports = {
   transform: {
     '^.+\\.jsx?$': '<rootDir>/node_modules/babel-jest',
   },
+  transformIgnorePatterns: [
+    '/node_modules/(?!@webitel/ui-sdk/src|@webitel/cc-ui-sdk/src|webitel-sdk).+\\.js$',
+  ],
   reporters: ['default', 'bamboo-jest-reporter'],
   collectCoverage: true,
   // coverageThreshold: {

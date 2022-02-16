@@ -1,6 +1,5 @@
 /* eslint-disable */
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 process.env.VUE_APP_PACKAGE_VERSION = require('./package.json').version;
 

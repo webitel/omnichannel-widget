@@ -7,13 +7,13 @@
     "build": "vue-cli-service build --target lib --name WtOmniWidget --inline-css --inline-vue src/install.js",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint --fix",
-    "cp-dist-to-static": "npm run build && rm -rf static-demo/omni-widget/* || true && cp -r dist/* static-demo/omni-widget"
+    "cp-dist-to-static": "npm run build && rm -rf static-demo/omni-widget/* || true && cp -r dist/* static-demo/omni-widget",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@webitel/ui-sdk": "^1.0.17",
     "autosize": "^5.0.0",
     "bamboo-jest-reporter": "^1.0.3",
-    "copy-webpack-plugin": "^6.4.1",
     "core-js": "^3.6.5",
     "deepmerge": "^4.2.2",
     "linkifyjs": "^3.0.0-beta.3",
@@ -39,6 +39,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.34.1",
     "sass-loader": "^10.2.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "husky": "^7.0.0"
   }
 }
