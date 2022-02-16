@@ -6,6 +6,7 @@
     <menu-button
       v-for="(button, key) of menu"
       :key="key"
+      :type="button.type"
       @click="handleMenuInput(button)"
     >{{ button.text || button.code || button }}
     </menu-button>
