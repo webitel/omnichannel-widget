@@ -31,7 +31,7 @@
 import { mapActions } from 'vuex';
 
 export default {
-  name: 'wt-omni-widget-chat-footer-actions',
+  name: 'chat-footer-actions',
   props: {
     namespace: {
       type: String,

@@ -19,7 +19,7 @@ import autosize from 'autosize';
 import { mapActions, mapState } from 'vuex';
 
 export default {
-  name: 'wt-omni-widget-chat-input',
+  name: 'chat-input',
   props: {
     namespace: {
       type: String,
