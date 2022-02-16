@@ -6,7 +6,7 @@ import i18n from './app/locale/i18n';
 
 import globalConfigMixin from './app/mixins/globalConfigMixin';
 
-import './app/assets/img/svg-sprites/wt-icon.svg';
+import './app/assets/icons/sprite';
 import './app/css/fonts/_fonts.scss';
 
 import './app/components/utils';

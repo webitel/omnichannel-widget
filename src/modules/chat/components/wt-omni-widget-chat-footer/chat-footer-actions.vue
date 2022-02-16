@@ -10,19 +10,19 @@
       <input
         ref="attachment-input"
         class="wt-omni-widget-chat-footer-actions__attach__input"
-        type="file"
         multiple
+        type="file"
         @change="handleAttachments"
       >
     </wt-icon-btn>
     <wt-icon-btn
-      class="wt-omni-widget-chat-footer-actions__send-btn"
-      icon="send-arrow"
-      size="md"
-      icon-size="sm"
-      color="contrast"
       :permanent-shadow="false"
-      @click="sendMessage"
+      class="wt-omni-widget-chat-footer-actions__send-btn"
+      color="contrast"
+      icon="send-arrow"
+      icon-size="sm"
+      size="md"
+      @click="sendDraft"
     ></wt-icon-btn>
   </div>
 </template>
@@ -31,7 +31,7 @@
 import { mapActions } from 'vuex';
 
 export default {
-  name: 'wt-omni-widget-chat-footer-actions',
+  name: 'chat-footer-actions',
   props: {
     namespace: {
       type: String,
@@ -40,8 +40,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      sendMessage(dispatch, payload) {
-        return dispatch(`${this.namespace}/SEND_MESSAGE`, payload);
+      sendDraft(dispatch, payload) {
+        return dispatch(`${this.namespace}/SEND_DRAFT`, payload);
       },
       sendFile(dispatch, payload) {
         return dispatch(`${this.namespace}/SEND_FILE`, payload);
