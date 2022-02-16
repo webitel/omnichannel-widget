@@ -49,7 +49,6 @@ export default {
 #wt-omni-widget {
   .wt-omni-widget-chat-message-attachment {
     display: flex;
-    justify-content: center;
     cursor: pointer;
 
     &__icon {
