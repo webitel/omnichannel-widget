@@ -16,9 +16,9 @@
 
 <script>
 import { mapState } from 'vuex';
+import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
 import chatScroll from '../../../../app/directives/chat-scroll/chatScroll';
 import scrollToBottom from '../../../../app/directives/chat-scroll/scripts/scrollToBottom';
-import getNamespacedState from '../../../../app/webitel-ui/store/helpers/getNamespacedState';
 import MessageType from '../../enums/MessageType.enum';
 import Message from './messages/message/message.vue';
 import EventMessage from './messages/event-message/event-message.vue';

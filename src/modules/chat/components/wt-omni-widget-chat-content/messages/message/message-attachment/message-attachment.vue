@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import prettifyFileSize from '../../../../../../../app/webitel-ui/scripts/prettifyFileSize';
+import prettifyFileSize from '@webitel/ui-sdk/src/scripts/prettifyFileSize';
 
 export default {
   name: 'message-attachment',

@@ -1,4 +1,4 @@
-import { objSnakeToCamel } from '../../../app/webitel-ui/scripts/caseConverters';
+import { objSnakeToCamel } from '@webitel/ui-sdk/src/scripts/caseConverters';
 import MessageType from '../enums/MessageType.enum';
 
 const parseMessage = (_message) => {

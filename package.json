@@ -10,6 +10,7 @@
     "cp-dist-to-static": "npm run build && rm -rf static-demo/omni-widget/* || true && cp -r dist/* static-demo/omni-widget"
   },
   "dependencies": {
+    "@webitel/ui-sdk": "^1.0.17",
     "autosize": "^5.0.0",
     "bamboo-jest-reporter": "^1.0.3",
     "copy-webpack-plugin": "^6.4.1",

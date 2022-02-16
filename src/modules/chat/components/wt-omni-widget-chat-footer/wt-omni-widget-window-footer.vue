@@ -19,7 +19,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import getNamespacedState from '../../../../app/webitel-ui/store/helpers/getNamespacedState';
+import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
 import ChatInput from './chat-input.vue';
 import ChatFooterActions from './chat-footer-actions.vue';
 
