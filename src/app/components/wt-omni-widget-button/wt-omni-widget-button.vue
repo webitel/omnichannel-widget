@@ -7,6 +7,7 @@
     <wt-icon
       icon="chat"
       color="contrast"
+      icon-prefix="wt-omni-widget"
     ></wt-icon>
   </button>
 </template>

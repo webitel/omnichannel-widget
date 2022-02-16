@@ -28,12 +28,16 @@ export default {
       default: 'main',
       options: ['main', 'contrast'],
     },
+    iconPrefix: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
     iconName() {
-      let name = '#_icon';
-      if (this.iconPrefix) name += `-${this.iconPrefix}`;
-      return `${name}-${this.icon}--${this.size}`;
+      let name = '#';
+      if (this.iconPrefix) name += `${this.iconPrefix}-`;
+      return `${name}${this.icon}`;
     },
     iconStyle() {
       return {
