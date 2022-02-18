@@ -44,7 +44,6 @@ export default {
     buttons() {
       return Object.entries(this.config.alternativeChannels)
         .reduce((channels, [channelName, channelUrl]) => {
-
           let url = channelUrl;
 
           switch (channelName) {

@@ -44,6 +44,12 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget {
+  $viber: #6F3FAA;
+  $telegram: #7AA5DA;
+  $email: #44ADFB;
+  $whatsapp: #75B73B;
+  $facebook: #4189BE;
+
   .wt-omni-widget-btn {
     width: 60px;
     height: 60px;
@@ -62,6 +68,21 @@ export default {
 
     &--chat {
       background: var(--wt-omni-widget__accent-color);
+    }
+    &--viber {
+      background: $viber;
+    }
+    &--whatsapp {
+      background: $whatsapp;
+    }
+    &--telegram {
+      background: $telegram;
+    }
+    &--email {
+      background: $email;
+    }
+    &--facebook {
+      background: $facebook;
     }
   }
 
