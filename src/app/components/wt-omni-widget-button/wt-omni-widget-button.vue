@@ -1,11 +1,25 @@
 <template>
-  <button
-    class="wt-omni-widget-btn"
+  <a
+    v-if="url"
     :class="`wt-omni-widget-btn--${type}`"
+    :href="url"
+    class="wt-omni-widget-btn"
+    target="_blank"
+  >
+    <wt-icon
+      :icon="type"
+      color="contrast"
+      icon-prefix="wt-omni-widget"
+    ></wt-icon>
+  </a>
+  <button
+    v-else
+    :class="`wt-omni-widget-btn--${type}`"
+    class="wt-omni-widget-btn"
     @click.prevent="$emit('click')"
   >
     <wt-icon
-      icon="chat"
+      :icon="type"
       color="contrast"
       icon-prefix="wt-omni-widget"
     ></wt-icon>
@@ -15,12 +29,14 @@
 <script>
 export default {
   name: 'wt-omni-widget-button',
-  data: () => ({}),
   props: {
     type: {
       type: String,
       required: true,
-      options: ['chat'],
+      options: ['chat', 'email', 'whatsapp', 'facebook', 'viber', 'telegram'],
+    },
+    url: {
+      type: String,
     },
   },
 };
@@ -28,6 +44,12 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget {
+  $viber: #6F3FAA;
+  $telegram: #7AA5DA;
+  $email: #44ADFB;
+  $whatsapp: #75B73B;
+  $facebook: #4189BE;
+
   .wt-omni-widget-btn {
     width: 60px;
     height: 60px;
@@ -37,6 +59,7 @@ export default {
     border-radius: var(--border-radius--square);
     transition: var(--transition);
     cursor: pointer;
+    background: var(--wt-omni-widget__accent-color);
     pointer-events: auto; // cause its wrapper p-events is none
 
     &:hover {
@@ -45,6 +68,21 @@ export default {
 
     &--chat {
       background: var(--wt-omni-widget__accent-color);
+    }
+    &--viber {
+      background: $viber;
+    }
+    &--whatsapp {
+      background: $whatsapp;
+    }
+    &--telegram {
+      background: $telegram;
+    }
+    &--email {
+      background: $email;
+    }
+    &--facebook {
+      background: $facebook;
     }
   }
 
