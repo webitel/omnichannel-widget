@@ -5,7 +5,7 @@
     @click.prevent="$emit('click')"
   >
     <wt-icon
-      icon="chat"
+      :icon="type"
       color="contrast"
       icon-prefix="wt-omni-widget"
     ></wt-icon>
@@ -20,7 +20,7 @@ export default {
     type: {
       type: String,
       required: true,
-      options: ['chat'],
+      options: ['chat', 'email', 'whatsapp', 'facebook', 'viber', 'telegram'],
     },
   },
 };
@@ -37,6 +37,7 @@ export default {
     border-radius: var(--border-radius--square);
     transition: var(--transition);
     cursor: pointer;
+    background: var(--wt-omni-widget__accent-color);
     pointer-events: auto; // cause its wrapper p-events is none
 
     &:hover {
