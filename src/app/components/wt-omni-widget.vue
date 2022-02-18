@@ -19,7 +19,7 @@
         ></wt-omni-widget-window>
         <wt-omni-widget-buttons-menu
           v-else
-          @click="openWidget"
+          @open="openWidget"
         ></wt-omni-widget-buttons-menu>
       </keep-alive>
     </transition>

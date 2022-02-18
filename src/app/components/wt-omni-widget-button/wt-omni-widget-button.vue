@@ -1,7 +1,21 @@
 <template>
-  <button
-    class="wt-omni-widget-btn"
+  <a
+    v-if="url"
     :class="`wt-omni-widget-btn--${type}`"
+    :href="url"
+    class="wt-omni-widget-btn"
+    target="_blank"
+  >
+    <wt-icon
+      :icon="type"
+      color="contrast"
+      icon-prefix="wt-omni-widget"
+    ></wt-icon>
+  </a>
+  <button
+    v-else
+    :class="`wt-omni-widget-btn--${type}`"
+    class="wt-omni-widget-btn"
     @click.prevent="$emit('click')"
   >
     <wt-icon
@@ -15,12 +29,14 @@
 <script>
 export default {
   name: 'wt-omni-widget-button',
-  data: () => ({}),
   props: {
     type: {
       type: String,
       required: true,
       options: ['chat', 'email', 'whatsapp', 'facebook', 'viber', 'telegram'],
+    },
+    url: {
+      type: String,
     },
   },
 };

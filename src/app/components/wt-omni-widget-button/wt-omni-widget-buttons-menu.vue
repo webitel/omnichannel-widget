@@ -14,19 +14,20 @@
           v-for="(button, key) of buttons"
           :key="key"
           :type="button.type"
-          @click="$emit('click', 'chat')"
+          :url="button.url"
         ></wt-omni-widget-button>
       </div>
     </transition-expand>
     <wt-omni-widget-button
-      type="chat"
-      @click="$emit('click', 'chat')"
+      :type="ChatChannel.CHAT"
+      @click="openChat"
     ></wt-omni-widget-button>
   </div>
 </template>
 
 <script>
 import { TransitionExpand } from 'vue-transition-expand';
+import ChatChannel from '../../enum/ChatChannel.enum';
 import WtOmniWidgetButton from './wt-omni-widget-button.vue';
 
 export default {
@@ -36,15 +37,36 @@ export default {
     TransitionExpand,
   },
   data: () => ({
+    ChatChannel,
     isExpanded: false,
   }),
   computed: {
     buttons() {
       return Object.entries(this.config.alternativeChannels)
-        .reduce((channels, [channelName, channelUrl]) => ([...channels, {
-          type: channelName,
-          url: channelUrl,
-        }]), []);
+        .reduce((channels, [channelName, channelUrl]) => {
+
+          let url = channelUrl;
+
+          switch (channelName) {
+            case ChatChannel.EMAIL: {
+              url = /^mailto:/.test(url) ? url : 'mailto:'.concat(url);
+              break;
+            }
+            default: {
+              url = /^(http(s?)):/.test(url) ? url : 'https://'.concat(url);
+            }
+          }
+
+          return [...channels, {
+            type: channelName,
+            url,
+          }];
+        }, []);
+    },
+  },
+  methods: {
+    openChat() {
+      this.$emit('open');
     },
   },
 };
