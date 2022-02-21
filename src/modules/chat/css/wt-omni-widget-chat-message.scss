@@ -9,7 +9,7 @@
     padding: var(--message-padding);
     color: var(--contrast-color);
     background: var(--agent-message-color);
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
     white-space: pre-line; // read \n as "new line"
 
     border-radius: var(--agent-message-border-radius--square);
