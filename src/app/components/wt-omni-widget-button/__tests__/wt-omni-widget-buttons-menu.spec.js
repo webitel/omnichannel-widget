@@ -4,7 +4,13 @@ import ChatChannel from '../../../enum/ChatChannel.enum';
 
 describe('WtOmniWidgetButtonsMenu', () => {
   it('renders a component', () => {
-    const wrapper = shallowMount(WtOmniWidgetButtonsMenu);
+    const wrapper = shallowMount(WtOmniWidgetButtonsMenu, {
+      computed: {
+        config() {
+          return {};
+        },
+      },
+    });
     expect(wrapper.exists()).toBe(true);
   });
 
@@ -79,7 +85,13 @@ describe('WtOmniWidgetButtonsMenu', () => {
   });
 
   it('at omni-widget-button with "type" chat prop click, emits "open" event', () => {
-    const wrapper = shallowMount(WtOmniWidgetButtonsMenu);
+    const wrapper = shallowMount(WtOmniWidgetButtonsMenu, {
+      computed: {
+        config() {
+          return {};
+        },
+      },
+    });
     wrapper.findAllComponents({ name: 'wt-omni-widget-button' })
       .wrappers.find((wrapper) => wrapper.vm.$props.type === ChatChannel.CHAT)
       .vm.$emit('click');

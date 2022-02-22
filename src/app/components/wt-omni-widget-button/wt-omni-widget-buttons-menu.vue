@@ -7,7 +7,7 @@
   >
     <transition-expand>
       <div
-        v-if="isExpanded"
+        v-if="buttons && isExpanded"
         class="wt-omni-widget-buttons-menu__hidden-buttons-wrapper"
       >
         <wt-omni-widget-button
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import isEmpty from '@webitel/ui-sdk/src/scripts/isEmpty';
 import { TransitionExpand } from 'vue-transition-expand';
 import ChatChannel from '../../enum/ChatChannel.enum';
 import WtOmniWidgetButton from './wt-omni-widget-button.vue';
@@ -42,25 +43,27 @@ export default {
   }),
   computed: {
     buttons() {
-      return Object.entries(this.config.alternativeChannels)
-        .reduce((channels, [channelName, channelUrl]) => {
-          let url = channelUrl;
+      return isEmpty(this.config.alternativeChannels)
+        ? false
+        : Object.entries(this.config.alternativeChannels)
+          .reduce((channels, [channelName, channelUrl]) => {
+            let url = channelUrl;
 
-          switch (channelName) {
-            case ChatChannel.EMAIL: {
-              url = /^mailto:/.test(url) ? url : 'mailto:'.concat(url);
-              break;
+            switch (channelName) {
+              case ChatChannel.EMAIL: {
+                url = /^mailto:/.test(url) ? url : 'mailto:'.concat(url);
+                break;
+              }
+              default: {
+                url = /^(http(s?)):/.test(url) ? url : 'https://'.concat(url);
+              }
             }
-            default: {
-              url = /^(http(s?)):/.test(url) ? url : 'https://'.concat(url);
-            }
-          }
 
-          return [...channels, {
-            type: channelName,
-            url,
-          }];
-        }, []);
+            return [...channels, {
+              type: channelName,
+              url,
+            }];
+          }, []);
     },
   },
   methods: {
