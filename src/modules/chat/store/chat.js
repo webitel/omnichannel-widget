@@ -107,10 +107,10 @@ const actions = {
   },
 
   SEND_DRAFT: async (context) => {
-    const { draft } = context.state;
-    if (!draft) return; // DO NOT send empty message
+    const text = context.state.draft.trim();
+    if (!text) return; // DO NOT send empty message
     try {
-      const message = { text: draft.trim(), type: MessageType.TEXT };
+      const message = { text, type: MessageType.TEXT };
       await context.dispatch('SEND_MESSAGE', message);
       await context.dispatch('SET_DRAFT', '');
     } catch (err) {
