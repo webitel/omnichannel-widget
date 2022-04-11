@@ -1,34 +1,109 @@
 <template>
-  <div class="wt-omni-widget-buttons-menu">
+  <div
+    :class="{ 'wt-omni-widget-buttons-menu--expanded': isExpanded }"
+    class="wt-omni-widget-buttons-menu"
+    @mouseenter="isExpanded = true"
+    @mouseleave="isExpanded = false"
+  >
+    <transition-expand>
+      <div
+        v-if="buttons && isExpanded"
+        class="wt-omni-widget-buttons-menu__hidden-buttons-wrapper"
+      >
+        <wt-omni-widget-button
+          v-for="(button, key) of buttons"
+          :key="key"
+          :type="button.type"
+          :url="button.url"
+        ></wt-omni-widget-button>
+      </div>
+    </transition-expand>
     <wt-omni-widget-button
-      type="chat"
-      @click="$emit('click', 'chat')"
+      :type="ChatChannel.CHAT"
+      @click="openChat"
     ></wt-omni-widget-button>
   </div>
 </template>
 
 <script>
+import isEmpty from '@webitel/ui-sdk/src/scripts/isEmpty';
+import { TransitionExpand } from 'vue-transition-expand';
+import ChatChannel from '../../enum/ChatChannel.enum';
 import WtOmniWidgetButton from './wt-omni-widget-button.vue';
 
 export default {
   name: 'wt-omni-widget-buttons-menu',
   components: {
     WtOmniWidgetButton,
+    TransitionExpand,
+  },
+  data: () => ({
+    ChatChannel,
+    isExpanded: false,
+  }),
+  computed: {
+    buttons() {
+      return isEmpty(this.config.alternativeChannels)
+        ? false
+        : Object.entries(this.config.alternativeChannels)
+          .reduce((channels, [channelName, channelUrl]) => {
+            let url = channelUrl;
+
+            switch (channelName) {
+              case ChatChannel.EMAIL: {
+                url = /^mailto:/.test(url) ? url : 'mailto:'.concat(url);
+                break;
+              }
+              default: {
+                url = /^(http(s?)):/.test(url) ? url : 'https://'.concat(url);
+              }
+            }
+
+            return [...channels, {
+              type: channelName,
+              url,
+            }];
+          }, []);
+    },
+  },
+  methods: {
+    openChat() {
+      this.$emit('open');
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #wt-omni-widget {
+  @import '~vue-transition-expand/dist/vue-transition-expand';
+  // override 1s vue-transition-expand duration
+  .expand-enter-active, .expand-leave-active {
+    transition-duration: 0.2s;
+  }
+
   .wt-omni-widget-buttons-menu {
+    --menu-buttons-gap: 10px;
+
     width: fit-content;
     padding: var(--buttons-menu-padding);
     border-radius: var(--border-radius--square);
     background: var(--main-color);
     opacity: var(--wt-omni-widget__buttons-menu-opacity); // configured style
     transition: var(--transition);
+
     // https://stackoverflow.com/a/30104683
     pointer-events: none; // apply hover styles only on child hover
+
+    &, &__hidden-buttons-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: var(--menu-buttons-gap);
+    }
+
+    &--expanded {
+      pointer-events: auto;
+    }
 
     &:hover {
       box-shadow: var(--morf-style-up-100);

@@ -9,17 +9,15 @@
     padding: var(--message-padding);
     color: var(--contrast-color);
     background: var(--agent-message-color);
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
     white-space: pre-line; // read \n as "new line"
 
-    &--text {
-      border-radius: var(--agent-message-border-radius--square);
+    border-radius: var(--agent-message-border-radius--square);
 
-      &.wt-omni-widget-chat-message--my {
-        margin-left: auto;
-        background: var(--client-message-color);
-        border-radius: var(--client-message-border-radius--square);
-      }
+    &.wt-omni-widget-chat-message--my {
+      margin-left: auto;
+      background: var(--client-message-color);
+      border-radius: var(--client-message-border-radius--square);
     }
 
     &--event {
@@ -28,7 +26,7 @@
   }
 
   &.wt-omni-widget--rounded {
-    .wt-omni-widget-chat-message--text {
+    .wt-omni-widget-chat-message {
       border-radius: var(--agent-message-border-radius--rounded);
 
       &.wt-omni-widget-chat-message--my {

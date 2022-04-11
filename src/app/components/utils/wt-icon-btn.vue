@@ -13,6 +13,7 @@
         :icon="icon"
         :size="iconSize || size"
         :color="color"
+        icon-prefix="wt-omni-widget"
       ></wt-icon>
       <slot></slot>
     </div>
