@@ -1,5 +1,6 @@
 import { objSnakeToCamel } from '@webitel/ui-sdk/src/scripts/caseConverters';
 import MessageType from '../enums/MessageType.enum';
+import ChatAPI from '../api/chat';
 
 const parseMessage = (_message) => {
   if (!_message.message && !_message.type) return { ..._message, type: MessageType.INIT }; // 1st message of session without type - init
@@ -129,7 +130,21 @@ const actions = {
     }
   },
 
-  SEND_FILE: (context, file) => {
+  SEND_FILE: async (context, files) => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const file of files) {
+      const onUploadProgress = (event) => {
+        console.log('progress', event);
+      };
+      // eslint-disable-next-line no-await-in-loop
+      const [fileLink] = await ChatAPI.sendFile({
+        uri: context.rootState.config.wsUrl,
+        file,
+        onUploadProgress,
+      });
+      console.info(fileLink);
+      context.dispatch('SEND_MESSAGE', { type: MessageType.FILE, file: fileLink });
+    }
   },
 
   SET_DRAFT: (context, draft) => {
