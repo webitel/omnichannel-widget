@@ -1,7 +1,6 @@
 <template>
   <div class="wt-omni-widget-chat-footer-actions">
     <wt-icon-btn
-      v-if="false"
       class="wt-omni-widget-chat-footer-actions__attach"
       icon="attach"
       size="sm"
