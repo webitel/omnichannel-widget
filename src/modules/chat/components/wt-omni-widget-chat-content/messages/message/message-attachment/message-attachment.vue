@@ -14,6 +14,7 @@
     <div class="wt-omni-widget-chat-message-attachment-info">
       <strong class="wt-omni-widget-chat-message-nfo__name">{{ file.name }}</strong>
       <span class="wt-omni-widget-chat-message-info__size">{{ fileSize }}</span>
+      <span>{{ file.uploadProgress }}</span>
     </div>
   </article>
 </template>
