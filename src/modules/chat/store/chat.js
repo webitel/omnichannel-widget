@@ -2,24 +2,20 @@ import { objSnakeToCamel } from '@webitel/ui-sdk/src/scripts/caseConverters';
 import MessageType from '../enums/MessageType.enum';
 import ChatAPI from '../api/chat';
 
-const parseMessage = (_message) => {
-  if (!_message.message && !_message.type) return { ..._message, type: MessageType.INIT }; // 1st message of session without type - init
-  const { message } = objSnakeToCamel(_message);
+const parseMessage = ({
+ message: msg, seq, type, ...rest
+}) => {
+  if (!msg && !type) return { message: { ...rest }, type: MessageType.INIT }; // 1st message of session without type - init
+  const message = objSnakeToCamel(msg);
   switch (message.type) {
     case MessageType.TEXT:
-      return message;
     case MessageType.FILE:
-      return message;
     case MessageType.CONTACT:
-      return message;
     case MessageType.JOINED:
-      return message;
     case MessageType.LEFT:
-      return message;
     case MessageType.CLOSED:
-      return message;
     default:
-      return message;
+      return { message, seq, type: message.type };
   }
 };
 
@@ -84,18 +80,18 @@ const actions = {
   },
 
   ON_MESSAGE: async (context, _message) => {
-    const message = parseMessage(_message.data);
-    if (message.seq) await context.dispatch('REPLACE_MESSAGE', message);
+    const { message, seq, type } = parseMessage(_message.data);
+    if (seq) await context.dispatch('REPLACE_MESSAGE', { message, seq });
     else await context.dispatch('ADD_MESSAGE', message);
     await triggerListeners({
-      event: message.type,
+      event: type,
       listeners: state._listeners,
       payload: message,
     });
   },
 
-  REPLACE_MESSAGE: (context, message) => {
-    context.commit('REPLACE_MESSAGE_BY_SEQ', message);
+  REPLACE_MESSAGE: (context, { message, seq }) => {
+    context.commit('REPLACE_MESSAGE_BY_SEQ', { message, seq });
   },
 
   ADD_MESSAGE: (context, message) => {
@@ -104,7 +100,7 @@ const actions = {
 
   SEND_MENU: (context, { code }) => {
     const message = { text: code, type: MessageType.TEXT };
-    return context.dispatch('SEND_MESSAGE', message);
+    return context.dispatch('SEND_MESSAGE', { message });
   },
 
   SEND_DRAFT: async (context) => {
@@ -112,7 +108,7 @@ const actions = {
     if (!text) return; // DO NOT send empty message
     try {
       const message = { text, type: MessageType.TEXT };
-      await context.dispatch('SEND_MESSAGE', message);
+      await context.dispatch('SEND_MESSAGE', { message });
       await context.dispatch('SET_DRAFT', '');
     } catch (err) {
       throw err;
@@ -121,10 +117,7 @@ const actions = {
 
   SEND_MESSAGE: (context, message) => {
     try {
-      const { seq } = context.state;
-      const _message = { seq, message };
-      state.messageClient.send(_message);
-      context.commit('INCREMENT_SEQ');
+      state.messageClient.send(message);
     } catch (err) {
       throw err;
     }
@@ -133,18 +126,58 @@ const actions = {
   SEND_FILE: async (context, files) => {
     // eslint-disable-next-line no-restricted-syntax
     for (const file of files) {
-      const onUploadProgress = (event) => {
-        console.log('progress', event);
-      };
+      const { seq } = context.state;
+      context.commit('INCREMENT_SEQ');
+
       // eslint-disable-next-line no-await-in-loop
-      const [fileLink] = await ChatAPI.sendFile({
-        uri: context.rootState.config.wsUrl,
-        file,
-        onUploadProgress,
-      });
-      console.info(fileLink);
-      context.dispatch('SEND_MESSAGE', { type: MessageType.FILE, file: fileLink });
+      const onUploadProgress = await context.dispatch('_ADD_FILE_PREVIEW', { file, seq });
+      context.dispatch('_UPLOAD_FILE', { file, seq, onUploadProgress });
     }
+  },
+
+  _ADD_FILE_PREVIEW: (context, { file, seq }) => {
+    const message = {
+      type: MessageType.FILE,
+      file: {
+        mime: file.type,
+        name: file.name,
+        size: file.size,
+        uploadProgress: 0,
+      },
+      from: context.state.user,
+      seq,
+    };
+
+    const fileReader = new FileReader();
+    fileReader.onload = (event) => {
+      message.file.url = event.target.result;
+      context.dispatch('ADD_MESSAGE', message);
+    };
+    fileReader.readAsDataURL(file);
+
+    const onUploadProgress = ({ total, loaded }) => {
+      const progress = Math.round((loaded / (total * 1.2)) * 100); // calc 100%
+      console.log('progress', progress, { total, loaded });
+      message.file.uploadProgress = progress;
+    };
+
+    return onUploadProgress;
+  },
+
+  _UPLOAD_FILE: async (context, { file, seq, onUploadProgress }) => {
+    const [fileLink] = await ChatAPI.sendFile({
+      uri: context.rootState.config.wsUrl,
+      file,
+      onUploadProgress,
+    });
+
+    return context.dispatch('SEND_MESSAGE', {
+      message: {
+        type: MessageType.FILE,
+        file: fileLink,
+      },
+      seq,
+    });
   },
 
   SET_DRAFT: (context, draft) => {
@@ -178,9 +211,9 @@ const mutations = {
   SET_DRAFT: (state, draft) => {
     state.draft = draft;
   },
-  REPLACE_MESSAGE_BY_SEQ: (state, newMsg) => {
-    const msgIndex = state.messages.findIndex((msg) => msg.seq === newMsg.seq);
-    state.messages.splice(msgIndex, 1, newMsg);
+  REPLACE_MESSAGE_BY_SEQ: (state, { message, seq }) => {
+    const msgIndex = state.messages.findIndex((msg) => msg.seq === seq);
+    state.messages.splice(msgIndex, 1, message);
   },
   PUSH_MESSAGE: (state, message) => {
     state.messages.push(message);
