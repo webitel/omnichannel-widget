@@ -156,8 +156,9 @@ const actions = {
     fileReader.readAsDataURL(file);
 
     const onUploadProgress = ({ total, loaded }) => {
-      console.log('progress', { total, loaded });
-      message.file.uploadProgress = Math.round(loaded / (total * 1.2)) * 100; // calc 100%
+      const progress = Math.round((loaded / (total * 1.2)) * 100); // calc 100%
+      console.log('progress', progress, { total, loaded });
+      message.file.uploadProgress = progress;
     };
 
     return onUploadProgress;

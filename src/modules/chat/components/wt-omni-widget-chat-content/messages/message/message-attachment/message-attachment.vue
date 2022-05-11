@@ -14,16 +14,21 @@
     <div class="wt-omni-widget-chat-message-attachment-info">
       <strong class="wt-omni-widget-chat-message-nfo__name">{{ file.name }}</strong>
       <span class="wt-omni-widget-chat-message-info__size">{{ fileSize }}</span>
-      <span>{{ file.uploadProgress }}</span>
+      <progress-bar
+        v-if="file.uploadProgress"
+        :value="file.uploadProgress"
+      ></progress-bar>
     </div>
   </article>
 </template>
 
 <script>
 import prettifyFileSize from '@webitel/ui-sdk/src/scripts/prettifyFileSize';
+import ProgressBar from '../../../../../../../app/components/utils/progress-bar.vue';
 
 export default {
   name: 'message-attachment',
+  components: { ProgressBar },
   props: {
     file: {
       type: Object,
@@ -52,6 +57,8 @@ export default {
   .wt-omni-widget-chat-message-attachment {
     display: flex;
     cursor: pointer;
+    min-width: 150px;
+    gap: 10px;
 
     &__icon {
       flex: 0 0 40px;
@@ -66,12 +73,11 @@ export default {
   .wt-omni-widget-chat-message-attachment-info {
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
+    flex: 1;
+    gap: 5px;
 
     &__name {
       @extend %typo-strong-md;
-
-      margin-bottom: 5px;
     }
 
     &__size {
