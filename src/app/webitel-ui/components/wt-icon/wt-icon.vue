@@ -1,6 +1,6 @@
 <!-- eslint-disable -->
 <template>
-  <i class="wt-icon">
+  <i class="wt-icon" @click="$emit('click', $event)">
     <svg
       class="wt-icon__icon"
       :class="`wt-icon__icon--${size}`"

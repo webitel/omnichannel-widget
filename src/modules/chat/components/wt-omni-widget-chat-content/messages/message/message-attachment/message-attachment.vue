@@ -12,12 +12,22 @@
         ></wt-icon>
       </div>
     <div class="wt-omni-widget-chat-message-attachment-info">
-      <strong class="wt-omni-widget-chat-message-nfo__name">{{ file.name }}</strong>
-      <span class="wt-omni-widget-chat-message-info__size">{{ fileSize }}</span>
-      <progress-bar
-        v-if="file.uploadProgress"
-        :value="file.uploadProgress"
-      ></progress-bar>
+      <strong class="wt-omni-widget-chat-message-attachment-info__name">{{ file.name }}</strong>
+      <span class="wt-omni-widget-chat-message-attachment-info__size">{{ fileSize }}</span>
+      <div
+        v-if="file.uploadProgress && file.uploadProgress < 100"
+        class="wt-omni-widget-chat-message-attachment-info__upload-progress"
+      >
+        <progress-bar
+          :value="file.uploadProgress"
+        ></progress-bar>
+        <wt-icon
+          icon="close"
+          size="sm"
+          icon-prefix="wt-omni-widget"
+          @click.stop="file.cancelUpload"
+        ></wt-icon>
+      </div>
     </div>
   </article>
 </template>
@@ -82,6 +92,16 @@ export default {
 
     &__size {
       @extend %typo-body-md;
+    }
+
+    &__upload-progress {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      .wt-omni-widget-progress-bar {
+        flex-grow: 1;
+      }
     }
   }
 
