@@ -1,12 +1,13 @@
 import { objSnakeToCamel } from '@webitel/ui-sdk/src/scripts/caseConverters';
-import MessageType from '../enums/MessageType.enum';
 import ChatAPI from '../api/chat';
+import MessageType from '../enums/MessageType.enum';
+import bToMb from '../scripts/bToMb';
+import i18n from '../../../app/locale/i18n';
 
 const parseMessage = ({
- message: msg, seq, type, ...rest
-}) => {
-  if (!msg && !type) return { message: { ...rest }, type: MessageType.INIT }; // 1st message of session without type - init
-  const message = objSnakeToCamel(msg);
+                        message, seq, type, ...rest
+                      }) => {
+  if (!message && !type) return { message: { ...rest }, type: MessageType.INIT }; // 1st message of session without type - init
   switch (message.type) {
     case MessageType.TEXT:
     case MessageType.FILE:
@@ -19,13 +20,18 @@ const parseMessage = ({
   }
 };
 
-const triggerListeners = ({ listeners, event, payload }) => Promise.all(listeners[event].map((callback) => callback(payload)));
+const triggerListeners = ({
+                            listeners,
+                            event,
+                            payload,
+                          }) => Promise.all(listeners[event].map((callback) => callback(payload)));
 
 const state = {
   messageClient: null,
   draft: '',
   messages: [],
   user: {},
+  mediaMaxSize: 0,
   seq: 1,
   isConnectionClosed: false,
   _listeners: {
@@ -40,7 +46,8 @@ const state = {
 };
 
 const getters = {
-  IS_MY_MESSAGE: (state) => (message) => message.from?.contact === state.user?.contact,
+  IS_MY_MESSAGE: (state) => (message) => message.from?.contact
+    === state.user?.contact,
 };
 
 const actions = {
@@ -72,15 +79,16 @@ const actions = {
 
   // process chat session data, received as 1st msg
   ON_SESSION_INFO_MESSAGE: (context, data) => {
-    const { user, msgs } = data;
+    const { user, msgs, mediaMaxSize = 0 } = data;
     context.commit('SET_USER', user);
+    context.commit('SET_MEDIA_MAX_SIZE', mediaMaxSize);
     if (msgs) {
       context.commit('SET_MESSAGES', msgs);
     }
   },
 
   ON_MESSAGE: async (context, _message) => {
-    const { message, seq, type } = parseMessage(_message.data);
+    const { message, seq, type } = parseMessage(objSnakeToCamel(_message.data));
     if (seq) await context.dispatch('REPLACE_MESSAGE', { message, seq });
     else await context.dispatch('ADD_MESSAGE', message);
     await triggerListeners({
@@ -129,9 +137,29 @@ const actions = {
       const { seq } = context.state;
       context.commit('INCREMENT_SEQ');
 
-      // eslint-disable-next-line no-await-in-loop
-      const onUploadProgress = await context.dispatch('_ADD_FILE_PREVIEW', { file, seq });
-      context.dispatch('_UPLOAD_FILE', { file, seq, onUploadProgress });
+      try {
+        if (file.size > context.state.mediaMaxSize) {
+          throw new RangeError(i18n.t('errors.fileTooLarge', {
+            file: file.name,
+            maxSize: bToMb(context.state.mediaMaxSize),
+          }));
+        }
+        // eslint-disable-next-line no-await-in-loop
+        const onUploadProgress = await context.dispatch('_ADD_FILE_PREVIEW', {
+          file,
+          seq,
+        });
+        // eslint-disable-next-line no-await-in-loop
+        await context.dispatch('_UPLOAD_FILE', { file, seq, onUploadProgress });
+      } catch (err) {
+        const message = {
+          type: MessageType.ERROR,
+          error: {
+            text: err.response?.data?.detail || err.message,
+          },
+        };
+        context.dispatch('REPLACE_MESSAGE', { message, seq });
+      }
     }
   },
 
@@ -157,7 +185,6 @@ const actions = {
 
     const onUploadProgress = ({ total, loaded }) => {
       const progress = Math.round((loaded / (total * 1.2)) * 100); // calc 100%
-      console.log('progress', progress, { total, loaded });
       message.file.uploadProgress = progress;
     };
 
@@ -171,13 +198,15 @@ const actions = {
       onUploadProgress,
     });
 
-    return context.dispatch('SEND_MESSAGE', {
+    const message = {
       message: {
         type: MessageType.FILE,
         file: fileLink,
       },
       seq,
-    });
+    };
+
+    return context.dispatch('SEND_MESSAGE', message);
   },
 
   SET_DRAFT: (context, draft) => {
@@ -207,6 +236,9 @@ const mutations = {
   },
   SET_USER: (state, user) => {
     state.user = user;
+  },
+  SET_MEDIA_MAX_SIZE: (state, mediaMaxSize) => {
+    state.mediaMaxSize = mediaMaxSize;
   },
   SET_DRAFT: (state, draft) => {
     state.draft = draft;

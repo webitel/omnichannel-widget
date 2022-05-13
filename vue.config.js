@@ -1,7 +1,7 @@
 /* eslint-disable */
-const path = require('path');
-
 process.env.VUE_APP_PACKAGE_VERSION = require('./package.json').version;
+
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 module.exports = {
   lintOnSave: false,
@@ -48,18 +48,20 @@ module.exports = {
     },
   },
   chainWebpack: (config) => {
+    config.plugin('polyfills').use(NodePolyfillPlugin);
+
     config.module.rule('js').exclude.add(/\.worker\.js$/);
 
-    config.module
-          .rule('fonts')
-          .use('url-loader')
-          .loader('url-loader')
-          .tap((options) => {
-            options.limit = false;
-            options.fallback = 'file-loader';
-            // изменение настроек...
-            return options;
-          });
+    // config.module
+    //       .rule('fonts')
+    //       .use('url-loader')
+    //       .loader('url-loader')
+    //       .tap((options) => {
+    //         options.limit = false;
+    //         options.fallback = 'file-loader';
+    //         // изменение настроек...
+    //         return options;
+    //       });
 
     config.module
           .rule('svg')

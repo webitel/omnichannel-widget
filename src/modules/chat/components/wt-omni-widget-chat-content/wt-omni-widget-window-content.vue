@@ -44,6 +44,7 @@ export default {
       [MessageType.LEFT]: 'event-message',
       [MessageType.CLOSED]: 'event-message',
       [MessageType.CONTACT]: 'event-message',
+      [MessageType.ERROR]: 'event-message',
     },
   }),
   computed: {
