@@ -1,5 +1,8 @@
 <template>
-  <div class="wt-omni-widget-chat-message wt-omni-widget-chat-message--event">
+  <div
+    class="wt-omni-widget-chat-message wt-omni-widget-chat-message--event"
+    :class="{ 'wt-omni-widget-chat-message--event--error': isError }"
+  >
     {{ eventMessage }}
   </div>
 </template>
@@ -25,9 +28,14 @@ export default {
           });
         case MessageType.CLOSED:
           return this.$t('chat.events.closed');
+        case MessageType.ERROR:
+          return this.$t('chat.events.error', { error: this.message.error.text });
         default:
           return this.message;
       }
+    },
+    isError() {
+      return this.message.type === MessageType.ERROR;
     },
   },
 };
@@ -43,6 +51,10 @@ export default {
     padding: var(--message-padding--event);
     margin: auto;
     background: var(--event-message-color);
+  }
+
+  .wt-omni-widget-chat-message--event--error {
+    color: var(--negative-color);
   }
 }
 </style>

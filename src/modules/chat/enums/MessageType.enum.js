@@ -6,6 +6,9 @@ const MessageType = {
   JOINED: 'joined',
   LEFT: 'left',
   CLOSED: 'closed',
+
+  // frontend only
+  ERROR: 'error',
 };
 
 export default MessageType;
