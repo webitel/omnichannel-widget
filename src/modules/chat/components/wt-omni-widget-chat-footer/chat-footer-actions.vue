@@ -51,6 +51,7 @@ export default {
     },
     async handleAttachments(event) {
       const files = Array.from(event.target.files);
+      this.$refs['attachment-input'].value = '';
       await this.sendFile(files);
     },
   },
