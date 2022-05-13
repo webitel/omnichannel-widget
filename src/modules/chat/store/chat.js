@@ -1,4 +1,5 @@
 import { objSnakeToCamel } from '@webitel/ui-sdk/src/scripts/caseConverters';
+import axios from 'axios';
 import ChatAPI from '../api/chat';
 import MessageType from '../enums/MessageType.enum';
 import bToMb from '../scripts/bToMb';
@@ -102,6 +103,10 @@ const actions = {
     context.commit('REPLACE_MESSAGE_BY_SEQ', { message, seq });
   },
 
+  REMOVE_MESSAGE_BY_SEQ: (context, seq) => {
+    context.commit('REMOVE_MESSAGE_BY_SEQ', seq);
+  },
+
   ADD_MESSAGE: (context, message) => {
     context.commit('PUSH_MESSAGE', message);
   },
@@ -145,12 +150,12 @@ const actions = {
           }));
         }
         // eslint-disable-next-line no-await-in-loop
-        const onUploadProgress = await context.dispatch('_ADD_FILE_PREVIEW', {
+        const messageMock = await context.dispatch('_ADD_FILE_PREVIEW', {
           file,
           seq,
         });
         // eslint-disable-next-line no-await-in-loop
-        await context.dispatch('_UPLOAD_FILE', { file, seq, onUploadProgress });
+        await context.dispatch('_UPLOAD_FILE', { file, seq, messageMock });
       } catch (err) {
         const message = {
           type: MessageType.ERROR,
@@ -183,19 +188,28 @@ const actions = {
     };
     fileReader.readAsDataURL(file);
 
-    const onUploadProgress = ({ total, loaded }) => {
-      const progress = Math.round((loaded / (total * 1.2)) * 100); // calc 100%
-      message.file.uploadProgress = progress;
-    };
-
-    return onUploadProgress;
+    return message;
   },
 
-  _UPLOAD_FILE: async (context, { file, seq, onUploadProgress }) => {
+  _UPLOAD_FILE: async (context, { file, seq, messageMock }) => {
+    const cancelToken = axios.CancelToken.source();
+    // eslint-disable-next-line no-param-reassign
+    messageMock.file.cancelUpload = () => {
+      cancelToken.cancel();
+      context.dispatch('REMOVE_MESSAGE_BY_SEQ', seq);
+    };
+
+    const onUploadProgress = ({ total, loaded }) => {
+      const progress = Math.round((loaded / total) * 100); // calc 100%
+      // eslint-disable-next-line no-param-reassign
+      messageMock.file.uploadProgress = progress;
+    };
+
     const [fileLink] = await ChatAPI.sendFile({
       uri: context.rootState.config.wsUrl,
       file,
       onUploadProgress,
+      cancelToken,
     });
 
     const message = {
@@ -245,7 +259,11 @@ const mutations = {
   },
   REPLACE_MESSAGE_BY_SEQ: (state, { message, seq }) => {
     const msgIndex = state.messages.findIndex((msg) => msg.seq === seq);
-    state.messages.splice(msgIndex, 1, message);
+    if (msgIndex !== -1) state.messages.splice(msgIndex, 1, message);
+  },
+  REMOVE_MESSAGE_BY_SEQ: (state, seq) => {
+    const msgIndex = state.messages.findIndex((msg) => msg.seq === seq);
+    state.messages.splice(msgIndex, 1);
   },
   PUSH_MESSAGE: (state, message) => {
     state.messages.push(message);
