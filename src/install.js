@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import merge from 'deepmerge';
+import PortalVue from 'portal-vue';
 import App from './app/app.vue';
 import store from './app/store';
 import i18n from './app/locale/i18n';
@@ -14,6 +15,7 @@ import './app/webitel-ui/components';
 
 Vue.config.productionTip = false;
 
+Vue.use(PortalVue);
 Vue.mixin(globalConfigMixin);
 
 const Instance = new Vue({

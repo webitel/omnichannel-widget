@@ -1,5 +1,6 @@
 <template>
   <section class="wt-omni-widget-window">
+    <portal-target name="popup"></portal-target>
     <wt-omni-widget-header
       @close="$emit('close')"
     ></wt-omni-widget-header>
