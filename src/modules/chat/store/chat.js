@@ -3,23 +3,8 @@ import axios from 'axios';
 import ChatAPI from '../api/chat';
 import MessageType from '../enums/MessageType.enum';
 import bToMb from '../scripts/bToMb';
+import parseMessage from '../scripts/parseMessage';
 import i18n from '../../../app/locale/i18n';
-
-const parseMessage = ({
-                        message, seq, type, ...rest
-                      }) => {
-  if (!message && !type) return { message: { ...rest }, type: MessageType.INIT }; // 1st message of session without type - init
-  switch (message.type) {
-    case MessageType.TEXT:
-    case MessageType.FILE:
-    case MessageType.CONTACT:
-    case MessageType.JOINED:
-    case MessageType.LEFT:
-    case MessageType.CLOSED:
-    default:
-      return { message, seq, type: message.type };
-  }
-};
 
 const triggerListeners = ({
                             listeners,
@@ -79,8 +64,8 @@ const actions = {
   },
 
   // process chat session data, received as 1st msg
-  ON_SESSION_INFO_MESSAGE: (context, data) => {
-    const { user, msgs, mediaMaxSize = 0 } = data;
+  ON_SESSION_INFO_MESSAGE: (context, message) => {
+    const { user, msgs, mediaMaxSize = 0 } = message;
     context.commit('SET_USER', user);
     context.commit('SET_MEDIA_MAX_SIZE', mediaMaxSize);
     if (msgs) {
@@ -89,11 +74,11 @@ const actions = {
   },
 
   ON_MESSAGE: async (context, _message) => {
-    const { message, seq, type } = parseMessage(objSnakeToCamel(_message.data));
+    const { message, seq } = parseMessage(objSnakeToCamel(_message.data));
     if (seq) await context.dispatch('REPLACE_MESSAGE', { message, seq });
     else await context.dispatch('ADD_MESSAGE', message);
     await triggerListeners({
-      event: type,
+      event: message.type,
       listeners: state._listeners,
       payload: message,
     });
@@ -130,7 +115,7 @@ const actions = {
 
   SEND_MESSAGE: (context, message) => {
     try {
-      state.messageClient.send(message);
+      context.state.messageClient.send(message);
     } catch (err) {
       throw err;
     }
