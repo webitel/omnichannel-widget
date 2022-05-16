@@ -136,7 +136,7 @@ const actions = {
     }
   },
 
-  SEND_FILE: async (context, files) => {
+  SEND_FILES: async (context, files) => {
     // eslint-disable-next-line no-restricted-syntax
     for (const file of files) {
       const { seq } = context.state;
@@ -150,10 +150,12 @@ const actions = {
           }));
         }
         // eslint-disable-next-line no-await-in-loop
-        const messageMock = await context.dispatch('_ADD_FILE_PREVIEW', {
+        const messageMock = await context.dispatch('_GET_FILE_PREVIEW', {
           file,
           seq,
         });
+        context.dispatch('ADD_MESSAGE', messageMock);
+
         // eslint-disable-next-line no-await-in-loop
         await context.dispatch('_UPLOAD_FILE', { file, seq, messageMock });
       } catch (err) {
@@ -168,10 +170,11 @@ const actions = {
     }
   },
 
-  _ADD_FILE_PREVIEW: (context, { file, seq }) => {
+  _GET_FILE_PREVIEW: (context, { file, seq }) => {
     const message = {
       type: MessageType.FILE,
       file: {
+        url: file.url, // prop, set by file-upload-preview-popup
         mime: file.type,
         name: file.name,
         size: file.size,
@@ -180,13 +183,6 @@ const actions = {
       from: context.state.user,
       seq,
     };
-
-    const fileReader = new FileReader();
-    fileReader.onload = (event) => {
-      message.file.url = event.target.result;
-      context.dispatch('ADD_MESSAGE', message);
-    };
-    fileReader.readAsDataURL(file);
 
     return message;
   },
