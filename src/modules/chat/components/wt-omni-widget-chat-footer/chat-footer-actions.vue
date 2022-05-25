@@ -44,7 +44,6 @@ export default {
         return dispatch(`${this.namespace}/SEND_FILES`, payload);
       },
     }),
-    handleEmojiInput() {},
   },
 };
 </script>
