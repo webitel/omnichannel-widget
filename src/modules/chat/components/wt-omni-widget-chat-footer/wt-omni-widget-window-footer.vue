@@ -1,13 +1,9 @@
 <template>
   <footer class="wt-omni-widget-window-footer">
-    <div v-if="!isConnectionClosed">
-      <chat-input
-        :namespace="namespace"
-      ></chat-input>
-      <chat-footer-actions
-        :namespace="namespace"
-      ></chat-footer-actions>
-    </div>
+    <chat-input
+      v-if="!isConnectionClosed"
+      :namespace="namespace"
+    ></chat-input>
     <wt-button
       v-else
       @click="openSession"
@@ -21,11 +17,10 @@
 import { mapState, mapActions } from 'vuex';
 import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
 import ChatInput from './chat-input.vue';
-import ChatFooterActions from './chat-footer-actions.vue';
 
 export default {
   name: 'wt-omni-widget-window-footer',
-  components: { ChatInput, ChatFooterActions },
+  components: { ChatInput },
   props: {
     namespace: {
       type: String,

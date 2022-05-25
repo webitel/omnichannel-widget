@@ -3,6 +3,9 @@
     <file-upload
       @send="sendFiles"
     ></file-upload>
+    <chat-emoji
+      @insert-emoji="$emit('emoji', $event)"
+    ></chat-emoji>
     <wt-icon-btn
       :permanent-shadow="false"
       class="wt-omni-widget-chat-footer-actions__send-btn"
@@ -17,11 +20,15 @@
 
 <script>
 import { mapActions } from 'vuex';
+import ChatEmoji from './wt-omni-widget-chat-emoji/wt-omni-widget-chat-emoji.vue';
 import FileUpload from './wt-omni-widget-file-upload/wt-omni-widget-file-upload.vue';
 
 export default {
   name: 'chat-footer-actions',
-  components: { FileUpload },
+  components: {
+    ChatEmoji,
+    FileUpload,
+  },
   props: {
     namespace: {
       type: String,
@@ -46,6 +53,7 @@ export default {
   .wt-omni-widget-chat-footer-actions {
     display: flex;
     align-items: center;
+    gap: 10px;
     padding: var(--footer-padding);
     margin-top: 10px;
 

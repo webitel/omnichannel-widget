@@ -3,23 +3,32 @@
     class="wt-omni-widget-chat-input"
     @submit.prevent="sendDraft"
   >
-    <textarea
-      id="wt-omni-widget-chat-input"
-      :placeholder="$t('chat.inputPlaceholder')"
-      :value="draft"
-      class="wt-omni-widget-chat-input__textarea"
-      @input="setDraft($event.target.value)"
-      @keypress.enter.prevent="handleEnter"
-    ></textarea>
+    <div class="wt-omni-widget-chat-input__textarea-wrapper">
+      <textarea
+        id="wt-omni-widget-chat-input"
+        :placeholder="$t('chat.inputPlaceholder')"
+        :value="draft"
+        class="wt-omni-widget-chat-input__textarea"
+        @input="setDraft($event.target.value)"
+        @keypress.enter.prevent="handleEnter"
+      ></textarea>
+    </div>
+    <chat-footer-actions
+      :namespace="namespace"
+      @emoji="insertEmoji"
+    ></chat-footer-actions>
   </form>
 </template>
 
 <script>
 import autosize from 'autosize';
+import insertTextAtCursor from 'insert-text-at-cursor';
 import { mapActions, mapState } from 'vuex';
+import ChatFooterActions from './chat-footer-actions.vue';
 
 export default {
   name: 'chat-input',
+  components: { ChatFooterActions },
   props: {
     namespace: {
       type: String,
@@ -47,6 +56,11 @@ export default {
         this.sendDraft(event);
       }
     },
+    insertEmoji(unicode) {
+      // view-source:https://bl.ocks.org/nolanlawson/raw/4f13bc639cdb3483efca8b657f30a1e0/
+      const textarea = document.getElementById('wt-omni-widget-chat-input');
+      insertTextAtCursor(textarea, unicode);
+    },
     setupAutosize() {
       autosize(document.getElementById('wt-omni-widget-chat-input'));
     },
@@ -59,7 +73,7 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget {
-  .wt-omni-widget-chat-input {
+  .wt-omni-widget-chat-input__textarea-wrapper {
     padding: var(--message-input-padding);
     background: var(--main-color);
     border-radius: var(--border-radius--square);
