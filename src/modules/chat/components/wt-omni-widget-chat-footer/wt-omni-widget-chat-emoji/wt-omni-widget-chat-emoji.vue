@@ -75,6 +75,7 @@ export default {
 
     --border-color: transparent;
     --outline-color: var(--contrast-color);
+    --outline-size: 1px;
     --indicator-color: var(--wt-omni-widget__accent-color);
     --input-padding: 10px;
     --input-font-size: 12px;
