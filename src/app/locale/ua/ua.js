@@ -1,7 +1,7 @@
 export default {
   reusable: {
     send: 'Відправити',
-    close: 'Заркити',
+    close: 'Закрити',
   },
   chat: {
     inputPlaceholder: 'Повідомлення',

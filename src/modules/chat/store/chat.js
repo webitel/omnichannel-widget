@@ -7,10 +7,9 @@ import parseMessage from '../scripts/parseMessage';
 import i18n from '../../../app/locale/i18n';
 
 const triggerListeners = ({
-                            listeners,
-                            event,
+                            listeners = [],
                             payload,
-                          }) => Promise.all(listeners[event].map((callback) => callback(payload)));
+                          }) => Promise.all(listeners.map((callback) => callback(payload)));
 
 const state = {
   messageClient: null,
@@ -77,11 +76,13 @@ const actions = {
     const { message, seq } = parseMessage(objSnakeToCamel(_message.data));
     if (seq) await context.dispatch('REPLACE_MESSAGE', { message, seq });
     else await context.dispatch('ADD_MESSAGE', message);
-    await triggerListeners({
-      event: message.type,
-      listeners: state._listeners,
-      payload: message,
-    });
+
+    const listeners = context.state._listeners[message.type];
+    if (listeners && listeners.length) {
+      await triggerListeners({ listeners, payload: message });
+    } else {
+      console.warn(`No listeners for ${message.type} event`);
+    }
   },
 
   REPLACE_MESSAGE: (context, { message, seq }) => {
@@ -128,6 +129,7 @@ const actions = {
       context.commit('INCREMENT_SEQ');
 
       try {
+        console.info(file.size, context.state.mediaMaxSize);
         if (file.size > context.state.mediaMaxSize) {
           throw new RangeError(i18n.t('errors.fileTooLarge', {
             file: file.name,
@@ -150,7 +152,7 @@ const actions = {
             text: err.response?.data?.detail || err.message,
           },
         };
-        context.dispatch('REPLACE_MESSAGE', { message, seq });
+        context.dispatch('ADD_MESSAGE', message);
       }
     }
   },
