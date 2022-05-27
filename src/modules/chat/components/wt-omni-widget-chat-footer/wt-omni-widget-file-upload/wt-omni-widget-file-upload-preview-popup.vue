@@ -14,7 +14,7 @@
         </wt-button>
         <wt-button
           color="secondary"
-          @click="$emit('close')"
+          @click="close"
         >{{ $t('reusable.close') }}
         </wt-button>
       </footer>
@@ -32,6 +32,16 @@ export default {
     files: {
       type: Array,
       default: () => [],
+    },
+  },
+  methods: {
+    close() {
+      this.$emit('close');
+    },
+  },
+  watch: {
+    files(files) {
+      if (!files.length) this.close();
     },
   },
 };

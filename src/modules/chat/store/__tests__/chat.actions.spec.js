@@ -69,21 +69,23 @@ describe('chat module: actions', () => {
     expect(context.commit).toHaveBeenCalledWith('SET_MESSAGES', msgs);
   });
 
-  it('ON_MESSAGE dispatches REPLACE_MESSAGE, if passed message has "seq"', () => {
+  it('ON_MESSAGE dispatches REPLACE_MESSAGE, if passed message has "seq"', async () => {
     const seq = 123;
     const message = { jest: 'jest' };
     const data = { data: { seq, message } };
     const output = { message, seq };
-    chat.actions.ON_MESSAGE(context, data);
+    context.state._listeners = {};
+    await chat.actions.ON_MESSAGE(context, data);
     expect(context.dispatch).toHaveBeenCalledWith('REPLACE_MESSAGE', output);
     expect(context.dispatch).not.toHaveBeenCalledWith('ADD_MESSAGE', output);
   });
 
-  it('ON_MESSAGE dispatches ADD_MESSAGE, if passed message has no "seq"', () => {
+  it('ON_MESSAGE dispatches ADD_MESSAGE, if passed message has no "seq"', async () => {
     const message = { jest: 'jest' };
     const data = { data: { message } };
     const output = message;
-    chat.actions.ON_MESSAGE(context, data);
+    context.state._listeners = {};
+    await chat.actions.ON_MESSAGE(context, data);
     expect(context.dispatch).toHaveBeenCalledWith('ADD_MESSAGE', output);
     expect(context.dispatch)
     .not
@@ -143,7 +145,7 @@ describe('chat module: actions', () => {
     context.state.mediaMaxSize = 10;
     const file = { size: 11 };
     chat.actions.SEND_FILES(context, [file]);
-    expect(context.dispatch.mock.calls.findIndex(([, params]) => params.message.type === MessageType.ERROR))
+    expect(context.dispatch.mock.calls.findIndex(([, message]) => message.type === MessageType.ERROR))
     .not.toBe(-1);
   });
 
