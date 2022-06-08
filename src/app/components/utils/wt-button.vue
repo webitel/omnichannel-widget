@@ -1,6 +1,7 @@
 <template>
   <button
     class="wt-button"
+    :class="[`wt-button--color-${color}`]"
     type="button"
     @click="$emit('click', $event)"
   >
@@ -11,6 +12,12 @@
 <script>
 export default {
   name: 'wt-button',
+  props: {
+    color: {
+      type: String,
+      default: 'accent',
+    },
+  },
 };
 </script>
 
@@ -40,6 +47,13 @@ export default {
     border-radius: var(--border-radius--square);
     transition: var(--transition);
     cursor: pointer;
+
+    &--color {
+      &-secondary {
+        color: var(--text-primary-color);
+        background: var(--secondary-color);
+      }
+    }
 
     &:hover {
       box-shadow: var(--morf-style-up-50);

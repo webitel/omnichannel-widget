@@ -1,11 +1,11 @@
+const esModules = ['emoji-picker-element', '@webitel/ui-sdk/src', '@webitel/cc-ui-sdk/src', 'webitel-sdk'].join('|');
+
 module.exports = {
   preset: '@vue/cli-plugin-unit-jest',
   transform: {
     '^.+\\.jsx?$': '<rootDir>/node_modules/babel-jest',
   },
-  transformIgnorePatterns: [
-    '/node_modules/(?!@webitel/ui-sdk/src|@webitel/cc-ui-sdk/src|webitel-sdk).+\\.js$',
-  ],
+  transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
   reporters: ['default', 'bamboo-jest-reporter'],
   collectCoverage: true,
   // coverageThreshold: {
@@ -27,5 +27,5 @@ module.exports = {
     './tests/config/config.js',
     // './src/plugins/index.js',
   ],
-  // setupFilesAfterEnv: ['./tests/config/jest.config.js'],
+  setupFilesAfterEnv: ['./tests/config/jest.config.js'],
 };

@@ -1,7 +1,9 @@
 <template>
   <section
     class="wt-omni-widget-chat-message"
-    :class="{ 'wt-omni-widget-chat-message--my': my }"
+    :class="{
+      'wt-omni-widget-chat-message--my': my,
+     }"
   >
     <message-gallery
       v-if="isGallery"

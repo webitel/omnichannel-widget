@@ -1,20 +1,11 @@
 <template>
   <div class="wt-omni-widget-chat-footer-actions">
-    <wt-icon-btn
-      v-if="false"
-      class="wt-omni-widget-chat-footer-actions__attach"
-      icon="attach"
-      size="sm"
-      @click="openFileSelect"
-    >
-      <input
-        ref="attachment-input"
-        class="wt-omni-widget-chat-footer-actions__attach__input"
-        multiple
-        type="file"
-        @change="handleAttachments"
-      >
-    </wt-icon-btn>
+    <file-upload
+      @send="sendFiles"
+    ></file-upload>
+    <chat-emoji
+      @insert-emoji="$emit('emoji', $event)"
+    ></chat-emoji>
     <wt-icon-btn
       :permanent-shadow="false"
       class="wt-omni-widget-chat-footer-actions__send-btn"
@@ -29,9 +20,15 @@
 
 <script>
 import { mapActions } from 'vuex';
+import ChatEmoji from './wt-omni-widget-chat-emoji/wt-omni-widget-chat-emoji.vue';
+import FileUpload from './wt-omni-widget-file-upload/wt-omni-widget-file-upload.vue';
 
 export default {
   name: 'chat-footer-actions',
+  components: {
+    ChatEmoji,
+    FileUpload,
+  },
   props: {
     namespace: {
       type: String,
@@ -43,17 +40,10 @@ export default {
       sendDraft(dispatch, payload) {
         return dispatch(`${this.namespace}/SEND_DRAFT`, payload);
       },
-      sendFile(dispatch, payload) {
-        return dispatch(`${this.namespace}/SEND_FILE`, payload);
+      sendFiles(dispatch, payload) {
+        return dispatch(`${this.namespace}/SEND_FILES`, payload);
       },
     }),
-    openFileSelect() {
-      this.$refs['attachment-input'].click();
-    },
-    async handleAttachments(event) {
-      const files = Array.from(event.target.files);
-      await this.sendFile(files);
-    },
   },
 };
 </script>
@@ -63,6 +53,7 @@ export default {
   .wt-omni-widget-chat-footer-actions {
     display: flex;
     align-items: center;
+    gap: 10px;
     padding: var(--footer-padding);
     margin-top: 10px;
 
@@ -70,13 +61,6 @@ export default {
       margin-left: auto;
       background: var(--wt-omni-widget__accent-color);
     }
-  }
-
-  .wt-omni-widget-chat-footer-actions__attach__input {
-    width: 0;
-    height: 0;
-    opacity: 0;
-    pointer-events: none;
   }
 }
 </style>
