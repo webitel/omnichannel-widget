@@ -52,16 +52,10 @@ module.exports = {
 
     config.module.rule('js').exclude.add(/\.worker\.js$/);
 
-    // config.module
-    //       .rule('fonts')
-    //       .use('url-loader')
-    //       .loader('url-loader')
-    //       .tap((options) => {
-    //         options.limit = false;
-    //         options.fallback = 'file-loader';
-    //         // изменение настроек...
-    //         return options;
-    //       });
+    config.module
+          .rule('fonts')
+          .type('asset/inline')
+          .set('generator', {});
 
     config.module
           .rule('svg')
