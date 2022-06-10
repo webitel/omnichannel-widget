@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 // modules
 import chat from '../../modules/chat/store/chat';
+import notifications from '../../modules/notifications/notifications';
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ const state = {
 const actions = {
   INITIALIZE_SESSION: (context, payload) => Promise.allSettled([
     context.dispatch('chat/SUBSCRIBE_TO_MESSAGES', payload),
+    context.dispatch('notifications/INITIALIZE'),
   ]),
   CLOSE_SESSION: () => {
     throw new Error('HOW TO CLOSE SESSION?');
@@ -37,5 +39,6 @@ export default new Vuex.Store({
   mutations,
   modules: {
     chat,
+    notifications,
   },
 });

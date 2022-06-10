@@ -41,12 +41,20 @@ const actions = {
     context.commit('SET_MESSAGE_CLIENT', messageClient);
 
     context.commit('ADD_LISTENER', {
-      event: MessageType.INIT,
+      event: [MessageType.INIT],
       callback: (data) => context.dispatch('ON_SESSION_INFO_MESSAGE', data),
     });
 
     context.commit('ADD_LISTENER', {
-      event: MessageType.CLOSED,
+      event: [MessageType.TEXT, MessageType.FILE, MessageType.CONTACT, MessageType.CLOSED],
+      callback: (data) => {
+        if (context.getters.IS_MY_MESSAGE(data)) return context.dispatch('notifications/HANDLE_CHAT_MESSAGE');
+        return null;
+      },
+    });
+
+    context.commit('ADD_LISTENER', {
+      event: [MessageType.CLOSED],
       callback: () => context.dispatch('SET_CONNECTION_STATUS', true), // set "true" to isConnectionClosed
     });
 
@@ -213,15 +221,6 @@ const actions = {
   SET_CONNECTION_STATUS: (context, status) => {
     context.commit('SET_CONNECTION_STATUS', status);
   },
-
-  LISTEN_ON_MESSAGE: (context, callback) => {
-    context.commit('ADD_LISTENER', { event: MessageType.TEXT, callback });
-    context.commit('ADD_LISTENER', { event: MessageType.FILE, callback });
-    context.commit('ADD_LISTENER', { event: MessageType.CONTACT, callback });
-    context.commit('ADD_LISTENER', { event: MessageType.JOINED, callback });
-    context.commit('ADD_LISTENER', { event: MessageType.LEFT, callback });
-    context.commit('ADD_LISTENER', { event: MessageType.CLOSED, callback });
-  },
 };
 
 const mutations = {
@@ -258,7 +257,9 @@ const mutations = {
     state.isConnectionClosed = status;
   },
   ADD_LISTENER: (state, { event, callback }) => {
-    state._listeners[event].push(callback);
+    event.forEach((e) => {
+      state._listeners[e].push(callback);
+    });
   },
 };
 

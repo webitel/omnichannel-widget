@@ -1,3 +1,4 @@
+import deepequal from 'fast-deep-equal';
 import getContextMock from '../../../../../tests/unit/mock/store/contextMock';
 import MessageType from '../../enums/MessageType.enum';
 import chat from '../chat';
@@ -29,15 +30,13 @@ describe('chat module: actions', () => {
 
   it('SUBSCRIBE_TO_MESSAGES subscribes to MessageType.INIT', async () => {
     await chat.actions.SUBSCRIBE_TO_MESSAGES(context, { messageClient });
-    expect(context.commit.mock.calls.some(([, params]) => params.event ===
-      MessageType.INIT))
+    expect(context.commit.mock.calls.some(([, params]) => deepequal(params.event, [MessageType.INIT])))
     .toBe(true);
   });
 
   it('SUBSCRIBE_TO_MESSAGES subscribes to MessageType.CLOSED', async () => {
     await chat.actions.SUBSCRIBE_TO_MESSAGES(context, { messageClient });
-    expect(context.commit.mock.calls.some(([, params]) => params.event ===
-      MessageType.CLOSED))
+    expect(context.commit.mock.calls.some(([, params]) => deepequal(params.event, [MessageType.CLOSED])))
     .toBe(true);
   });
 
@@ -214,15 +213,5 @@ describe('chat module: actions', () => {
     const status = true;
     chat.actions.SET_CONNECTION_STATUS(context, status);
     expect(context.commit).toHaveBeenCalledWith('SET_CONNECTION_STATUS', status);
-  });
-
-  it('LISTEN_ON_MESSAGE subscribes on all "regular" message types', () => {
-    chat.actions.LISTEN_ON_MESSAGE(context, () => {});
-    expect(context.commit.mock.calls.find(([, params]) => params.event === MessageType.TEXT)).toBeTruthy();
-    expect(context.commit.mock.calls.find(([, params]) => params.event === MessageType.FILE)).toBeTruthy();
-    expect(context.commit.mock.calls.find(([, params]) => params.event === MessageType.CONTACT)).toBeTruthy();
-    expect(context.commit.mock.calls.find(([, params]) => params.event === MessageType.JOINED)).toBeTruthy();
-    expect(context.commit.mock.calls.find(([, params]) => params.event === MessageType.LEFT)).toBeTruthy();
-    expect(context.commit.mock.calls.find(([, params]) => params.event === MessageType.CLOSED)).toBeTruthy();
   });
 });
