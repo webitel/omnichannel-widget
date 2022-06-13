@@ -214,4 +214,16 @@ describe('chat module: actions', () => {
     chat.actions.SET_CONNECTION_STATUS(context, status);
     expect(context.commit).toHaveBeenCalledWith('SET_CONNECTION_STATUS', status);
   });
+
+  it('LISTEN_ON_MESSAGE subscribes on all "regular" message types', () => {
+    chat.actions.LISTEN_ON_MESSAGE(context, () => {});
+    expect(context.commit.mock.calls.find(([, params]) => params.event)[1].event).toEqual([
+      MessageType.TEXT,
+      MessageType.FILE,
+      MessageType.CONTACT,
+      MessageType.JOINED,
+      MessageType.LEFT,
+      MessageType.CLOSED,
+    ]);
+  });
 });

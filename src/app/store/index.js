@@ -16,9 +16,9 @@ const actions = {
     context.dispatch('chat/SUBSCRIBE_TO_MESSAGES', payload),
     context.dispatch('notifications/INITIALIZE'),
   ]),
-  CLOSE_SESSION: () => {
-    throw new Error('HOW TO CLOSE SESSION?');
-  },
+  CLOSE_SESSION: (context) => Promise.allSettled([
+    context.dispatch('notifications/DESTROY'),
+  ]),
   SET_CONFIG: (context, config) => {
     context.commit('SET_CONFIG', config);
   },

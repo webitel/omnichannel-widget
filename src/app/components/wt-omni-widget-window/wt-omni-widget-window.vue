@@ -23,12 +23,14 @@
 import { mapActions } from 'vuex';
 import ChatContent
   from '../../../modules/chat/components/wt-omni-widget-chat-content/wt-omni-widget-window-content.vue';
-import ChatFooter from '../../../modules/chat/components/wt-omni-widget-chat-footer/wt-omni-widget-window-footer.vue';
+import ChatFooter
+  from '../../../modules/chat/components/wt-omni-widget-chat-footer/wt-omni-widget-window-footer.vue';
 import Type from '../../enum/Type.enum';
 import MessageClient from '../../websocket/MessageClient';
 import WtOmniWidgetContentWrapper
   from './wt-omni-widget-window-content-wrapper/wt-omni-widget-window-content-wrapper.vue';
-import WtOmniWidgetFooterWrapper from './wt-omni-widget-window-footer-wrapper/wt-omni-widget-window-footer-wrapper.vue';
+import WtOmniWidgetFooterWrapper
+  from './wt-omni-widget-window-footer-wrapper/wt-omni-widget-window-footer-wrapper.vue';
 import WtOmniWidgetHeader from './wt-omni-widget-window-header/wt-omni-widget-window-header.vue';
 
 export default {
@@ -117,6 +119,10 @@ export default {
       this.initPreviewMode();
     } else {
       this.initSession();
+      window.addEventListener('beforeunload', async (e) => {
+        await this.closeSession();
+        delete e.returnValue; // page will always reload
+      });
     }
   },
 };

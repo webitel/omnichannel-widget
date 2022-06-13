@@ -1,15 +1,15 @@
 import { objSnakeToCamel } from '@webitel/ui-sdk/src/scripts/caseConverters';
 import axios from 'axios';
+import i18n from '../../../app/locale/i18n';
 import ChatAPI from '../api/chat';
 import MessageType from '../enums/MessageType.enum';
 import bToMb from '../scripts/bToMb';
 import parseMessage from '../scripts/parseMessage';
-import i18n from '../../../app/locale/i18n';
 
 const triggerListeners = ({
-                            listeners = [],
-                            payload,
-                          }) => Promise.all(listeners.map((callback) => callback(payload)));
+  listeners = [],
+  payload,
+}) => Promise.all(listeners.map((callback) => callback(payload)));
 
 const state = {
   messageClient: null,
@@ -48,7 +48,9 @@ const actions = {
     context.commit('ADD_LISTENER', {
       event: [MessageType.TEXT, MessageType.FILE, MessageType.CONTACT, MessageType.CLOSED],
       callback: (data) => {
-        if (context.getters.IS_MY_MESSAGE(data)) return context.dispatch('notifications/HANDLE_CHAT_MESSAGE');
+        if (context.getters.IS_MY_MESSAGE(data)) {
+          return context.dispatch('notifications/HANDLE_CHAT_MESSAGE', null, { root: true });
+        }
         return null;
       },
     });
@@ -72,7 +74,11 @@ const actions = {
 
   // process chat session data, received as 1st msg
   ON_SESSION_INFO_MESSAGE: (context, message) => {
-    const { user, msgs, mediaMaxSize = 0 } = message;
+    const {
+      user,
+      msgs,
+      mediaMaxSize = 0,
+    } = message;
     context.commit('SET_USER', user);
     context.commit('SET_MEDIA_MAX_SIZE', mediaMaxSize);
     if (msgs) {
@@ -81,20 +87,38 @@ const actions = {
   },
 
   ON_MESSAGE: async (context, _message) => {
-    const { message, seq } = parseMessage(objSnakeToCamel(_message.data));
-    if (seq) await context.dispatch('REPLACE_MESSAGE', { message, seq });
-    else await context.dispatch('ADD_MESSAGE', message);
+    const {
+      message,
+      seq,
+    } = parseMessage(objSnakeToCamel(_message.data));
+    if (seq) {
+      await context.dispatch('REPLACE_MESSAGE', {
+        message,
+        seq,
+      });
+    } else {
+      await context.dispatch('ADD_MESSAGE', message);
+    }
 
     const listeners = context.state._listeners[message.type];
     if (listeners && listeners.length) {
-      await triggerListeners({ listeners, payload: message });
+      await triggerListeners({
+        listeners,
+        payload: message,
+      });
     } else {
       console.warn(`No listeners for ${message.type} event`);
     }
   },
 
-  REPLACE_MESSAGE: (context, { message, seq }) => {
-    context.commit('REPLACE_MESSAGE_BY_SEQ', { message, seq });
+  REPLACE_MESSAGE: (context, {
+    message,
+    seq,
+  }) => {
+    context.commit('REPLACE_MESSAGE_BY_SEQ', {
+      message,
+      seq,
+    });
   },
 
   REMOVE_MESSAGE_BY_SEQ: (context, seq) => {
@@ -106,7 +130,10 @@ const actions = {
   },
 
   SEND_MENU: (context, { code }) => {
-    const message = { text: code, type: MessageType.TEXT };
+    const message = {
+      text: code,
+      type: MessageType.TEXT,
+    };
     return context.dispatch('SEND_MESSAGE', { message });
   },
 
@@ -114,7 +141,10 @@ const actions = {
     const text = context.state.draft.trim();
     if (!text) return; // DO NOT send empty message
     try {
-      const message = { text, type: MessageType.TEXT };
+      const message = {
+        text,
+        type: MessageType.TEXT,
+      };
       await context.dispatch('SEND_MESSAGE', { message });
       await context.dispatch('SET_DRAFT', '');
     } catch (err) {
@@ -152,7 +182,11 @@ const actions = {
         context.dispatch('ADD_MESSAGE', messageMock);
 
         // eslint-disable-next-line no-await-in-loop
-        await context.dispatch('_UPLOAD_FILE', { file, seq, messageMock });
+        await context.dispatch('_UPLOAD_FILE', {
+          file,
+          seq,
+          messageMock,
+        });
       } catch (err) {
         const message = {
           type: MessageType.ERROR,
@@ -165,7 +199,10 @@ const actions = {
     }
   },
 
-  _GET_FILE_PREVIEW: (context, { file, seq }) => {
+  _GET_FILE_PREVIEW: (context, {
+    file,
+    seq,
+  }) => {
     const message = {
       type: MessageType.FILE,
       file: {
@@ -182,7 +219,11 @@ const actions = {
     return message;
   },
 
-  _UPLOAD_FILE: async (context, { file, seq, messageMock }) => {
+  _UPLOAD_FILE: async (context, {
+    file,
+    seq,
+    messageMock,
+  }) => {
     const cancelToken = axios.CancelToken.source();
     // eslint-disable-next-line no-param-reassign
     messageMock.file.cancelUpload = () => {
@@ -190,7 +231,10 @@ const actions = {
       context.dispatch('REMOVE_MESSAGE_BY_SEQ', seq);
     };
 
-    const onUploadProgress = ({ total, loaded }) => {
+    const onUploadProgress = ({
+      total,
+      loaded,
+    }) => {
       const progress = Math.round((loaded / total) * 100); // calc 100%
       // eslint-disable-next-line no-param-reassign
       messageMock.file.uploadProgress = progress;
@@ -221,6 +265,20 @@ const actions = {
   SET_CONNECTION_STATUS: (context, status) => {
     context.commit('SET_CONNECTION_STATUS', status);
   },
+
+  LISTEN_ON_MESSAGE: (context, callback) => {
+    context.commit('ADD_LISTENER', {
+      event: [
+        MessageType.TEXT,
+        MessageType.FILE,
+        MessageType.CONTACT,
+        MessageType.JOINED,
+        MessageType.LEFT,
+        MessageType.CLOSED,
+      ],
+      callback,
+    });
+  },
 };
 
 const mutations = {
@@ -239,7 +297,10 @@ const mutations = {
   SET_DRAFT: (state, draft) => {
     state.draft = draft;
   },
-  REPLACE_MESSAGE_BY_SEQ: (state, { message, seq }) => {
+  REPLACE_MESSAGE_BY_SEQ: (state, {
+    message,
+    seq,
+  }) => {
     const msgIndex = state.messages.findIndex((msg) => msg.seq === seq);
     if (msgIndex !== -1) state.messages.splice(msgIndex, 1, message);
   },
@@ -256,7 +317,10 @@ const mutations = {
   SET_CONNECTION_STATUS: (state, status) => {
     state.isConnectionClosed = status;
   },
-  ADD_LISTENER: (state, { event, callback }) => {
+  ADD_LISTENER: (state, {
+    event,
+    callback,
+  }) => {
     event.forEach((e) => {
       state._listeners[e].push(callback);
     });
