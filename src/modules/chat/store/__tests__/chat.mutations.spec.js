@@ -78,7 +78,7 @@ describe('chat module: mutations', () => {
       [MessageType.CONTACT]: [],
     };
     const callback = () => {};
-    chat.mutations.ADD_LISTENER(state, { event: MessageType.CONTACT, callback });
+    chat.mutations.ADD_LISTENER(state, { event: [MessageType.CONTACT], callback });
     expect(state._listeners[MessageType.CONTACT]).toContain(callback);
   });
 });
