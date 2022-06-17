@@ -38,6 +38,9 @@ const getters = {
 const actions = {
   SUBSCRIBE_TO_MESSAGES: (context, { messageClient }) => {
     messageClient.addEventListener('message', (msg) => context.dispatch('ON_MESSAGE', msg));
+    messageClient.addEventListener('error', (msg) => context.dispatch('ON_WEBSOCKET_ERROR', msg));
+    messageClient.addEventListener('info', (msg) => context.dispatch('ON_WEBSOCKET_INFO', msg));
+
     context.commit('SET_MESSAGE_CLIENT', messageClient);
 
     context.commit('ADD_LISTENER', {
@@ -99,7 +102,26 @@ const actions = {
     } else {
       await context.dispatch('ADD_MESSAGE', message);
     }
+    await context.dispatch('TRIGGER_LISTENERS', message);
+  },
 
+  ON_WEBSOCKET_ERROR: async (context, { data: text }) => {
+    const message = {
+      type: MessageType.ERROR,
+      error: { text },
+    };
+    await context.dispatch('ADD_MESSAGE', message);
+    await context.dispatch('TRIGGER_LISTENERS', message);
+  },
+
+  ON_WEBSOCKET_INFO: async (context, { data }) => {
+    if (data.code !== 1006) return;
+    const message = { type: MessageType.CLOSED };
+    await context.dispatch('ADD_MESSAGE', message);
+    await context.dispatch('TRIGGER_LISTENERS', message);
+  },
+
+  TRIGGER_LISTENERS: async (context, message) => {
     const listeners = context.state._listeners[message.type];
     if (listeners && listeners.length) {
       await triggerListeners({
@@ -109,7 +131,7 @@ const actions = {
     } else {
       console.warn(`No listeners for ${message.type} event`);
     }
-  },
+    },
 
   REPLACE_MESSAGE: (context, {
     message,

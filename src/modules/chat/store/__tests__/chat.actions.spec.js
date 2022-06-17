@@ -91,6 +91,27 @@ describe('chat module: actions', () => {
     .toHaveBeenCalledWith('REPLACE_MESSAGE', output);
   });
 
+  it('ON_MESSAGE dispatches TRIGGER_LISTENERS with its message', async () => {
+    const message = { jest: 'jest' };
+    const data = { data: { message } };
+    await chat.actions.ON_MESSAGE(context, data);
+    expect(context.dispatch).toHaveBeenCalledWith('TRIGGER_LISTENERS', message);
+  });
+
+  it('ON_WEBSOCKET_ERROR dispatches ADD_MESSAGE', async () => {
+    const error = { data: 'jest' };
+    const message = { type: MessageType.ERROR, error: { text: 'jest' } };
+    await chat.actions.ON_WEBSOCKET_ERROR(context, error);
+    expect(context.dispatch).toHaveBeenCalledWith('ADD_MESSAGE', message);
+  });
+
+  it('ON_WEBSOCKET_INFO dispatches ADD_MESSAGE with CLOSED MessageType, if error code is 1006', async () => {
+    const info = { data: { code: 1006 } };
+    const message = { type: MessageType.CLOSED };
+    await chat.actions.ON_WEBSOCKET_INFO(context, info);
+    expect(context.dispatch).toHaveBeenCalledWith('ADD_MESSAGE', message);
+  });
+
   it('REPLACE_MESSAGE commits REPLACE_MESSAGE_BY_SEQ with passed message and seq', () => {
     const payload = { message: { jest: 123 }, seq: 321 };
     chat.actions.REPLACE_MESSAGE(context, payload);
