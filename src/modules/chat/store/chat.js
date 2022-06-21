@@ -18,6 +18,7 @@ const state = {
   user: {},
   mediaMaxSize: 0,
   seq: 1,
+  sendTimeout: 5,
   isConnectionClosed: false,
   _listeners: {
     [MessageType.INIT]: [],
@@ -106,9 +107,11 @@ const actions = {
       user,
       msgs,
       mediaMaxSize = 0,
+      sendTimeout = 5,
     } = message;
     context.commit('SET_USER', user);
     context.commit('SET_MEDIA_MAX_SIZE', mediaMaxSize);
+    context.commit('SET_SEND_TIMEOUT', sendTimeout);
     if (msgs) {
       const messages = msgs.map((msg) => new Message(msg));
       context.commit('SET_MESSAGES', messages);
@@ -273,7 +276,7 @@ const actions = {
   SEND_MESSAGE: (context, { message, seq }) => {
     try {
       context.state.messageClient.send({ message, seq });
-      message.handleSend();
+      message.setSendingTimeout(context.state.sendTimeout);
     } catch (err) {
       throw err;
     }
@@ -314,6 +317,9 @@ const mutations = {
   },
   SET_MEDIA_MAX_SIZE: (state, mediaMaxSize) => {
     state.mediaMaxSize = mediaMaxSize;
+  },
+  SET_SEND_TIMEOUT: (state, sendTimeout) => {
+    state.sendTimeout = sendTimeout;
   },
   SET_DRAFT: (state, draft) => {
     state.draft = draft;

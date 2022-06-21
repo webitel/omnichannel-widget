@@ -38,12 +38,13 @@ export default class Message {
 
   #initPreview({ seq, ...rest }) {
     Object.assign(this, rest);
+    this.createdAt = Date.now();
     this.seq = seq;
   }
 
-  handleSend() {
+  setSendingTimeout(timeout = 5) {
     setTimeout(() => {
       this.notSent = true;
-    }, 1000);
+    }, timeout * 1000);
   }
 }
