@@ -22,6 +22,7 @@
       :buttons="message.buttons"
       :namespace="namespace"
     ></message-menu>
+    {{ message.status }}
   </section>
 </template>
 

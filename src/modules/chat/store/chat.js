@@ -1,15 +1,15 @@
-import { objSnakeToCamel } from '@webitel/ui-sdk/src/scripts/caseConverters';
 import axios from 'axios';
+import { objSnakeToCamel } from '@webitel/ui-sdk/src/scripts/caseConverters';
 import i18n from '../../../app/locale/i18n';
 import ChatAPI from '../api/chat';
+import Message from '../classes/Message.class';
 import MessageType from '../enums/MessageType.enum';
 import bToMb from '../scripts/bToMb';
-import parseMessage from '../scripts/parseMessage';
 
 const triggerListeners = ({
-  listeners = [],
-  payload,
-}) => Promise.all(listeners.map((callback) => callback(payload)));
+                            listeners = [],
+                            payload,
+                          }) => Promise.all(listeners.map((callback) => callback(payload)));
 
 const state = {
   messageClient: null,
@@ -31,25 +31,28 @@ const state = {
 };
 
 const getters = {
-  IS_MY_MESSAGE: (state) => (message) => message.from?.contact
-    === state.user?.contact,
+  // check seq cause if no session message => no user => getter is always falsy
+  IS_MY_MESSAGE: (state) => (message) => (
+    message.seq
+    || message.from?.contact === state.user?.contact
+  ),
 };
 
 const actions = {
   SUBSCRIBE_TO_MESSAGES: (context, { messageClient }) => {
-    messageClient.addEventListener('message', (msg) => context.dispatch('ON_MESSAGE', msg));
+    messageClient.addEventListener('message', (msg) => context.dispatch('ON_WEBSOCKET_MESSAGE', msg));
     messageClient.addEventListener('error', (msg) => context.dispatch('ON_WEBSOCKET_ERROR', msg));
     messageClient.addEventListener('info', (msg) => context.dispatch('ON_WEBSOCKET_INFO', msg));
 
     context.commit('SET_MESSAGE_CLIENT', messageClient);
 
     context.commit('ADD_LISTENER', {
-      event: [MessageType.INIT],
-      callback: (data) => context.dispatch('ON_SESSION_INFO_MESSAGE', data),
-    });
-
-    context.commit('ADD_LISTENER', {
-      event: [MessageType.TEXT, MessageType.FILE, MessageType.CONTACT, MessageType.CLOSED],
+      event: [
+        MessageType.TEXT,
+        MessageType.FILE,
+        MessageType.CONTACT,
+        MessageType.CLOSED,
+      ],
       callback: (data) => {
         if (context.getters.IS_MY_MESSAGE(data)) {
           return context.dispatch('notifications/HANDLE_CHAT_MESSAGE', null, { root: true });
@@ -75,6 +78,28 @@ const actions = {
     }
   },
 
+  ON_WEBSOCKET_ERROR: async (context, { data: text }) => {
+    const message = new Message({
+      type: MessageType.ERROR,
+      error: { text },
+    });
+    await context.dispatch('ADD_MESSAGE', message);
+    await context.dispatch('TRIGGER_LISTENERS', message);
+  },
+
+  ON_WEBSOCKET_INFO: async (context, { data }) => {
+    if (data.code !== 1006) return;
+    const message = new Message({ type: MessageType.CLOSED });
+    await context.dispatch('ADD_MESSAGE', message);
+    await context.dispatch('TRIGGER_LISTENERS', message);
+  },
+
+  ON_WEBSOCKET_MESSAGE: (context, msg) => (
+    !msg.data.type && !msg.data.message
+      ? context.dispatch('ON_SESSION_INFO_MESSAGE', objSnakeToCamel(msg.data))
+      : context.dispatch('ON_MESSAGE', objSnakeToCamel(msg.data))
+  ),
+
   // process chat session data, received as 1st msg
   ON_SESSION_INFO_MESSAGE: (context, message) => {
     const {
@@ -85,39 +110,18 @@ const actions = {
     context.commit('SET_USER', user);
     context.commit('SET_MEDIA_MAX_SIZE', mediaMaxSize);
     if (msgs) {
-      context.commit('SET_MESSAGES', msgs);
+      const messages = msgs.map((msg) => new Message(msg));
+      context.commit('SET_MESSAGES', messages);
     }
   },
 
-  ON_MESSAGE: async (context, _message) => {
-    const {
-      message,
-      seq,
-    } = parseMessage(objSnakeToCamel(_message.data));
+  ON_MESSAGE: async (context, { error, message: msg = error, seq }) => {
+    const message = new Message(msg);
     if (seq) {
-      await context.dispatch('REPLACE_MESSAGE', {
-        message,
-        seq,
-      });
+      await context.dispatch('REPLACE_MESSAGE', { message, seq });
     } else {
       await context.dispatch('ADD_MESSAGE', message);
     }
-    await context.dispatch('TRIGGER_LISTENERS', message);
-  },
-
-  ON_WEBSOCKET_ERROR: async (context, { data: text }) => {
-    const message = {
-      type: MessageType.ERROR,
-      error: { text },
-    };
-    await context.dispatch('ADD_MESSAGE', message);
-    await context.dispatch('TRIGGER_LISTENERS', message);
-  },
-
-  ON_WEBSOCKET_INFO: async (context, { data }) => {
-    if (data.code !== 1006) return;
-    const message = { type: MessageType.CLOSED };
-    await context.dispatch('ADD_MESSAGE', message);
     await context.dispatch('TRIGGER_LISTENERS', message);
   },
 
@@ -131,7 +135,7 @@ const actions = {
     } else {
       console.warn(`No listeners for ${message.type} event`);
     }
-    },
+  },
 
   REPLACE_MESSAGE: (context, {
     message,
@@ -151,32 +155,37 @@ const actions = {
     context.commit('PUSH_MESSAGE', message);
   },
 
-  SEND_MENU: (context, { code }) => {
-    const message = {
+  GENERATE_USER_MESSAGE: (context, content) => {
+    const { seq } = context.state;
+    context.commit('INCREMENT_SEQ');
+
+    return new Message({
+      ...content,
+      seq,
+    });
+  },
+
+  SEND_MENU: async (context, { code }) => {
+    const message = await context.dispatch('GENERATE_USER_MESSAGE', {
       text: code,
       type: MessageType.TEXT,
-    };
-    return context.dispatch('SEND_MESSAGE', { message });
+    });
+    await context.dispatch('ADD_MESSAGE', message);
+    return context.dispatch('SEND_MESSAGE', { seq: message.seq, message });
   },
 
   SEND_DRAFT: async (context) => {
     const text = context.state.draft.trim();
     if (!text) return; // DO NOT send empty message
+
     try {
-      const message = {
+      const message = await context.dispatch('GENERATE_USER_MESSAGE', {
         text,
         type: MessageType.TEXT,
-      };
-      await context.dispatch('SEND_MESSAGE', { message });
+      });
+      await context.dispatch('ADD_MESSAGE', message);
+      await context.dispatch('SEND_MESSAGE', { seq: message.seq, message });
       await context.dispatch('SET_DRAFT', '');
-    } catch (err) {
-      throw err;
-    }
-  },
-
-  SEND_MESSAGE: (context, message) => {
-    try {
-      context.state.messageClient.send(message);
     } catch (err) {
       throw err;
     }
@@ -185,11 +194,7 @@ const actions = {
   SEND_FILES: async (context, files) => {
     // eslint-disable-next-line no-restricted-syntax
     for (const file of files) {
-      const { seq } = context.state;
-      context.commit('INCREMENT_SEQ');
-
       try {
-        console.info(file.size, context.state.mediaMaxSize);
         if (file.size > context.state.mediaMaxSize) {
           throw new RangeError(i18n.t('errors.fileTooLarge', {
             file: file.name,
@@ -197,54 +202,39 @@ const actions = {
           }));
         }
         // eslint-disable-next-line no-await-in-loop
-        const messageMock = await context.dispatch('_GET_FILE_PREVIEW', {
-          file,
-          seq,
+        const messageMock = await context.dispatch('GENERATE_USER_MESSAGE', {
+          type: MessageType.FILE,
+          file: {
+            url: file.url, // prop, set by file-upload-preview-popup
+            mime: file.type,
+            name: file.name,
+            size: file.size,
+            uploadProgress: 0,
+          },
         });
         context.dispatch('ADD_MESSAGE', messageMock);
 
         // eslint-disable-next-line no-await-in-loop
         await context.dispatch('_UPLOAD_FILE', {
           file,
-          seq,
           messageMock,
         });
       } catch (err) {
-        const message = {
+        const message = new Message({
           type: MessageType.ERROR,
           error: {
             text: err.response?.data?.detail || err.message,
           },
-        };
+        });
         context.dispatch('ADD_MESSAGE', message);
       }
     }
   },
 
-  _GET_FILE_PREVIEW: (context, {
-    file,
-    seq,
-  }) => {
-    const message = {
-      type: MessageType.FILE,
-      file: {
-        url: file.url, // prop, set by file-upload-preview-popup
-        mime: file.type,
-        name: file.name,
-        size: file.size,
-        uploadProgress: 0,
-      },
-      from: context.state.user,
-      seq,
-    };
-
-    return message;
-  },
-
   _UPLOAD_FILE: async (context, {
     file,
-    seq,
     messageMock,
+    seq = messageMock.seq,
   }) => {
     const cancelToken = axios.CancelToken.source();
     // eslint-disable-next-line no-param-reassign
@@ -254,9 +244,9 @@ const actions = {
     };
 
     const onUploadProgress = ({
-      total,
-      loaded,
-    }) => {
+                                total,
+                                loaded,
+                              }) => {
       const progress = Math.round((loaded / total) * 100); // calc 100%
       // eslint-disable-next-line no-param-reassign
       messageMock.file.uploadProgress = progress;
@@ -269,15 +259,24 @@ const actions = {
       cancelToken,
     });
 
-    const message = {
+    const message = new Message({
       message: {
         type: MessageType.FILE,
         file: fileLink,
       },
       seq,
-    };
+    });
 
     return context.dispatch('SEND_MESSAGE', message);
+  },
+
+  SEND_MESSAGE: (context, { message, seq }) => {
+    try {
+      context.state.messageClient.send({ message, seq });
+      message.handleSend();
+    } catch (err) {
+      throw err;
+    }
   },
 
   SET_DRAFT: (context, draft) => {
