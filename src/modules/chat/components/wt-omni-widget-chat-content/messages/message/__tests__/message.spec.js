@@ -5,6 +5,7 @@ import MessageAttachment from '../message-attachment/message-attachment.vue';
 import MessageGallery from '../message-gallery/message-gallery.vue';
 import MessageMenu from '../message-menu/message-menu.vue';
 import MessageText from '../message-text/message-text.vue';
+import MessageStatus from '../message-status/message-status.vue';
 
 const namespace = 'chats';
 const mocks = {
@@ -70,5 +71,16 @@ describe('Message: Component appearances', () => {
       mocks,
     });
     expect(wrapper.findComponent(MessageGallery).isVisible()).toBe(true);
+  });
+  it('draws MessageStatus', () => {
+    const message = { file: { mime: 'image' } };
+    const wrapper = shallowMount(Message, {
+      propsData: {
+        message,
+        namespace,
+      },
+      mocks,
+    });
+    expect(wrapper.findComponent(MessageStatus).isVisible()).toBe(true);
   });
 });
