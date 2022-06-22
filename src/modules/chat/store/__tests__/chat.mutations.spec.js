@@ -26,6 +26,12 @@ describe('chat module: mutations', () => {
     expect(state.user).toEqual(value);
   });
 
+  it('SET_SEND_TIMEOUT sets passed sendTimeout', () => {
+    const value = 'jest';
+    chat.mutations.SET_SEND_TIMEOUT(state, value);
+    expect(state.sendTimeout).toEqual(value);
+  });
+
   it('SET_MEDIA_MAX_SIZE sets passed mediaMaxSize', () => {
     const value = 'jest';
     chat.mutations.SET_MEDIA_MAX_SIZE(state, value);

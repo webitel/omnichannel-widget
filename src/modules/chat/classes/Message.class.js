@@ -37,8 +37,8 @@ export default class Message {
   }
 
   #initPreview({ seq, ...rest }) {
+    this.createdAt = new Date().setSeconds(0);
     Object.assign(this, rest);
-    this.createdAt = Date.now();
     this.seq = seq;
   }
 
