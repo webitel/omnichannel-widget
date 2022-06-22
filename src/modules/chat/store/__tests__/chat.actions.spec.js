@@ -60,19 +60,21 @@ describe('chat module: actions', () => {
     const msgs = [{ jest: 'foo' }];
     const message = { msgs };
     await chat.actions.ON_SESSION_INFO_MESSAGE(context, message);
-    expect(context.commit)
-    .toHaveBeenCalledWith('SET_MESSAGES', [new Message(msgs[0])]);
+    const index = context.commit.mock.calls
+    .findIndex(([commit]) => commit === 'SET_MESSAGES');
+    expect(context.commit.mock.calls[index][1][0]).toBeInstanceOf(Message);
   });
 
   it('ON_MESSAGE dispatches REPLACE_MESSAGE, if passed message has "seq"', async () => {
     const seq = 123;
     const message = { jest: 'jest' };
     const data = { seq, message };
-    const output = { message: new Message(message), seq };
     context.state._listeners = {};
     await chat.actions.ON_MESSAGE(context, data);
-    expect(context.dispatch).toHaveBeenCalledWith('REPLACE_MESSAGE', output);
-    expect(context.dispatch).not.toHaveBeenCalledWith('ADD_MESSAGE', output);
+    const index = context.dispatch.mock.calls
+    .findIndex(([dispatch]) => dispatch === 'REPLACE_MESSAGE');
+    expect(index).not.toBe(-1);
+    expect(context.dispatch).not.toHaveBeenCalledWith('ADD_MESSAGE');
   });
 
   it('ON_MESSAGE dispatches ADD_MESSAGE, if passed message has no "seq"', async () => {
@@ -112,6 +114,25 @@ describe('chat module: actions', () => {
     const index = context.dispatch.mock.calls
     .findIndex(([action]) => action === 'ADD_MESSAGE');
     expect(context.dispatch.mock.calls[index][1]).toBeInstanceOf(Message);
+  });
+
+  it('ON_WEBSOCKET_MESSAGE dispatches ON_SESSION_INFO_MESSAGE if no message and type were passed', async () => {
+    const msg = { data: { code: 1006 } };
+    // const message = new Message({ type: MessageType.CLOSED });
+    await chat.actions.ON_WEBSOCKET_MESSAGE(context, msg);
+    expect(context.dispatch.mock.calls[0][0]).toBe('ON_SESSION_INFO_MESSAGE');
+  });
+
+  it('ON_WEBSOCKET_MESSAGE dispatches ON_SESSION_INFO_MESSAGE if message and type were passed', async () => {
+    const msg = { data: { type: 'jest', message: {} } };
+    // const message = new Message({ type: MessageType.CLOSED });
+    await chat.actions.ON_WEBSOCKET_MESSAGE(context, msg);
+    expect(context.dispatch.mock.calls[0][0]).toBe('ON_MESSAGE');
+  });
+
+  it('GENERATE_USER_MESSAGE commits INCREMENT_SEQ', async () => {
+    await chat.actions.GENERATE_USER_MESSAGE(context, {});
+    expect(context.commit).toHaveBeenCalledWith('INCREMENT_SEQ');
   });
 
   it('REPLACE_MESSAGE commits REPLACE_MESSAGE_BY_SEQ with passed message and seq', () => {

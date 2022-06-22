@@ -2,7 +2,7 @@ import MessageStatus from '../enums/MessageStatus.enum';
 import MessageType from '../enums/MessageType.enum';
 
 export default class Message {
-  notSent = false;
+  #notSent = false;
 
   constructor(msg) {
     if (msg.id) {
@@ -13,11 +13,11 @@ export default class Message {
   }
 
   get preview() {
-    return !!this.id;
+    return !this.id;
   }
 
   get status() {
-    if (this.notSent) return MessageStatus.ERROR;
+    if (this.#notSent) return MessageStatus.ERROR;
     if (this.seq) return MessageStatus.SENDING;
     return MessageStatus.SENT;
   }
@@ -43,8 +43,11 @@ export default class Message {
   }
 
   setSendingTimeout(timeout = 5) {
-    setTimeout(() => {
-      this.notSent = true;
-    }, timeout * 1000);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.#notSent = true;
+        resolve();
+      }, timeout * 1000);
+    });
   }
 }
