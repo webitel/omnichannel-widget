@@ -37,6 +37,16 @@ const getters = {
     !!message.seq
     || message.from?.contact === state.user?.contact
   ),
+  SHOW_BUTTONS: (state, getters) => (message) => {
+    const findLastIndexOf = (arr) => (callback) => {
+      let index = arr.length;
+      while (index--) {
+        if (callback(arr[index], index, arr)) return index;
+      }
+      return -1;
+    };
+    return state.messages.indexOf(message) > findLastIndexOf(state.messages)((msg) => getters.IS_MY_MESSAGE(msg));
+  },
 };
 
 const actions = {

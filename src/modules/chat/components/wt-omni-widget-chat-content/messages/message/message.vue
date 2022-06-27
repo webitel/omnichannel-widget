@@ -18,7 +18,7 @@
       :file="message.file"
     ></message-file>
     <message-menu
-      v-if="message.buttons"
+      v-if="showButtons"
       :buttons="message.buttons"
       :namespace="namespace"
     ></message-menu>
@@ -40,7 +40,7 @@ import MessageMenu from './message-menu/message-menu.vue';
 import MessageStatus from './message-status/message-status.vue';
 
 export default {
-  name: 'message',
+  name: 'chat-message',
   mixins: [chatMessageMixin],
   components: {
     MessageGallery,
@@ -58,6 +58,9 @@ export default {
   computed: {
     my() {
       return this.$store.getters[`${this.namespace}/IS_MY_MESSAGE`](this.message);
+    },
+    showButtons() {
+      return this.message.buttons && this.$store.getters[`${this.namespace}/SHOW_BUTTONS`](this.message);
     },
     isGallery() {
       return this.message.file?.mime?.includes('image');
