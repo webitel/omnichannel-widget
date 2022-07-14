@@ -81,6 +81,9 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget {
+  .wt-omni-widget-file-upload__action {
+    width: 24px; // prevent mobile overflow from input https://my.webitel.com/browse/WTEL-2755
+  }
   .wt-omni-widget-file-upload__input {
     width: 0;
     height: 0;
