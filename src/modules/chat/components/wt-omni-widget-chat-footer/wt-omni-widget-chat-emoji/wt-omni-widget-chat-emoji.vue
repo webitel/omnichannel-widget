@@ -39,6 +39,7 @@ export default {
         i18n: this.$i18n.t('emojiPicker'),
       });
       this.appendPicker();
+      this.picker.classList.add('light');
     },
     appendPicker() {
       this.$refs['emoji-picker-wrapper'].appendChild(this.picker);
@@ -57,18 +58,27 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget .wt-omni-widget-chat-emoji {
-  width: 100%;
   position: relative;
+  display: block;
 
   ::v-deep emoji-picker {
     @extend %wt-scrollbar;
     @extend %typo-body-md;
 
+    /*
+      I needed to center emoji-picker, but it is absolutely positioned relatively
+      to emoji-picker icon, that isn't centered, and i cannot use portal-vue
+      because then emoji-picker loses its reference and cannot initialize iteself
+      so i copied sizing computations from wt-omni-widget-window.vue and adjusted
+      "left" property to fit correctly in window wrapper
+     */
+    width: calc(100vw - var(--chat-offset) * 2);
+    max-width: 390px;
+    left: -58px;
+
     position: absolute;
     z-index: 1;
     bottom: calc(100% + 10px);
-    left: 50%;
-    transform: translateX(-50%);
     max-height: 285px;
     overflow-y: scroll;
     border-radius: var(--border-radius--square);
@@ -83,6 +93,17 @@ export default {
     --input-border-radius: 20px;
     --input-font-color: var(--contrast-color);
     --input-border-color: transparent;
+
+    // https://github.com/nolanlawson/emoji-picker-element#small-screen-sizes
+    @media screen and (max-width: 425px) {
+      --num-columns: 7;
+      --category-emoji-size: 1rem;
+    }
+
+    @media screen and (max-width: 400px) {
+      --num-columns: 6;
+      --category-emoji-size: 0.75rem;
+    }
   }
 
   &.wt-omni-widget--rounded ::v-deep emoji-picker {

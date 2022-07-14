@@ -1,6 +1,6 @@
 {
   "name": "omnichannel-widget",
-  "version": "22.05.0",
+  "version": "22.05.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

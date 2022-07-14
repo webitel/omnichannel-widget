@@ -6,6 +6,9 @@ const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
+  // devServer: {
+  //   https: true,
+  // },
   css: {
     loaderOptions: {
       sass: {
