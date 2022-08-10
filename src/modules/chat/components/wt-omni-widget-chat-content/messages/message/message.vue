@@ -18,10 +18,15 @@
       :file="message.file"
     ></message-file>
     <message-menu
-      v-if="message.buttons"
+      v-if="showButtons"
       :buttons="message.buttons"
       :namespace="namespace"
     ></message-menu>
+    <message-status
+      :my="my"
+      :status="message.status"
+      :created-at="message.createdAt"
+    ></message-status>
   </section>
 </template>
 
@@ -32,15 +37,17 @@ import MessageGallery from './message-gallery/message-gallery.vue';
 import MessageText from './message-text/message-text.vue';
 import MessageFile from './message-attachment/message-attachment.vue';
 import MessageMenu from './message-menu/message-menu.vue';
+import MessageStatus from './message-status/message-status.vue';
 
 export default {
-  name: 'message',
+  name: 'chat-message',
   mixins: [chatMessageMixin],
   components: {
     MessageGallery,
     MessageText,
     MessageFile,
     MessageMenu,
+    MessageStatus,
   },
   props: {
     namespace: {
@@ -51,6 +58,9 @@ export default {
   computed: {
     my() {
       return this.$store.getters[`${this.namespace}/IS_MY_MESSAGE`](this.message);
+    },
+    showButtons() {
+      return this.message.buttons && this.$store.getters[`${this.namespace}/SHOW_BUTTONS`](this.message);
     },
     isGallery() {
       return this.message.file?.mime?.includes('image');
@@ -64,9 +74,10 @@ export default {
 
 #wt-omni-widget {
   .wt-omni-widget-chat-message {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 8px;
   }
 }
 </style>

@@ -69,6 +69,7 @@ export default {
     background: var(--main-color);
     box-shadow: var(--morf-style-up-50);
     gap: 15px;
+    z-index: 1;
   }
 
   .wt-omni-widget-file-upload-preview-popup__actions {
