@@ -54,6 +54,9 @@ export default {
                 url = /^mailto:/.test(url) ? url : 'mailto:'.concat(url);
                 break;
               }
+              case ChatChannel.VIBER: {
+                break;
+              }
               default: {
                 url = /^(http(s?)):/.test(url) ? url : 'https://'.concat(url);
               }
