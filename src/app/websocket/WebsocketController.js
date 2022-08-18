@@ -39,7 +39,7 @@ export default class WebsocketController {
   _wsOnError() {
     this._callback({
       type: MessageEvents.ERROR,
-      data: 'ws error have occured',
+      data: 'Websocket error has occured. Please check your internet connection!',
     });
   }
 
