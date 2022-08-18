@@ -16,7 +16,7 @@ describe('WtOmniWidgetButtonsMenu', () => {
 
   it('correctly computes menu, processing urls: no "https" case', () => {
     const alternativeChannels = {
-      [ChatChannel.VIBER]: 'viber.co',
+      [ChatChannel.VIBER]: 'viber://co',
     };
     const wrapper = shallowMount(WtOmniWidgetButtonsMenu, {
       computed: {
@@ -25,26 +25,12 @@ describe('WtOmniWidgetButtonsMenu', () => {
         },
       },
     });
-    expect(wrapper.vm.buttons).toEqual([{type: ChatChannel.VIBER, url: 'https://viber.co' }]);
-  });
-
-  it('correctly computes menu, processing urls: no "http" case', () => {
-    const alternativeChannels = {
-      [ChatChannel.VIBER]: 'http://viber.co',
-    };
-    const wrapper = shallowMount(WtOmniWidgetButtonsMenu, {
-      computed: {
-        config() {
-          return { alternativeChannels };
-        },
-      },
-    });
-    expect(wrapper.vm.buttons).toEqual([{type: ChatChannel.VIBER, url: 'http://viber.co' }]);
+    expect(wrapper.vm.buttons).toEqual([{ type: ChatChannel.VIBER, url: 'viber://co' }]);
   });
 
   it('correctly computes menu, processing urls: "https" case', () => {
     const alternativeChannels = {
-      [ChatChannel.VIBER]: 'https://viber.co',
+      [ChatChannel.WHATSAPP]: 'https://whatsapp.co',
     };
     const wrapper = shallowMount(WtOmniWidgetButtonsMenu, {
       computed: {
@@ -53,7 +39,7 @@ describe('WtOmniWidgetButtonsMenu', () => {
         },
       },
     });
-    expect(wrapper.vm.buttons).toEqual([{type: ChatChannel.VIBER, url: 'https://viber.co' }]);
+    expect(wrapper.vm.buttons).toEqual([{type: ChatChannel.WHATSAPP, url: 'https://whatsapp.co' }]);
   });
 
   it('correctly computes menu, processing urls: no "mailto:" email case', () => {
