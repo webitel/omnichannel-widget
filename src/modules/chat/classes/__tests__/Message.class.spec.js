@@ -26,7 +26,7 @@ describe('Message class', () => {
 
   beforeEach(() => {
     input = { id: 1, foo: [{ jest: 'jest' }] };
-    output = { id: 1, foo: [{ jest: 'jest' }] };
+    output = { id: 1, foo: [{ jest: 'jest' }], _notSent: false, };
   });
 
   it('correctly parses Text message (MessageType.TEXT)', () => {
