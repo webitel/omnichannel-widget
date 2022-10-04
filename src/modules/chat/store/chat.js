@@ -266,7 +266,7 @@ const actions = {
     };
 
     const [fileLink] = await ChatAPI.sendFile({
-      uri: context.rootState.config.wsUrl,
+      uri: context.rootState.config.chat.url,
       file,
       onUploadProgress,
       cancelToken,

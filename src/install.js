@@ -25,19 +25,23 @@ const Instance = new Vue({
 });
 
 const devConfig = {
-  _previewMode: false, // [false, 'chat', 'button']
+  view: {
+    _previewMode: false, // [false, 'chat', 'button']
+  },
 };
 
-const defaultConfig = {
-  ...devConfig,
-  borderRadiusStyle: 'square', // ['square', 'rounded'],
-  lang: 'en', // ['en', 'ru', 'ua'],
-  position: 'right', // ['right', 'left', 'static']
-  accentColor: 'hsl(42, 100%, 50%)',
-  btnOpacity: 1,
-  wsUrl: 'wss://dev.webitel.com/chat/ws',
-  openTimeout: false, // numeric value in sec
-};
+const defaultConfig = merge(devConfig, {
+  view: {
+    borderRadiusStyle: 'square', // ['square', 'rounded'],
+    lang: 'en', // ['en', 'ru', 'ua'],
+    position: 'right', // ['right', 'left', 'static']
+    accentColor: 'hsl(42, 100%, 50%)',
+    btnOpacity: 1,
+  },
+  chat: null,
+  appointment: null,
+  alternativeChannels: null,
+});
 
 export default class WtOmniWidget {
   constructor(selector, _config = {}) {

@@ -6,7 +6,7 @@ export default {
       config: (state) => state.config,
     }),
     isPreviewMode() {
-      return this.config._previewMode;
+      return this.config.view._previewMode;
     },
   },
 };

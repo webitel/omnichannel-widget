@@ -6,7 +6,9 @@ import WtOmniWidgetButtonsMenu from '../wt-omni-widget-button/wt-omni-widget-but
 
 const computed = {
   config() {
-    return {};
+    return {
+      view: {},
+    };
   },
 };
 

@@ -9,8 +9,11 @@
   >
     <transition name="widget-appearance-transition">
       <keep-alive>
+        <wt-omni-widget-popup
+          v-if="isPopupOpened"
+        ></wt-omni-widget-popup>
         <wt-omni-widget-window
-          v-if="isWidgetOpened"
+          v-else-if="isWidgetOpened"
           :class="{
         'wt-omni-widget-window--preview-mode': isPreviewMode === 'chat',
       }"
@@ -19,7 +22,7 @@
         ></wt-omni-widget-window>
         <wt-omni-widget-buttons-menu
           v-else
-          @open="openWidget"
+          @open="handleBtnOpen"
         ></wt-omni-widget-buttons-menu>
       </keep-alive>
     </transition>
@@ -29,6 +32,8 @@
 <script>
 import WtOmniWidgetButtonsMenu from './wt-omni-widget-button/wt-omni-widget-buttons-menu.vue';
 import WtOmniWidgetWindow from './wt-omni-widget-window/wt-omni-widget-window.vue';
+import WtOmniWidgetPopup from './wt-omni-widget-popup/wt-omni-widget-popup.vue';
+import ChatChannel from '../enum/ChatChannel.enum';
 
 let openTimeoutContainer = null;
 
@@ -36,31 +41,33 @@ export default {
   name: 'wt-omni-widget',
   components: {
     WtOmniWidgetWindow,
+    WtOmniWidgetPopup,
     WtOmniWidgetButtonsMenu,
   },
   data: () => ({
+    isPopupOpened: true,
     isWidgetOpened: false,
   }),
 
   computed: {
     borderRadiusStyleClass() {
-      switch (this.config.borderRadiusStyle) {
+      switch (this.config.view.borderRadiusStyle) {
         case 'square':
-          return this.config.borderRadiusStyle;
+          return this.config.view.borderRadiusStyle;
         case 'rounded':
-          return this.config.borderRadiusStyle;
+          return this.config.view.borderRadiusStyle;
         default:
           return 'square';
       }
     },
     positionClass() {
-      switch (this.config.position) {
+      switch (this.config.view.position) {
         case 'right':
-          return this.config.position;
+          return this.config.view.position;
         case 'left':
-          return this.config.position;
+          return this.config.view.position;
         case 'static':
-          return this.config.position;
+          return this.config.view.position;
         default:
           return 'right';
       }
@@ -71,21 +78,34 @@ export default {
     applyGlobalConfig() {
       this.isWidgetOpened = this.isPreviewMode === 'chat'; // Open chat preview if configuration contains chat preview property
       this.$i18n.locale = this.config.lang;
-      document.documentElement.style.setProperty('--wt-omni-widget__accent-color', this.config.accentColor);
-      document.documentElement.style.setProperty('--wt-omni-widget__buttons-menu-opacity', this.config.btnOpacity);
+      document.documentElement.style.setProperty('--wt-omni-widget__accent-color', this.config.view.accentColor);
+      document.documentElement.style.setProperty('--wt-omni-widget__buttons-menu-opacity', this.config.view.btnOpacity);
 
       this.setupOpenTimeout();
     },
     setupOpenTimeout() {
-      const { openTimeout } = this.config;
+      const openTimeout = this.config.chat?.openTimeout;
       if (openTimeoutContainer) openTimeoutContainer = clearTimeout(openTimeoutContainer);
       if (typeof openTimeout === 'number' && openTimeout >= 0) {
         openTimeoutContainer = setTimeout(() => this.openWidget(), openTimeout * 1000); // sec -> msec
       }
     },
+    handleBtnOpen(type) {
+      if (type === ChatChannel.APPOINTMENT) {
+        this.openAppointment();
+      } else {
+        this.openWidget();
+      }
+    },
     openWidget() {
       if (this.isPreviewMode) return;
       this.isWidgetOpened = true;
+    },
+    openAppointment() {
+      this.isPopupOpened = true;
+    },
+    closeAppointment() {
+      this.isPopupOpened = false;
     },
     closeWidget() {
       if (this.isPreviewMode) return;

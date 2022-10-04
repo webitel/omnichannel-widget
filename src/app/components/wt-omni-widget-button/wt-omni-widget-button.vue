@@ -16,7 +16,7 @@
     v-else
     :class="`wt-omni-widget-btn--${type}`"
     class="wt-omni-widget-btn"
-    @click.prevent="$emit('click')"
+    @click.prevent="$emit('click', type)"
   >
     <wt-icon
       :icon="type"
@@ -33,7 +33,7 @@ export default {
     type: {
       type: String,
       required: true,
-      options: ['chat', 'email', 'whatsapp', 'facebook', 'viber', 'telegram'],
+      options: ['chat', 'appointment', 'email', 'whatsapp', 'facebook', 'viber', 'telegram'],
     },
     url: {
       type: String,
@@ -66,7 +66,8 @@ export default {
       box-shadow: var(--morf-style-up-50);
     }
 
-    &--chat {
+    &--chat,
+    &--appointment {
       background: var(--wt-omni-widget__accent-color);
     }
     &--viber {

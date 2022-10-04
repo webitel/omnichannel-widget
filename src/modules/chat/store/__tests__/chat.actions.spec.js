@@ -209,7 +209,7 @@ describe('chat module: actions', () => {
   });
 
   it('_UPLOAD_FILE dispatches SEND_MESSAGE', async () => {
-    context.rootState = { config: { wsUrl: 'jest' } };
+    context.rootState = { config: { chat: { url: 'jest' } } };
     const fileLink = {};
 
     jest.spyOn(ChatAPI, 'sendFile')

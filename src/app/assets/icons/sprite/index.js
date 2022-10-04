@@ -1,3 +1,4 @@
+import './wt-omni-widget-appointment.svg';
 import './wt-omni-widget-attach.svg';
 import './wt-omni-widget-attention.svg';
 import './wt-omni-widget-chat.svg';

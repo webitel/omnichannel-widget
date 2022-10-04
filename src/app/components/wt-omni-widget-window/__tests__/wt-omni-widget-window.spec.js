@@ -23,7 +23,10 @@ describe('WtOmniWidgetWindow', () => {
     const wrapper = shallowMount(WtOmniWidgetWindow, {
       computed: {
         config() {
-          return {};
+          return {
+            view: {},
+            chat: {},
+          };
         },
       },
     });
@@ -34,7 +37,10 @@ describe('WtOmniWidgetWindow', () => {
     const wrapper = shallowMount(WtOmniWidgetWindow, {
       computed: {
         config() {
-          return {};
+          return {
+            view: {},
+            chat: {},
+          };
         },
         isPreviewMode() {
           return true;

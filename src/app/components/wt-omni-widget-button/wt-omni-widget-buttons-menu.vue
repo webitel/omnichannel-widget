@@ -11,7 +11,7 @@
         class="wt-omni-widget-buttons-menu__hidden-buttons-wrapper"
       >
         <wt-omni-widget-button
-          v-for="(button, key) of buttons"
+          v-for="(button, key) of expandedButtons"
           :key="key"
           :type="button.type"
           :url="button.url"
@@ -19,8 +19,8 @@
       </div>
     </transition-expand>
     <wt-omni-widget-button
-      :type="ChatChannel.CHAT"
-      @click="openChat"
+      :type="visibleBtn.type"
+      @click="visibleBtn.handler"
     ></wt-omni-widget-button>
   </div>
 </template>
@@ -43,35 +43,58 @@ export default {
   }),
   computed: {
     buttons() {
-      return isEmpty(this.config.alternativeChannels)
-        ? false
+      const alternativeChannelButtons = isEmpty(this.config.alternativeChannels)
+        ? []
         : Object.entries(this.config.alternativeChannels)
-          .reduce((channels, [channelName, channelUrl]) => {
-            let url = channelUrl;
+        .reduce((channels, [channelName, channelUrl]) => {
+          let url = channelUrl;
 
-            switch (channelName) {
-              case ChatChannel.EMAIL: {
-                url = /^mailto:/.test(url) ? url : 'mailto:'.concat(url);
-                break;
-              }
-              case ChatChannel.VIBER: {
-                break;
-              }
-              default: {
-                url = /^(http(s?)):/.test(url) ? url : 'https://'.concat(url);
-              }
+          switch (channelName) {
+            case ChatChannel.EMAIL: {
+              url = /^mailto:/.test(url) ? url : 'mailto:'.concat(url);
+              break;
             }
+            case ChatChannel.VIBER: {
+              break;
+            }
+            default: {
+              url = /^(http(s?)):/.test(url) ? url : 'https://'.concat(url);
+            }
+          }
 
-            return [...channels, {
+          return [
+            ...channels, {
               type: channelName,
               url,
-            }];
-          }, []);
+            },
+          ];
+        }, []);
+
+      const chatBtn = this.config.chat ? [{
+        type: ChatChannel.CHAT,
+        handler: this.open,
+      }] : [];
+
+      const appointmentBtn = this.config.appointment ? [{
+        type: ChatChannel.APPOINTMENT,
+        handler: this.open,
+      }] : [];
+      return [
+        ...chatBtn,
+        ...appointmentBtn,
+        ...alternativeChannelButtons,
+      ];
+    },
+    visibleBtn() {
+      return this.buttons.at(0);
+    },
+    expandedButtons() {
+      return this.buttons.slice(1).reverse();
     },
   },
   methods: {
-    openChat() {
-      this.$emit('open');
+    open(type) {
+      this.$emit('open', type);
     },
   },
 };
@@ -86,17 +109,17 @@ export default {
   }
 
   .wt-omni-widget-buttons-menu {
-    --menu-buttons-gap: 10px;
-
     width: fit-content;
+
     padding: var(--buttons-menu-padding);
+    transition: var(--transition);
+    pointer-events: none; // apply hover styles only on child hover
+    opacity: var(--wt-omni-widget__buttons-menu-opacity); // configured style
     border-radius: var(--border-radius--square);
     background: var(--main-color);
-    opacity: var(--wt-omni-widget__buttons-menu-opacity); // configured style
-    transition: var(--transition);
 
     // https://stackoverflow.com/a/30104683
-    pointer-events: none; // apply hover styles only on child hover
+    --menu-buttons-gap: 10px;
 
     &, &__hidden-buttons-wrapper {
       display: flex;
@@ -109,8 +132,8 @@ export default {
     }
 
     &:hover {
-      box-shadow: var(--morf-style-up-100);
       opacity: 1;
+      box-shadow: var(--morf-style-up-100);
     }
 
     /*
