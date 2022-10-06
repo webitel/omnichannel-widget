@@ -9,7 +9,7 @@ export default new WtOmniWidget('#wt-omni-widget', {
     url: 'wss://dev.webitel.com/chat/dania-webchat',
   },
   appointment: {
-    url: 'https://dev.webitel.com/chat/dania-webchat',
+    url: 'https://dev.webitel.com/appointments/dania-webchat',
   },
   alternativeChannels: {
     [ChatChannel.FACEBOOK]: {},

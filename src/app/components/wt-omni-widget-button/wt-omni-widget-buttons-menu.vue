@@ -15,12 +15,13 @@
           :key="key"
           :type="button.type"
           :url="button.url"
+          @click="open"
         ></wt-omni-widget-button>
       </div>
     </transition-expand>
     <wt-omni-widget-button
       :type="visibleBtn.type"
-      @click="visibleBtn.handler"
+      @click="open"
     ></wt-omni-widget-button>
   </div>
 </template>
@@ -72,12 +73,10 @@ export default {
 
       const chatBtn = this.config.chat ? [{
         type: ChatChannel.CHAT,
-        handler: this.open,
       }] : [];
 
       const appointmentBtn = this.config.appointment ? [{
         type: ChatChannel.APPOINTMENT,
-        handler: this.open,
       }] : [];
       return [
         ...chatBtn,

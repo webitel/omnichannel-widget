@@ -1,4 +1,8 @@
-import instance from '../../../app/api/instance.axios';
+import axios from 'axios';
+
+const sendFileInstance = axios.create({
+  withCredentials: true,
+});
 
 const sendFile = async ({
                           uri,
@@ -10,7 +14,7 @@ const sendFile = async ({
   const headers = {
     'Content-Type': file.type,
   };
-  const response = await instance.post(url, file, {
+  const response = await sendFileInstance.post(url, file, {
     headers,
     onUploadProgress,
     cancelToken: cancelToken.token,

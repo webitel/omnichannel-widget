@@ -4,55 +4,93 @@
       <wt-omni-widget-header
         @close="$emit('close')"
       ></wt-omni-widget-header>
-      <article class="wt-omni-widget-popup__main">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, quae, repudiandae. Labore modi pariatur quasi. Accusamus autem beatae, corporis dolores dolorum iste, nulla pariatur porro quibusdam quisquam, reiciendis voluptatibus voluptatum.</article>
-      <footer class="wt-omni-widget-popup__actions"></footer>
+      <article class="wt-omni-widget-popup__main">
+        <slot name="main">
+          <the-appointment></the-appointment>
+        </slot>
+      </article>
     </section>
   </aside>
 </template>
 
 <script>
-import WtOmniWidgetHeader from '../wt-omni-widget-window/wt-omni-widget-window-header/wt-omni-widget-window-header.vue';
+import { mapActions } from 'vuex';
+import WtOmniWidgetHeader
+  from '../wt-omni-widget-window/wt-omni-widget-window-header/wt-omni-widget-window-header.vue';
+import TheAppointment from '../../../modules/appointment/components/wt-omni-widget-appointment.vue';
+import Type from '../../enum/Type.enum';
 
 export default {
   name: 'wt-omni-widget-popup',
   components: {
     WtOmniWidgetHeader,
+    TheAppointment,
+  },
+  data: () => ({
+    // type: Type.APPOINTMENT,
+  }),
+  computed: {
+    // namespace() {
+      // we place namespacing in container file cause we should pass it to many components with same namespace: content, footer
+      // switch (this.type) {
+      //   case Type.APPOINTMENT:
+      //     return 'appointment';
+      //   default:
+      //     return '';
+      // }
+    // },
+  },
+  methods: {
+    ...mapActions('appointment', {
+      loadAppointmentData: 'LOAD_APPOINTMENT_DATA',
+    }),
+  },
+  created() {
+    this.loadAppointmentData();
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.wt-omni-widget-popup {
-  position: fixed;
-  z-index: 1111;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: hsla(0, 0%, 20%, 0.8); // copy-pasted --contrast-color without opacity
-}
+#wt-omni-widget {
+  .wt-omni-widget-popup {
+    position: fixed;
+    z-index: 1111;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: hsla(0, 0%, 20%, 0.8); // copy-pasted --contrast-color without opacity
+  }
 
-.wt-omni-widget-popup__popup {
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  max-height: 90%;
-  margin: var(--main-app-padding);
-  padding: var(--main-app-padding);
-  border-radius: var(--border-radius);
-  background: var(--main-color);
-  //box-shadow: var(--elevation-10);
-  gap: var(--main-app-padding);
-}
+  .wt-omni-widget-popup__popup {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    max-height: 90%;
+    margin: var(--main-app-padding);
+    padding: var(--main-app-padding);
+    border-radius: var(--border-radius--square);
+    background: var(--main-color);
+    //box-shadow: var(--elevation-10);
+    gap: var(--main-app-padding);
+  }
 
-.wt-omni-widget-popup__main {
-  @extend %wt-scrollbar;
-  overflow-y: auto;
-  flex-grow: 1;
-  min-height: 0;
-  padding-right: 5px;
+  .wt-omni-widget-popup__main {
+    @extend %wt-scrollbar;
+    overflow-y: auto;
+    flex-grow: 1;
+    min-height: 0;
+    padding-right: 5px;
+  }
+
+  &.wt-omni-widget--rounded {
+    .wt-omni-widget-popup__popup {
+      border-radius: var(--border-radius--rounded);
+    }
+  }
 }
 </style>

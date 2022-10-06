@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 // modules
+import appointment from '../../modules/appointment/store/appointment';
 import chat from '../../modules/chat/store/chat';
 import notifications from '../../modules/notifications/notifications';
 
@@ -38,6 +39,7 @@ export default new Vuex.Store({
   actions,
   mutations,
   modules: {
+    appointment,
     chat,
     notifications,
   },

@@ -11,12 +11,13 @@
       <keep-alive>
         <wt-omni-widget-popup
           v-if="isPopupOpened"
+          @close="closePopup"
         ></wt-omni-widget-popup>
         <wt-omni-widget-window
           v-else-if="isWidgetOpened"
           :class="{
-        'wt-omni-widget-window--preview-mode': isPreviewMode === 'chat',
-      }"
+            'wt-omni-widget-window--preview-mode': isPreviewMode === 'chat',
+          }"
           @open="openWidget"
           @close="closeWidget"
         ></wt-omni-widget-window>
@@ -45,7 +46,7 @@ export default {
     WtOmniWidgetButtonsMenu,
   },
   data: () => ({
-    isPopupOpened: true,
+    isPopupOpened: false,
     isWidgetOpened: false,
   }),
 
@@ -92,7 +93,7 @@ export default {
     },
     handleBtnOpen(type) {
       if (type === ChatChannel.APPOINTMENT) {
-        this.openAppointment();
+        this.openPopup();
       } else {
         this.openWidget();
       }
@@ -101,10 +102,10 @@ export default {
       if (this.isPreviewMode) return;
       this.isWidgetOpened = true;
     },
-    openAppointment() {
+    openPopup() {
       this.isPopupOpened = true;
     },
-    closeAppointment() {
+    closePopup() {
       this.isPopupOpened = false;
     },
     closeWidget() {
