@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'wt-omni-widget-appointment-list',
+  name: 'wt-omni-widget-appointment-success',
 };
 </script>
 

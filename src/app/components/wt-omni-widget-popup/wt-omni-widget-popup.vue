@@ -26,28 +26,6 @@ export default {
     WtOmniWidgetHeader,
     TheAppointment,
   },
-  data: () => ({
-    // type: Type.APPOINTMENT,
-  }),
-  computed: {
-    // namespace() {
-      // we place namespacing in container file cause we should pass it to many components with same namespace: content, footer
-      // switch (this.type) {
-      //   case Type.APPOINTMENT:
-      //     return 'appointment';
-      //   default:
-      //     return '';
-      // }
-    // },
-  },
-  methods: {
-    ...mapActions('appointment', {
-      loadAppointmentData: 'LOAD_APPOINTMENT_DATA',
-    }),
-  },
-  created() {
-    this.loadAppointmentData();
-  },
 };
 </script>
 
