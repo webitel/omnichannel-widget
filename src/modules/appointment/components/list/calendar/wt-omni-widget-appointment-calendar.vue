@@ -9,9 +9,10 @@
    >
      <div
        style="border: 1px solid blue;"
-       v-for="(time) of times"
-       :key="time"
-     >{{ time }}</div>
+       v-for="({ time, reserved }) of times"
+       :key="date.concat(time)"
+       @click="selectTime({ time, date })"
+     >{{ time }}, reserved: {{ reserved }}</div>
    </div>
  </article>
 </template>
@@ -28,9 +29,21 @@ export default {
       type: Array,
     },
   },
+  methods: {
+    selectTime({ date, time }) {
+      const value = {
+        ...this.value,
+        scheduleDate: date,
+        scheduleTime: time,
+      };
+      this.$emit('input', value);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-
+#wt-omni-widget {
+  // code goes here
+}
 </style>

@@ -27,11 +27,6 @@
         v-on="listeners"
       >
     </div>
-<!--    <wt-input-info-->
-<!--      v-if="isValidation"-->
-<!--      :invalid="invalid"-->
-<!--    >{{ validationText }}-->
-<!--    </wt-input-info>-->
   </div>
 </template>
 
@@ -136,5 +131,61 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#wt-omni-widget {
+  .wt-input {
+    cursor: text;
+  }
 
+  .wt-input__wrapper {
+    position: relative;
+  }
+
+  .wt-label {
+    margin-left: 15px;
+    margin-bottom: 5px;
+
+    .wt-input:hover &,
+    .wt-input:focus-within & {
+      color: var(--form-label--hover-color);
+    }
+
+    .wt-input--invalid:hover &,
+    .wt-input--invalid:focus-within & {
+      color: var(--label--invalid-color);
+    }
+  }
+
+  .wt-input__input {
+    @extend %typo-body-md;
+    @include wt-placeholder;
+
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 15px;
+    transition: var(--transition);
+    color: var(--form-input-color);
+    border-radius: var(--border-radius--square);
+    box-shadow: var(--morf-style-down-50);
+    border: none;
+    outline: none;
+
+    //&:focus {
+      // @include wt-placeholder('focus');
+      //border-color: var(--form-border--hover-color);
+    //}
+
+    .wt-input--invalid &,
+    .wt-input--invalid:hover & {
+      border-color: var(--false-color);
+      outline: none; // prevent outline overlapping false color
+    }
+  }
+
+  &.wt-omni-widget--rounded {
+    .wt-input__input {
+      border-radius: var(--border-radius--rounded);
+    }
+  }
+}
 </style>

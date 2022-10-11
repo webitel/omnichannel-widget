@@ -14,11 +14,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 import WtOmniWidgetHeader
   from '../wt-omni-widget-window/wt-omni-widget-window-header/wt-omni-widget-window-header.vue';
 import TheAppointment from '../../../modules/appointment/components/wt-omni-widget-appointment.vue';
-import Type from '../../enum/Type.enum';
 
 export default {
   name: 'wt-omni-widget-popup',
@@ -52,9 +50,28 @@ export default {
     margin: var(--main-app-padding);
     padding: var(--main-app-padding);
     border-radius: var(--border-radius--square);
-    background: var(--main-color);
-    //box-shadow: var(--elevation-10);
+    background: var(--background-color);
     gap: var(--main-app-padding);
+
+    width: 1024px;
+    height: 608px;
+    @media (max-width: 1280px) {
+      width: 800px;
+      height: 538px;
+    }
+    @media (max-width: 1024px) {
+      width: 800px;
+      height: 538px;
+    }
+    @media (max-width: 820px) {
+      width: 540px;
+      height: 484px;
+    }
+    @media (max-width: 600px) {
+      width: 100%;
+      height: auto;
+      min-height: 50%;
+    }
   }
 
   .wt-omni-widget-popup__main {

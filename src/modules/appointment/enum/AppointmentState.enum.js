@@ -1,6 +1,6 @@
 const AppointmentState = Object.freeze({
   LIST: 'list',
-  SUCCESS: 'success',
+  SUCCESS: 'appointment',
 });
 
 export default AppointmentState;

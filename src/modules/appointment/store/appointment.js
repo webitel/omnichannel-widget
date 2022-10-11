@@ -4,16 +4,26 @@ const state = {
   appointmentState: {},
 };
 
-const getters = {};
+const getters = {
+  APPOINTMENT_URL: (s, g, rootState) => rootState.config.appointment.url,
+};
 
 const actions = {
   LOAD_APPOINTMENT_DATA: async (context) => {
-    const { url } = context.rootState.config.appointment;
-    const appointmentState = await AppointmentAPI.getAppointment(url);
+    const appointmentState = await AppointmentAPI.getAppointment(context.getters.APPOINTMENT_URL);
     return context.commit('SET_APPOINTMENT_STATE', appointmentState);
   },
-  SCHEDULE_APPOINTMENT: (context, scheduleInfo) => {},
-  REMOVE_APPOINTMENT: () => {},
+  SCHEDULE_APPOINTMENT: async (context, scheduleInfo) => {
+    const appointmentState = await AppointmentAPI.postAppointment(context.getters.APPOINTMENT_URL, scheduleInfo);
+    return context.commit('SET_APPOINTMENT_STATE', appointmentState);
+  },
+  REMOVE_APPOINTMENT: async (context) => {
+    try {
+      await AppointmentAPI.deleteAppointment(context.getters.APPOINTMENT_URL);
+    } finally {
+      await context.dispatch('LOAD_APPOINTMENT_DATA');
+    }
+  },
 };
 
 const mutations = {
