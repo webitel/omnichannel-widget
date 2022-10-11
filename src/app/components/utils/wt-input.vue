@@ -121,6 +121,9 @@ export default {
         input: this.inputHandler,
       };
     },
+    invalid() {
+      return true;
+    },
   },
   methods: {
     inputHandler(event) {
@@ -143,42 +146,32 @@ export default {
   .wt-label {
     margin-left: 15px;
     margin-bottom: 5px;
-
-    .wt-input:hover &,
-    .wt-input:focus-within & {
-      color: var(--form-label--hover-color);
-    }
-
-    .wt-input--invalid:hover &,
-    .wt-input--invalid:focus-within & {
-      color: var(--label--invalid-color);
-    }
   }
 
   .wt-input__input {
     @extend %typo-body-md;
     @include wt-placeholder;
 
+    position: relative;
     display: block;
     box-sizing: border-box;
     width: 100%;
     padding: 10px 15px;
     transition: var(--transition);
-    color: var(--form-input-color);
+    color: var(--contrast-color);
     border-radius: var(--border-radius--square);
     box-shadow: var(--morf-style-down-50);
     border: none;
     outline: none;
 
-    //&:focus {
-      // @include wt-placeholder('focus');
-      //border-color: var(--form-border--hover-color);
-    //}
-
-    .wt-input--invalid &,
-    .wt-input--invalid:hover & {
-      border-color: var(--false-color);
-      outline: none; // prevent outline overlapping false color
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      border: 1px solid red;
     }
   }
 

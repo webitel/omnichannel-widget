@@ -60,8 +60,8 @@ export default {
       height: 538px;
     }
     @media (max-width: 1024px) {
-      width: 800px;
-      height: 538px;
+      width: 648px;
+      height: 484px;
     }
     @media (max-width: 820px) {
       width: 540px;

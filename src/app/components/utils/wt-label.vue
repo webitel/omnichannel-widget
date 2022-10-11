@@ -36,7 +36,7 @@ export default {
   cursor: text;
 
   &--invalid {
-    color: var(--false-color);
+    color: var(--negative-color);
   }
 }
 </style>
