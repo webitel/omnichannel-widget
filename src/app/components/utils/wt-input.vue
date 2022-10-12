@@ -121,9 +121,6 @@ export default {
         input: this.inputHandler,
       };
     },
-    invalid() {
-      return true;
-    },
   },
   methods: {
     inputHandler(event) {
@@ -141,6 +138,19 @@ export default {
 
   .wt-input__wrapper {
     position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      border: 1px solid transparent;
+      border-radius: var(--border-radius--square);
+      z-index: 1;
+      pointer-events: none;
+    }
   }
 
   .wt-label {
@@ -152,7 +162,6 @@ export default {
     @extend %typo-body-md;
     @include wt-placeholder;
 
-    position: relative;
     display: block;
     box-sizing: border-box;
     width: 100%;
@@ -163,19 +172,23 @@ export default {
     box-shadow: var(--morf-style-down-50);
     border: none;
     outline: none;
+  }
 
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      border: 1px solid red;
+  .wt-input--invalid {
+    .wt-input__wrapper {
+      &:before {
+        border-color: var(--negative-color);
+      }
     }
   }
 
   &.wt-omni-widget--rounded {
+    .wt-input__wrapper {
+      &:before {
+        border-radius: var(--border-radius--rounded);
+      }
+    }
+
     .wt-input__input {
       border-radius: var(--border-radius--rounded);
     }
