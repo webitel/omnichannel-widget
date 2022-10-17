@@ -1,20 +1,20 @@
 <template>
-  <form>
+  <form class="wt-omni-widget-appointment-form">
     <wt-input
       :label="$t('appointment.form.name')"
       :value="value.name"
       @input="handleInput({ prop: 'name', value: $event })"
     ></wt-input>
     <wt-input
-      :label="$t('appointment.form.destination')"
-      :value="value.destination"
-      @input="handleInput({ prop: 'destination', value: $event })"
-    ></wt-input>
-    <wt-input
       v-if="showEmail"
       :label="$t('appointment.form.email')"
       :value="value.email"
       @input="handleInput({ prop: 'email', value: $event })"
+    ></wt-input>
+    <wt-input
+      :label="$t('appointment.form.destination')"
+      :value="value.destination"
+      @input="handleInput({ prop: 'destination', value: $event })"
     ></wt-input>
     <wt-input
       v-if="showMessage"
@@ -55,6 +55,14 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget {
-  // code goes here
+  .wt-omni-widget-appointment-list {
+    &-wrap {
+      form {
+       .wt-input {
+         margin-bottom: 8px;
+       }
+      }
+    }
+  }
 }
 </style>

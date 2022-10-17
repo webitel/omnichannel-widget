@@ -1,5 +1,6 @@
 <template>
- <section>
+ <section class="wt-omni-widget-appointment-list">
+   <div class="wt-omni-widget-appointment-list-wrap">
    <appointment-form
     v-model="draft"
    ></appointment-form>
@@ -7,8 +8,9 @@
     v-model="draft"
     :calendar="state.list"
    ></appointment-calendar>
-   <div>
-     <wt-button @click="send">Send</wt-button>
+   </div>
+   <div class="wt-omni-widget-appointment-list-btn">
+     <wt-button @click="send">{{ $t('reusable.send') }}</wt-button>
    </div>
  </section>
 </template>
@@ -77,6 +79,16 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget {
-  // code goes here
+  .wt-omni-widget-appointment-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &-wrap {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+    }
+  }
 }
 </style>

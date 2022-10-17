@@ -15,6 +15,14 @@ export default {
     previewChatMessage1: 'Good afternoon!\nI am Your chatbot.\n\nHow can I help?',
     previewChatMessage2: 'Hello, \nI would like to ask more details\nabout your services.',
   },
+  appointment: {
+    form: {
+      name: 'Name',
+      email: 'Email',
+      destination: 'Phone number',
+      message: 'Message',
+    },
+  },
   errors: {
     fileTooLarge: 'File "{file}" is too large! Maximum size is {maxSize} Mb',
   },
