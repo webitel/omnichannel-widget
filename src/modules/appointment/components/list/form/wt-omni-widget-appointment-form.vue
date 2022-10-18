@@ -16,12 +16,12 @@
       :value="value.email"
       @input="handleInput({ prop: 'email', value: $event })"
     ></wt-input>
-    <wt-input
+    <wt-textarea
       v-if="showMessage"
       :label="$t('appointment.form.message')"
       :value="value.message"
       @input="handleInput({ prop: 'message', value: $event })"
-    ></wt-input>
+    ></wt-textarea>
   </form>
 </template>
 
