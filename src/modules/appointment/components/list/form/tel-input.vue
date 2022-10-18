@@ -1,12 +1,13 @@
 <template>
   <div
     :class="{
+      'wt-input--invalid': invalid,
     }"
-    class="wt-input"
+    class="wt-input tel-input"
   >
     <wt-label
       v-if="hasLabel"
-      :for="name"
+      for="tel"
       :invalid="invalid"
       :outline="outline"
       v-bind="labelProps"
@@ -15,26 +16,33 @@
       <slot name="label" v-bind="{ label }">{{ requiredLabel }}</slot>
     </wt-label>
     <div class="wt-input__wrapper">
-      <input
-        :id="name"
-        ref="wt-input"
-        :max="numberMax"
-        :min="numberMin"
-        :placeholder="placeholder || label"
+      <vue-tel-input
         :value="value"
         class="wt-input__input"
+        :input-options="{
+          placeholder: placeholder || label,
+          required,
+        }"
         v-on="listeners"
-      >
+      ></vue-tel-input>
     </div>
   </div>
 </template>
 
 <script>
-import validationMixin from '../../mixins/validationMixin/validationMixin';
+// import { VueTelInput } from 'vue-tel-input';
+// import 'vue-tel-input/dist/vue-tel-input.css';
+import validationMixin from '../../../../../app/mixins/validationMixin/validationMixin';
+
+const VueTelInput = () => Promise.all([
+    import(/* webpackChunkName: "chunk-vue-tel-input" */ 'vue-tel-input'),
+    import(/* webpackChunkName: "chunk-vue-tel-input" */ 'vue-tel-input/dist/vue-tel-input.css'),
+  ]).then(([{ VueTelInput }]) => VueTelInput);
 
 export default {
-  name: 'wt-input',
+  name: 'tel-input',
   mixins: [validationMixin],
+  components: { VueTelInput },
   props: {
     /**
      * Current input value (`v-model`)
@@ -118,6 +126,7 @@ export default {
       return {
         ...this.$listeners,
         input: this.inputHandler,
+        validate: this.handleValidate,
       };
     },
   },
@@ -126,9 +135,11 @@ export default {
       this.$emit('input', event.target.value.trim());
     },
   },
+  mounted() {
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../../css/styleguide/wt-input/wt-input';
+
 </style>

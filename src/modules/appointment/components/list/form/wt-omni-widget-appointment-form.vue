@@ -5,16 +5,16 @@
       :value="value.name"
       @input="handleInput({ prop: 'name', value: $event })"
     ></wt-input>
+    <tel-input
+      :label="$t('appointment.form.destination')"
+      :value="value.destination"
+      @input="handleInput({ prop: 'destination', value: $event })"
+    ></tel-input>
     <wt-input
       v-if="showEmail"
       :label="$t('appointment.form.email')"
       :value="value.email"
       @input="handleInput({ prop: 'email', value: $event })"
-    ></wt-input>
-    <wt-input
-      :label="$t('appointment.form.destination')"
-      :value="value.destination"
-      @input="handleInput({ prop: 'destination', value: $event })"
     ></wt-input>
     <wt-input
       v-if="showMessage"
@@ -26,9 +26,11 @@
 </template>
 
 <script>
+import TelInput from './tel-input.vue';
 
 export default {
   name: 'wt-omni-widget-appointment-form',
+  components: { TelInput },
   props: {
     value: {
       type: Object,
