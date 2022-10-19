@@ -100,9 +100,13 @@
 
 <style lang="scss" scoped>
 #wt-omni-widget {
-
   .wt-textarea {
     cursor: text;
+  }
+
+  .wt-label {
+    margin-left: 15px;
+    margin-bottom: 5px;
   }
 
   .wt-textarea__wrapper {
