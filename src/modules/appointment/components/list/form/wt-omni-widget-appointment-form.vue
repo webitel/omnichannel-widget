@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import TelInput from './tel-input.vue';
+import TelInput from './wt-tel-input.vue';
 
 export default {
   name: 'wt-omni-widget-appointment-form',
