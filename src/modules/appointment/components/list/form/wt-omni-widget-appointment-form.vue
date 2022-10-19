@@ -61,23 +61,6 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    @media (max-width: 1280px) {
-      width: 800px;
-      height: 538px;
-    }
-    @media (max-width: 1024px) {
-      width: 648px;
-      height: 484px;
-    }
-    @media (max-width: 820px) {
-      width: 540px;
-      height: 484px;
-    }
-    @media (max-width: 600px) {
-      width: 100%;
-      height: auto;
-      min-height: 50%;
-    }
   }
 }
 </style>
