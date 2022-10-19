@@ -11,10 +11,10 @@
 }
 
 // breakpoints
-$breakpoint-xl: 1280px;
-$breakpoint-l: 1024px;
-$breakpoint-m: 820px;
-$breakpoint-s: 600px;
+$lg: 1280px;
+$md: 1024px;
+$sm: 820px;
+$xs: 600px;
 
 .wt-omni-widget-chat-message {
   --client-message-border-radius--square: 5px 5px 0px 5px;
