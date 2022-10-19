@@ -28,6 +28,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../css/variables';
 #wt-omni-widget {
   .wt-omni-widget-popup {
     position: fixed;
@@ -55,19 +56,19 @@ export default {
 
     width: 1024px;
     height: 608px;
-    @media (max-width: var(--breakpoint-desktop)) {
+    @media (max-width: var($breakpoint-xl)) {
       width: 800px;
       height: 538px;
     }
-    @media (max-width: var(--breakpoint-tablet)) {
+    @media (max-width: var($breakpoint-l)) {
       width: 648px;
       height: 484px;
     }
-    @media (max-width: var(--breakpoint-tablet-small)) {
+    @media (max-width: var($breakpoint-m)) {
       width: 540px;
       height: 484px;
     }
-    @media (max-width: var(--breakpoint-mobile)) {
+    @media (max-width: var($breakpoint-s)) {
       width: 100%;
       height: auto;
       min-height: 50%;

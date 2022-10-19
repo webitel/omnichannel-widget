@@ -1,12 +1,6 @@
 #wt-omni-widget {
   --transition: 0.2s all;
 
-  // breakpoints
-  --breakpoint-desktop: 1280px;
-  --breakpoint-tablet: 1024px;
-  --breakpoint-tablet-small: 820px;
-  --breakpoint-mobile: 600px;
-
   // offset
   --chat-offset: 30px;
 
@@ -15,6 +9,12 @@
   --border-radius--rounded: 20px;
   --border-radius--rounded-btn: 40px;
 }
+
+// breakpoints
+$breakpoint-xl: 1280px;
+$breakpoint-l: 1024px;
+$breakpoint-m: 820px;
+$breakpoint-s: 600px;
 
 .wt-omni-widget-chat-message {
   --client-message-border-radius--square: 5px 5px 0px 5px;
