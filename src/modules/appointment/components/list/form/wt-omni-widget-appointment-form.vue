@@ -27,7 +27,6 @@
 
 <script>
 import TelInput from './tel-input.vue';
-
 export default {
   name: 'wt-omni-widget-appointment-form',
   components: { TelInput },
@@ -57,13 +56,27 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget {
-  .wt-omni-widget-appointment-list {
-    &-wrap {
-      form {
-       .wt-input {
-         margin-bottom: 8px;
-       }
-      }
+  .wt-omni-widget-appointment-form {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    @media (max-width: 1280px) {
+      width: 800px;
+      height: 538px;
+    }
+    @media (max-width: 1024px) {
+      width: 648px;
+      height: 484px;
+    }
+    @media (max-width: 820px) {
+      width: 540px;
+      height: 484px;
+    }
+    @media (max-width: 600px) {
+      width: 100%;
+      height: auto;
+      min-height: 50%;
     }
   }
 }

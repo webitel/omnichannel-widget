@@ -55,19 +55,19 @@ export default {
 
     width: 1024px;
     height: 608px;
-    @media (max-width: 1280px) {
+    @media (max-width: var(--breakpoint-desktop)) {
       width: 800px;
       height: 538px;
     }
-    @media (max-width: 1024px) {
+    @media (max-width: var(--breakpoint-tablet)) {
       width: 648px;
       height: 484px;
     }
-    @media (max-width: 820px) {
+    @media (max-width: var(--breakpoint-tablet-small)) {
       width: 540px;
       height: 484px;
     }
-    @media (max-width: 600px) {
+    @media (max-width: var(--breakpoint-mobile)) {
       width: 100%;
       height: auto;
       min-height: 50%;

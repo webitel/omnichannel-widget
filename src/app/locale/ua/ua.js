@@ -15,6 +15,14 @@ export default {
     previewChatMessage1: 'Добрий день!\nЯ - Ваш чат-бот.\n\nЧим можу допомогти?',
     previewChatMessage2: 'Добрий день,\nхочу дізнатись детальніше про ваші послуги.',
   },
+  appointment: {
+    form: {
+      name: 'Ім\'я',
+      email: 'Електронна пошта',
+      destination: 'Номер телефону',
+      message: 'Повідомлення',
+    },
+  },
   errors: {
     fileTooLarge: 'Файл "{file}" завеликий! Максимальний розмір файлу: {maxSize} Мб',
   },
