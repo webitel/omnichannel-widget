@@ -1,16 +1,16 @@
 <template>
- <section>
-   <appointment-form
-    v-model="draft"
-   ></appointment-form>
-   <appointment-calendar
-    v-model="draft"
-    :calendar="state.list"
-   ></appointment-calendar>
-   <div>
-     <wt-button @click="send">Send</wt-button>
-   </div>
- </section>
+  <section class="wt-omni-widget-appointment-list">
+    <div class="wt-omni-widget-appointment-list__wrap">
+      <appointment-form
+        v-model="draft"
+      ></appointment-form>
+      <appointment-calendar
+        v-model="draft"
+        :calendar="state.list"
+      ></appointment-calendar>
+    </div>
+    <wt-button @click="send">{{ $t('reusable.send') }}</wt-button>
+  </section>
 </template>
 
 <script>
@@ -20,8 +20,8 @@ import AppointmentForm from './form/wt-omni-widget-appointment-form.vue';
 import AppointmentCalendar from './calendar/wt-omni-widget-appointment-calendar.vue';
 
 const generateAppointmentSchema = ({
-  showEmailField,
-  showMessageField,
+ showEmailField,
+ showMessageField,
 }) => {
   const appointment = {
     scheduleDate: '', // required
@@ -33,7 +33,6 @@ const generateAppointmentSchema = ({
   if (showMessageField) appointment.message = '';
   return appointment;
 };
-
 export default {
   name: 'wt-omni-widget-appointment-list',
   components: {
@@ -77,6 +76,13 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget {
-  // code goes here
+  .wt-omni-widget-appointment-list {
+    &__wrap {
+      display: flex;
+    }
+    .wt-button {
+      margin: auto;
+    }
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form class="wt-omni-widget-appointment-form">
     <wt-input
       :label="$t('appointment.form.name')"
       :value="value.name"
@@ -57,6 +57,11 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget {
-  // code goes here
+  .wt-omni-widget-appointment-form {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
- <article>
+ <article class="wt-omni-widget-appointment-calendar">
    {{ value.scheduleDate }}
    {{ value.scheduleTime }}
    <div
@@ -44,6 +44,9 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget {
-  // code goes here
+  .wt-omni-widget-appointment-calendar {
+    max-height: 410px; //temporary parameter
+    margin-left: 8px;
+  }
 }
 </style>
