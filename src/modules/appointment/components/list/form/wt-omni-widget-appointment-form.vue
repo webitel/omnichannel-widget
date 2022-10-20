@@ -16,17 +16,18 @@
       :value="value.email"
       @input="handleInput({ prop: 'email', value: $event })"
     ></wt-input>
-    <wt-input
+    <wt-textarea
       v-if="showMessage"
       :label="$t('appointment.form.message')"
       :value="value.message"
       @input="handleInput({ prop: 'message', value: $event })"
-    ></wt-input>
+    ></wt-textarea>
   </form>
 </template>
 
 <script>
-import TelInput from './tel-input.vue';
+import TelInput from './wt-tel-input.vue';
+
 export default {
   name: 'wt-omni-widget-appointment-form',
   components: { TelInput },
