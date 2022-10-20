@@ -1,15 +1,14 @@
 <template>
   <div
+    class="wt-input wt-tel-input"
     :class="{
       'wt-input--invalid': invalid,
     }"
-    class="wt-input tel-input"
   >
     <wt-label
       v-if="hasLabel"
-      for="tel"
       :invalid="invalid"
-      :outline="outline"
+      for="tel"
       v-bind="labelProps"
     >
       <!-- @slot Custom input label -->
@@ -17,12 +16,12 @@
     </wt-label>
     <div class="wt-input__wrapper">
       <vue-tel-input
-        :value="value"
-        class="wt-input__input"
         :input-options="{
           placeholder: placeholder || label,
           required,
         }"
+        :value="value"
+        class="wt-tel-input__input"
         v-on="listeners"
       ></vue-tel-input>
     </div>
@@ -30,17 +29,12 @@
 </template>
 
 <script>
-// import { VueTelInput } from 'vue-tel-input';
-// import 'vue-tel-input/dist/vue-tel-input.css';
+import { VueTelInput } from 'vue-tel-input';
+import 'vue-tel-input/dist/vue-tel-input.css';
 import validationMixin from '../../../../../app/mixins/validationMixin/validationMixin';
 
-const VueTelInput = () => Promise.all([
-    import(/* webpackChunkName: "chunk-vue-tel-input" */ 'vue-tel-input'),
-    import(/* webpackChunkName: "chunk-vue-tel-input" */ 'vue-tel-input/dist/vue-tel-input.css'),
-  ]).then(([{ VueTelInput }]) => VueTelInput);
-
 export default {
-  name: 'tel-input',
+  name: 'wt-tel-input',
   mixins: [validationMixin],
   components: { VueTelInput },
   props: {
@@ -65,20 +59,6 @@ export default {
       type: String,
     },
     /**
-     * Form input name
-     */
-    name: {
-      type: String,
-      default: '',
-    },
-    /**
-     * Form input type
-     */
-    type: {
-      type: String,
-      default: 'text',
-    },
-    /**
      * Native input required attribute
      */
     required: {
@@ -93,18 +73,6 @@ export default {
     numberMin: {
       type: Number,
       default: 0,
-    },
-
-    /**
-     * Native number input restrictions
-     */
-    numberMax: {
-      type: Number,
-    },
-
-    outline: {
-      type: Boolean,
-      default: false,
     },
 
     labelProps: {
@@ -135,11 +103,48 @@ export default {
       this.$emit('input', event.target.value.trim());
     },
   },
-  mounted() {
-  },
 };
 </script>
 
 <style lang="scss" scoped>
+@import '../../../../../app/css/styleguide/wt-input/wt-input';
 
+#wt-omni-widget {
+  .wt-tel-input__input {
+    transition: var(--transition);
+    color: var(--contrast-color);
+    border: none;
+    border-radius: var(--border-radius--square);
+    outline: none;
+    background: var(--main-color);
+    box-shadow: var(--morf-style-down-50);
+
+    ::v-deep {
+      .vti__input {
+        @extend %typo-body-md;
+        @include wt-placeholder;
+        padding: 10px 15px 10px 10px;
+        border-radius: var(--border-radius--square);
+      }
+    }
+  }
+
+  &.wt-omni-widget--rounded {
+    .wt-input__wrapper {
+      &:before {
+        border-radius: var(--border-radius--rounded);
+      }
+    }
+
+    .wt-tel-input__input {
+      border-radius: var(--border-radius--rounded);
+
+      ::v-deep {
+        .vti__input {
+          border-radius: var(--border-radius--rounded);
+        }
+      }
+    }
+  }
+}
 </style>

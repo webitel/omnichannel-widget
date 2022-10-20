@@ -1,10 +1,10 @@
 <template>
   <label
-    class="wt-label"
     :class="{
       'wt-label--invalid': invalid,
     }"
     :for="this.for"
+    class="wt-label"
   >
     <slot></slot>
   </label>
@@ -26,17 +26,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wt-label {
-  @extend %typo-body-sm;
+#wt-omni-widget {
+  .wt-label {
+    @extend %typo-body-sm;
 
-  display: flex;
-  align-items: center;
-  color: var(--contrast-color);
-  transition: var(--transition);
-  cursor: text;
+    display: flex;
+    align-items: center;
+    cursor: text;
+    transition: var(--transition);
+    color: var(--contrast-color);
 
-  &--invalid {
-    color: var(--negative-color);
+    &--invalid {
+      color: var(--negative-color);
+    }
   }
 }
 </style>
