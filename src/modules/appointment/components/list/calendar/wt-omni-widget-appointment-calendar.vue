@@ -3,16 +3,19 @@
    {{ value.scheduleDate }}
    {{ value.scheduleTime }}
    <div
-     style="border: 1px solid red;"
      v-for="({ date, times }) of calendar"
+     class="wt-omni-widget-appointment-calendar_date"
      :key="date"
    >
+     <div class="wt-omni-widget-appointment-calendar_date-title">
+       {{ date }}
+     </div>
      <div
-       style="border: 1px solid blue;"
        v-for="({ time, reserved }) of times"
+       class="wt-omni-widget-appointment-calendar_date-time-option"
        :key="date.concat(time)"
-       @click="selectTime({ time, date })"
-     >{{ time }}, reserved: {{ reserved }}</div>
+       @click="selectTime({ time })"
+     >{{ time }}</div>
    </div>
  </article>
 </template>
@@ -45,8 +48,43 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar {
-    max-height: 410px; //temporary parameter
     margin-left: 8px;
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    overflow-y: auto;
+    &_date {
+      display: flex;
+      flex-direction: column;
+      width: inherit;
+      padding: 8px;
+      gap: 8px;
+      border: 1px solid #E0E7EB;
+      border-radius: 20px;
+      &-title {
+        padding: 16px 0;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 14px;
+      }
+      &-time-option {
+        padding: 16px 0;
+        text-align: center;
+        background: #F2F2F2;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 14px;
+        border-radius: 30px;
+        &_free {
+
+        }
+        &_selected {
+
+        }
+      }
+    }
   }
 }
 </style>
