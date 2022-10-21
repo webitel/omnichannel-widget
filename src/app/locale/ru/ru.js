@@ -17,10 +17,14 @@ export default {
   },
   appointment: {
     form: {
+      title: 'Персональная информация',
       name: 'Имя',
       email: 'Электронная почта',
       destination: 'Номер телефона',
       message: 'Сообщение',
+    },
+    calendar: {
+      title: 'Выберите время звонка',
     },
   },
   errors: {

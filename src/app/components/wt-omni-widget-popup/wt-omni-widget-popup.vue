@@ -54,7 +54,7 @@ export default {
     gap: var(--main-app-padding);
 
     width: 1024px;
-    height: 608px;
+    height: 606px;
     @media (max-width: $breakpoint-lg) {
       width: 800px;
       height: 538px;
@@ -75,11 +75,9 @@ export default {
   }
 
   .wt-omni-widget-popup__main {
-    @extend %wt-scrollbar;
-    overflow-y: auto;
+    @extend %typo-body-md;
     flex-grow: 1;
     min-height: 0;
-    padding-right: 5px;
   }
 
   &.wt-omni-widget--rounded {
