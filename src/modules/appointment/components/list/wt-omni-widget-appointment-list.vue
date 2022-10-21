@@ -3,19 +3,27 @@
     <div class="wt-omni-widget-appointment-list__wrap">
       <appointment-form
         v-model="draft"
+        :v="$v"
       ></appointment-form>
       <appointment-calendar
         v-model="draft"
         :calendar="state.list"
       ></appointment-calendar>
     </div>
-    <wt-button @click="send">{{ $t('reusable.send') }}</wt-button>
+    <wt-button
+      :disabled="disableSend"
+      @click="send"
+    >{{ $t('reusable.send') }}</wt-button>
   </section>
 </template>
 
 <script>
+import Vue from 'vue';
+import { validationMixin } from 'vuelidate';
+import { required } from 'vuelidate/lib/validators';
 import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
 import { mapActions, mapState } from 'vuex';
+import { isValidPhoneNumber } from 'libphonenumber-js';
 import AppointmentForm from './form/wt-omni-widget-appointment-form.vue';
 import AppointmentCalendar from './calendar/wt-omni-widget-appointment-calendar.vue';
 
@@ -33,8 +41,9 @@ const generateAppointmentSchema = ({
   if (showMessageField) appointment.message = '';
   return appointment;
 };
-export default {
+export default Vue.extend({
   name: 'wt-omni-widget-appointment-list',
+  mixins: [validationMixin],
   components: {
     AppointmentForm,
     AppointmentCalendar,
@@ -48,12 +57,27 @@ export default {
   data: () => ({
     draft: {},
   }),
+  validations: {
+    draft: {
+      scheduleDate: { required }, // required
+      scheduleTime: { required }, // required
+      name: { required }, // required
+      destination: {
+        required,
+        phone: (value) => isValidPhoneNumber(value),
+      }, // required
+    },
+  },
   computed: {
     ...mapState({
       state(state) {
         return getNamespacedState(state, this.namespace).appointmentState;
       },
     }),
+    disableSend() {
+      this.$v.$touch();
+      return this.$v.$error;
+    },
   },
   methods: {
     ...mapActions({
@@ -71,7 +95,7 @@ export default {
   created() {
     this.initDraft();
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

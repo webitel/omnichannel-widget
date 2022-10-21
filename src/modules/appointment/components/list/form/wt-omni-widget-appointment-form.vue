@@ -3,11 +3,15 @@
     <wt-input
       :label="$t('appointment.form.name')"
       :value="value.name"
+      :v="v.draft.name"
+      required
       @input="handleInput({ prop: 'name', value: $event })"
     ></wt-input>
     <tel-input
       :label="$t('appointment.form.destination')"
       :value="value.destination"
+      :v="v.draft.destination"
+      required
       @input="handleInput({ prop: 'destination', value: $event })"
     ></tel-input>
     <wt-input
@@ -35,6 +39,9 @@ export default {
     value: {
       type: Object,
       required: true,
+    },
+    v: {
+      type: Object,
     },
   },
   computed: {

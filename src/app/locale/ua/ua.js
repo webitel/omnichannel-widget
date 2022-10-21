@@ -22,6 +22,11 @@ export default {
       destination: 'Номер телефону',
       message: 'Повідомлення',
     },
+    success: {
+      congratulations: 'Вітаємо!',
+      title: 'Ви запланували дзвінок.',
+      cancel: 'Скасувати дзвінок',
+    },
   },
   errors: {
     fileTooLarge: 'Файл "{file}" завеликий! Максимальний розмір файлу: {maxSize} Мб',

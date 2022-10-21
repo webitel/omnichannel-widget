@@ -22,6 +22,11 @@ export default {
       destination: 'Phone number',
       message: 'Message',
     },
+    success: {
+      congratulations: 'Congratulations!',
+      title: 'You\'ve scheduled an appointment.',
+      cancel: 'Cancel an appointment',
+    },
   },
   errors: {
     fileTooLarge: 'File "{file}" is too large! Maximum size is {maxSize} Mb',
