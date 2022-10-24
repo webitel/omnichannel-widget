@@ -94,13 +94,13 @@ export default {
       return {
         ...this.$listeners,
         input: this.inputHandler,
-        validate: this.handleValidate,
+        // validate: this.handleValidate,
       };
     },
   },
   methods: {
-    inputHandler(event) {
-      this.$emit('input', event.target.value.trim());
+    inputHandler(value, { number }) {
+      this.$emit('input', number || '');
     },
   },
 };

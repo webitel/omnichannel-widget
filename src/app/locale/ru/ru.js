@@ -22,6 +22,11 @@ export default {
       destination: 'Номер телефона',
       message: 'Сообщение',
     },
+    success: {
+      congratulations: 'Поздравляем!',
+      title: 'Вы запланировали звонок.',
+      cancel: 'Отменить звонок',
+    },
   },
   errors: {
     fileTooLarge: 'Файл "{file}" слишком большой! Максимальный размер файла: {maxSize} Мб',
