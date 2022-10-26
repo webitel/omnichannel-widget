@@ -24,7 +24,7 @@ export default {
       message: 'Повідомлення',
     },
     calendar: {
-      title: 'Оберіть час здвінку',
+      title: 'Оберіть час дзвінку',
     },
   },
   errors: {

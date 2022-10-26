@@ -44,7 +44,7 @@ export default {
     color: var(--main-color);
     background: var(--wt-omni-widget__accent-color);
     //border-color: var(--wt-omni-widget__accent-color);
-    border-radius: var(--border-radius--square);
+    border-radius: var(--border-radius--rounded-btn);
     transition: var(--transition);
     cursor: pointer;
 

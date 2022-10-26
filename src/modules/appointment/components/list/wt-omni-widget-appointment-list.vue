@@ -246,7 +246,6 @@ export default {
     .wt-button {
       margin: var(--main-app-padding) auto;
       min-width: 168px;
-      font-weight: 400;
     }
   }
 }
