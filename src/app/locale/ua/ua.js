@@ -26,6 +26,11 @@ export default {
     calendar: {
       title: 'Оберіть час дзвінку',
     },
+    success: {
+      congratulations: 'Вітаємо!',
+      title: 'Ви запланували дзвінок.',
+      cancel: 'Скасувати дзвінок',
+    },
   },
   errors: {
     fileTooLarge: 'Файл "{file}" завеликий! Максимальний розмір файлу: {maxSize} Мб',

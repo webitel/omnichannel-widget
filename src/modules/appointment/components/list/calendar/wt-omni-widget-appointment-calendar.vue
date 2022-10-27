@@ -16,10 +16,10 @@
        class="wt-omni-widget-appointment-calendar__date-title-wrapper"
        :class="{ 'wt-omni-widget-appointment-calendar__date-title-wrapper--sticky':
        !isDateTitleInDefaultPosition }"
-       ref="dateTitle">
+       >
        <div class="background"></div>
        <div class="title">
-         {{ dateTitle(date) }}
+         {{ formattingDateTitle(date) }}
        </div>
      </div>
      <div class="wt-omni-widget-appointment-calendar__time-wrapper">
@@ -44,7 +44,6 @@
 export default {
   name: 'wt-omni-widget-appointment-calendar',
   data: () => ({
-    selectedTime: {},
     isDateTitleInDefaultPosition: true,
   }),
   props: {
@@ -62,15 +61,11 @@ export default {
     });
   },
   methods: {
-    dateTitle(currentDateForm) {
+    formattingDateTitle(currentDateForm) {
       const currentDate = new Date(currentDateForm);
       return `${currentDate.getUTCDate()} ${currentDate.toString().substring(0,3)}`;
     },
     selectTime({ date, time }) {
-      this.selectedTime = {
-        date,
-        time,
-      };
       const value = {
         ...this.value,
         scheduleDate: date,
@@ -79,7 +74,7 @@ export default {
       this.$emit('input', value);
     },
     isTimeSelected({date, time}) {
-      return this.selectedTime.date === date && this.selectedTime.time === time;
+      return this.value.scheduleDate === date && this.value.scheduleTime === time;
     },
     handleDateTitlePositionChange() {
       const blockTopPosition = this.$refs.wrapper.getBoundingClientRect().top;
@@ -93,7 +88,7 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar {
-    width: -webkit-fill-available;
+    flex: 1;
     color: var(--contrast-color);
     &__title {
       @extend %typo-body-md;
@@ -113,11 +108,10 @@ export default {
     }
     &__date {
       position: relative;
-      width: -webkit-fill-available;
+      flex: 1;
       height: fit-content;
-      gap: 8px;
       border: 1px solid var(--border-color);
-      border-radius: var(--border-radius--rounded);
+      border-radius: var(--border-radius--square);
       &-title-wrapper {
         position: sticky;
         top: 0;
@@ -141,7 +135,7 @@ export default {
             left: -1px;
             width: 100%;
             border: 1px solid var(--border-color);
-            border-radius: calc(var(--border-radius--rounded) + 1px) calc(var(--border-radius--rounded) + 1px) 0 0;
+            border-radius: calc(var(--border-radius--square) + 1px) calc(var(--border-radius--square) + 1px) 0 0;
             border-bottom: none;
             background: var(--background-color);
           }
@@ -160,16 +154,11 @@ export default {
       }
       &-item {
         @extend %typo-body-md;
-        max-height: 46px;
-        height: 46px;
         padding: 16px 0;
         text-align: center;
         font-weight: 600;
         border-radius: var(--border-radius--rounded-btn);
         border: 2px solid var(--positive-light-color);
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
         user-select: none;
         cursor: pointer;
         &--reserved {
@@ -181,6 +170,20 @@ export default {
         &--selected {
           background: var(--positive-light-color);
           color: #FFFFFF;
+        }
+      }
+    }
+  }
+  &.wt-omni-widget--rounded {
+    .wt-omni-widget-appointment-calendar {
+      &__date {
+        border-radius: var(--border-radius--rounded);
+      }
+    }
+    .wt-omni-widget-appointment-calendar__date-title-wrapper {
+      &--sticky {
+        .title {
+          border-radius: calc(var(--border-radius--rounded) + 1px) calc(var(--border-radius--rounded) + 1px) 0 0;
         }
       }
     }

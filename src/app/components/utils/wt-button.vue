@@ -1,7 +1,12 @@
 <template>
   <button
     class="wt-button"
-    :class="[`wt-button--color-${color}`]"
+    :class="[
+      `wt-button--color-${color}`,
+      {
+        'wt-button--disabled': disabled,
+      }
+      ]"
     type="button"
     @click="$emit('click', $event)"
   >
@@ -16,6 +21,11 @@ export default {
     color: {
       type: String,
       default: 'accent',
+      options: ['accent', 'secondary', 'danger'],
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
 };
@@ -50,9 +60,19 @@ export default {
 
     &--color {
       &-secondary {
-        color: var(--text-primary-color);
+        color: var(--contrast-color);
         background: var(--secondary-color);
       }
+      &-danger {
+        color: var(--main-color);
+        background: var(--negative-color);
+      }
+    }
+
+    &--disabled {
+      pointer-events: none;
+      color: var(--text-primary-color);
+      background: var(--disabled-color);
     }
 
     &:hover {

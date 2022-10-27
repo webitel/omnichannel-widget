@@ -26,6 +26,11 @@ export default {
     calendar: {
       title: 'Выберите время звонка',
     },
+    success: {
+      congratulations: 'Поздравляем!',
+      title: 'Вы запланировали звонок.',
+      cancel: 'Отменить звонок',
+    },
   },
   errors: {
     fileTooLarge: 'Файл "{file}" слишком большой! Максимальный размер файла: {maxSize} Мб',

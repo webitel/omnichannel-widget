@@ -6,11 +6,15 @@
     <wt-input
       :label="$t('appointment.form.name')"
       :value="value.name"
+      :v="v.draft.name"
+      required
       @input="handleInput({ prop: 'name', value: $event })"
     ></wt-input>
     <tel-input
       :label="$t('appointment.form.destination')"
       :value="value.destination"
+      :v="v.draft.destination"
+      required
       @input="handleInput({ prop: 'destination', value: $event })"
     ></tel-input>
     <wt-input
@@ -39,6 +43,9 @@ export default {
       type: Object,
       required: true,
     },
+    v: {
+      type: Object,
+    },
   },
   computed: {
     showEmail() {
@@ -61,18 +68,28 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-form {
-    min-width: 250px;
+    width: 250px;
     display: flex;
     flex-direction: column;
     gap: 8px;
     color: var(--contrast-color);
     &__title {
+      @extend %typo-body-md;
       margin-bottom: var(--main-app-padding);
       padding: var(--main-app-padding);
-      font-size: 12px;
       font-weight: 600;
-      line-height: 14px;
     }
+    .wt-textarea {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+  }
+  .wt-textarea__wrapper {
+    flex: 1;
+  }
+  .wt-textarea__textarea {
+    height: 100%;
   }
 }
 </style>
