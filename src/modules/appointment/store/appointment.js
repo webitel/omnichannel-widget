@@ -14,7 +14,17 @@ const actions = {
     return context.commit('SET_APPOINTMENT_STATE', appointmentState);
   },
   SCHEDULE_APPOINTMENT: async (context, scheduleInfo) => {
-    const appointmentState = await AppointmentAPI.postAppointment(context.getters.APPOINTMENT_URL, scheduleInfo);
+    const _scheduleInfo = {
+      scheduleDate: scheduleInfo.scheduleDate,
+      scheduleTime: scheduleInfo.scheduleTime,
+      name: scheduleInfo.name,
+      destination: scheduleInfo.destination,
+      variables: {},
+    };
+    if (scheduleInfo.email) _scheduleInfo.variables.email = scheduleInfo.email;
+    if (scheduleInfo.message) _scheduleInfo.variables.message = scheduleInfo.message;
+
+    const appointmentState = await AppointmentAPI.postAppointment(context.getters.APPOINTMENT_URL, _scheduleInfo);
     return context.commit('SET_APPOINTMENT_STATE', appointmentState);
   },
   REMOVE_APPOINTMENT: async (context) => {
