@@ -23,10 +23,10 @@
         <b>{{ $t('appointment.form.destination') }}:</b> {{ appointment.destination }}
       </p>
       <p class="wt-omni-widget-appointment-success__info-line" v-if="showEmail">
-        <b>{{ $t('appointment.form.email') }}:</b> {{ variables.destination }}
+        <b>{{ $t('appointment.form.email') }}:</b> {{ appointment.variables.email }}
       </p>
       <p class="wt-omni-widget-appointment-success__info-line" v-if="showMessage">
-        <b>{{ $t('appointment.form.message') }}:</b> {{ variables.destination }}
+        <b>{{ $t('appointment.form.message') }}:</b> {{ appointment.variables.message }}
       </p>
     </div>
     <wt-button
@@ -54,15 +54,12 @@ export default {
       appointment(state) {
         return getNamespacedState(state, this.namespace).appointmentState.appointment || {};
       },
-      variables(state) {
-        return getNamespacedState(state, this.namespace).appointmentState.variables || {};
-      },
     }),
     showEmail() {
-      return this.variables.email;
+      return this.appointment.variables?.email;
     },
     showMessage() {
-      return this.variables.message;
+      return this.appointment.variables?.message;
     },
   },
   methods: {
@@ -79,7 +76,7 @@ export default {
 #wt-omni-widget {
   .wt-omni-widget-appointment-success {
     box-sizing: border-box;
-    height: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -117,6 +114,10 @@ export default {
     gap: 32px;
     grid-template-columns: 1fr 1fr;
     width: 100%;
+
+    @media (max-width: $breakpoint-xs) {
+      grid-template-columns: 1fr;
+    }
   }
   .wt-omni-widget-appointment-success__info-line {
     @extend %typo-body-md;

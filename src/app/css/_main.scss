@@ -26,6 +26,10 @@
 }
 
 #wt-omni-widget {
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     @extend %typo-body-md;
   }
