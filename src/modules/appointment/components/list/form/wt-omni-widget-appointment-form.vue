@@ -84,12 +84,26 @@ export default {
       flex-direction: column;
       flex: 1;
     }
+    @media (max-width: $breakpoint-md) {
+      width: 200px;
+    }
+
+    &::v-deep .wt-textarea {
+      &__wrapper {
+        flex: 1;
+      }
+      &__textarea {
+        height: 100%;
+      }
+    }
   }
-  .wt-textarea__wrapper {
-    flex: 1;
-  }
-  .wt-textarea__textarea {
-    height: 100%;
+  @media (max-width: $breakpoint-xxs) {
+    .wt-omni-widget-appointment-form {
+      width: 100%;
+      &__title {
+        margin-bottom: 0;
+      }
+    }
   }
 }
 </style>

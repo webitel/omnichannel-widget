@@ -264,12 +264,24 @@ export default Vue.extend({
 #wt-omni-widget {
   .wt-omni-widget-appointment-list {
     max-height: 100%;
+    height: 100%;
     &__wrap {
       display: flex;
+      max-height: 90%;
     }
     .wt-button {
-      margin: var(--main-app-padding) auto 0;
+      margin: 16px auto 0;
       width: 168px;
+    }
+  }
+  @media (max-width: $breakpoint-xxs) {
+    .wt-omni-widget-appointment-list {
+      &__wrap {
+        flex-direction: column;
+      }
+      .wt-button {
+        width: 100%;
+      }
     }
   }
 }

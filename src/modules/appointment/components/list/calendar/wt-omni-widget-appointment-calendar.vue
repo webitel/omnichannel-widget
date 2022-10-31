@@ -88,6 +88,8 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     color: var(--contrast-color);
     &__title {
@@ -100,7 +102,6 @@ export default {
       @extend %wt-scrollbar;
       margin-left: 8px;
       padding-right: 8px;
-      max-height: 402px;
       display: flex;
       justify-content: space-between;
       gap: 8px;
@@ -133,7 +134,7 @@ export default {
         &--sticky {
           .title {
             left: -1px;
-            width: 100%;
+            width: calc(100% + 2px);
             border: 1px solid var(--border-color);
             border-radius: calc(var(--border-radius--square) + 1px) calc(var(--border-radius--square) + 1px) 0 0;
             border-bottom: none;
@@ -154,7 +155,7 @@ export default {
       }
       &-item {
         @extend %typo-body-md;
-        padding: 16px 0;
+        padding: 14px 0;
         text-align: center;
         font-weight: 600;
         border-radius: var(--border-radius--rounded-btn);
@@ -163,7 +164,7 @@ export default {
         cursor: pointer;
         &--reserved {
           background: var(--background-darker-color);
-          border: none;
+          border-color: var(--background-darker-color);
           cursor: default;
           pointer-events: none;
         }
@@ -185,6 +186,22 @@ export default {
         .title {
           border-radius: calc(var(--border-radius--rounded) + 1px) calc(var(--border-radius--rounded) + 1px) 0 0;
         }
+      }
+    }
+  }
+
+  .wt-omni-widget-appointment-calendar {
+    //&__wrapper {
+    //  @media (max-width: $breakpoint-lg) {
+    //    max-height: 332px;
+    //  }
+    //  @media (max-width: $breakpoint-md) {
+    //    max-height: 278px;
+    //  }
+    //}
+    &__title {
+      @media (max-width: $breakpoint-md) {
+        text-align: center;
       }
     }
   }
