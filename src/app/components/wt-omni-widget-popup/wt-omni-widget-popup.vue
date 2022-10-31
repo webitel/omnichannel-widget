@@ -67,10 +67,12 @@ export default {
       width: 540px;
       //height: 484px;
     }
-    @media (max-width: $breakpoint-xs) {
+    @media (max-width: $breakpoint-xxs) {
       width: 100%;
-      height: auto;
-      //min-height: 50%;
+      height: 800px;
+      min-height: 85%;
+      gap: 8px;
+      padding: 8px;
     }
   }
 
@@ -78,6 +80,9 @@ export default {
     @extend %typo-body-md;
     flex-grow: 1;
     min-height: 0;
+    @media (max-width: $breakpoint-xxs) {
+      overflow-y: auto;
+    }
   }
 
   &.wt-omni-widget--rounded {

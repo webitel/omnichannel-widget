@@ -94,6 +94,9 @@ export default {
       }
       &__textarea {
         height: 100%;
+        @media (max-width: $breakpoint-xxs) {
+          min-height: 64px;
+        }
       }
     }
   }
@@ -102,6 +105,7 @@ export default {
       width: 100%;
       &__title {
         margin-bottom: 0;
+        text-align: center;
       }
     }
   }

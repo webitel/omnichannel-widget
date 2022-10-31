@@ -265,9 +265,18 @@ export default Vue.extend({
   .wt-omni-widget-appointment-list {
     max-height: 100%;
     height: 100%;
+    @media (max-width: $breakpoint-xxs) {
+      max-height: none;
+      height: auto;
+    }
     &__wrap {
       display: flex;
       max-height: 90%;
+      gap: 8px;
+      @media (max-width: $breakpoint-xxs) {
+        max-height: 95%;
+        height: 95%;
+      }
     }
     .wt-button {
       margin: 16px auto 0;
@@ -281,6 +290,7 @@ export default Vue.extend({
       }
       .wt-button {
         width: 100%;
+        margin-top: 8px;
       }
     }
   }

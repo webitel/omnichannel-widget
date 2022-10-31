@@ -34,6 +34,11 @@
          @click="selectTime({ date, time })"
        >{{ time }}</div>
      </div>
+     <div
+       class="wt-omni-widget-appointment-calendar__date-bottom-border"
+       :class="{ 'wt-omni-widget-appointment-calendar__date-bottom-border--sticky':
+       !isDateTitleInDefaultPosition }"
+     ></div>
    </div>
    </div>
  </article>
@@ -145,6 +150,16 @@ export default {
           }
         }
       }
+      //&-bottom-border {
+      //  position: sticky;
+      //  bottom: 0;
+      //  left: 0;
+      //  &--sticky {
+      //    height: 20px;
+      //    border: 1px solid var(--border-color);
+      //    border-radius: var(--border-radius--square);
+      //  }
+      //}
     }
     &__time {
       &-wrapper {
@@ -191,17 +206,29 @@ export default {
   }
 
   .wt-omni-widget-appointment-calendar {
-    //&__wrapper {
-    //  @media (max-width: $breakpoint-lg) {
-    //    max-height: 332px;
-    //  }
-    //  @media (max-width: $breakpoint-md) {
-    //    max-height: 278px;
-    //  }
-    //}
+    @media (max-width: $breakpoint-xxs) {
+      max-height: 50%;
+      gap: 8px;
+    }
+    &__wrapper {
+      //@media (max-width: $breakpoint-lg) {
+      //  max-height: 332px;
+      //}
+      //@media (max-width: $breakpoint-md) {
+      //  max-height: 278px;
+      //}
+      @media (max-width: $breakpoint-xxs) {
+        margin-left: 0;
+        //padding-right: 0;
+        max-height: 284px;
+      }
+    }
     &__title {
       @media (max-width: $breakpoint-md) {
         text-align: center;
+      }
+      @media (max-width: $breakpoint-xxs) {
+        margin-bottom: 0;
       }
     }
   }
