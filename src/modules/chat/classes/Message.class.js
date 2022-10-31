@@ -2,7 +2,11 @@ import MessageStatus from '../enums/MessageStatus.enum';
 import MessageType from '../enums/MessageType.enum';
 
 export default class Message {
-  #notSent = false;
+  /*
+    We mark this property as private (_), but do not use private modifier (#)
+    because Vue needs to see this property to make getter reactive somehow
+   */
+  _notSent = false;
 
   constructor(msg) {
     if (msg.id) {
@@ -17,7 +21,7 @@ export default class Message {
   }
 
   get status() {
-    if (this.#notSent) return MessageStatus.ERROR;
+    if (this._notSent) return MessageStatus.ERROR;
     if (this.seq) return MessageStatus.SENDING;
     return MessageStatus.SENT;
   }
@@ -45,7 +49,7 @@ export default class Message {
   setSendingTimeout(timeout = 5) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        this.#notSent = true;
+        this._notSent = true;
         resolve();
       }, timeout * 1000);
     });
