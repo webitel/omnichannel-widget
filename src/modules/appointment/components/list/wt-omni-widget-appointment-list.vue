@@ -8,6 +8,7 @@
       <appointment-calendar
         v-model="draft"
         :calendar="calendar"
+        :time-zone="state.timezone"
       ></appointment-calendar>
     </div>
     <wt-button
@@ -250,7 +251,6 @@ export default Vue.extend({
       this.scheduleAppointment(this.draft);
     },
     initDraft() {
-      console.log('initDraft:', this.config.appointment);
       this.draft = generateAppointmentSchema(this.config.appointment);
     },
   },
@@ -261,6 +261,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+$send-button-weight: 52px;
 #wt-omni-widget {
   .wt-omni-widget-appointment-list {
     max-height: 100%;
@@ -271,12 +272,8 @@ export default Vue.extend({
     }
     &__wrap {
       display: flex;
-      max-height: 90%;
+      max-height: calc(100% - $send-button-weight);
       gap: 8px;
-      @media (max-width: $breakpoint-xxs) {
-        max-height: 95%;
-        height: 95%;
-      }
     }
     .wt-button {
       margin: 16px auto 0;

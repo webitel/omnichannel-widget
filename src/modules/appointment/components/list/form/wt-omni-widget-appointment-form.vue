@@ -75,7 +75,7 @@ export default {
     color: var(--contrast-color);
     &__title {
       @extend %typo-body-md;
-      margin-bottom: var(--main-app-padding);
+      margin-bottom: 8px;
       padding: var(--main-app-padding);
       font-weight: 600;
     }

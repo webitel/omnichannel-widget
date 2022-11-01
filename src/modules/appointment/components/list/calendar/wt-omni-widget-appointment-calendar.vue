@@ -1,7 +1,21 @@
 <template>
  <article class="wt-omni-widget-appointment-calendar">
-   <div class="wt-omni-widget-appointment-calendar__title">
-     {{ $t('appointment.calendar.title') }}
+   <div class="wt-omni-widget-appointment-calendar__title-wrap">
+    <span class="wt-omni-widget-appointment-calendar__title">
+      {{ $t('appointment.calendar.title') }}
+    </span>
+     <div class="wt-omni-widget-appointment-calendar__time-zone">
+<!--       <div class="icon">-->
+<!--         <img-->
+<!--           :src="logoUrl"-->
+<!--           alt="Webitel logo"-->
+<!--           @dblclick="showVersionInfo"-->
+<!--         >-->
+<!--       </div>-->
+       <span class="title">
+         {{ timeZone + ' Time Zone' }}
+       </span>
+     </div>
    </div>
    <div
      class="wt-omni-widget-appointment-calendar__wrapper"
@@ -34,11 +48,11 @@
          @click="selectTime({ date, time })"
        >{{ time }}</div>
      </div>
-     <div
-       class="wt-omni-widget-appointment-calendar__date-bottom-border"
-       :class="{ 'wt-omni-widget-appointment-calendar__date-bottom-border--sticky':
-       !isDateTitleInDefaultPosition }"
-     ></div>
+<!--     <div-->
+<!--       class="wt-omni-widget-appointment-calendar__date-bottom-border"-->
+<!--       :class="{ 'wt-omni-widget-appointment-calendar__date-bottom-border&#45;&#45;sticky':-->
+<!--       !isDateTitleInDefaultPosition }"-->
+<!--     ></div>-->
    </div>
    </div>
  </article>
@@ -59,6 +73,9 @@ export default {
     calendar: {
       type: Array,
     },
+    timeZone: {
+      type: String,
+    },
   },
   mounted() {
     this.$nextTick(() => {
@@ -68,7 +85,7 @@ export default {
   methods: {
     formattingDateTitle(currentDateForm) {
       const currentDate = new Date(currentDateForm);
-      return `${currentDate.getUTCDate()} ${currentDate.toString().substring(0,3)}`;
+      return `${currentDate.getUTCDate()} ${currentDate.toString().substring(0, 3)}`;
     },
     selectTime({ date, time }) {
       const value = {
@@ -97,11 +114,24 @@ export default {
     flex-direction: column;
     flex: 1;
     color: var(--contrast-color);
-    &__title {
+    @media (max-width: $breakpoint-xxs) {
+      max-height: 50%;
+      gap: 8px;
+    }
+    &__title-wrap {
       @extend %typo-body-md;
       margin-bottom: 16px;
       padding: 16px;
       font-weight: 600;
+      display: flex;
+      justify-content: space-around;
+      @media (max-width: $breakpoint-md) {
+        flex-direction: column;
+        align-items: center;
+      }
+      @media (max-width: $breakpoint-xxs) {
+        margin-bottom: 0;
+      }
     }
     &__wrapper {
       @extend %wt-scrollbar;
@@ -111,6 +141,10 @@ export default {
       justify-content: space-between;
       gap: 8px;
       overflow-y: auto;
+      @media (max-width: $breakpoint-xxs) {
+        margin-left: 0;
+        max-height: 284px;
+      }
     }
     &__date {
       position: relative;
@@ -201,34 +235,6 @@ export default {
         .title {
           border-radius: calc(var(--border-radius--rounded) + 1px) calc(var(--border-radius--rounded) + 1px) 0 0;
         }
-      }
-    }
-  }
-
-  .wt-omni-widget-appointment-calendar {
-    @media (max-width: $breakpoint-xxs) {
-      max-height: 50%;
-      gap: 8px;
-    }
-    &__wrapper {
-      //@media (max-width: $breakpoint-lg) {
-      //  max-height: 332px;
-      //}
-      //@media (max-width: $breakpoint-md) {
-      //  max-height: 278px;
-      //}
-      @media (max-width: $breakpoint-xxs) {
-        margin-left: 0;
-        //padding-right: 0;
-        max-height: 284px;
-      }
-    }
-    &__title {
-      @media (max-width: $breakpoint-md) {
-        text-align: center;
-      }
-      @media (max-width: $breakpoint-xxs) {
-        margin-bottom: 0;
       }
     }
   }

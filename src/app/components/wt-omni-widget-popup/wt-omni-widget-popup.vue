@@ -54,7 +54,7 @@ export default {
     gap: var(--main-app-padding);
 
     width: 1024px;
-    height: 606px;
+    height: 608px;
     @media (max-width: $breakpoint-lg) {
       width: 800px;
       height: 538px;
