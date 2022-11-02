@@ -9,6 +9,7 @@
         v-model="draft"
         :calendar="calendar"
         :time-zone="state.timezone"
+        :locates="config.view.lang"
       ></appointment-calendar>
     </div>
     <wt-button
@@ -251,6 +252,7 @@ export default Vue.extend({
       this.scheduleAppointment(this.draft);
     },
     initDraft() {
+      console.log('config', this.config);
       this.draft = generateAppointmentSchema(this.config.appointment);
     },
   },

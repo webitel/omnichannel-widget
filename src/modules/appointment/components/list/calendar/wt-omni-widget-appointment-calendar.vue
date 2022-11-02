@@ -5,13 +5,12 @@
       {{ $t('appointment.calendar.title') }}
     </span>
      <div class="wt-omni-widget-appointment-calendar__time-zone">
-<!--       <div class="icon">-->
-<!--         <img-->
-<!--           :src="logoUrl"-->
-<!--           alt="Webitel logo"-->
-<!--           @dblclick="showVersionInfo"-->
-<!--         >-->
-<!--       </div>-->
+       <div class="wt-omni-widget-appointment-calendar__time-zone-icon">
+         <img
+           src="../../../assets/appointment-time-zone.svg"
+           alt="time zone icon"
+         >
+       </div>
        <span class="title">
          {{ timeZone + ' Time Zone' }}
        </span>
@@ -48,11 +47,6 @@
          @click="selectTime({ date, time })"
        >{{ time }}</div>
      </div>
-<!--     <div-->
-<!--       class="wt-omni-widget-appointment-calendar__date-bottom-border"-->
-<!--       :class="{ 'wt-omni-widget-appointment-calendar__date-bottom-border&#45;&#45;sticky':-->
-<!--       !isDateTitleInDefaultPosition }"-->
-<!--     ></div>-->
    </div>
    </div>
  </article>
@@ -76,6 +70,9 @@ export default {
     timeZone: {
       type: String,
     },
+    locates: {
+      type: String,
+    },
   },
   mounted() {
     this.$nextTick(() => {
@@ -85,7 +82,13 @@ export default {
   methods: {
     formattingDateTitle(currentDateForm) {
       const currentDate = new Date(currentDateForm);
-      return `${currentDate.getUTCDate()} ${currentDate.toString().substring(0, 3)}`;
+      const options = { day: 'numeric', weekday: 'short' };
+      const dateStr = currentDate.toLocaleDateString(this.locates || 'en-US', options).toString();
+      const subStr1 = dateStr.substring(0, dateStr.indexOf(','||''||'.'));
+      const subStr2 = dateStr.substring(dateStr.indexOf(','||''||'.') + 1, dateStr.length + 1);
+      return Number(dateStr.substring(0, 1)) ?
+        `${ subStr1 } ${ subStr2 }` :
+        `${ subStr2 } ${ subStr1 }`
     },
     selectTime({ date, time }) {
       const value = {
@@ -120,22 +123,34 @@ export default {
     }
     &__title-wrap {
       @extend %typo-body-md;
+      min-height: 48px;
       margin-bottom: 16px;
-      padding: 16px;
       font-weight: 600;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
+      align-items: center;
       @media (max-width: $breakpoint-md) {
         flex-direction: column;
+        justify-content: center;
         align-items: center;
       }
       @media (max-width: $breakpoint-xxs) {
         margin-bottom: 0;
+        padding: 16px 0;
+        gap: 8px;
+      }
+    }
+    &__time-zone {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      &-icon {
+        width: 16px;
+        height: 16px;
       }
     }
     &__wrapper {
       @extend %wt-scrollbar;
-      margin-left: 8px;
       padding-right: 8px;
       display: flex;
       justify-content: space-between;
@@ -184,16 +199,6 @@ export default {
           }
         }
       }
-      //&-bottom-border {
-      //  position: sticky;
-      //  bottom: 0;
-      //  left: 0;
-      //  &--sticky {
-      //    height: 20px;
-      //    border: 1px solid var(--border-color);
-      //    border-radius: var(--border-radius--square);
-      //  }
-      //}
     }
     &__time {
       &-wrapper {
