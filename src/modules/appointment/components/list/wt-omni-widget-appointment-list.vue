@@ -250,7 +250,6 @@ export default Vue.extend({
       this.scheduleAppointment(this.draft);
     },
     initDraft() {
-      console.log('initDraft:', this.config.appointment);
       this.draft = generateAppointmentSchema(this.config.appointment);
     },
   },

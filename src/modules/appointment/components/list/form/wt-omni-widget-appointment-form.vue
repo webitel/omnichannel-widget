@@ -27,6 +27,7 @@
       v-if="showMessage"
       :label="$t('appointment.form.message')"
       :value="value.message"
+      stretched
       @input="handleInput({ prop: 'message', value: $event })"
     ></wt-textarea>
   </form>
@@ -79,17 +80,6 @@ export default {
       padding: var(--main-app-padding);
       font-weight: 600;
     }
-    .wt-textarea {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-  }
-  .wt-textarea__wrapper {
-    flex: 1;
-  }
-  .wt-textarea__textarea {
-    height: 100%;
   }
 }
 </style>
