@@ -95,18 +95,17 @@ export default {
     color: var(--contrast-color);
     &__title {
       @extend %typo-body-md;
-      margin-bottom: 16px;
+      margin-bottom: var(--app-gap-md);
       padding: var(--main-app-padding);
       font-weight: 600;
     }
     &__wrapper {
       @extend %wt-scrollbar;
-      margin-left: 8px;
-      padding-right: 8px;
+      padding-right: var(--app-gap-md);
       max-height: 402px;
       display: flex;
       justify-content: space-between;
-      gap: 8px;
+      gap: var(--app-gap-md);
       overflow-y: auto;
     }
     &__date {
@@ -155,8 +154,8 @@ export default {
     &__time-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      padding: 0 8px 8px;
+      gap: var(--app-gap-md);
+      padding: 0 var(--appointment-time-wrap-padding) var(--appointment-time-wrap-padding);
     }
   }
   &.wt-omni-widget--rounded {

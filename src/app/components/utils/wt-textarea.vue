@@ -110,7 +110,7 @@
   }
 
   .wt-label {
-    margin-left: 15px;
+    margin-left: var(--main-app-padding);
     margin-bottom: 5px;
   }
 
@@ -137,9 +137,11 @@
 
   .wt-textarea--stretched {
       height: 100%;
+    display: flex;
+    flex-direction: column;
     .wt-textarea {
       &__wrapper {
-        height: 100%;
+        flex-grow: 1;
       }
       &__textarea {
         height: 100%;

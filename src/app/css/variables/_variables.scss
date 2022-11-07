@@ -34,6 +34,11 @@ $breakpoint-xs: 600px;
 
 .wt-omni-widget {
   --main-app-padding: 15px;
+  --app-gap-sm: 5px;
+  --app-gap-md: 10px;
+
+  --appointment-time-wrap-padding: 10px;
+  --appointment-time-padding: 15px;
 
   .wt-omni-widget-window-header {
     --header-padding: 10px 10px 10px 15px;

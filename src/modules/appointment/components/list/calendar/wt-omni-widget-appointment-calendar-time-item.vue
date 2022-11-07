@@ -50,7 +50,7 @@ export default {
     cursor: pointer;
     &--reserved {
       background: var(--color-resered-day);
-      border: none;
+      border: 2px solid var(--color-resered-day);
       cursor: default;
       pointer-events: none;
     }
