@@ -72,10 +72,10 @@ export default {
     width: 250px;
     display: flex;
     flex-direction: column;
-    gap: var(--app-gap-md);
+    gap: var(--gap-md);
     color: var(--contrast-color);
     &__title {
-      @extend %typo-strong-md;
+      @extend %typo-heading-md;
       padding: var(--main-app-padding);
     }
   }

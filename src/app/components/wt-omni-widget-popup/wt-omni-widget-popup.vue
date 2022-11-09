@@ -51,7 +51,7 @@ export default {
     padding: var(--main-app-padding);
     border-radius: var(--border-radius--square);
     background: var(--background-color);
-    gap: var(--app-gap-md);
+    gap: var(--gap-md);
 
     width: 1024px;
     @media (max-width: $breakpoint-lg) {

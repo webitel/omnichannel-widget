@@ -27,10 +27,9 @@
        <calendar-time-item
          v-for="({ time, reserved }) of times"
          :key="date.concat(time)"
-         :time="time"
-         :reserved="reserved"
-         :selected="isTimeSelected({ date, time, reserved })"
-         @click="selectTime({ date, time })"
+         :value="{ time, date, reserved }"
+         :previousValue="{ time: value.scheduleTime, date: value.scheduleDate}"
+         @click="selectTime({ time, date })"
        ></calendar-time-item>
      </div>
    </div>
@@ -90,70 +89,70 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget {
+  $border-default-color: hsla(202, 20%, 90%, 1);
+  $time-wrap-padding: 10px;
   .wt-omni-widget-appointment-calendar {
     flex: 1;
     color: var(--contrast-color);
     &__title {
-      @extend %typo-strong-md;
-      margin-bottom: var(--app-gap-md);
-      padding: var(--main-app-padding) 10px;
+      @extend %typo-heading-md;
+      margin-bottom: var(--gap-md);
+      padding: var(--main-app-padding);
     }
     &__wrapper {
       @extend %wt-scrollbar;
-      padding-right: var(--app-gap-md);
+      padding-right: var(--gap-md);
       max-height: 402px;
       display: flex;
       justify-content: space-between;
-      gap: var(--app-gap-md);
+      gap: var(--gap-md);
       overflow-y: auto;
     }
     &__date {
       position: relative;
       flex: 1;
       height: fit-content;
-      border: 1px solid var(--border-default-color);
+      border: 1px solid $border-default-color;
       border-radius: var(--border-radius--square);
-      &-title {
-        &-wrapper {
-          position: sticky;
-          top: 0;
-          left: -1px;
-          &--sticky {
-            .wt-omni-widget-appointment-calendar__date-title {
-              &-text {
-                left: -1px;
-                width: calc(100% + 2px);
-                background: var(--background-color);
-                border: 1px solid var(--border-default-color);
-                border-radius: calc(var(--border-radius--square) + 1px) calc(var(--border-radius--square) + 1px) 0 0;
-                border-bottom: none;
-              }
-              &-background {
-                background: var(--background-color);
-              }
-            }
+    }
+    &__date-title-wrapper {
+      position: sticky;
+      top: 0;
+      left: -1px;
+      &--sticky {
+        .wt-omni-widget-appointment-calendar {
+          &__date-title-text {
+            left: -1px;
+            width: calc(100% + 2px);
+            background: var(--background-color);
+            border: 1px solid $border-default-color;
+            border-radius: calc(var(--border-radius--square) + 1px) calc(var(--border-radius--square) + 1px) 0 0;
+            border-bottom: none;
+          }
+          &__date-title-background {
+            background: var(--background-color);
           }
         }
-        &-text {
-          @extend %typo-strong-md;
-          position: relative;
-          padding: 24px 0;
-          text-align: center;
-          text-transform: uppercase;
-        }
-        &-background {
-          position: absolute;
-          left: -1px;
-          width: calc(100% + 2px);
-          height: 100%;
-        }
       }
+    }
+    &__date-title-text {
+      @extend %typo-heading-md;
+      position: relative;
+      padding: 24px 0;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    &__date-title-background {
+      position: absolute;
+      left: -1px;
+      width: calc(100% + 2px);
+      height: 100%;
     }
     &__time-wrapper {
       display: flex;
       flex-direction: column;
-      gap: var(--app-gap-md);
-      padding: 0 var(--appointment-time-wrap-padding) var(--appointment-time-wrap-padding);
+      gap: var(--gap-md);
+      padding: 0 $time-wrap-padding $time-wrap-padding;
     }
   }
   &.wt-omni-widget--rounded {
@@ -161,9 +160,7 @@ export default {
       &__date {
         border-radius: var(--border-radius--rounded);
       }
-    }
-    .wt-omni-widget-appointment-calendar__date-title-wrapper {
-      &--sticky {
+      &__date-title-wrapper--sticky {
         .wt-omni-widget-appointment-calendar__date-title-text {
           border-radius: calc(var(--border-radius--rounded) + 1px) calc(var(--border-radius--rounded) + 1px) 0 0;
         }

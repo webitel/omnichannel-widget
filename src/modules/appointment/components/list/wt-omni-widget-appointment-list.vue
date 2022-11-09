@@ -265,10 +265,10 @@ export default Vue.extend({
     max-height: 100%;
     &__wrap {
       display: flex;
-      gap: var(--app-gap-md);
+      gap: var(--gap-md);
     }
     .wt-button {
-      margin: var(--app-gap-md) auto 0;
+      margin: var(--gap-md) auto 0;
       width: 168px;
     }
   }

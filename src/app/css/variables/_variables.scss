@@ -7,8 +7,11 @@
   // BORDER RADIUS
   --border-radius--square: 5px;
   --border-radius--rounded: 20px;
-  --border-radius--rounded-xl: 100px;
   --border-radius--rounded-btn: 40px;
+
+  //GAP
+  --gap-md: 10px;
+  --gap-sm: 5px;
 }
 
 // breakpoints
@@ -16,6 +19,7 @@ $breakpoint-lg: 1280px;
 $breakpoint-md: 1024px;
 $breakpoint-sm: 820px;
 $breakpoint-xs: 600px;
+
 
 .wt-omni-widget-chat-message {
   --client-message-border-radius--square: 5px 5px 0px 5px;
@@ -35,11 +39,6 @@ $breakpoint-xs: 600px;
 
 .wt-omni-widget {
   --main-app-padding: 15px;
-  --app-gap-sm: 5px;
-  --app-gap-md: 10px;
-
-  --appointment-time-wrap-padding: 10px;
-  --appointment-time-padding: 15px;
 
   .wt-omni-widget-window-header {
     --header-padding: 10px 10px 10px 15px;

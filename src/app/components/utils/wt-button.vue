@@ -34,13 +34,16 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   %typo-btn {
-    @extend %typo-body-md;
+    font: {
+      family: 'Montserrat Semi', monospace;
+      size: 12px;
+    }
+    line-height: 14px;
+    font-weight: 400;
   }
-
   .wt-button {
     --btn-padding: 11px 19px;
     //--btn-border: 1px solid;
-
     @extend %typo-btn;
     position: relative;
     display: block;
@@ -53,7 +56,6 @@ export default {
     border-radius: var(--border-radius--square);
     transition: var(--transition);
     cursor: pointer;
-
     &--color {
       &-secondary {
         color: var(--contrast-color);
@@ -64,18 +66,15 @@ export default {
         background: var(--negative-color);
       }
     }
-
     &--disabled {
       pointer-events: none;
       color: var(--text-primary-color);
       background: var(--disabled-color);
     }
-
     &:hover {
       box-shadow: var(--morf-style-up-50);
     }
   }
-
   &.wt-omni-widget--rounded {
     .wt-button {
       border-radius: var(--border-radius--rounded);
