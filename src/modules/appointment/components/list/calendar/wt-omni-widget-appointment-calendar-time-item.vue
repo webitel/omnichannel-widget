@@ -40,23 +40,28 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar-time-item {
-    @extend %typo-body-md;
+    @extend %typo-strong-md;
     padding: var(--main-app-padding) 0;
     text-align: center;
-    font-weight: 600;
-    border-radius: 30px;
+    border-radius: var(--border-radius--rounded-xl);
     border: 2px solid var(--color-free-day);
     user-select: none;
     cursor: pointer;
+    transition: var(--transition);
     &--reserved {
-      background: var(--color-resered-day);
-      border: 2px solid var(--color-resered-day);
+      background: var(--color-reserved-day);
+      border-color: var(--color-reserved-day);
       cursor: default;
       pointer-events: none;
     }
     &--selected {
       background: var(--color-free-day);
       color: #FFFFFF;
+    }
+    &:hover {
+      color: #FFFFFF;
+      background: var(--color-free-day-hover);
+      border-color: var(--color-free-day-hover);
     }
   }
 }

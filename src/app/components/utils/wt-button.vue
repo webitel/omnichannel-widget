@@ -34,11 +34,7 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   %typo-btn {
-    font: {
-      family: 'Montserrat Semi', monospace;
-      size: 12px;
-    }
-    line-height: 14px;
+    @extend %typo-body-md;
   }
 
   .wt-button {
@@ -54,7 +50,7 @@ export default {
     color: var(--main-color);
     background: var(--wt-omni-widget__accent-color);
     //border-color: var(--wt-omni-widget__accent-color);
-    border-radius: 30px;
+    border-radius: var(--border-radius--square);
     transition: var(--transition);
     cursor: pointer;
 

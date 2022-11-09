@@ -4,6 +4,7 @@
     size: 20px;
   }
   line-height: 24px;
+  font-weight: 600;
 }
 
 %typo-strong-md {
@@ -12,6 +13,7 @@
     size: 12px;
   }
   line-height: 14px;
+  font-weight: 600;
 }
 
 // WT-TOOLTIP DEPENDENCY
@@ -29,6 +31,7 @@
     size: 12px;
   }
   line-height: 14px;
+  font-weight: 400;
 }
 
 %typo-body-sm {
@@ -37,4 +40,14 @@
     size: 10px;
   }
   line-height: 14px;
+  font-weight: 500;
+}
+
+%typo-link-md {
+  font: {
+    family: 'Montserrat Regular', monospace;
+    size: 12px;
+  }
+  line-height: 14px;
+  font-weight: 400;
 }

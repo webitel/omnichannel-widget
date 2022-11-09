@@ -94,10 +94,9 @@ export default {
     flex: 1;
     color: var(--contrast-color);
     &__title {
-      @extend %typo-body-md;
+      @extend %typo-strong-md;
       margin-bottom: var(--app-gap-md);
-      padding: var(--main-app-padding);
-      font-weight: 600;
+      padding: var(--main-app-padding) 10px;
     }
     &__wrapper {
       @extend %wt-scrollbar;
@@ -136,11 +135,10 @@ export default {
           }
         }
         &-text {
-          @extend %typo-body-md;
+          @extend %typo-strong-md;
           position: relative;
           padding: 24px 0;
           text-align: center;
-          font-weight: 600;
           text-transform: uppercase;
         }
         &-background {

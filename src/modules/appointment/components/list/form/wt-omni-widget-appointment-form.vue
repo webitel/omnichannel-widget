@@ -75,9 +75,8 @@ export default {
     gap: var(--app-gap-md);
     color: var(--contrast-color);
     &__title {
-      @extend %typo-body-md;
+      @extend %typo-strong-md;
       padding: var(--main-app-padding);
-      font-weight: 600;
     }
   }
 }
