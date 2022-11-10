@@ -35,11 +35,10 @@ export default {
 #wt-omni-widget {
   %typo-btn {
     font: {
-      family: 'Montserrat Semi', monospace;
+      family: 'Montserrat Regular', monospace;
       size: 12px;
     }
     line-height: 14px;
-    font-weight: 400;
   }
   .wt-button {
     --btn-padding: 11px 19px;
@@ -77,7 +76,7 @@ export default {
   }
   &.wt-omni-widget--rounded {
     .wt-button {
-      border-radius: var(--border-radius--rounded);
+      border-radius: var(--border-radius--rounded-btn);
     }
   }
 }

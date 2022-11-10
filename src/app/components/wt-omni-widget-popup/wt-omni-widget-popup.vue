@@ -54,6 +54,7 @@ export default {
     gap: var(--gap-md);
 
     width: 1024px;
+    height: 608px;
     @media (max-width: $breakpoint-lg) {
       width: 800px;
       height: 538px;

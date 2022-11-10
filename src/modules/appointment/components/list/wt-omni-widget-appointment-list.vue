@@ -269,7 +269,7 @@ export default Vue.extend({
     }
     .wt-button {
       margin: var(--gap-md) auto 0;
-      width: 168px;
+      min-width: 168px;
     }
   }
 }

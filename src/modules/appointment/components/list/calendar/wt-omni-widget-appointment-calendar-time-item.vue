@@ -3,8 +3,9 @@
     class="wt-omni-widget-appointment-calendar-time-item"
     :class="{
            'wt-omni-widget-appointment-calendar-time-item--reserved': value.reserved,
-           'wt-omni-widget-appointment-calendar-time-item--selected': isTimeSelected }"
-    v-on:click="clickHandler"
+           'wt-omni-widget-appointment-calendar-time-item--selected': isTimeSelected
+  }"
+    @click="$emit('click');"
   >{{ value.time }}</div>
 </template>
 
@@ -35,44 +36,45 @@ export default {
         : this.previousValue.date === this.value.date && this.previousValue.time === this.value.time;
     },
   },
-  methods: {
-    clickHandler() {
-      this.$emit('click');
-    },
-  },
 };
 </script>
 
 <style lang="scss" scoped>
 #wt-omni-widget {
   $time-padding: 15px;
-  $free-day-color: hsla(119, 50%, 60%, 1);
-  $reserved-day-color: hsla(0, 0%, 95%, 1);
-  $hover-day-color: hsla(119, 50%, 70%, 1);
+  $free-time-color: hsla(119, 50%, 60%, 1);
+  $reserved-time-color: hsla(0, 0%, 95%, 1);
+  $hover-time-color: hsla(119, 50%, 70%, 1);
+  $selected-time-text-color: hsla(0, 0%, 100%, 1);
 
   .wt-omni-widget-appointment-calendar-time-item {
     @extend %typo-heading-md;
     padding: $time-padding;
     text-align: center;
-    border-radius: 100px;
-    border: 2px solid $free-day-color;
+    border-radius: var(--border-radius--square);
+    border: 2px solid $free-time-color;
     user-select: none;
     cursor: pointer;
     transition: var(--transition);
     &--reserved {
-      background: $reserved-day-color;
-      border-color: $reserved-day-color;
+      background: $reserved-time-color;
+      border-color: $reserved-time-color;
       cursor: default;
       pointer-events: none;
     }
     &--selected {
-      background: $free-day-color;
-      color: #FFFFFF;
+      background: $free-time-color;
+      color: $selected-time-text-color;
     }
     &:hover {
-      background: $hover-day-color;
-      border-color: $hover-day-color;
-      color: #FFFFFF;
+      background: $hover-time-color;
+      border-color: $hover-time-color;
+      color: $selected-time-text-color;
+    }
+  }
+  &.wt-omni-widget--rounded {
+    .wt-omni-widget-appointment-calendar-time-item {
+      border-radius: var(--border-radius--rounded-btn);
     }
   }
 }

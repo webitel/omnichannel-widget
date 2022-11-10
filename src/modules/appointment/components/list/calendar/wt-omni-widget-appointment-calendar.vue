@@ -16,8 +16,8 @@
      <div
        class="wt-omni-widget-appointment-calendar__date-title-wrapper"
        :class="{ 'wt-omni-widget-appointment-calendar__date-title-wrapper--sticky':
-       !isDateTitleInDefaultPosition }"
-       >
+       !isDateTitleInDefaultPosition
+     }">
        <div class="wt-omni-widget-appointment-calendar__date-title-background"></div>
        <div class="wt-omni-widget-appointment-calendar__date-title-text">
          {{ formattingDateTitle(date) }}
@@ -28,7 +28,7 @@
          v-for="({ time, reserved }) of times"
          :key="date.concat(time)"
          :value="{ time, date, reserved }"
-         :previousValue="{ time: value.scheduleTime, date: value.scheduleDate}"
+         :previousValue="{ time: value.scheduleTime, date: value.scheduleDate }"
          @click="selectTime({ time, date })"
        ></calendar-time-item>
      </div>
@@ -75,9 +75,6 @@ export default {
       };
       this.$emit('input', value);
     },
-    isTimeSelected({ date, time, reserved }) {
-      return reserved ? false : this.value.scheduleDate === date && this.value.scheduleTime === time;
-    },
     handleDateTitlePositionChange() {
       const blockTopPosition = this.$refs.wrapper.getBoundingClientRect().top;
       const dateTopPosition = this.$refs.date[0].getBoundingClientRect().top;
@@ -89,7 +86,6 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget {
-  $border-default-color: hsla(202, 20%, 90%, 1);
   $time-wrap-padding: 10px;
   .wt-omni-widget-appointment-calendar {
     flex: 1;
@@ -112,7 +108,7 @@ export default {
       position: relative;
       flex: 1;
       height: fit-content;
-      border: 1px solid $border-default-color;
+      border: 1px solid var(--border-default-color);
       border-radius: var(--border-radius--square);
     }
     &__date-title-wrapper {
@@ -125,7 +121,7 @@ export default {
             left: -1px;
             width: calc(100% + 2px);
             background: var(--background-color);
-            border: 1px solid $border-default-color;
+            border: 1px solid var(--border-default-color);
             border-radius: calc(var(--border-radius--square) + 1px) calc(var(--border-radius--square) + 1px) 0 0;
             border-bottom: none;
           }
