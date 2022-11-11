@@ -4,22 +4,24 @@
       {{ $t('appointment.calendar.title') }}
     </div>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
-      <div
+      <section
         v-for="({ date, times }) of calendar"
         :key="date"
-        class="wt-omni-widget-appointment-calendar__date"
+        class="wt-omni-widget-appointment-calendar-date"
       >
-        <div class="wt-omni-widget-appointment-calendar__date-title">
+        <header class="wt-omni-widget-appointment-calendar-date__title">
           {{ formattingDateTitle(date) }}
+        </header>
+        <div class="wt-omni-widget-appointment-calendar-date__main">
+          <calendar-time-item
+            v-for="({ time, reserved }) of times"
+            :key="date.concat(time)"
+            :previousValue="{ time: value.scheduleTime, date: value.scheduleDate }"
+            :value="{ time, date, reserved }"
+            @click="selectTime({ time, date })"
+          ></calendar-time-item>
         </div>
-        <calendar-time-item
-          v-for="({ time, reserved }) of times"
-          :key="date.concat(time)"
-          :previousValue="{ time: value.scheduleTime, date: value.scheduleDate }"
-          :value="{ time, date, reserved }"
-          @click="selectTime({ time, date })"
-        ></calendar-time-item>
-      </div>
+      </section>
     </div>
   </article>
 </template>
@@ -81,43 +83,65 @@ export default {
       padding-right: var(--gap-md);
       gap: var(--gap-md);
     }
+  }
 
-    &__date {
-      position: relative;
-      flex: 1;
-      flex-direction: column;
-      height: fit-content;
-      padding: 0 $time-wrap-padding $time-wrap-padding;
-      border: 1px solid var(--border-default-color);
-      border-radius: var(--border-radius--square);
-      display: flex;
-      gap: var(--gap-md);
-    }
+  .wt-omni-widget-appointment-calendar-date {
+    position: relative;
+    flex: 1;
+    height: fit-content;
 
-    &__date-title {
+    &__title {
       @extend %typo-heading-md;
       position: sticky;
-      top: 1px; // prvent layout shift
-      right: 2px;
-      left: 2px;
-      padding: 24px 0;
+      top: 0;
+      right: 0;
+      left: 0;
+      padding: 24px $time-wrap-padding;
       text-align: center;
       text-transform: uppercase;
-      border-radius: calc(var(--border-radius--square) + 1px) var(--border-radius--square) 0 0; // FIXME
       background: var(--background-color);
+
+      /*
+        We use title:after border instead of simple title border because it
+        has border radius, which will be overflown on its corners by main content side borders
+      */
+      &:after {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 100%;
+        content: '';
+        border-top: 1px solid var(--border-default-color);
+        border-right: 1px solid var(--border-default-color);
+        border-left: 1px solid var(--border-default-color);
+        border-radius: var(--border-radius--square) var(--border-radius--square) 0 0;
+      }
+    }
+
+    &__main {
+      display: flex;
+      flex-direction: column;
+      padding: 0 $time-wrap-padding $time-wrap-padding;
+      border-right: 1px solid var(--border-default-color);
+      border-bottom: 1px solid var(--border-default-color);
+      border-left: 1px solid var(--border-default-color);
+      border-radius: var(--border-radius--square) var(--border-radius--square) 0 0;
+      gap: var(--gap-md);
     }
   }
 
   &.wt-omni-widget--rounded {
-    .wt-omni-widget-appointment-calendar {
-      &__date {
-        border-radius: var(--border-radius--rounded);
+    .wt-omni-widget-appointment-calendar-date {
+      &__title {
+        &:after {
+          border-radius: var(--border-radius--rounded) var(--border-radius--rounded) 0 0;
+        }
       }
 
-      &__date-title-wrapper--sticky {
-        .wt-omni-widget-appointment-calendar__date-title-text {
-          border-radius: calc(var(--border-radius--rounded) + 1px) calc(var(--border-radius--rounded) + 1px) 0 0;
-        }
+      &__main {
+        border-radius: 0 0 var(--border-radius--rounded) var(--border-radius--rounded);
       }
     }
   }
