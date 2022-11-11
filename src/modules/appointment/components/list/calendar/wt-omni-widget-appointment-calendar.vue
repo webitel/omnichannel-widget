@@ -28,7 +28,7 @@
          v-for="({ time, reserved }) of times"
          :key="date.concat(time)"
          :value="{ time, date, reserved }"
-         :previousValue="{ time: value.scheduleTime, date: value.scheduleDate }"
+         :selectedValue="{ time: value.scheduleTime, date: value.scheduleDate }"
          @click="selectTime({ time, date })"
        ></calendar-time-item>
      </div>
@@ -117,12 +117,14 @@ export default {
       left: -1px;
       &--sticky {
         .wt-omni-widget-appointment-calendar {
-          &__date-title-text {
-            left: -1px;
-            width: calc(100% + 2px);
+          &__date-title-wrapper {
             background: var(--background-color);
             border: 1px solid var(--border-default-color);
-            border-radius: calc(var(--border-radius--square) + 1px) calc(var(--border-radius--square) + 1px) 0 0;
+            border-bottom: none;
+          }
+          &__date-title-text {
+            background: var(--background-color);
+            border: 1px solid var(--border-default-color);
             border-bottom: none;
           }
           &__date-title-background {
@@ -134,6 +136,8 @@ export default {
     &__date-title-text {
       @extend %typo-heading-md;
       position: relative;
+      //left: -1px;
+      //width: calc(100% + 2px);
       padding: 24px 0;
       text-align: center;
       text-transform: uppercase;
@@ -158,7 +162,7 @@ export default {
       }
       &__date-title-wrapper--sticky {
         .wt-omni-widget-appointment-calendar__date-title-text {
-          border-radius: calc(var(--border-radius--rounded) + 1px) calc(var(--border-radius--rounded) + 1px) 0 0;
+          border-radius: var(--border-radius--rounded) var(--border-radius--rounded) 0 0;
         }
       }
     }
