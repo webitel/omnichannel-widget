@@ -15,7 +15,7 @@
         <calendar-time-item
           v-for="({ time, reserved }) of times"
           :key="date.concat(time)"
-          :selectedValue="{ time: value.scheduleTime, date: value.scheduleDate }"
+          :selected-value="{ time: value.scheduleTime, date: value.scheduleDate }"
           :value="{ time, date, reserved }"
           @click="selectTime({ time, date })"
         ></calendar-time-item>
