@@ -17,10 +17,14 @@ export default {
   },
   appointment: {
     form: {
+      title: 'Personal information',
       name: 'Name',
       email: 'Email',
       destination: 'Phone number',
       message: 'Message',
+    },
+    calendar: {
+      title: 'Select Appointment Time',
     },
     success: {
       congratulations: 'Congratulations!',

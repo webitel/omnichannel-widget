@@ -1,5 +1,8 @@
 <template>
   <form class="wt-omni-widget-appointment-form">
+    <div class="wt-omni-widget-appointment-form__title">
+      {{ $t('appointment.form.title') }}
+    </div>
     <wt-input
       :label="$t('appointment.form.name')"
       :value="value.name"
@@ -24,6 +27,7 @@
       v-if="showMessage"
       :label="$t('appointment.form.message')"
       :value="value.message"
+      stretched
       @input="handleInput({ prop: 'message', value: $event })"
     ></wt-textarea>
   </form>
@@ -68,7 +72,12 @@ export default {
     width: 250px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--gap-md);
+    color: var(--contrast-color);
+    &__title {
+      @extend %typo-heading-md;
+      padding: var(--main-app-padding);
+    }
   }
 }
 </style>

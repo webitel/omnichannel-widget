@@ -223,7 +223,7 @@ describe('chat module: actions', () => {
 
     const index = context.dispatch.mock.calls
     .findIndex(([action]) => action === 'SEND_MESSAGE');
-    expect(context.dispatch.mock.calls[index][1]).toBeInstanceOf(Message);
+    expect(context.dispatch.mock.calls[index][1].message).toBeInstanceOf(Message);
   });
 
   it('SET_DRAFT commits SET_DRAFT with passed value', () => {

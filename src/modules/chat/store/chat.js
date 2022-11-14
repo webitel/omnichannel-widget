@@ -273,14 +273,11 @@ const actions = {
     });
 
     const message = new Message({
-      message: {
-        type: MessageType.FILE,
-        file: fileLink,
-      },
+      type: MessageType.FILE,
+      file: fileLink,
       seq,
     });
-
-    return context.dispatch('SEND_MESSAGE', message);
+    return context.dispatch('SEND_MESSAGE', { message, seq: message.seq });
   },
 
   SEND_MESSAGE: (context, { message, seq }) => {

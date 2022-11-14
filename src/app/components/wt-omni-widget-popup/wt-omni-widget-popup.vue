@@ -51,7 +51,7 @@ export default {
     padding: var(--main-app-padding);
     border-radius: var(--border-radius--square);
     background: var(--background-color);
-    gap: var(--main-app-padding);
+    gap: var(--gap-md);
 
     width: 1024px;
     height: 608px;
@@ -76,10 +76,10 @@ export default {
 
   .wt-omni-widget-popup__main {
     @extend %wt-scrollbar;
-    overflow-y: auto;
+    @extend %typo-body-md;
     flex-grow: 1;
     min-height: 0;
-    padding-right: 5px;
+    overflow-y: auto;
   }
 
   &.wt-omni-widget--rounded {

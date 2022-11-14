@@ -3,6 +3,7 @@
     class="wt-textarea"
     :class="{
       'wt-textarea--disabled': disabled,
+      'wt-textarea--stretched': stretched,
     }"
   >
     <wt-label
@@ -70,6 +71,10 @@
         type: Object,
         description: 'Object with props, passed down to wt-label as props',
       },
+      stretched: {
+        type: Boolean,
+        default: false,
+      },
     },
 
     computed: {
@@ -128,6 +133,20 @@
     border: none;
     outline: none;
     resize: none;
+  }
+
+  .wt-textarea--stretched {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .wt-textarea {
+      &__wrapper {
+        flex-grow: 1;
+      }
+      &__textarea {
+        height: 100%;
+      }
+    }
   }
 
   &.wt-omni-widget--rounded {

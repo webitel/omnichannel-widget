@@ -1,25 +1,30 @@
 <template>
- <article class="wt-omni-widget-appointment-calendar">
-   {{ value.scheduleDate }}
-   {{ value.scheduleTime }}
-   <div
-     style="border: 1px solid red;"
-     v-for="({ date, times }) of calendar"
-     :key="date"
-   >
-     <div
-       style="border: 1px solid blue;"
-       v-for="({ time, reserved }) of times"
-       :key="date.concat(time)"
-       @click="selectTime({ time, date })"
-     >{{ time }}, reserved: {{ reserved }}</div>
-   </div>
- </article>
+  <article class="wt-omni-widget-appointment-calendar">
+    <div class="wt-omni-widget-appointment-calendar__title">
+      {{ $t('appointment.calendar.title') }}
+    </div>
+    <div class="wt-omni-widget-appointment-calendar__wrapper">
+      <calendar-date
+        v-for="({ date, times }) of calendar"
+        :key="date"
+        :value="{ date, times }"
+        :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
+        @select="selectTime"
+      >
+      </calendar-date>
+    </div>
+  </article>
 </template>
 
 <script>
+
+import CalendarDate from './wt-omni-widget-appointment-calendar-date.vue';
+
 export default {
   name: 'wt-omni-widget-appointment-calendar',
+  components: {
+    CalendarDate,
+  },
   props: {
     value: {
       type: Object,
@@ -45,8 +50,24 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar {
-    max-height: 410px; //temporary parameter
-    margin-left: 8px;
+    flex: 1;
+    color: var(--contrast-color);
+
+    &__title {
+      @extend %typo-heading-md;
+      margin-bottom: var(--gap-md);
+      padding: var(--main-app-padding);
+    }
+
+    &__wrapper {
+      @extend %wt-scrollbar;
+      display: flex;
+      overflow-y: auto;
+      justify-content: space-between;
+      max-height: 402px;
+      padding-right: var(--gap-md);
+      gap: var(--gap-md);
+    }
   }
 }
 </style>
