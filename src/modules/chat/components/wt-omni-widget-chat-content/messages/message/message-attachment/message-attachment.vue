@@ -87,7 +87,7 @@ export default {
     gap: 5px;
 
     &__name {
-      @extend %typo-strong-md;
+      @extend %typo-heading-md;
     }
 
     &__size {

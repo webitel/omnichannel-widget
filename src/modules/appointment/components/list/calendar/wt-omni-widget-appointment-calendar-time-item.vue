@@ -2,11 +2,11 @@
   <div
     class="wt-omni-widget-appointment-calendar-time-item"
     :class="{
-           'wt-omni-widget-appointment-calendar-time-item--reserved': value.reserved,
+           'wt-omni-widget-appointment-calendar-time-item--reserved': timeItem.reserved,
            'wt-omni-widget-appointment-calendar-time-item--selected': isTimeSelected
   }"
     @click="$emit('click');"
-  >{{ value.time }}</div>
+  >{{ timeItem.time }}</div>
 </template>
 
 <script>
@@ -16,8 +16,12 @@ export default {
   data: () => ({
   }),
   props: {
-    value: {
+    timeItem: {
       type: Object,
+      required: true,
+    },
+    date: {
+      type: String,
       required: true,
     },
     selectedValue: {
@@ -27,9 +31,9 @@ export default {
   },
   computed: {
     isTimeSelected() {
-      return this.value.reserved
+      return this.timeItem.reserved
         ? false
-        : this.selectedValue.date === this.value.date && this.selectedValue.time === this.value.time;
+        : this.selectedValue.date === this.date && this.selectedValue.time === this.timeItem.time;
     },
   },
 };
