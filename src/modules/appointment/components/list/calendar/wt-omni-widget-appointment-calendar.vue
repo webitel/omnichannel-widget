@@ -9,7 +9,7 @@
         :key="date"
         :value="{ date, times }"
         :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
-        @select-time="selectTime"
+        @select="selectTime"
       >
       </calendar-date>
     </div>
