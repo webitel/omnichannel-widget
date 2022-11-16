@@ -40,11 +40,21 @@ export default {
       type: Object,
       required: true,
     },
+    locate: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
     formattingDateTitle() {
       const currentDate = new Date(this.value.date);
-      return `${currentDate.getUTCDate()} ${currentDate.toString().substring(0, 3)}`;
+      const options = { day: 'numeric', weekday: 'short' };
+      const dateStr = currentDate.toLocaleDateString(this.locate || 'en-US', options).toString();
+      const subStr1 = dateStr.substring(0, dateStr.indexOf(',' || '' || '.'));
+      const subStr2 = dateStr.substring(dateStr.indexOf(',' || '' || '.') + 1, dateStr.length + 1);
+      return Number(dateStr.substring(0, 1))
+        ? `${subStr1} ${subStr2}`
+        : `${subStr2} ${subStr1}`;
     },
   },
 };

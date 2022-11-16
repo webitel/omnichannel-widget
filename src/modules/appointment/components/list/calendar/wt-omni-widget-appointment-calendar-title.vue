@@ -1,0 +1,77 @@
+<template>
+  <header class="wt-omni-widget-appointment-calendar-title">
+    <span class="wt-omni-widget-appointment-calendar-title__text">
+      {{ $t('appointment.calendar.title') }}
+    </span>
+    <div class="wt-omni-widget-appointment-calendar-title__time-zone">
+      <img
+        class="wt-omni-widget-appointment-calendar-title__time-zone-icon"
+        src="../../../assets/appointment-time-zone.svg"
+        alt="time zone icon"
+      >
+    <span class="title">
+       {{ timeZone + ' Time Zone' }}
+     </span>
+    </div>
+  </header>
+</template>
+
+<script>
+
+export default {
+  name: 'wt-omni-widget-appointment-calendar-title',
+  data: () => ({
+  }),
+  props: {
+    timeZone: {
+      type: String,
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+#wt-omni-widget {
+
+  .wt-omni-widget-appointment-calendar-title {
+    margin-bottom: var(--gap-md);
+    padding: var(--main-app-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: $breakpoint-md) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media (max-width: $breakpoint-xxs) {
+      margin-bottom: 0;
+      padding: var(--main-app-padding) 0;
+      gap: var(--gap-md);
+    }
+
+    &__text {
+      @extend %typo-heading-md;
+
+      @media (max-width: $breakpoint-xxs) {
+        max-height: 50%;
+        gap: var(--gap-md);
+      }
+    }
+
+    &__time-zone {
+      @extend %typo-body-md;
+      display: flex;
+      align-items: center;
+      gap: var(--gap-md);
+    }
+
+    &__time-zone-icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+</style>
