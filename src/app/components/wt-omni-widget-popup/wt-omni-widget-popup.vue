@@ -55,24 +55,27 @@ export default {
 
     width: 1024px;
     height: 608px;
+
     @media (max-width: $breakpoint-lg) {
       width: 800px;
       height: 538px;
     }
+
     @media (max-width: $breakpoint-md) {
       width: 648px;
       height: 484px;
     }
+
     @media (max-width: $breakpoint-sm) {
       width: 540px;
       height: 484px;
     }
-    @media (max-width: $breakpoint-xs) {
+
+    @media (max-width: $breakpoint-xxs) {
       width: 100%;
       height: 800px;
       min-height: 800px;
-      gap: 8px;
-      padding: 8px;
+      //gap: 8px;
     }
   }
 

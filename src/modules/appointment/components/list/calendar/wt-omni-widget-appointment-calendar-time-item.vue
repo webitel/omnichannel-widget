@@ -56,22 +56,26 @@ export default {
     user-select: none;
     cursor: pointer;
     transition: var(--transition);
+
     &--reserved {
       background: $reserved-time-color;
       border-color: $reserved-time-color;
       cursor: default;
       pointer-events: none;
     }
+
     &--selected {
       background: $free-time-color;
       color: $selected-time-text-color;
     }
+
     &:hover {
       background: $time-hover-color;
       border-color:$time-hover-color;
       color: $selected-time-text-color;
     }
   }
+
   &.wt-omni-widget--rounded {
     .wt-omni-widget-appointment-calendar-time-item {
       border-radius: var(--border-radius--rounded-btn);

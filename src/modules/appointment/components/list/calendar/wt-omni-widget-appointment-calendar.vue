@@ -61,14 +61,16 @@ export default {
     display: flex;
     flex-direction: column;
     flex: 1;
+    gap: var(--gap-md);
     color: var(--contrast-color);
 
     &__wrapper {
       @extend %wt-scrollbar;
       display: flex;
-      overflow-y: auto;
       justify-content: space-between;
+      padding-right: var(--gap-md);
       gap: var(--gap-md);
+      overflow-y: auto;
 
       @media (max-width: $breakpoint-xxs) {
         max-height: 284px;

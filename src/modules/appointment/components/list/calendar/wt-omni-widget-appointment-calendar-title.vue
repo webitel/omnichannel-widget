@@ -34,8 +34,7 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar-title {
-    margin-bottom: var(--gap-md);
-    padding: var(--main-app-padding);
+    padding: var(--main-app-padding) 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -44,12 +43,14 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      min-height: 44px;
+      padding: 0;
+      gap: var(--gap-md);
     }
 
     @media (max-width: $breakpoint-xxs) {
       margin-bottom: 0;
       padding: var(--main-app-padding) 0;
-      gap: var(--gap-md);
     }
 
     &__text {
@@ -69,8 +70,8 @@ export default {
     }
 
     &__time-zone-icon {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
     }
   }
 }

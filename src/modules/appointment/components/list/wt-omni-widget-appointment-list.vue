@@ -266,7 +266,7 @@ $send-button-weight: 48px;
 
 #wt-omni-widget {
   .wt-omni-widget-appointment-list {
-    max-height: 100%;
+    //max-height: 100%;
     height: 100%;
 
     @media (max-width: $breakpoint-xxs) {

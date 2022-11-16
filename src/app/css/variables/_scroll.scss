@@ -1,9 +1,9 @@
 #wt-omni-widget {
-  --scrollbar-width: 5px;
-  --scrollbar-height: 5px;
-  --scrollbar-thumb-width: 5px;
+  --scrollbar-width: 2px;
+  --scrollbar-height: 2px;
+  --scrollbar-thumb-width: 2px;
   --scrollbar-bg-color: var(--main-color);
-  --scrollbar-thumb-color: var(--secondary-color);
+  --scrollbar-thumb-color: var(--wt-omni-widget__accent-color);
   --scrollbar-border-radius: var(--border-radius);
 }
 
