@@ -86,6 +86,10 @@ export default {
     &__title {
       @extend %typo-heading-md;
       padding: var(--main-app-padding);
+
+      @media (max-width: $breakpoint-xxs) {
+        text-align: center;
+      }
     }
   }
 }

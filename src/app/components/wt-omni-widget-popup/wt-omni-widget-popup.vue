@@ -73,9 +73,8 @@ export default {
 
     @media (max-width: $breakpoint-xxs) {
       width: 100%;
-      height: 800px;
-      min-height: 800px;
-      //gap: 8px;
+      height: 828px;
+      max-height: 100%;
     }
   }
 

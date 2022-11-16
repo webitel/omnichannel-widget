@@ -290,7 +290,6 @@ $send-button-weight: 48px;
 
       @media (max-width: $breakpoint-xxs) {
         width: 100%;
-        //margin-top: var(--gap-md);
       }
     }
   }
