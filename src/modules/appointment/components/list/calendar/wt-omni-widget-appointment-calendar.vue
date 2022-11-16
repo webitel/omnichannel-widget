@@ -97,7 +97,6 @@ export default {
       @extend %typo-body-md;
       margin-bottom: var(--gap-md);
       padding: var(--main-app-padding);
-      font-weight: 600;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -111,14 +110,14 @@ export default {
       @media (max-width: $breakpoint-xxs) {
         margin-bottom: 0;
         padding: 16px 0;
-        gap: 8px;
+        gap: var(--gap-md);
       }
     }
 
     &__time-zone {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--gap-md);
     }
 
     &__time-zone-icon {
