@@ -73,7 +73,7 @@ export default {
       overflow-y: auto;
 
       @media (max-width: $breakpoint-xxs) {
-        max-height: 284px;
+        max-height: 280px;
       }
     }
   }

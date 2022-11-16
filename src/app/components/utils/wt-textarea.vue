@@ -133,6 +133,10 @@
     border: none;
     outline: none;
     resize: none;
+
+    @media (max-width: $breakpoint-xxs) {
+      min-height: 64px;
+    }
   }
 
   .wt-textarea--stretched {

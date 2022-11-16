@@ -73,7 +73,7 @@ export default {
 
     @media (max-width: $breakpoint-xxs) {
       width: 100%;
-      height: 828px;
+      height: 824px;
       max-height: 100%;
     }
   }
@@ -83,6 +83,7 @@ export default {
     @extend %typo-body-md;
     flex-grow: 1;
     min-height: 0;
+    padding-right: 5px;
     overflow-y: auto;
   }
 
