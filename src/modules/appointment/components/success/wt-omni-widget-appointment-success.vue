@@ -89,7 +89,7 @@ export default {
     text-align: center;
   }
   .wt-omni-widget-appointment-success__info-wrapper {
-    @extend %typo-strong-md;
+    @extend %typo-heading-md;
     padding: 16px;
     border-radius: var(--border-radius--square);
     background: var(--main-color);

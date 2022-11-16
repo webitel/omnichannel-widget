@@ -35,16 +35,14 @@ export default {
 #wt-omni-widget {
   %typo-btn {
     font: {
-      family: 'Montserrat Semi', monospace;
+      family: 'Montserrat Regular', monospace;
       size: 12px;
     }
     line-height: 14px;
   }
-
   .wt-button {
     --btn-padding: 11px 19px;
     //--btn-border: 1px solid;
-
     @extend %typo-btn;
     position: relative;
     display: block;
@@ -54,10 +52,9 @@ export default {
     color: var(--main-color);
     background: var(--wt-omni-widget__accent-color);
     //border-color: var(--wt-omni-widget__accent-color);
-    border-radius: var(--border-radius--rounded-btn);
+    border-radius: var(--border-radius--square);
     transition: var(--transition);
     cursor: pointer;
-
     &--color {
       &-secondary {
         color: var(--contrast-color);
@@ -68,21 +65,18 @@ export default {
         background: var(--negative-color);
       }
     }
-
     &--disabled {
       pointer-events: none;
       color: var(--text-primary-color);
       background: var(--disabled-color);
     }
-
     &:hover {
       box-shadow: var(--morf-style-up-50);
     }
   }
-
   &.wt-omni-widget--rounded {
     .wt-button {
-      border-radius: var(--border-radius--rounded);
+      border-radius: var(--border-radius--rounded-btn);
     }
   }
 }

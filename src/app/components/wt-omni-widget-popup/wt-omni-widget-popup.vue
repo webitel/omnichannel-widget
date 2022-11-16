@@ -48,13 +48,13 @@ export default {
     flex-direction: column;
     max-height: 90%;
     margin: var(--main-app-padding);
-    padding: 16px;
+    padding: var(--main-app-padding);
     border-radius: var(--border-radius--square);
     background: var(--background-color);
-    gap: var(--main-app-padding);
+    gap: var(--gap-md);
 
     width: 1024px;
-    height: 606px;
+    height: 608px;
     @media (max-width: $breakpoint-lg) {
       width: 800px;
       height: 538px;
@@ -65,8 +65,9 @@ export default {
     }
     @media (max-width: $breakpoint-sm) {
       width: 540px;
+      height: 484px;
     }
-    @media (max-width: $breakpoint-xxs) {
+    @media (max-width: $breakpoint-xs) {
       width: 100%;
       height: 800px;
       min-height: 800px;
@@ -76,9 +77,11 @@ export default {
   }
 
   .wt-omni-widget-popup__main {
+    @extend %wt-scrollbar;
     @extend %typo-body-md;
     flex-grow: 1;
     min-height: 0;
+    overflow-y: auto;
   }
 
   &.wt-omni-widget--rounded {

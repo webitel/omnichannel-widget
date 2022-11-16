@@ -7,7 +7,11 @@
   // BORDER RADIUS
   --border-radius--square: 5px;
   --border-radius--rounded: 20px;
-  --border-radius--rounded-btn: 30px;
+  --border-radius--rounded-btn: 40px;
+
+  //GAP
+  --gap-md: 10px;
+  --gap-sm: 5px;
 }
 
 // breakpoints
@@ -17,6 +21,7 @@ $breakpoint-sm: 820px;
 $breakpoint-xs: 648px;
 $breakpoint-xxs: 540px;
 $breakpoint-xxxs: 360px;
+
 
 .wt-omni-widget-chat-message {
   --client-message-border-radius--square: 5px 5px 0px 5px;

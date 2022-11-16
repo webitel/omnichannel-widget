@@ -252,7 +252,6 @@ export default Vue.extend({
       this.scheduleAppointment(this.draft);
     },
     initDraft() {
-      console.log('config', this.config);
       this.draft = generateAppointmentSchema(this.config.appointment);
     },
   },
@@ -275,11 +274,11 @@ $send-button-weight: 52px;
     &__wrap {
       display: flex;
       max-height: calc(100% - $send-button-weight);
-      gap: 8px;
+      gap: var(--gap-md);
     }
     .wt-button {
-      margin: 16px auto 0;
-      width: 168px;
+      margin: var(--gap-md) auto 0;
+      min-width: 168px;
     }
   }
   @media (max-width: $breakpoint-xxs) {

@@ -27,6 +27,7 @@
       v-if="showMessage"
       :label="$t('appointment.form.message')"
       :value="value.message"
+      stretched
       @input="handleInput({ prop: 'message', value: $event })"
     ></wt-textarea>
   </form>
@@ -71,42 +72,20 @@ export default {
     width: 250px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--gap-md);
     color: var(--contrast-color);
-    &__title {
-      @extend %typo-body-md;
-      margin-bottom: 8px;
-      padding: var(--main-app-padding);
-      font-weight: 600;
-    }
-    .wt-textarea {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
+
     @media (max-width: $breakpoint-md) {
       width: 200px;
     }
 
-    &::v-deep .wt-textarea {
-      &__wrapper {
-        flex: 1;
-      }
-      &__textarea {
-        height: 100%;
-        @media (max-width: $breakpoint-xxs) {
-          min-height: 64px;
-        }
-      }
-    }
-  }
-  @media (max-width: $breakpoint-xxs) {
-    .wt-omni-widget-appointment-form {
+    @media (max-width: $breakpoint-xxs) {
       width: 100%;
-      &__title {
-        margin-bottom: 0;
-        text-align: center;
-      }
+    }
+
+    &__title {
+      @extend %typo-heading-md;
+      padding: var(--main-app-padding);
     }
   }
 }
