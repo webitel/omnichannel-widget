@@ -262,33 +262,35 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-$send-button-weight: 52px;
+$send-button-weight: 48px;
+
 #wt-omni-widget {
   .wt-omni-widget-appointment-list {
     max-height: 100%;
     height: 100%;
+
     @media (max-width: $breakpoint-xxs) {
       max-height: none;
       height: auto;
     }
+
     &__wrap {
       display: flex;
       max-height: calc(100% - $send-button-weight);
       gap: var(--gap-md);
+
+      @media (max-width: $breakpoint-xxs) {
+        flex-direction: column;
+      }
     }
+
     .wt-button {
       margin: var(--gap-md) auto 0;
       min-width: 168px;
-    }
-  }
-  @media (max-width: $breakpoint-xxs) {
-    .wt-omni-widget-appointment-list {
-      &__wrap {
-        flex-direction: column;
-      }
-      .wt-button {
+
+      @media (max-width: $breakpoint-xxs) {
         width: 100%;
-        margin-top: 8px;
+        //margin-top: var(--gap-md);
       }
     }
   }

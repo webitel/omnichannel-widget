@@ -25,6 +25,7 @@ export default {
     },
     calendar: {
       title: 'Select Appointment Time',
+      timeZone: 'Time Zone',
     },
     success: {
       congratulations: 'Congratulations!',

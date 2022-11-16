@@ -9,9 +9,10 @@
         src="../../../assets/appointment-time-zone.svg"
         alt="time zone icon"
       >
-    <span class="title">
-       {{ timeZone + ' Time Zone' }}
-     </span>
+      <span class="wt-omni-widget-appointment-calendar-title__time-zone-text"
+      >
+        {{ timeZone }} {{ $t('appointment.calendar.timeZone') }}
+      </span>
     </div>
   </header>
 </template>
@@ -32,7 +33,6 @@ export default {
 
 <style lang="scss" scoped>
 #wt-omni-widget {
-
   .wt-omni-widget-appointment-calendar-title {
     margin-bottom: var(--gap-md);
     padding: var(--main-app-padding);

@@ -25,6 +25,7 @@ export default {
     },
     calendar: {
       title: 'Выберите время звонка',
+      timeZone: 'Часовой пояс',
     },
     success: {
       congratulations: 'Поздравляем!',
