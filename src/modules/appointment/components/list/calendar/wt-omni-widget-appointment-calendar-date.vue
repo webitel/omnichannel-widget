@@ -48,8 +48,7 @@ export default {
   computed: {
     formattingDateTitle() {
       const currentDate = new Date(this.value.date);
-      const options = { day: 'numeric', weekday: 'short' };
-      const dateStr = currentDate.toLocaleDateString(this.locate || 'en-US', options).toString();
+      const dateStr = currentDate.toLocaleDateString(this.locate || 'en-US', { day: 'numeric', weekday: 'short' }).toString();
       const subStr1 = dateStr.substring(0, dateStr.indexOf(',' || '' || '.'));
       const subStr2 = dateStr.substring(dateStr.indexOf(',' || '' || '.') + 1, dateStr.length + 1);
       return Number(dateStr.substring(0, 1))
