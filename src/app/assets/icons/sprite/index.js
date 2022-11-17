@@ -12,3 +12,4 @@ import './wt-omni-widget-telegram.svg';
 import './wt-omni-widget-viber.svg';
 import './wt-omni-widget-whatsapp.svg';
 import './wt-omni-widget-tick.svg';
+import './wt-omni-widget-time-zone.svg';

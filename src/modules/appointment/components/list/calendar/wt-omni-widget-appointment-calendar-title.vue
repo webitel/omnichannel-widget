@@ -3,31 +3,21 @@
     <span class="wt-omni-widget-appointment-calendar-title__text">
       {{ $t('appointment.calendar.title') }}
     </span>
-    <div class="wt-omni-widget-appointment-calendar-title__time-zone">
-      <img
-        class="wt-omni-widget-appointment-calendar-title__time-zone-icon"
-        src="../../../assets/appointment-time-zone.svg"
-        alt="time zone icon"
-      >
-      <span class="wt-omni-widget-appointment-calendar-title__time-zone-text"
-      >
-        {{ timeZone }} {{ $t('appointment.calendar.timeZone') }}
-      </span>
-    </div>
+    <slot></slot>
   </header>
 </template>
 
 <script>
 
+import WtIcon from './../../../../../app/webitel-ui/components/wt-icon/wt-icon';
+
 export default {
   name: 'wt-omni-widget-appointment-calendar-title',
+  components: {
+   WtIcon,
+  },
   data: () => ({
   }),
-  props: {
-    timeZone: {
-      type: String,
-    },
-  },
 };
 </script>
 
@@ -43,7 +33,7 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 0;
+      padding: 5px;
       gap: var(--gap-md);
     }
 
@@ -54,14 +44,6 @@ export default {
     &__text {
       @extend %typo-heading-md;
     }
-
-    &__time-zone {
-      @extend %typo-body-md;
-      display: flex;
-      align-items: center;
-      gap: var(--gap-md);
-    }
-
   }
 }
 </style>

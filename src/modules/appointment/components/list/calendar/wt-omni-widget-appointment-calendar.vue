@@ -1,14 +1,20 @@
 <template>
   <article class="wt-omni-widget-appointment-calendar">
-    <calendar-title :time-zone="timeZone"
-    ></calendar-title>
+    <calendar-title>
+      <div class="wt-omni-widget-appointment-calendar__time-zone">
+        <wt-icon icon="wt-omni-widget-time-zone" size="sm"></wt-icon>
+        <span class="wt-omni-widget-appointment-calendar__time-zone-text">
+          {{ timeZone }} {{ $t('appointment.calendar.timeZone') }}
+        </span>
+      </div>
+    </calendar-title>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
       <calendar-date
         v-for="({ date, times }) of calendar"
         :key="date"
         :value="{ date, times }"
         :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
-        :locate="locate"
+        :locale="locale"
         @select="selectTime"
       >
       </calendar-date>
@@ -38,7 +44,7 @@ export default {
     timeZone: {
       type: String,
     },
-    locate: {
+    locale: {
       type: String,
     },
   },
@@ -72,9 +78,16 @@ export default {
       gap: var(--gap-md);
       overflow-y: auto;
 
-      //@media (max-width: $breakpoint-xs) {
-      //  max-height: 280px;
-      //}
+      @media (max-width: $breakpoint-xs) {
+        max-height: 280px;
+      }
+    }
+
+    &__time-zone {
+      @extend %typo-body-md;
+      display: flex;
+      align-items: center;
+      gap: var(--gap-md);
     }
   }
 }

@@ -9,7 +9,7 @@
         v-model="draft"
         :calendar="state.list"
         :time-zone="state.timezone"
-        :locates="config.view.lang"
+        :locale="$i18n.locale"
       ></appointment-calendar>
     </div>
     <wt-button

@@ -40,7 +40,7 @@ export default {
       type: Object,
       required: true,
     },
-    locate: {
+    locale: {
       type: String,
       default: '',
     },
@@ -48,12 +48,13 @@ export default {
   computed: {
     formattingDateTitle() {
       const currentDate = new Date(this.value.date);
-      const dateStr = currentDate.toLocaleDateString(this.locate || 'en-US', { day: 'numeric', weekday: 'short' }).toString();
+      const dateStr = currentDate.toLocaleDateString(
+        this.locale || 'en-US', { day: 'numeric', weekday: 'short' }
+        ).toString(); //formatting date from DB in form '18 Fri' (Day of month + Weekday), using available locate
+      if (Number(dateStr.substring(0, 1))) return dateStr; // return result if day of month goes first
       const subStr1 = dateStr.substring(0, dateStr.indexOf(',' || '' || '.'));
       const subStr2 = dateStr.substring(dateStr.indexOf(',' || '' || '.') + 1, dateStr.length + 1);
-      return Number(dateStr.substring(0, 1))
-        ? `${subStr1} ${subStr2}`
-        : `${subStr2} ${subStr1}`;
+      return `${subStr2} ${subStr1}`; // if weekday goes first - switch 2 parts of string and return
     },
   },
 };
