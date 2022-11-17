@@ -46,13 +46,14 @@ export default {
   $reserved-time-color: hsla(0, 0%, 95%, 1);
   $time-hover-color: hsla(119, 50%, 70%, 1);
   $selected-time-text-color: hsla(0, 0%, 100%, 1);
+  $time-border-width: 2px;
 
   .wt-omni-widget-appointment-calendar-time-item {
     @extend %typo-heading-md;
-    padding: $time-padding;
+    padding: calc($time-padding - $time-border-width);
     text-align: center;
     border-radius: var(--border-radius--square);
-    border: 2px solid $free-time-color;
+    border: $time-border-width solid $free-time-color;
     user-select: none;
     cursor: pointer;
     transition: var(--transition);

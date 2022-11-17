@@ -143,13 +143,13 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    .wt-textarea {
-      &__wrapper {
+
+    .wt-textarea__wrapper {
         flex-grow: 1;
-      }
-      &__textarea {
+    }
+
+    .wt-textarea__textarea {
         height: 100%;
-      }
     }
   }
 
