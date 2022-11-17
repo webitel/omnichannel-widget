@@ -39,27 +39,20 @@ export default {
     justify-content: space-between;
     align-items: center;
 
-    @media (max-width: $breakpoint-md) {
+    @media (max-width: $breakpoint-sm) {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      min-height: 44px;
       padding: 0;
       gap: var(--gap-md);
     }
 
-    @media (max-width: $breakpoint-xxs) {
-      margin-bottom: 0;
+    @media (max-width: $breakpoint-xs) {
       padding: var(--main-app-padding) 0;
     }
 
     &__text {
       @extend %typo-heading-md;
-
-      @media (max-width: $breakpoint-xxs) {
-        max-height: 50%;
-        gap: var(--gap-md);
-      }
     }
 
     &__time-zone {
@@ -69,10 +62,6 @@ export default {
       gap: var(--gap-md);
     }
 
-    &__time-zone-icon {
-      width: 14px;
-      height: 14px;
-    }
   }
 }
 </style>

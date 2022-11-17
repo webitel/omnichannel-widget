@@ -75,11 +75,11 @@ export default {
     gap: var(--gap-md);
     color: var(--contrast-color);
 
-    @media (max-width: $breakpoint-md) {
+    @media (max-width: $breakpoint-lg) {
       width: 200px;
     }
 
-    @media (max-width: $breakpoint-xxs) {
+    @media (max-width: $breakpoint-xs) {
       width: 100%;
     }
 
@@ -87,7 +87,7 @@ export default {
       @extend %typo-heading-md;
       padding: var(--main-app-padding);
 
-      @media (max-width: $breakpoint-xxs) {
+      @media (max-width: $breakpoint-xs) {
         text-align: center;
       }
     }

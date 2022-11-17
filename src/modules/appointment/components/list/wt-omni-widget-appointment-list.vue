@@ -101,23 +101,23 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-$send-button-weight: 48px;
+$send-button-height: 48px;
 
 #wt-omni-widget {
   .wt-omni-widget-appointment-list {
     height: 100%;
 
-    @media (max-width: $breakpoint-xxs) {
+    @media (max-width: $breakpoint-xs) {
       max-height: none;
       height: auto;
     }
 
     &__wrap {
       display: flex;
-      max-height: calc(100% - $send-button-weight);
+      height: calc(100% - $send-button-height);
       gap: var(--gap-md);
 
-      @media (max-width: $breakpoint-xxs) {
+      @media (max-width: $breakpoint-xs) {
         flex-direction: column;
       }
     }
@@ -126,7 +126,7 @@ $send-button-weight: 48px;
       margin: var(--gap-md) auto 0;
       min-width: 168px;
 
-      @media (max-width: $breakpoint-xxs) {
+      @media (max-width: $breakpoint-xs) {
         width: 100%;
       }
     }

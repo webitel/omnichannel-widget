@@ -72,9 +72,9 @@ export default {
       gap: var(--gap-md);
       overflow-y: auto;
 
-      @media (max-width: $breakpoint-xxs) {
-        max-height: 280px;
-      }
+      //@media (max-width: $breakpoint-xs) {
+      //  max-height: 280px;
+      //}
     }
   }
 }

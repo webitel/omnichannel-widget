@@ -46,7 +46,8 @@ export default {
     z-index: 1;
     display: flex;
     flex-direction: column;
-    max-height: 90%;
+    //max-height: 90%;
+    max-height: 100%;
     margin: var(--main-app-padding);
     padding: var(--main-app-padding);
     border-radius: var(--border-radius--square);
@@ -71,10 +72,9 @@ export default {
       height: 484px;
     }
 
-    @media (max-width: $breakpoint-xxs) {
+    @media (max-width: $breakpoint-xs) {
       width: 100%;
       height: 824px;
-      max-height: 100%;
     }
   }
 

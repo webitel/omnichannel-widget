@@ -124,7 +124,7 @@
 
     display: block;
     width: 100%;
-    min-height: 76px;
+    min-height: 64px;
     box-sizing: border-box;
     padding: 10px 15px;
     color: var(--contrast-color);
@@ -133,10 +133,6 @@
     border: none;
     outline: none;
     resize: none;
-
-    @media (max-width: $breakpoint-xxs) {
-      min-height: 64px;
-    }
   }
 
   .wt-textarea--stretched {

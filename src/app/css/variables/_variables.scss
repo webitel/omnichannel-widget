@@ -15,12 +15,18 @@
 }
 
 // breakpoints
-$breakpoint-lg: 1280px;
-$breakpoint-md: 1024px;
-$breakpoint-sm: 820px;
-$breakpoint-xs: 648px;
-$breakpoint-xxs: 540px;
-$breakpoint-xxxs: 360px;
+//$breakpoint-lg: 1280px;
+//$breakpoint-md: 1024px;
+//$breakpoint-sm: 820px;
+//$breakpoint-xs: 648px;
+//$breakpoint-xxs: 540px;
+//$breakpoint-xxxs: 360px;
+
+$breakpoint-lg: 1024px;
+$breakpoint-md: 820px;
+$breakpoint-sm: 648px;
+$breakpoint-xs: 540px;
+$breakpoint-xxs: 360px;
 
 
 .wt-omni-widget-chat-message {
