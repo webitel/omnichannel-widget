@@ -1,12 +1,7 @@
 <template>
   <article class="wt-omni-widget-appointment-calendar">
     <calendar-title>
-      <div class="wt-omni-widget-appointment-calendar__time-zone">
-        <wt-icon icon="wt-omni-widget-time-zone" size="sm"></wt-icon>
-        <span class="wt-omni-widget-appointment-calendar__time-zone-text">
-          {{ timeZone }} {{ $t('appointment.calendar.timeZone') }}
-        </span>
-      </div>
+          {{ timeZone }}
     </calendar-title>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
       <calendar-date
@@ -14,7 +9,6 @@
         :key="date"
         :value="{ date, times }"
         :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
-        :locale="locale"
         @select="selectTime"
       >
       </calendar-date>
@@ -44,9 +38,6 @@ export default {
     timeZone: {
       type: String,
     },
-    locale: {
-      type: String,
-    },
   },
   methods: {
     selectTime({ date, time }) {
@@ -64,30 +55,44 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar {
+    //display: flex;
+    //flex-direction: column;
+    //flex: 1;
+    //gap: var(--gap-md);
+    //color: var(--contrast-color);
+
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
-    flex: 1;
-    gap: var(--gap-md);
-    color: var(--contrast-color);
+    height: 100%;
+    width: 100%;
 
     &__wrapper {
       @extend %wt-scrollbar;
-      display: flex;
       justify-content: space-between;
       padding-right: var(--gap-md);
       gap: var(--gap-md);
-      overflow-y: auto;
+      //overflow-y: auto;
+
+      -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+      flex-grow: 1;
+      position: relative;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      overflow-y: scroll;
+      padding-right: var(--spacing-2xs);
 
       @media (max-width: $breakpoint-xs) {
-        max-height: 280px;
+        height: 280px;
       }
-    }
-
-    &__time-zone {
-      @extend %typo-body-md;
-      display: flex;
-      align-items: center;
-      gap: var(--gap-md);
     }
   }
 }

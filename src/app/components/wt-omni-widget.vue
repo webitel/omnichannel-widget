@@ -78,7 +78,7 @@ export default {
   methods: {
     applyGlobalConfig() {
       this.isWidgetOpened = this.isPreviewMode === 'chat'; // Open chat preview if configuration contains chat preview property
-      this.$i18n.locale = this.config.lang;
+      if (this.config.view.lang) this.$i18n.locale = this.config.view.lang;
       document.documentElement.style.setProperty('--wt-omni-widget__accent-color', this.config.view.accentColor);
       document.documentElement.style.setProperty('--wt-omni-widget__buttons-menu-opacity', this.config.view.btnOpacity);
 

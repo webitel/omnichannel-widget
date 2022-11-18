@@ -46,7 +46,6 @@ export default {
     z-index: 1;
     display: flex;
     flex-direction: column;
-    //max-height: 90%;
     max-height: 100%;
     margin: var(--main-app-padding);
     padding: var(--main-app-padding);
