@@ -105,20 +105,22 @@ $send-button-height: 48px;
 
 #wt-omni-widget {
   .wt-omni-widget-appointment-list {
+    display: flex;
+    flex-direction: column;
     height: 100%;
 
-    @media (max-width: $breakpoint-xs) {
-      max-height: none;
-      height: auto;
-    }
-
     &__wrap {
+      @extend %wt-scrollbar;
       display: flex;
-      height: calc(100% - $send-button-height);
       gap: var(--gap-md);
+      min-height: 0;
+      padding-right: 5px;
+      overflow-y: scroll;
+      height: 100%;
 
       @media (max-width: $breakpoint-xs) {
         flex-direction: column;
+        flex-grow: 1;
       }
     }
 

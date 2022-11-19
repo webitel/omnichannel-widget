@@ -55,11 +55,9 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar {
-    //display: flex;
-    //flex-direction: column;
-    //flex: 1;
-    //gap: var(--gap-md);
-    //color: var(--contrast-color);
+    flex-grow: 1;
+    gap: var(--gap-md);
+    color: var(--contrast-color);
 
     display: -webkit-box;
     display: -ms-flexbox;
@@ -69,30 +67,26 @@ export default {
     -ms-flex-direction: column;
     flex-direction: column;
     height: 100%;
-    width: 100%;
+
+    @media (max-width: $breakpoint-xs) {
+      height: 50%;
+    }
 
     &__wrapper {
       @extend %wt-scrollbar;
       justify-content: space-between;
       padding-right: var(--gap-md);
       gap: var(--gap-md);
-      //overflow-y: auto;
 
       -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
       flex-grow: 1;
-      position: relative;
+      //position: relative;
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
       -webkit-box-orient: vertical;
       -webkit-box-direction: normal;
       overflow-y: scroll;
-      padding-right: var(--spacing-2xs);
-
-      @media (max-width: $breakpoint-xs) {
-        height: 280px;
-      }
     }
   }
 }

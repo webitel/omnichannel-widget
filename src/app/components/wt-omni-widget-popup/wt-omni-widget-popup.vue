@@ -78,12 +78,9 @@ export default {
   }
 
   .wt-omni-widget-popup__main {
-    @extend %wt-scrollbar;
     @extend %typo-body-md;
     flex-grow: 1;
     min-height: 0;
-    padding-right: 5px;
-    overflow-y: auto;
   }
 
   &.wt-omni-widget--rounded {
