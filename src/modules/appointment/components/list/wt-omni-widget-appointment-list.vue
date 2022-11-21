@@ -101,7 +101,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-$send-button-height: 48px;
 
 #wt-omni-widget {
   .wt-omni-widget-appointment-list {
@@ -115,7 +114,7 @@ $send-button-height: 48px;
       gap: var(--gap-md);
       min-height: 0;
       padding-right: 5px;
-      overflow-y: scroll;
+      overflow-y: auto;
       height: 100%;
 
       @media (max-width: $breakpoint-xs) {

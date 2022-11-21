@@ -80,13 +80,12 @@ export default {
 
       -webkit-box-flex: 1;
       flex-grow: 1;
-      //position: relative;
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
       -webkit-box-orient: vertical;
       -webkit-box-direction: normal;
-      overflow-y: scroll;
+      overflow-y: auto;
     }
   }
 }

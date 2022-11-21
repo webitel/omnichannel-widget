@@ -79,7 +79,6 @@ export default {
 
   .wt-omni-widget-popup__main {
     @extend %typo-body-md;
-    flex-grow: 1;
     min-height: 0;
   }
 
