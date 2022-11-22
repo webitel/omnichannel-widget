@@ -1,5 +1,11 @@
 <template>
   <header class="wt-omni-widget-appointment-calendar-title">
+    <div
+      class="wt-omni-widget-appointment-calendar-title__button-previous"
+      @click="$emit('previous')"
+    >
+      <wt-icon icon="wt-omni-widget-arrow-left" size="sm"></wt-icon>
+    </div>
     <span class="wt-omni-widget-appointment-calendar-title__text">
       {{ $t('appointment.calendar.title') }}
     </span>
@@ -8,6 +14,12 @@
       <span class="wt-omni-widget-appointment-calendar-title__time-zone-text">
           <slot></slot> {{ $t('appointment.calendar.timeZone') }}
         </span>
+    </div>
+    <div
+      class="wt-omni-widget-appointment-calendar-title__button-next"
+      @click="$emit('next')"
+    >
+      <wt-icon icon="wt-omni-widget-arrow-right" size="sm"></wt-icon>
     </div>
   </header>
 </template>
@@ -50,6 +62,23 @@ export default {
       display: flex;
       align-items: center;
       gap: var(--gap-md);
+    }
+
+    &__button-previous,
+    &__button-next {
+      display: flex;
+      padding: 10px;
+      background: var(--icon-contrast-color);
+      border-radius: var(--border-radius--square);
+      cursor: pointer;
+    }
+  }
+  &.wt-omni-widget--rounded {
+    .wt-omni-widget-appointment-calendar-title {
+      &__button-previous,
+      &__button-next {
+        border-radius: var(--border-radius--rounded);
+      }
     }
   }
 }

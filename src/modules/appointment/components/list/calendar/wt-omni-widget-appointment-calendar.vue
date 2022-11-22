@@ -1,6 +1,9 @@
 <template>
   <article class="wt-omni-widget-appointment-calendar">
-    <calendar-title>
+    <calendar-title
+    @previous=""
+    @next=""
+    >
       {{ timeZone }}
     </calendar-title>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
@@ -37,6 +40,9 @@ export default {
       type: String,
     },
   },
+  data: () => ({
+    carouselPosition: 0,
+  }),
   methods: {
     selectTime({ date, time }) {
       const value = {
