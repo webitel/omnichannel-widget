@@ -28,11 +28,10 @@ import { mapActions, mapState } from 'vuex';
 import { isValidPhoneNumber } from 'libphonenumber-js';
 import AppointmentForm from './form/wt-omni-widget-appointment-form.vue';
 import AppointmentCalendar from './calendar/wt-omni-widget-appointment-calendar.vue';
-
 const generateAppointmentSchema = ({
- showEmailField,
- showMessageField,
-}) => {
+                                     showEmailField,
+                                     showMessageField,
+                                   }) => {
   const appointment = {
     scheduleDate: '', // required
     scheduleTime: '', // required
@@ -101,7 +100,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-
 #wt-omni-widget {
   .wt-omni-widget-appointment-list {
     display: flex;

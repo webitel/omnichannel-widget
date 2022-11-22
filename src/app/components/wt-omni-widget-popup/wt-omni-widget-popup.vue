@@ -17,7 +17,6 @@
 import WtOmniWidgetHeader
   from '../wt-omni-widget-window/wt-omni-widget-window-header/wt-omni-widget-window-header.vue';
 import TheAppointment from '../../../modules/appointment/components/wt-omni-widget-appointment.vue';
-
 export default {
   name: 'wt-omni-widget-popup',
   components: {
@@ -41,7 +40,6 @@ export default {
     justify-content: center;
     background: hsla(0, 0%, 20%, 0.8); // copy-pasted --contrast-color without opacity
   }
-
   .wt-omni-widget-popup__popup {
     z-index: 1;
     display: flex;
@@ -52,7 +50,6 @@ export default {
     border-radius: var(--border-radius--square);
     background: var(--background-color);
     gap: var(--gap-md);
-
     width: 1024px;
     height: 608px;
 

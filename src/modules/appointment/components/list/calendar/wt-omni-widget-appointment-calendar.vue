@@ -1,7 +1,7 @@
 <template>
   <article class="wt-omni-widget-appointment-calendar">
     <calendar-title>
-          {{ timeZone }}
+      {{ timeZone }}
     </calendar-title>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
       <calendar-date
@@ -17,10 +17,8 @@
 </template>
 
 <script>
-
 import CalendarTitle from './wt-omni-widget-appointment-calendar-title.vue';
 import CalendarDate from './wt-omni-widget-appointment-calendar-date.vue';
-
 export default {
   name: 'wt-omni-widget-appointment-calendar',
   components: {
@@ -58,13 +56,7 @@ export default {
     flex-grow: 1;
     gap: var(--gap-md);
     color: var(--contrast-color);
-
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
     flex-direction: column;
     height: 100%;
 
@@ -77,14 +69,8 @@ export default {
       justify-content: space-between;
       padding-right: var(--gap-md);
       gap: var(--gap-md);
-
-      -webkit-box-flex: 1;
       flex-grow: 1;
-      display: -webkit-box;
-      display: -ms-flexbox;
       display: flex;
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
       overflow-y: auto;
     }
   }

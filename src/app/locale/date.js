@@ -5,7 +5,7 @@ export default {
       weekday: 'short',
     },
   },
-  uk: {
+  ua: {
     appointments: {
       day: 'numeric',
       weekday: 'short',
