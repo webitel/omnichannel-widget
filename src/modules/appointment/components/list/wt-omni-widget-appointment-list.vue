@@ -28,6 +28,7 @@ import { mapActions, mapState } from 'vuex';
 import { isValidPhoneNumber } from 'libphonenumber-js';
 import AppointmentForm from './form/wt-omni-widget-appointment-form.vue';
 import AppointmentCalendar from './calendar/wt-omni-widget-appointment-calendar.vue';
+
 const generateAppointmentSchema = ({
                                      showEmailField,
                                      showMessageField,
@@ -105,10 +106,7 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
     height: 100%;
-
-    @media (max-width: $breakpoint-xs) {
-      height: 740px;
-    }
+    gap: var(--gap-md);
 
     &__wrap {
       display: flex;
@@ -117,12 +115,15 @@ export default Vue.extend({
 
       @media (max-width: $breakpoint-xs) {
         flex-direction: column;
-        flex-grow: 1;
       }
     }
 
+    .wt-omni-widget-appointment-calendar {
+      flex-grow: 1;
+    }
+
     .wt-button {
-      margin: var(--gap-md) auto 0;
+      margin: 0 auto;
       min-width: 168px;
 
       @media (max-width: $breakpoint-xs) {

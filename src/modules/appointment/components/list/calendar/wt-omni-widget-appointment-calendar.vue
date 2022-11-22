@@ -10,8 +10,7 @@
         :value="{ date, times }"
         :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
         @select="selectTime"
-      >
-      </calendar-date>
+      ></calendar-date>
     </div>
   </article>
 </template>
@@ -19,6 +18,7 @@
 <script>
 import CalendarTitle from './wt-omni-widget-appointment-calendar-title.vue';
 import CalendarDate from './wt-omni-widget-appointment-calendar-date.vue';
+
 export default {
   name: 'wt-omni-widget-appointment-calendar',
   components: {
@@ -53,16 +53,11 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar {
-    flex-grow: 1;
     gap: var(--gap-md);
     color: var(--contrast-color);
     display: flex;
     flex-direction: column;
-    height: 100%;
-
-    @media (max-width: $breakpoint-xs) {
-      height: 50%;
-    }
+    min-height: 0;
 
     &__wrapper {
       @extend %wt-scrollbar;
