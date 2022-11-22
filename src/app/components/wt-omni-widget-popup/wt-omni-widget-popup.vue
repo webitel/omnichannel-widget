@@ -41,7 +41,6 @@ export default {
     background: hsla(0, 0%, 20%, 0.8); // copy-pasted --contrast-color without opacity
   }
   .wt-omni-widget-popup__popup {
-    //@extend %wt-scrollbar;
     z-index: 1;
     display: flex;
     flex-direction: column;
@@ -53,7 +52,6 @@ export default {
     gap: var(--gap-md);
     width: 1024px;
     height: 608px;
-    //overflow-y: auto;
 
     @media (max-width: $breakpoint-lg) {
       width: 800px;
@@ -80,12 +78,7 @@ export default {
     @extend %wt-scrollbar;
     @extend %typo-body-md;
     padding-right: 5px;
-    //min-height: 0;
     overflow-y: auto;
-
-    //@media (max-width: $breakpoint-xs) {
-    //  height: 824px;
-    //}
   }
 
   &.wt-omni-widget--rounded {
