@@ -136,9 +136,9 @@
   }
 
   .wt-textarea--stretched {
-    height: 100%;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
 
     .wt-textarea__wrapper {
         flex-grow: 1;

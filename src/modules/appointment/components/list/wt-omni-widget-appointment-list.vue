@@ -106,14 +106,18 @@ export default Vue.extend({
     flex-direction: column;
     height: 100%;
 
+    @media (max-width: $breakpoint-xs) {
+      height: 740px;
+    }
+
     &__wrap {
-      @extend %wt-scrollbar;
+      //@extend %wt-scrollbar;
       display: flex;
       gap: var(--gap-md);
       min-height: 0;
-      padding-right: 5px;
-      overflow-y: auto;
-      height: 100%;
+      //padding-right: 5px;
+      //overflow-y: auto;
+      //height: 100%;
 
       @media (max-width: $breakpoint-xs) {
         flex-direction: column;
