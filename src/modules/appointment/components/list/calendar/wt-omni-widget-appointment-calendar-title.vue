@@ -6,14 +6,16 @@
     >
       <wt-icon icon="wt-omni-widget-arrow-left" size="sm"></wt-icon>
     </div>
-    <span class="wt-omni-widget-appointment-calendar-title__text">
-      {{ $t('appointment.calendar.title') }}
-    </span>
-    <div class="wt-omni-widget-appointment-calendar-title__time-zone">
-      <wt-icon icon="wt-omni-widget-time-zone" size="sm"></wt-icon>
-      <span class="wt-omni-widget-appointment-calendar-title__time-zone-text">
-          <slot></slot> {{ $t('appointment.calendar.timeZone') }}
-        </span>
+    <div class="wt-omni-widget-appointment-calendar-title__wrapper">
+      <span class="wt-omni-widget-appointment-calendar-title__text">
+        {{ $t('appointment.calendar.title') }}
+      </span>
+      <div class="wt-omni-widget-appointment-calendar-title__time-zone">
+        <wt-icon icon="wt-omni-widget-time-zone" size="sm"></wt-icon>
+        <span class="wt-omni-widget-appointment-calendar-title__time-zone-text">
+            <slot></slot> {{ $t('appointment.calendar.timeZone') }}
+          </span>
+      </div>
     </div>
     <div
       class="wt-omni-widget-appointment-calendar-title__button-next"
@@ -41,16 +43,22 @@ export default {
     justify-content: space-between;
     align-items: center;
 
-    @media (max-width: $breakpoint-sm) {
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 5px;
-      gap: var(--gap-md);
-    }
-
     @media (max-width: $breakpoint-xs) {
       padding: var(--main-app-padding) 0;
+    }
+
+    &__wrapper {
+      display: flex;
+      justify-content: space-around;
+      flex-grow: 1;
+
+      @media (max-width: $breakpoint-md) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        gap: var(--gap-md);
+      }
     }
 
     &__text {

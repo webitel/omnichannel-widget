@@ -1,6 +1,9 @@
 <template>
   <section
     class="wt-omni-widget-appointment-calendar-date"
+    :class="{
+    'wt-omni-widget-appointment-calendar-date--hidden': hidden,
+    }"
   >
     <calendar-date-title>
       {{ $d(new Date(value.date), 'appointments') }}
@@ -40,6 +43,10 @@ export default {
       type: Object,
       required: true,
     },
+    hidden: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
@@ -52,6 +59,8 @@ export default {
     position: relative;
     flex: 1;
     height: fit-content;
+    visibility: visible;
+    transition: var(--transition);
 
     &__main {
       display: flex;
@@ -62,6 +71,11 @@ export default {
       border-left: 1px solid var(--border-default-color);
       border-radius: var(--border-radius--square) var(--border-radius--square) 0 0;
       gap: var(--gap-md);
+    }
+
+    &--hidden {
+      position: absolute;
+      visibility: hidden;
     }
   }
 
