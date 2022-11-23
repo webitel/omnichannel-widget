@@ -110,8 +110,8 @@ export default Vue.extend({
 
     &__wrap {
       display: flex;
-      gap: var(--gap-md);
       min-height: 0;
+      gap: var(--gap-md);
 
       @media (max-width: $breakpoint-xs) {
         flex-direction: column;
@@ -123,8 +123,8 @@ export default Vue.extend({
     }
 
     .wt-button {
-      margin: 0 auto;
       min-width: 168px;
+      margin: 0 auto;
 
       @media (max-width: $breakpoint-xs) {
         width: 100%;

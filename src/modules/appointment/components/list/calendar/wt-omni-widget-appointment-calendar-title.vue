@@ -24,15 +24,15 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar-title {
-    padding: var(--main-app-padding) 10px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    padding: var(--main-app-padding) 10px;
 
     @media (max-width: $breakpoint-sm) {
+      align-items: center;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
       padding: 5px;
       gap: var(--gap-md);
     }

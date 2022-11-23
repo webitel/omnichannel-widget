@@ -53,20 +53,20 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar {
-    gap: var(--gap-md);
-    color: var(--contrast-color);
     display: flex;
     flex-direction: column;
     min-height: 0;
+    color: var(--contrast-color);
+    gap: var(--gap-md);
 
     &__wrapper {
       @extend %wt-scrollbar;
+      display: flex;
+      overflow-y: auto;
+      flex-grow: 1;
       justify-content: space-between;
       padding-right: var(--gap-md);
       gap: var(--gap-md);
-      flex-grow: 1;
-      display: flex;
-      overflow-y: auto;
     }
   }
 }

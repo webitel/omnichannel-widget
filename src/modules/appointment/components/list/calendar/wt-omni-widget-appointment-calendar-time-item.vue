@@ -51,29 +51,29 @@ export default {
   .wt-omni-widget-appointment-calendar-time-item {
     @extend %typo-heading-md;
     padding: calc($time-padding - $time-border-width);
-    text-align: center;
-    border-radius: var(--border-radius--square);
-    border: $time-border-width solid $free-time-color;
-    user-select: none;
     cursor: pointer;
+    user-select: none;
     transition: var(--transition);
+    text-align: center;
+    border: $time-border-width solid $free-time-color;
+    border-radius: var(--border-radius--square);
 
     &--reserved {
-      background: $reserved-time-color;
-      border-color: $reserved-time-color;
       cursor: default;
       pointer-events: none;
+      border-color: $reserved-time-color;
+      background: $reserved-time-color;
     }
 
     &--selected {
-      background: $free-time-color;
       color: $selected-time-text-color;
+      background: $free-time-color;
     }
 
     &:hover {
-      background: $time-hover-color;
-      border-color:$time-hover-color;
       color: $selected-time-text-color;
+      border-color: $time-hover-color;
+      background: $time-hover-color;
     }
   }
 
