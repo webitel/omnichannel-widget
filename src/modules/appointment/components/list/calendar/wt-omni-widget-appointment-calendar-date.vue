@@ -74,8 +74,7 @@ export default {
     }
 
     &--hidden {
-      position: absolute;
-      visibility: hidden;
+      display: none;
     }
   }
 

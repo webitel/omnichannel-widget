@@ -1,12 +1,13 @@
 <template>
   <article class="wt-omni-widget-appointment-calendar">
     <calendar-title
-    @previous="handlePrevDate"
-    @next="handleNextDate"
-    >
+      @previous="handlePrevDate"
+      @next="handleNextDate"
+      >
       {{ timeZone }}
     </calendar-title>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
+      {{ maxVisibleItems }}
       <calendar-date
         v-for="({ date, times }, index) of calendar"
         :key="date"
@@ -14,8 +15,7 @@
         :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
         :hidden="isDateHidden(index)"
         @select="selectTime"
-      >
-      </calendar-date>
+      ></calendar-date>
     </div>
   </article>
 </template>
@@ -43,10 +43,35 @@ export default {
     },
   },
   data: () => ({
-    carouselStart: 0,
-    step: 1,
+    firstVisibleItem: 0,
+    step: 1, // how many date items should be changing
+    visibleItems: 2, // how many date items can be visible
+    breakpoints: {
+      lg: 1024,
+      md: 820,
+      sm: 648,
+    },
+    popUpWidth: 0,
   }),
+  mounted() {
+    console.log(document.getElementsByClassName('wt-omni-widget-popup__popup')[0].getBoundingClientRect());
+    window.addEventListener("resize", () => {
+      this.popUpWidth = document.getElementsByClassName('wt-omni-widget-popup__popup')[0].clientWidth;
+    });
+  },
   computed: {
+    maxVisibleItems() {
+      const popup = document.getElementsByClassName('wt-omni-widget-popup__popup')[0];
+      console.log('this.popUpWidth:', this.popUpWidth);
+      // треба визначати ширину попапу та фіксувати її
+      // треба відстежувати зміну розміру попапу
+      switch (this.popUpWidth) {
+        case this.breakpoints.lg: return 7;
+        case this.breakpoints.md: return 5;
+        case this.breakpoints.sm: return 3;
+        default: return 3;
+      }
+    },
   },
   methods: {
     selectTime({ date, time }) {
@@ -58,16 +83,14 @@ export default {
       this.$emit('input', value);
     },
     isDateHidden(index) {
-      const visibleItems = 2;
-      console.log('index', index, index <= this.carouselStart && index >= (this.carouselStart + visibleItems));
-      // if (this.calendar.length > visibleItems)
-      return index <= this.carouselStart || index > (this.carouselStart + visibleItems);
-    },
-    handleNextDate() {
-      this.carouselStart += this.step;
+      console.log('index', index, index < this.firstVisibleItem && index >= (this.firstVisibleItem + this.maxVisibleItems));
+      return index < this.firstVisibleItem || index >= (this.firstVisibleItem + this.maxVisibleItems);
     },
     handlePrevDate() {
-      this.carouselStart -= this.step;
+      if (this.firstVisibleItem > 0) this.firstVisibleItem -= this.step;
+    },
+    handleNextDate() {
+      if (this.firstVisibleItem + this.maxVisibleItems < this.calendar.length) this.firstVisibleItem += this.step;
     },
   },
 };
