@@ -5,6 +5,7 @@ const ChatChannel = Object.freeze({
   FACEBOOK: 'facebook',
   EMAIL: 'email',
   CHAT: 'chat',
+  APPOINTMENT: 'appointment',
 });
 
 export default ChatChannel;

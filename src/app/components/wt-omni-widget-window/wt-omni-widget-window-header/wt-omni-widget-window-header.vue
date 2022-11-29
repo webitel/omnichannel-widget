@@ -33,7 +33,7 @@ export default {
   }),
   computed: {
     logoUrl() {
-      const { logoUrl } = this.config;
+      const { logoUrl } = this.config.view;
       return logoUrl || WebitelLogo;
     },
   },

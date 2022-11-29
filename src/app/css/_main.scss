@@ -1,14 +1,35 @@
 @import 'typography/typography';
 @import 'variables/index';
+@import 'variables/variables';
+@import 'variables/scroll';
+@import 'styleguide/placeholder/placeholder';
 
-@import '../webitel-ui/css/scroll';
 
 .wt-omni-widget--reset-styles,
 .wt-omni-widget--reset-styles * {
-  all: revert;
+  /*
+    This reset was needed to prevent site own styling affect on widget itself
+    for instance, without this property, if someone would write span { d: none; } on its site,
+    embedded widget will brake.
+
+    However, this property negatively afftects on widget styling, so that we should
+    apply #id selector for all styles to increase its specificity
+
+    it became a problem when i tried to add ui component library to app (vue-tel-input),
+    because its styling is based on classes and i can't increase its specificity cause
+    style file is just imported.
+
+    So i commented this reset in order to be able to use ui libraries in project
+    however, still not sure, if that is a good idea
+  */
+  //all: revert;
 }
 
 #wt-omni-widget {
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     @extend %typo-body-md;
   }

@@ -89,7 +89,7 @@ export default {
         overflow-wrap: anywhere;
 
         .wt-omni-widget-file-upload-preview-info__name {
-          @extend %typo-strong-md;
+          @extend %typo-heading-md;
         }
 
         .wt-omni-widget-file-upload-preview-info__size {

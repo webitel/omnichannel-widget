@@ -1,5 +1,5 @@
 <template>
-  <portal to="popup">
+  <portal to="in-window-popup">
     <div class="wt-omni-widget-file-upload-preview-popup">
       <file
         v-for="(file, index) of files"

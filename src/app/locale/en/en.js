@@ -15,6 +15,24 @@ export default {
     previewChatMessage1: 'Good afternoon!\nI am Your chatbot.\n\nHow can I help?',
     previewChatMessage2: 'Hello, \nI would like to ask more details\nabout your services.',
   },
+  appointment: {
+    form: {
+      title: 'Personal information',
+      name: 'Name',
+      email: 'Email',
+      destination: 'Phone number',
+      message: 'Message',
+    },
+    calendar: {
+      title: 'Select Appointment Time',
+      timeZone: 'Time Zone',
+    },
+    success: {
+      congratulations: 'Congratulations!',
+      title: 'You\'ve scheduled an appointment.',
+      cancel: 'Cancel an appointment',
+    },
+  },
   errors: {
     fileTooLarge: 'File "{file}" is too large! Maximum size is {maxSize} Mb',
   },

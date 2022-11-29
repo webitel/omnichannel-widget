@@ -15,6 +15,24 @@ export default {
     previewChatMessage1: 'Добрий день!\nЯ - Ваш чат-бот.\n\nЧим можу допомогти?',
     previewChatMessage2: 'Добрий день,\nхочу дізнатись детальніше про ваші послуги.',
   },
+  appointment: {
+    form: {
+      title: 'Персональна інформація',
+      name: 'Ім\'я',
+      email: 'Електронна пошта',
+      destination: 'Номер телефону',
+      message: 'Повідомлення',
+    },
+    calendar: {
+      title: 'Оберіть час дзвінку',
+      timeZone: 'Часовий пояс',
+    },
+    success: {
+      congratulations: 'Вітаємо!',
+      title: 'Ви запланували дзвінок.',
+      cancel: 'Скасувати дзвінок',
+    },
+  },
   errors: {
     fileTooLarge: 'Файл "{file}" завеликий! Максимальний розмір файлу: {maxSize} Мб',
   },

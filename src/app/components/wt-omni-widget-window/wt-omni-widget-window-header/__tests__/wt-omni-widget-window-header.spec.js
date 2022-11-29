@@ -6,7 +6,9 @@ describe('WtOmniWidgetWindowHeader', () => {
     const wrapper = shallowMount(WtOmniWidgetWindowHeader, {
       computed: {
         config() {
-          return {};
+          return {
+            view: {},
+          };
         },
       },
     });
