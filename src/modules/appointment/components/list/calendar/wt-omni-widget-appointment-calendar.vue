@@ -7,7 +7,6 @@
       {{ timeZone }}
     </calendar-title>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
-      {{ maxVisibleItems }}
       <calendar-date
         v-for="({ date, times }, index) of calendar"
         :key="date"
@@ -99,26 +98,30 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar {
-    flex-grow: 1;
-    gap: var(--gap-md);
-    color: var(--contrast-color);
     display: flex;
     flex-direction: column;
-    height: 100%;
+    flex-grow: 1;
+    min-height: 0;
+    color: var(--contrast-color);
+    gap: var(--gap-md);
 
     @media (max-width: $breakpoint-xs) {
-      height: 50%;
+      min-height: auto;
     }
 
     &__wrapper {
       @extend %wt-scrollbar;
       position: relative;
+      display: flex;
+      overflow-y: auto;
+      flex-grow: 1;
       justify-content: space-between;
       padding-right: var(--gap-md);
       gap: var(--gap-md);
-      flex-grow: 1;
-      display: flex;
-      overflow-y: auto;
+
+      @media (max-width: $breakpoint-xs) {
+        padding-right: 0;
+      }
     }
   }
 }

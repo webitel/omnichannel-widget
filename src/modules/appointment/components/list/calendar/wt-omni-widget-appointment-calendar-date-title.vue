@@ -46,6 +46,7 @@ export default {
       border-radius: var(--border-radius--square) var(--border-radius--square) 0 0;
     }
   }
+
   &.wt-omni-widget--rounded {
     .wt-omni-widget-appointment-calendar-date-title {
       &:after {

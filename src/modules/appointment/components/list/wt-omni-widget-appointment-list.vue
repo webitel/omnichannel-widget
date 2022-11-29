@@ -12,10 +12,12 @@
         :locale="$i18n.locale"
       ></appointment-calendar>
     </div>
+    <div class="wt-omni-widget-appointment-list__button-wrap">
     <wt-button
       :disabled="disableSend"
       @click="send"
     >{{ $t('reusable.send') }}</wt-button>
+    </div>
   </section>
 </template>
 
@@ -28,6 +30,7 @@ import { mapActions, mapState } from 'vuex';
 import { isValidPhoneNumber } from 'libphonenumber-js';
 import AppointmentForm from './form/wt-omni-widget-appointment-form.vue';
 import AppointmentCalendar from './calendar/wt-omni-widget-appointment-calendar.vue';
+
 const generateAppointmentSchema = ({
                                      showEmailField,
                                      showMessageField,
@@ -105,25 +108,35 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
     height: 100%;
+    gap: var(--gap-md);
 
     @media (max-width: $breakpoint-xs) {
-      height: 740px;
+      gap: 0;
     }
 
     &__wrap {
       display: flex;
-      gap: var(--gap-md);
       min-height: 0;
+      gap: var(--gap-md);
 
       @media (max-width: $breakpoint-xs) {
         flex-direction: column;
-        flex-grow: 1;
+        min-height: auto;
+      }
+    }
+
+    &__button-wrap {
+      @media (max-width: $breakpoint-xs) {
+        position: sticky;
+        bottom: 0;
+        padding-top: var(--gap-md);
+        background: var(--background-color);
       }
     }
 
     .wt-button {
-      margin: var(--gap-md) auto 0;
       min-width: 168px;
+      margin: 0 auto;
 
       @media (max-width: $breakpoint-xs) {
         width: 100%;

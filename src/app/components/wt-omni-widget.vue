@@ -149,8 +149,8 @@ export default {
     }
 
     &-left {
-      left: var(--chat-offset);
       bottom: var(--chat-offset);
+      left: var(--chat-offset);
 
       .wt-omni-widget-window,
       .wt-omni-widget-buttons-menu {
