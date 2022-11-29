@@ -7,13 +7,17 @@
       ></appointment-form>
       <appointment-calendar
         v-model="draft"
-        :calendar="calendar"
+        :calendar="state.list"
+        :time-zone="state.timezone"
+        :locale="$i18n.locale"
       ></appointment-calendar>
     </div>
+    <div class="wt-omni-widget-appointment-list__button-wrap">
     <wt-button
       :disabled="disableSend"
       @click="send"
     >{{ $t('reusable.send') }}</wt-button>
+    </div>
   </section>
 </template>
 
@@ -28,9 +32,9 @@ import AppointmentForm from './form/wt-omni-widget-appointment-form.vue';
 import AppointmentCalendar from './calendar/wt-omni-widget-appointment-calendar.vue';
 
 const generateAppointmentSchema = ({
- showEmailField,
- showMessageField,
-}) => {
+                                     showEmailField,
+                                     showMessageField,
+                                   }) => {
   const appointment = {
     scheduleDate: '', // required
     scheduleTime: '', // required
@@ -56,167 +60,6 @@ export default Vue.extend({
   },
   data: () => ({
     draft: {},
-    calendar: [
-      {
-        date: '2022-10-20',
-        times: [
-          {
-          reserved: true,
-          time: '10:00',
-          },
-          {
-            reserved: false,
-            time: '11:00',
-          },
-          {
-            reserved: true,
-            time: '12:00',
-          },
-          {
-            reserved: true,
-            time: '13:00',
-          },
-          {
-            reserved: false,
-            time: '14:00',
-          },
-          {
-            reserved: true,
-            time: '15:00',
-          },
-          {
-            reserved: true,
-            time: '16:00',
-          },
-          {
-            reserved: false,
-            time: '17:00',
-          },
-          {
-            reserved: true,
-            time: '18:00',
-          },
-          {
-            reserved: true,
-            time: '19:00',
-          },
-          {
-            reserved: false,
-            time: '20:00',
-          },
-          {
-            reserved: true,
-            time: '21:00',
-          },
-        ],
-      },
-      {
-        date: '2022-10-21',
-        times: [
-          {
-            reserved: false,
-            time: '10:00',
-          },
-          {
-            reserved: false,
-            time: '11:00',
-          },
-          {
-            reserved: true,
-            time: '12:00',
-          },
-          {
-            reserved: true,
-            time: '13:00',
-          },
-          {
-            reserved: false,
-            time: '14:00',
-          },
-          {
-            reserved: true,
-            time: '15:00',
-          },
-          {
-            reserved: true,
-            time: '16:00',
-          },
-          {
-            reserved: true,
-            time: '17:00',
-          },
-          {
-            reserved: true,
-            time: '18:00',
-          },
-          {
-            reserved: false,
-            time: '19:00',
-          },
-          {
-            reserved: true,
-            time: '20:00',
-          },
-          {
-            reserved: false,
-            time: '21:00',
-          },
-        ],
-      },
-      {
-        date: '2022-10-22',
-        times: [
-          {
-            reserved: false,
-            time: '10:00',
-          },
-          {
-            reserved: false,
-            time: '11:00',
-          },
-          {
-            reserved: true,
-            time: '12:00',
-          },
-          {
-            reserved: true,
-            time: '13:00',
-          },
-          {
-            reserved: false,
-            time: '14:00',
-          },
-          {
-            reserved: false,
-            time: '15:00',
-          },
-          {
-            reserved: false,
-            time: '16:00',
-          },
-          {
-            reserved: false,
-            time: '17:00',
-          },
-          {
-            reserved: true,
-            time: '18:00',
-          },
-          {
-            reserved: true,
-            time: '19:00',
-          },
-          {
-            reserved: false,
-            time: '20:00',
-          },
-          {
-            reserved: true,
-            time: '21:00',
-          },
-        ],
-      },
-    ],
   }),
   validations: {
     draft: {
@@ -262,14 +105,42 @@ export default Vue.extend({
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-list {
-    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: var(--gap-md);
+
+    @media (max-width: $breakpoint-xs) {
+      gap: 0;
+    }
+
     &__wrap {
       display: flex;
+      min-height: 0;
       gap: var(--gap-md);
+
+      @media (max-width: $breakpoint-xs) {
+        flex-direction: column;
+        min-height: auto;
+      }
     }
+
+    &__button-wrap {
+      @media (max-width: $breakpoint-xs) {
+        position: sticky;
+        bottom: 0;
+        padding-top: var(--gap-md);
+        background: var(--background-color);
+      }
+    }
+
     .wt-button {
-      margin: var(--gap-md) auto 0;
       min-width: 168px;
+      margin: 0 auto;
+
+      @media (max-width: $breakpoint-xs) {
+        width: 100%;
+      }
     }
   }
 }

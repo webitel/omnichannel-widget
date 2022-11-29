@@ -3,7 +3,7 @@
     class="wt-omni-widget-appointment-calendar-date"
   >
     <calendar-date-title>
-      {{ formattingDateTitle }}
+      {{ $d(new Date(value.date), 'appointments') }}
     </calendar-date-title>
     <div class="wt-omni-widget-appointment-calendar-date__main">
       <calendar-time-item
@@ -39,12 +39,6 @@ export default {
     selectedValue: {
       type: Object,
       required: true,
-    },
-  },
-  computed: {
-    formattingDateTitle() {
-      const currentDate = new Date(this.value.date);
-      return `${currentDate.getUTCDate()} ${currentDate.toString().substring(0, 3)}`;
     },
   },
 };

@@ -124,7 +124,7 @@
 
     display: block;
     width: 100%;
-    min-height: 76px;
+    min-height: 64px;
     box-sizing: border-box;
     padding: 10px 15px;
     color: var(--contrast-color);
@@ -136,16 +136,16 @@
   }
 
   .wt-textarea--stretched {
-    height: 100%;
     display: flex;
     flex-direction: column;
-    .wt-textarea {
-      &__wrapper {
+    flex-grow: 1;
+
+    .wt-textarea__wrapper {
         flex-grow: 1;
-      }
-      &__textarea {
+    }
+
+    .wt-textarea__textarea {
         height: 100%;
-      }
     }
   }
 

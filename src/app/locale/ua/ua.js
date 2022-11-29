@@ -25,6 +25,7 @@ export default {
     },
     calendar: {
       title: 'Оберіть час дзвінку',
+      timeZone: 'Часовий пояс',
     },
     success: {
       congratulations: 'Вітаємо!',

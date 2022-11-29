@@ -14,9 +14,8 @@
 </template>
 
 <script>
-import WtOmniWidgetHeader
-  from '../wt-omni-widget-window/wt-omni-widget-window-header/wt-omni-widget-window-header.vue';
 import TheAppointment from '../../../modules/appointment/components/wt-omni-widget-appointment.vue';
+import WtOmniWidgetHeader from '../wt-omni-widget-window/wt-omni-widget-window-header/wt-omni-widget-window-header.vue';
 
 export default {
   name: 'wt-omni-widget-popup',
@@ -46,31 +45,33 @@ export default {
     z-index: 1;
     display: flex;
     flex-direction: column;
-    max-height: 90%;
+    width: 1024px;
+    height: 608px;
+    max-height: 100%;
     margin: var(--main-app-padding);
     padding: var(--main-app-padding);
     border-radius: var(--border-radius--square);
     background: var(--background-color);
     gap: var(--gap-md);
 
-    width: 1024px;
-    height: 608px;
     @media (max-width: $breakpoint-lg) {
       width: 800px;
       height: 538px;
     }
+
     @media (max-width: $breakpoint-md) {
       width: 648px;
       height: 484px;
     }
+
     @media (max-width: $breakpoint-sm) {
       width: 540px;
       height: 484px;
     }
+
     @media (max-width: $breakpoint-xs) {
       width: 100%;
-      height: auto;
-      min-height: 50%;
+      height: 824px;
     }
   }
 
@@ -80,6 +81,7 @@ export default {
     flex-grow: 1;
     min-height: 0;
     overflow-y: auto;
+    padding-right: var(--gap-sm);
   }
 
   &.wt-omni-widget--rounded {
