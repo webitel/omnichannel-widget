@@ -12,10 +12,12 @@
         :locale="$i18n.locale"
       ></appointment-calendar>
     </div>
+    <div class="wt-omni-widget-appointment-list__button-wrap">
     <wt-button
       :disabled="disableSend"
       @click="send"
     >{{ $t('reusable.send') }}</wt-button>
+    </div>
   </section>
 </template>
 
@@ -108,6 +110,10 @@ export default Vue.extend({
     height: 100%;
     gap: var(--gap-md);
 
+    @media (max-width: $breakpoint-xs) {
+      gap: 0;
+    }
+
     &__wrap {
       display: flex;
       min-height: 0;
@@ -115,11 +121,17 @@ export default Vue.extend({
 
       @media (max-width: $breakpoint-xs) {
         flex-direction: column;
+        min-height: auto;
       }
     }
 
-    .wt-omni-widget-appointment-calendar {
-      flex-grow: 1;
+    &__button-wrap {
+      @media (max-width: $breakpoint-xs) {
+        position: sticky;
+        bottom: 0;
+        padding-top: var(--gap-md);
+        background: var(--background-color);
+      }
     }
 
     .wt-button {

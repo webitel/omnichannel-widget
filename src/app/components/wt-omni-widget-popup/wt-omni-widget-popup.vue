@@ -79,9 +79,7 @@ export default {
     @extend %wt-scrollbar;
     @extend %typo-body-md;
     overflow-y: auto;
-    flex-grow: 1;
-    min-height: 0;
-    padding-right: 5px;
+    padding-right: var(--gap-md);
   }
 
   &.wt-omni-widget--rounded {

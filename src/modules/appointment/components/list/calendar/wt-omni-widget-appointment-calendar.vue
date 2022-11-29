@@ -56,8 +56,13 @@ export default {
     display: flex;
     flex-direction: column;
     min-height: 0;
+    flex-grow: 1;
     color: var(--contrast-color);
     gap: var(--gap-md);
+
+    @media (max-width: $breakpoint-xs) {
+      min-height: auto;
+    }
 
     &__wrapper {
       @extend %wt-scrollbar;
@@ -67,6 +72,10 @@ export default {
       justify-content: space-between;
       padding-right: var(--gap-md);
       gap: var(--gap-md);
+
+      @media (max-width: $breakpoint-xs) {
+        padding-right: 0;
+      }
     }
   }
 }
