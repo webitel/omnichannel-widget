@@ -55,8 +55,8 @@ export default {
   .wt-omni-widget-appointment-calendar {
     display: flex;
     flex-direction: column;
-    min-height: 0;
     flex-grow: 1;
+    min-height: 0;
     color: var(--contrast-color);
     gap: var(--gap-md);
 
