@@ -8,28 +8,27 @@
       <appointment-calendar
         v-model="draft"
         :calendar="state.list"
-        :time-zone="state.timezone"
         :locale="$i18n.locale"
+        :time-zone="state.timezone"
       ></appointment-calendar>
     </div>
-    <div class="wt-omni-widget-appointment-list__button-wrap">
     <wt-button
       :disabled="disableSend"
       @click="send"
-    >{{ $t('reusable.send') }}</wt-button>
-    </div>
+    >{{ $t('reusable.send') }}
+    </wt-button>
   </section>
 </template>
 
 <script>
+import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
+import { isValidPhoneNumber } from 'libphonenumber-js';
 import Vue from 'vue';
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
-import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
 import { mapActions, mapState } from 'vuex';
-import { isValidPhoneNumber } from 'libphonenumber-js';
-import AppointmentForm from './form/wt-omni-widget-appointment-form.vue';
 import AppointmentCalendar from './calendar/wt-omni-widget-appointment-calendar.vue';
+import AppointmentForm from './form/wt-omni-widget-appointment-form.vue';
 
 const generateAppointmentSchema = ({
                                      showEmailField,
@@ -110,27 +109,17 @@ export default Vue.extend({
     height: 100%;
     gap: var(--gap-md);
 
-    @media (max-width: $breakpoint-xs) {
-      gap: 0;
-    }
-
     &__wrap {
+      @extend %wt-scrollbar; // xs size scrollbar
       display: flex;
+      overflow: auto; // prevent scroll bugs on small height
       min-height: 0;
       gap: var(--gap-md);
 
       @media (max-width: $breakpoint-xs) {
+        overflow: auto;
         flex-direction: column;
-        min-height: auto;
-      }
-    }
-
-    &__button-wrap {
-      @media (max-width: $breakpoint-xs) {
-        position: sticky;
-        bottom: 0;
-        padding-top: var(--gap-md);
-        background: var(--background-color);
+        padding-right: 5px;
       }
     }
 

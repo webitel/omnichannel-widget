@@ -74,6 +74,7 @@
       stretched: {
         type: Boolean,
         default: false,
+        description: 'component takes not fixed but all available height',
       },
     },
 
@@ -138,7 +139,6 @@
   .wt-textarea--stretched {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
 
     .wt-textarea__wrapper {
         flex-grow: 1;

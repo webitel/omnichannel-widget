@@ -71,7 +71,7 @@ export default {
 
     @media (max-width: $breakpoint-xs) {
       width: 100%;
-      height: 824px;
+      height: calc(100% - 2 * var(--main-app-padding)); // - 2 margins
     }
   }
 
