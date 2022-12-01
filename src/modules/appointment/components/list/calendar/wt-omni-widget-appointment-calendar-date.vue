@@ -1,9 +1,6 @@
 <template>
   <section
     class="wt-omni-widget-appointment-calendar-date"
-    :class="{
-    'wt-omni-widget-appointment-calendar-date--hidden': hidden,
-    }"
   >
     <calendar-date-title>
       {{ $d(new Date(value.date), 'appointments') }}
@@ -23,6 +20,7 @@
 
 <script>
 
+import { VueperSlide } from 'vueperslides';
 import CalendarTimeItem from './wt-omni-widget-appointment-calendar-time-item.vue';
 import CalendarDateTitle from './wt-omni-widget-appointment-calendar-date-title.vue';
 
@@ -31,6 +29,7 @@ export default {
   components: {
     CalendarTimeItem,
     CalendarDateTitle,
+    VueperSlide,
   },
   data: () => ({
   }),
@@ -42,10 +41,6 @@ export default {
     selectedValue: {
       type: Object,
       required: true,
-    },
-    hidden: {
-      type: Boolean,
-      default: false,
     },
   },
 };
@@ -71,10 +66,6 @@ export default {
       border-left: 1px solid var(--border-default-color);
       border-radius: var(--border-radius--square) var(--border-radius--square) 0 0;
       gap: var(--gap-md);
-    }
-
-    &--hidden {
-      display: none;
     }
   }
 

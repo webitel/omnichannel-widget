@@ -11,6 +11,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@egjs/vue-flicking": "^4.10.3",
     "@webitel/ui-sdk": "^2.0.10",
     "autosize": "^5.0.0",
     "axios": "^0.27.2",
@@ -26,6 +27,7 @@
     "vue-tel-input": "^5.12.0",
     "vue-transition-expand": "^0.1.0",
     "vuelidate": "^0.7.7",
+    "vueperslides": "^2.16.0",
     "vuex": "^3.6.2",
     "webitel-sdk": "^0.1.125"
   },
