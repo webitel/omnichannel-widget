@@ -1,28 +1,39 @@
 <template>
   <article class="wt-omni-widget-appointment-calendar">
-    <calendar-title @previous="$refs.slider.previous()" @next="$refs.slider.next()">
+    <calendar-title
+      :disabled-prev="disabledPrev"
+      :disabled-next="disabledNext"
+      @previous="$refs.myVueperSlides.previous()"
+      @next="$refs.myVueperSlides.next()"
+    >
       {{ timeZone }}
     </calendar-title>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
     <vueper-slides
-      ref="slider"
+      ref="myVueperSlides"
       class="no-shadow"
       :visible-slides="calendar.length > 7 ? 7 : calendar.length"
       :gap="2"
       :dragging-distance="70"
       :slide-ratio="11 / 12"
-      :arrows="false"
-      :autoplay="false"
       :bullets="false"
       :touchable="false"
+      :arrows="false"
+      :infinite="false"
+      :initSlide="4"
       :breakpoints="{
         1024: {
         visibleSlides: calendar.length > 5 ? 5 : calendar.length,
+        slideRatio: '1.21',
         },
         820: {
         visibleSlides: calendar.length > 3 ? 3 : calendar.length,
+        slideRatio: '1.69',
         },
       }"
+      @ready="handleReady($event)"
+      @next="handleNext($event)"
+      @previous="handlePrev($event)"
     >
       <vueper-slide v-for="({ date, times }, index) of calendar" :key="date">
         <template #content>
@@ -369,17 +380,212 @@ export default {
           },
         ],
       },
+      {
+        date: '2022-12-06',
+        times: [
+          {
+            time: '12:00',
+            reserved: false,
+          },
+          {
+            time: '12:30',
+            reserved: true,
+          },
+          {
+            time: '13:00',
+            reserved: false,
+          },
+          {
+            time: '13:30',
+            reserved: true,
+          },
+          {
+            time: '14:00',
+            reserved: false,
+          },
+          {
+            time: '14:30',
+            reserved: false,
+          },
+          {
+            time: '15:00',
+            reserved: true,
+          },
+          {
+            time: '15:30',
+            reserved: true,
+          },
+          {
+            time: '16:00',
+            reserved: false,
+          },
+          {
+            time: '16:30',
+            reserved: true,
+          },
+          {
+            time: '17:00',
+            reserved: true,
+          },
+        ],
+      },
+      {
+        date: '2022-12-07',
+        times: [
+          {
+            time: '12:00',
+            reserved: false,
+          },
+          {
+            time: '12:30',
+            reserved: true,
+          },
+          {
+            time: '13:00',
+            reserved: false,
+          },
+          {
+            time: '13:30',
+            reserved: true,
+          },
+          {
+            time: '14:00',
+            reserved: false,
+          },
+          {
+            time: '14:30',
+            reserved: false,
+          },
+          {
+            time: '15:00',
+            reserved: true,
+          },
+          {
+            time: '15:30',
+            reserved: true,
+          },
+          {
+            time: '16:00',
+            reserved: false,
+          },
+          {
+            time: '16:30',
+            reserved: true,
+          },
+          {
+            time: '17:00',
+            reserved: true,
+          },
+        ],
+      },
+      {
+        date: '2022-12-08',
+        times: [
+          {
+            time: '12:00',
+            reserved: false,
+          },
+          {
+            time: '12:30',
+            reserved: true,
+          },
+          {
+            time: '13:00',
+            reserved: false,
+          },
+          {
+            time: '13:30',
+            reserved: true,
+          },
+          {
+            time: '14:00',
+            reserved: false,
+          },
+          {
+            time: '14:30',
+            reserved: false,
+          },
+          {
+            time: '15:00',
+            reserved: true,
+          },
+          {
+            time: '15:30',
+            reserved: true,
+          },
+          {
+            time: '16:00',
+            reserved: false,
+          },
+          {
+            time: '16:30',
+            reserved: true,
+          },
+          {
+            time: '17:00',
+            reserved: true,
+          },
+        ],
+      },
+      {
+        date: '2022-12-09',
+        times: [
+          {
+            time: '12:00',
+            reserved: false,
+          },
+          {
+            time: '12:30',
+            reserved: true,
+          },
+          {
+            time: '13:00',
+            reserved: false,
+          },
+          {
+            time: '13:30',
+            reserved: true,
+          },
+          {
+            time: '14:00',
+            reserved: false,
+          },
+          {
+            time: '14:30',
+            reserved: false,
+          },
+          {
+            time: '15:00',
+            reserved: true,
+          },
+          {
+            time: '15:30',
+            reserved: true,
+          },
+          {
+            time: '16:00',
+            reserved: false,
+          },
+          {
+            time: '16:30',
+            reserved: true,
+          },
+          {
+            time: '17:00',
+            reserved: true,
+          },
+        ],
+      },
     ],
-
+    disabledPrev: false,
+    disabledNext: false,
   }),
-  mounted() {
-    console.log(document.getElementsByClassName('wt-omni-widget-popup__popup')[0].getBoundingClientRect());
-    window.addEventListener('resize', () => {
-      this.popUpWidth = document.getElementsByClassName('wt-omni-widget-popup__popup')[0].clientWidth;
-    });
-    console.log(this.$refs.wrapper);
-    this.handleSlick();
-  },
+  // mounted() {
+  //   console.log(document.getElementsByClassName('wt-omni-widget-popup__popup')[0].getBoundingClientRect());
+  //   window.addEventListener('resize', () => {
+  //     this.popUpWidth = document.getElementsByClassName('wt-omni-widget-popup__popup')[0].clientWidth;
+  //   });
+  // },
   computed: {
     maxVisibleItems() {
       const popup = document.getElementsByClassName('wt-omni-widget-popup__popup')[0];
@@ -403,8 +609,17 @@ export default {
       };
       this.$emit('input', value);
     },
-    handleSlick() {
-      document.querySelector('.wt-omni-widget-appointment-calendar__wrapper');
+    handleReady(params) {
+      console.log('ready:', params, 'calendar.length:', this.calendar.length);
+      this.disabledPrev = 4 - 1 === params.currentSlide.index;
+      this.disabledNext = (4 + 1 + params.currentSlide.index) === this.calendar.length;
+    },
+    handlePrev(params) {
+      this.disabledPrev = 4 - 1 === params.currentSlide.index;
+    },
+    handleNext(params) {
+      this.disabledNext = (4 + 1 + params.currentSlide.index) === this.calendar.length;
+      console.log((4 + 1 + params.currentSlide.index) === this.calendar.length);
     },
     // isDateHidden(index) {
     //   console.log('index', index, index < this.position && index >= (this.position + this.maxVisibleItems));

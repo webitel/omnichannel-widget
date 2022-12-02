@@ -2,6 +2,9 @@
   <header class="wt-omni-widget-appointment-calendar-title">
     <div
       class="wt-omni-widget-appointment-calendar-title__button-previous"
+      :class="{
+      'wt-omni-widget-appointment-calendar-title__button-previous--disabled': disabledPrev
+    }"
       @click="$emit('previous')"
     >
       <wt-icon icon="wt-omni-widget-arrow-left" size="sm"></wt-icon>
@@ -19,6 +22,9 @@
     </div>
     <div
       class="wt-omni-widget-appointment-calendar-title__button-next"
+      :class="{
+      'wt-omni-widget-appointment-calendar-title__button-previous--disabled': disabledNext
+    }"
       @click="$emit('next')"
     >
       <wt-icon icon="wt-omni-widget-arrow-right" size="sm"></wt-icon>
@@ -30,6 +36,16 @@
 
 export default {
   name: 'wt-omni-widget-appointment-calendar-title',
+  props: {
+    disabledPrev: {
+      type: Boolean,
+      default: false,
+    },
+    disabledNext: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data: () => ({
   }),
 };
