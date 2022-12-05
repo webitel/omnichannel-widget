@@ -1,6 +1,7 @@
 <template>
   <header class="wt-omni-widget-appointment-calendar-title">
     <div
+        v-if="showButtons"
       class="wt-omni-widget-appointment-calendar-title__button-previous"
       :class="{
       'wt-omni-widget-appointment-calendar-title__button-previous--disabled': disabledPrev
@@ -21,6 +22,7 @@
       </div>
     </div>
     <div
+        v-if="showButtons"
       class="wt-omni-widget-appointment-calendar-title__button-next"
       :class="{
       'wt-omni-widget-appointment-calendar-title__button-previous--disabled': disabledNext
@@ -44,6 +46,10 @@ export default {
     disabledNext: {
       type: Boolean,
       default: false,
+    },
+    showButtons: {
+      type: Boolean,
+      default: true,
     },
   },
   data: () => ({
@@ -103,6 +109,13 @@ export default {
       background: var(--icon-contrast-color);
       border-radius: var(--border-radius--square);
       cursor: pointer;
+      transition: var(--transition);
+    }
+
+    &__button-previous--disabled,
+    &__button-next--disabled {
+      cursor: default;
+      visibility: hidden;
     }
   }
   &.wt-omni-widget--rounded {

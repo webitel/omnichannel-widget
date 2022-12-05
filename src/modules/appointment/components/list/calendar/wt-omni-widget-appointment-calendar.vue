@@ -3,48 +3,50 @@
     <calendar-title
       :disabled-prev="disabledPrev"
       :disabled-next="disabledNext"
+      :show-buttons="maxVisibleItems < calendar.length"
       @previous="$refs.myVueperSlides.previous()"
       @next="$refs.myVueperSlides.next()"
     >
       {{ timeZone }}
     </calendar-title>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
-    <vueper-slides
-      ref="myVueperSlides"
-      class="no-shadow"
-      :visible-slides="calendar.length > 7 ? 7 : calendar.length"
-      :gap="2"
-      :dragging-distance="70"
-      :slide-ratio="11 / 12"
-      :bullets="false"
-      :touchable="false"
-      :arrows="false"
-      :infinite="false"
-      :initSlide="4"
-      :breakpoints="{
-        1024: {
-        visibleSlides: calendar.length > 5 ? 5 : calendar.length,
-        slideRatio: '1.21',
-        },
-        820: {
-        visibleSlides: calendar.length > 3 ? 3 : calendar.length,
-        slideRatio: '1.69',
-        },
-      }"
-      @ready="handleReady($event)"
-      @next="handleNext($event)"
-      @previous="handlePrev($event)"
-    >
-      <vueper-slide v-for="({ date, times }, index) of calendar" :key="date">
-        <template #content>
-          <calendar-date
-            :value="{ date, times }"
-            :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
-            @select="selectTime"
-          ></calendar-date>
-        </template>
-      </vueper-slide>
-    </vueper-slides>
+      <vueper-slides
+        ref="myVueperSlides"
+        class="no-shadow"
+        :visible-slides="this.calendar.length > 7 ? 7 : this.calendar.length"
+        :gap="2"
+        :dragging-distance="70"
+        :slide-ratio="11 / 12"
+        :bullets="false"
+        :touchable="false"
+        :arrows="false"
+        :infinite="false"
+        :initSlide="4"
+        :breakpoints="{
+          1024: {
+          visibleSlides: this.calendar.length > 5 ? 5 : this.calendar.length,
+          slideRatio: '1.21',
+          initSlide: 3,
+          },
+          820: {
+          visibleSlides: this.calendar.length > 3 ? 3 : this.calendar.length,
+          slideRatio: '1.69',
+          initSlide: 2,
+          },
+        }"
+        @ready="handleSlideReady($event)"
+        @slide="handleSlide($event)"
+      >
+        <vueper-slide v-for="({ date, times }, index) of calendar" :key="date">
+          <template #content>
+            <calendar-date
+              :value="{ date, times }"
+              :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
+              @select="selectTime"
+            ></calendar-date>
+          </template>
+        </vueper-slide>
+      </vueper-slides>
     </div>
   </article>
 </template>
@@ -76,15 +78,6 @@ export default {
     },
   },
   data: () => ({
-    position: 0,
-    step: 1, // how many date items should be changing
-    visibleItems: 2, // how many date items can be visible
-    breakpoints: {
-      lg: 1024,
-      md: 820,
-      sm: 648,
-    },
-    popUpWidth: 0,
     calendar: [
       {
         date: '2022-11-30',
@@ -579,26 +572,21 @@ export default {
     ],
     disabledPrev: false,
     disabledNext: false,
+    initItem: 0,
+    breakpoints: {
+      lg: 1024,
+      md: 820,
+      sm: 648,
+    },
   }),
-  // mounted() {
-  //   console.log(document.getElementsByClassName('wt-omni-widget-popup__popup')[0].getBoundingClientRect());
-  //   window.addEventListener('resize', () => {
-  //     this.popUpWidth = document.getElementsByClassName('wt-omni-widget-popup__popup')[0].clientWidth;
-  //   });
-  // },
+  mounted() {
+  },
   computed: {
     maxVisibleItems() {
-      const popup = document.getElementsByClassName('wt-omni-widget-popup__popup')[0];
-      console.log('this.popUpWidth:', this.popUpWidth);
-      // треба визначати ширину попапу та фіксувати її
-      // треба відстежувати зміну розміру попапу
-      switch (this.popUpWidth) {
-        case this.breakpoints.lg: return 7;
-        case this.breakpoints.md: return 5;
-        case this.breakpoints.sm: return 3;
-        default: return 3;
-      }
-    },
+      if (this.isCurrentBreakpoint(this.breakpoints.lg)) return 7;
+      if (this.isCurrentBreakpoint(this.breakpoints.md)) return 5;
+      return 3;
+    }
   },
   methods: {
     selectTime({ date, time }) {
@@ -609,28 +597,20 @@ export default {
       };
       this.$emit('input', value);
     },
-    handleReady(params) {
-      console.log('ready:', params, 'calendar.length:', this.calendar.length);
-      this.disabledPrev = 4 - 1 === params.currentSlide.index;
-      this.disabledNext = (4 + 1 + params.currentSlide.index) === this.calendar.length;
+    handleSlideReady(params) {
+      // console.log('ready:', params, 'calendar.length:', this.calendar.length, this.maxVisibleItems);
+      this.initItem = params.currentSlide.index;
+      this.disabledPrev = true;
     },
-    handlePrev(params) {
-      this.disabledPrev = 4 - 1 === params.currentSlide.index;
+    handleSlide(params) {
+      this.disabledNext = (this.initItem + 1 + params.currentSlide.index) === this.calendar.length;
+      this.disabledPrev = this.initItem === params.currentSlide.index;
+      // console.log('disabledNext:', (this.initItem + params.currentSlide.index) === this.calendar.length,
+      //   'disabledPrev:', this.initItem - 1 === params.currentSlide.index,
+      //   'params.currentSlide.index:', params.currentSlide.index);
     },
-    handleNext(params) {
-      this.disabledNext = (4 + 1 + params.currentSlide.index) === this.calendar.length;
-      console.log((4 + 1 + params.currentSlide.index) === this.calendar.length);
-    },
-    // isDateHidden(index) {
-    //   console.log('index', index, index < this.position && index >= (this.position + this.maxVisibleItems));
-    //   return index < this.position || index >= (this.position + this.maxVisibleItems);
-    // },
-    handlePrevDate() {
-      console.log('click', this.$refs.slider);
-      this.$refs.slider.prev();
-    },
-    handleNextDate() {
-      if (this.position + this.maxVisibleItems < this.calendar.length) this.position += this.step;
+    isCurrentBreakpoint(value) {
+      return window.matchMedia(`(min-width: ${value}px)`).matches;
     },
   },
 };
@@ -646,7 +626,6 @@ export default {
     min-height: 0;
     color: var(--contrast-color);
     gap: var(--gap-md);
-    //width: 73%;
 
     @media (max-width: $breakpoint-xs) {
       min-height: auto;
