@@ -15,7 +15,6 @@
         class="no-shadow"
         :visible-slides="this.calendar.length > 7 ? 7 : this.calendar.length"
         :gap="2"
-        :dragging-distance="70"
         :slide-ratio="11 / 12"
         :bullets="false"
         :touchable="false"
@@ -34,8 +33,8 @@
           initSlide: 2,
           },
         }"
-        @ready="handleSlideReady($event)"
-        @slide="handleSlide($event)"
+        @ready="handleSlideReady($event.currentSlide.index)"
+        @slide="handleSlide($event.currentSlide.index)"
       >
         <vueper-slide v-for="({ date, times }, index) of calendar" :key="date">
           <template #content>
@@ -580,6 +579,24 @@ export default {
     },
   }),
   mounted() {
+    const resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        const element = entry.contentRect;
+        console.log('Element:', entry.target);
+        console.log(`Element size: ${element.width + element.x*2}px x ${element.height}px`);
+        console.log('element padding: ', element);
+        //визначати initItem саме для цього бп
+        switch (element.width + element.x*2) {
+          case this.breakpoints.lg: this.handleSlideReady(4);
+          break;
+          case this.breakpoints.md: this.handleSlideReady(3);
+          break;
+          case this.breakpoints.sm: this.handleSlideReady(2);
+          break
+        }
+      }
+    });
+    resizeObserver.observe(document.getElementsByClassName('wt-omni-widget-popup__popup')[0]);
   },
   computed: {
     maxVisibleItems() {
@@ -597,14 +614,16 @@ export default {
       };
       this.$emit('input', value);
     },
-    handleSlideReady(params) {
-      // console.log('ready:', params, 'calendar.length:', this.calendar.length, this.maxVisibleItems);
-      this.initItem = params.currentSlide.index;
+    handleSlideReady(index) {
+      console.log('ready:', index, 'calendar.length:', this.calendar.length, this.maxVisibleItems);
+      this.initItem = index;
       this.disabledPrev = true;
+      this.$refs.myVueperSlides.goToSlide(index);
     },
-    handleSlide(params) {
-      this.disabledNext = (this.initItem + 1 + params.currentSlide.index) === this.calendar.length;
-      this.disabledPrev = this.initItem === params.currentSlide.index;
+    handleSlide(index) {
+      this.disabledNext = (this.initItem + 1 + index) === this.calendar.length;
+      this.disabledPrev = this.initItem === index;
+      document.getElementsByClassName('wt-omni-widget-popup__popup')
       // console.log('disabledNext:', (this.initItem + params.currentSlide.index) === this.calendar.length,
       //   'disabledPrev:', this.initItem - 1 === params.currentSlide.index,
       //   'params.currentSlide.index:', params.currentSlide.index);
