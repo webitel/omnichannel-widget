@@ -118,6 +118,7 @@ export default Vue.extend({
       display: flex;
       min-height: 0;
       gap: var(--gap-md);
+      height: 100%;
 
       @media (max-width: $breakpoint-xs) {
         flex-direction: column;

@@ -14,7 +14,7 @@
         class="no-shadow"
         :visible-slides="this.calendar.length > 7 ? 7 : this.calendar.length"
         :gap="2"
-        :slide-ratio="11 / 12"
+        :fixed-height="sliderHeight"
         :bullets="false"
         :touchable="false"
         :arrows="false"
@@ -23,12 +23,10 @@
         :breakpoints="{
           1024: {
           visibleSlides: this.calendar.length > 5 ? 5 : this.calendar.length,
-          slideRatio: '1.21',
           initSlide: 3,
           },
           820: {
           visibleSlides: this.calendar.length > 3 ? 3 : this.calendar.length,
-          slideRatio: '1.69',
           initSlide: 2,
           },
         }"
@@ -38,6 +36,7 @@
         <vueper-slide v-for="({ date, times }) of calendar" :key="date">
           <template #content>
             <calendar-date
+              ref="date"
               :value="{ date, times }"
               :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
               @select="selectTime"
@@ -571,7 +570,11 @@ export default {
     visiblePrev: true,
     visibleNext: true,
     initItem: 0,
+    sliderHeight: '100%',
   }),
+  mounted() {
+    this.getSliderHeight();
+  },
   methods: {
     selectTime({ date, time }) {
       const value = {
@@ -588,6 +591,9 @@ export default {
     handleSlide(index) {
       this.visibleNext = (this.initItem + 1 + index) !== this.calendar.length;
       this.visiblePrev = this.initItem !== index;
+    },
+    getSliderHeight() {
+      this.sliderHeight = `${this.$refs.date[0].$el.clientHeight}px`;
     },
   },
 };
@@ -613,7 +619,7 @@ export default {
       position: relative;
       //display: flex;
       overflow-y: auto;
-      //flex-grow: 1;
+      flex-grow: 1;
       //justify-content: space-between;
       padding-right: var(--gap-md);
       //gap: var(--gap-md);
@@ -623,6 +629,8 @@ export default {
       }
     }
   }
-
+  .vueperslides--fixed-height {
+    margin-bottom: 0;
+  }
 }
 </style>
