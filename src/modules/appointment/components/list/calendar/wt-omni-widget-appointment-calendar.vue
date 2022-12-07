@@ -1,9 +1,8 @@
 <template>
   <article class="wt-omni-widget-appointment-calendar">
     <calendar-title
-      :disabled-prev="disabledPrev"
-      :disabled-next="disabledNext"
-      :show-buttons="maxVisibleItems < calendar.length"
+      :visible-prev="visiblePrev"
+      :visible-next="visibleNext"
       @previous="$refs.myVueperSlides.previous()"
       @next="$refs.myVueperSlides.next()"
     >
@@ -36,7 +35,7 @@
         @ready="handleSlideReady($event.currentSlide.index)"
         @slide="handleSlide($event.currentSlide.index)"
       >
-        <vueper-slide v-for="({ date, times }, index) of calendar" :key="date">
+        <vueper-slide v-for="({ date, times }) of calendar" :key="date">
           <template #content>
             <calendar-date
               :value="{ date, times }"
@@ -569,42 +568,10 @@ export default {
         ],
       },
     ],
-    disabledPrev: false,
-    disabledNext: false,
+    visiblePrev: true,
+    visibleNext: true,
     initItem: 0,
-    breakpoints: {
-      lg: 1024,
-      md: 820,
-      sm: 648,
-    },
   }),
-  mounted() {
-    const resizeObserver = new ResizeObserver(entries => {
-      for (let entry of entries) {
-        const element = entry.contentRect;
-        console.log('Element:', entry.target);
-        console.log(`Element size: ${element.width + element.x*2}px x ${element.height}px`);
-        console.log('element padding: ', element);
-        //визначати initItem саме для цього бп
-        switch (element.width + element.x*2) {
-          case this.breakpoints.lg: this.handleSlideReady(4);
-          break;
-          case this.breakpoints.md: this.handleSlideReady(3);
-          break;
-          case this.breakpoints.sm: this.handleSlideReady(2);
-          break
-        }
-      }
-    });
-    resizeObserver.observe(document.getElementsByClassName('wt-omni-widget-popup__popup')[0]);
-  },
-  computed: {
-    maxVisibleItems() {
-      if (this.isCurrentBreakpoint(this.breakpoints.lg)) return 7;
-      if (this.isCurrentBreakpoint(this.breakpoints.md)) return 5;
-      return 3;
-    }
-  },
   methods: {
     selectTime({ date, time }) {
       const value = {
@@ -615,21 +582,12 @@ export default {
       this.$emit('input', value);
     },
     handleSlideReady(index) {
-      console.log('ready:', index, 'calendar.length:', this.calendar.length, this.maxVisibleItems);
       this.initItem = index;
-      this.disabledPrev = true;
-      this.$refs.myVueperSlides.goToSlide(index);
+      this.visiblePrev = false;
     },
     handleSlide(index) {
-      this.disabledNext = (this.initItem + 1 + index) === this.calendar.length;
-      this.disabledPrev = this.initItem === index;
-      document.getElementsByClassName('wt-omni-widget-popup__popup')
-      // console.log('disabledNext:', (this.initItem + params.currentSlide.index) === this.calendar.length,
-      //   'disabledPrev:', this.initItem - 1 === params.currentSlide.index,
-      //   'params.currentSlide.index:', params.currentSlide.index);
-    },
-    isCurrentBreakpoint(value) {
-      return window.matchMedia(`(min-width: ${value}px)`).matches;
+      this.visibleNext = (this.initItem + 1 + index) !== this.calendar.length;
+      this.visiblePrev = this.initItem !== index;
     },
   },
 };

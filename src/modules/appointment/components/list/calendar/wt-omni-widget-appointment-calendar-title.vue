@@ -1,14 +1,13 @@
 <template>
   <header class="wt-omni-widget-appointment-calendar-title">
-    <div
-        v-if="showButtons"
-      class="wt-omni-widget-appointment-calendar-title__button-previous"
-      :class="{
-      'wt-omni-widget-appointment-calendar-title__button-previous--disabled': disabledPrev
-    }"
-      @click="$emit('previous')"
-    >
-      <wt-icon icon="wt-omni-widget-arrow-left" size="sm"></wt-icon>
+    <div class="wt-omni-widget-appointment-calendar-title__button-wrapper">
+      <wt-icon-btn
+        v-if="visiblePrev"
+        icon="arrow-left"
+        icon-size="sm"
+        size="md"
+        @click="$emit('previous')"
+      ></wt-icon-btn>
     </div>
     <div class="wt-omni-widget-appointment-calendar-title__wrapper">
       <span class="wt-omni-widget-appointment-calendar-title__text">
@@ -21,15 +20,14 @@
           </span>
       </div>
     </div>
-    <div
-        v-if="showButtons"
-      class="wt-omni-widget-appointment-calendar-title__button-next"
-      :class="{
-      'wt-omni-widget-appointment-calendar-title__button-previous--disabled': disabledNext
-    }"
-      @click="$emit('next')"
-    >
-      <wt-icon icon="wt-omni-widget-arrow-right" size="sm"></wt-icon>
+    <div class="wt-omni-widget-appointment-calendar-title__button-wrapper">
+      <wt-icon-btn
+        v-if="visibleNext"
+        icon="arrow-right"
+        icon-size="sm"
+        size="md"
+        @click="$emit('next')"
+      ></wt-icon-btn>
     </div>
   </header>
 </template>
@@ -39,15 +37,11 @@
 export default {
   name: 'wt-omni-widget-appointment-calendar-title',
   props: {
-    disabledPrev: {
+    visiblePrev: {
       type: Boolean,
-      default: false,
+      default: true,
     },
-    disabledNext: {
-      type: Boolean,
-      default: false,
-    },
-    showButtons: {
+    visibleNext: {
       type: Boolean,
       default: true,
     },
@@ -60,17 +54,12 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 32px 1fr 32px;
     padding: var(--main-app-padding) 10px;
 
     @media (max-width: $breakpoint-sm) {
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
       padding: 5px;
-      gap: var(--gap-md);
     }
 
     @media (max-width: $breakpoint-xs) {
@@ -80,7 +69,7 @@ export default {
     &__wrapper {
       display: flex;
       justify-content: space-around;
-      flex-grow: 1;
+      align-items: center;
 
       @media (max-width: $breakpoint-md) {
         flex-direction: column;
@@ -100,22 +89,6 @@ export default {
       display: flex;
       align-items: center;
       gap: var(--gap-md);
-    }
-
-    &__button-previous,
-    &__button-next {
-      display: flex;
-      padding: 10px;
-      background: var(--icon-contrast-color);
-      border-radius: var(--border-radius--square);
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    &__button-previous--disabled,
-    &__button-next--disabled {
-      cursor: default;
-      visibility: hidden;
     }
   }
   &.wt-omni-widget--rounded {
