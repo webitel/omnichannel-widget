@@ -20,7 +20,6 @@
 
 <script>
 
-import { VueperSlide } from 'vueperslides';
 import CalendarTimeItem from './wt-omni-widget-appointment-calendar-time-item.vue';
 import CalendarDateTitle from './wt-omni-widget-appointment-calendar-date-title.vue';
 
@@ -29,7 +28,6 @@ export default {
   components: {
     CalendarTimeItem,
     CalendarDateTitle,
-    VueperSlide,
   },
   data: () => ({
   }),

@@ -12,6 +12,7 @@
       <vueper-slides
         ref="myVueperSlides"
         class="no-shadow"
+        :class="'wt-omni-widget-appointment-calendar__slider'"
         :visible-slides="this.calendar.length > 7 ? 7 : this.calendar.length"
         :gap="2"
         :fixed-height="sliderHeight"
@@ -617,12 +618,9 @@ export default {
     &__wrapper {
       @extend %wt-scrollbar;
       position: relative;
-      //display: flex;
       overflow-y: auto;
       flex-grow: 1;
-      //justify-content: space-between;
       padding-right: var(--gap-md);
-      //gap: var(--gap-md);
 
       @media (max-width: $breakpoint-xs) {
         padding-right: 0;
@@ -633,4 +631,5 @@ export default {
     margin-bottom: 0;
   }
 }
+
 </style>
