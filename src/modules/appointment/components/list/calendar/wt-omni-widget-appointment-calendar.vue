@@ -614,7 +614,6 @@ export default {
       @extend %wt-scrollbar;
       position: relative;
       overflow-y: auto;
-      //flex-grow: 1;
       padding-right: var(--gap-md);
 
       @media (max-width: $breakpoint-xs) {
