@@ -11,7 +11,6 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@egjs/vue-flicking": "^4.10.3",
     "@webitel/ui-sdk": "^2.0.10",
     "autosize": "^5.0.0",
     "axios": "^0.27.2",

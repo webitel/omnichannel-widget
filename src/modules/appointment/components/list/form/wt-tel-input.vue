@@ -126,6 +126,13 @@ export default {
         padding: 10px 15px 10px 10px;
         border-radius: var(--border-radius--square);
       }
+
+      .vti__dropdown-list {
+        z-index: 2; // overlap calendar
+        @media (max-width: $breakpoint-xs) {
+          width: 250px !important;
+        }
+      }
     }
   }
 
