@@ -115,6 +115,7 @@ export default Vue.extend({
       overflow: auto; // prevent scroll bugs on small height
       min-height: 0;
       gap: var(--gap-md);
+      height: 100%;
 
       @media (max-width: $breakpoint-xs) {
         overflow: auto;
