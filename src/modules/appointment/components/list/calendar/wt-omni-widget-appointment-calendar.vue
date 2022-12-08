@@ -53,7 +53,7 @@
 import { VueperSlides, VueperSlide } from 'vueperslides';
 import 'vueperslides/dist/vueperslides.css';
 import CalendarTitle from './wt-omni-widget-appointment-calendar-title.vue';
-import CalendarDate from './wt-omni-widget-appointment-calendar-date.vue';
+import CalendarDate from './date/wt-omni-widget-appointment-calendar-date.vue';
 
 export default {
   name: 'wt-omni-widget-appointment-calendar',
@@ -607,19 +607,13 @@ export default {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    min-height: 0;
     color: var(--contrast-color);
     gap: var(--gap-md);
-
-    @media (max-width: $breakpoint-xs) {
-      min-height: auto;
-    }
 
     &__wrapper {
       @extend %wt-scrollbar;
       position: relative;
       overflow-y: auto;
-      flex-grow: 1;
       padding-right: var(--gap-md);
 
       @media (max-width: $breakpoint-xs) {

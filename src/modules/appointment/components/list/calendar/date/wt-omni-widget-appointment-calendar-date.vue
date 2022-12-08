@@ -20,7 +20,7 @@
 
 <script>
 
-import CalendarTimeItem from './wt-omni-widget-appointment-calendar-time-item.vue';
+import CalendarTimeItem from '../time/wt-omni-widget-appointment-calendar-time-item.vue';
 import CalendarDateTitle from './wt-omni-widget-appointment-calendar-date-title.vue';
 
 export default {
@@ -52,8 +52,6 @@ export default {
     position: relative;
     flex: 1;
     height: fit-content;
-    visibility: visible;
-    transition: var(--transition);
 
     &__main {
       display: flex;

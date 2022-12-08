@@ -1,12 +1,12 @@
 <template>
-  <appointment-list
-    v-if="state === AppointmentState.LIST"
-    :namespace="namespace"
-  ></appointment-list>
   <appointment-success
-    v-else
+    v-if="state === AppointmentState.SUCCESS"
     :namespace="namespace"
   ></appointment-success>
+  <appointment-list
+    v-else
+    :namespace="namespace"
+  ></appointment-list>
 </template>
 
 <script>
