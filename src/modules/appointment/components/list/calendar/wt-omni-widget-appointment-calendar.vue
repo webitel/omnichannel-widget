@@ -100,9 +100,9 @@ export default {
       this.initItem = index;
       this.visiblePrev = false;
     },
-    handleSlide(index) {
-      this.visibleNext = (this.initItem + 1 + index) !== this.calendar.length;
-      this.visiblePrev = this.initItem !== index;
+    handleSlide(currentPosition) {
+      this.visibleNext = (this.initItem + 1 + currentPosition) !== this.calendar.length;
+      this.visiblePrev = this.initItem !== currentPosition;
     },
     getSliderHeight() {
       this.sliderHeight = `${this.$refs.date[0].$el.clientHeight}px`;
