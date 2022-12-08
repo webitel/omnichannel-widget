@@ -110,7 +110,6 @@ export default Vue.extend({
     gap: var(--gap-md);
 
     &__wrap {
-      @extend %wt-scrollbar; // xs size scrollbar
       display: flex;
       overflow: auto; // prevent scroll bugs on small height
       min-height: 0;
@@ -120,7 +119,6 @@ export default Vue.extend({
       @media (max-width: $breakpoint-xs) {
         overflow: auto;
         flex-direction: column;
-        padding-right: 5px;
       }
     }
 

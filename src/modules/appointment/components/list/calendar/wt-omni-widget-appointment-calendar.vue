@@ -1,25 +1,26 @@
 <template>
   <article class="wt-omni-widget-appointment-calendar">
     <calendar-title
-      :visible-prev="visiblePrev"
       :visible-next="visibleNext"
-      @previous="$refs.myVueperSlides.previous()"
+      :visible-prev="visiblePrev"
       @next="$refs.myVueperSlides.next()"
+      @previous="$refs.myVueperSlides.previous()"
     >
       {{ timeZone }}
     </calendar-title>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
       <flicking
-        :options="{ circular: false, moveType: 'freeScroll', align:'prev' }"
-        :viewportTag="'section'"
-        :cameraTag="'div'"
         :cameraClass="''"
+        :cameraTag="'div'"
+        :options="{ circular: false, moveType: ['freeScroll', { stopAtEdge: true }], align: 0, bound: true }"
+        :viewportTag="'section'"
       >
         <calendar-date
-          ref="date"
           v-for="({ date, times }) of calendar"
-          :value="{ date, times }"
+          :key="date"
+          ref="date"
           :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
+          :value="{ date, times }"
           @select="selectTime"
         ></calendar-date>
       </flicking>
@@ -29,9 +30,9 @@
 
 <script>
 
-import { Flicking } from "@egjs/vue-flicking";
-import CalendarTitle from './wt-omni-widget-appointment-calendar-title.vue';
+import { Flicking } from '@egjs/vue-flicking';
 import CalendarDate from './date/wt-omni-widget-appointment-calendar-date.vue';
+import CalendarTitle from './wt-omni-widget-appointment-calendar-title.vue';
 
 export default {
   name: 'wt-omni-widget-appointment-calendar',
@@ -549,7 +550,10 @@ export default {
     visibleNext: true,
   }),
   methods: {
-    selectTime({ date, time }) {
+    selectTime({
+      date,
+      time,
+    }) {
       const value = {
         ...this.value,
         scheduleDate: date,
@@ -561,8 +565,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar {
     display: flex;
@@ -580,6 +583,43 @@ export default {
       @media (max-width: $breakpoint-xs) {
         padding-right: 0;
       }
+    }
+  }
+
+
+
+  .flicking-viewport {
+    //height: fit-content;
+    @extend %wt-scrollbar;
+    overflow-y: auto;
+  }
+
+  .flicking-camera {
+    height: fit-content;
+  }
+
+    @media screen and (max-width: 768px) {
+      .flicking-camera > * {
+        width: 100%;
+      }
+    }
+
+    @media screen and (min-width: 1024px) {
+      .flicking-camera > * {
+        width: 50%;
+      }
+    }
+
+    @media screen and (min-width: 1216px) {
+      .flicking-camera > * {
+        width: 33.3%;
+      }
+    }
+
+    @media screen and (min-width: 1408px) {
+      .flicking-camera > * {
+        width: 25%;
+
     }
   }
 }
