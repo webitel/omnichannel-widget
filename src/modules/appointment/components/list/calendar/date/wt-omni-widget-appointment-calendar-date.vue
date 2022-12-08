@@ -51,7 +51,7 @@ export default {
   .wt-omni-widget-appointment-calendar-date {
     position: relative;
     flex: 1;
-    height: fit-content;
+    width: 33.3%;
 
     &__main {
       display: flex;

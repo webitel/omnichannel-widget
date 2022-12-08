@@ -9,49 +9,27 @@
       {{ timeZone }}
     </calendar-title>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
-      <vueper-slides
-        ref="myVueperSlides"
-        class="no-shadow"
-        :class="'wt-omni-widget-appointment-calendar__slider'"
-        :visible-slides="this.calendar.length > 7 ? 7 : this.calendar.length"
-        :gap="2"
-        :fixed-height="sliderHeight"
-        :bullets="false"
-        :touchable="false"
-        :arrows="false"
-        :infinite="false"
-        :initSlide="4"
-        :breakpoints="{
-          1024: {
-          visibleSlides: this.calendar.length > 5 ? 5 : this.calendar.length,
-          initSlide: 3,
-          },
-          820: {
-          visibleSlides: this.calendar.length > 3 ? 3 : this.calendar.length,
-          initSlide: 2,
-          },
-        }"
-        @ready="handleSlideReady($event.currentSlide.index)"
-        @slide="handleSlide($event.currentSlide.index)"
+      <flicking
+        :options="{ circular: false, moveType: 'freeScroll', align:'prev' }"
+        :viewportTag="'section'"
+        :cameraTag="'div'"
+        :cameraClass="''"
       >
-        <vueper-slide v-for="({ date, times }) of calendar" :key="date">
-          <template #content>
-            <calendar-date
-              ref="date"
-              :value="{ date, times }"
-              :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
-              @select="selectTime"
-            ></calendar-date>
-          </template>
-        </vueper-slide>
-      </vueper-slides>
+        <calendar-date
+          ref="date"
+          v-for="({ date, times }) of calendar"
+          :value="{ date, times }"
+          :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
+          @select="selectTime"
+        ></calendar-date>
+      </flicking>
     </div>
   </article>
 </template>
 
 <script>
-import { VueperSlides, VueperSlide } from 'vueperslides';
-import 'vueperslides/dist/vueperslides.css';
+
+import { Flicking } from "@egjs/vue-flicking";
 import CalendarTitle from './wt-omni-widget-appointment-calendar-title.vue';
 import CalendarDate from './date/wt-omni-widget-appointment-calendar-date.vue';
 
@@ -60,8 +38,7 @@ export default {
   components: {
     CalendarDate,
     CalendarTitle,
-    VueperSlides,
-    VueperSlide,
+    Flicking,
   },
   props: {
     value: {
@@ -570,12 +547,7 @@ export default {
     ],
     visiblePrev: true,
     visibleNext: true,
-    initItem: 0,
-    sliderHeight: '100%',
   }),
-  mounted() {
-    this.getSliderHeight();
-  },
   methods: {
     selectTime({ date, time }) {
       const value = {
@@ -584,17 +556,6 @@ export default {
         scheduleTime: time,
       };
       this.$emit('input', value);
-    },
-    handleSlideReady(index) {
-      this.initItem = index;
-      this.visiblePrev = false;
-    },
-    handleSlide(currentPosition) {
-      this.visibleNext = (this.initItem + 1 + currentPosition) !== this.calendar.length;
-      this.visiblePrev = this.initItem !== currentPosition;
-    },
-    getSliderHeight() {
-      this.sliderHeight = `${this.$refs.date[0].$el.clientHeight}px`;
     },
   },
 };
@@ -620,9 +581,6 @@ export default {
         padding-right: 0;
       }
     }
-  }
-  .vueperslides--fixed-height {
-    margin-bottom: 0;
   }
 }
 
