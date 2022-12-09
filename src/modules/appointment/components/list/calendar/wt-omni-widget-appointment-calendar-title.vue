@@ -1,6 +1,6 @@
 <template>
   <header class="wt-omni-widget-appointment-calendar-title">
-    <div class="wt-omni-widget-appointment-calendar-title__button-wrapper">
+    <div class="wt-omni-widget-appointment-calendar-title__button-wrapper flicking-arrow-prev is-outside flicking-arrow-disabled">
       <wt-icon-btn
         v-if="visiblePrev"
         icon="arrow-left"
@@ -20,7 +20,7 @@
           </span>
       </div>
     </div>
-    <div class="wt-omni-widget-appointment-calendar-title__button-wrapper">
+    <div class="wt-omni-widget-appointment-calendar-title__button-wrapper flicking-arrow-next is-outside">
       <wt-icon-btn
         v-if="visibleNext"
         icon="arrow-right"

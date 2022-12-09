@@ -3,8 +3,6 @@
     <calendar-title
       :visible-next="visibleNext"
       :visible-prev="visiblePrev"
-      @next="$refs.myVueperSlides.next()"
-      @previous="$refs.myVueperSlides.previous()"
     >
       {{ timeZone }}
     </calendar-title>
@@ -14,6 +12,8 @@
         :cameraTag="'div'"
         :options="{ circular: false, moveType: ['freeScroll', { stopAtEdge: true }], align: 0, bound: true }"
         :viewportTag="'section'"
+        :plugins="plugins"
+        @reach-edge="updateChange"
       >
         <calendar-date
           v-for="({ date, times }) of calendar"
@@ -31,6 +31,8 @@
 <script>
 
 import { Flicking } from '@egjs/vue-flicking';
+import { Arrow } from "@egjs/flicking-plugins";
+import "@egjs/flicking-plugins/dist/arrow.css";
 import CalendarDate from './date/wt-omni-widget-appointment-calendar-date.vue';
 import CalendarTitle from './wt-omni-widget-appointment-calendar-title.vue';
 
@@ -548,18 +550,24 @@ export default {
     ],
     visiblePrev: true,
     visibleNext: true,
+    plugins: [new Arrow({ parentEl: document.body })],
   }),
   methods: {
     selectTime({
-      date,
-      time,
-    }) {
+                 date,
+                 time,
+               }) {
       const value = {
         ...this.value,
         scheduleDate: date,
         scheduleTime: time,
       };
       this.$emit('input', value);
+    },
+    updateChange(event) {
+      console.log(event.direction);
+      if (event.direction === 'NEXT') this.visibleNext = false;
+      if (event.direction === 'PREV') this.visiblePrev = false;
     },
   },
 };
@@ -585,8 +593,6 @@ export default {
       }
     }
   }
-
-
 
   .flicking-viewport {
     //height: fit-content;

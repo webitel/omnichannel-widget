@@ -1,25 +1,25 @@
 <template>
-  <section
-    class="wt-omni-widget-appointment-calendar-date"
-  >
-    <calendar-date-title>
-      {{ $d(new Date(value.date), 'appointments') }}
-    </calendar-date-title>
-    <div class="wt-omni-widget-appointment-calendar-date__main">
-      <calendar-time-item
-        v-for="item of value.times"
-        :key="value.date.concat(item.time)"
-        :value="item"
-        :date="value.date"
-        :selected-value="{ time: selectedValue.time, date: selectedValue.date }"
-        @click="$emit('select', { date: value.date, time: item.time })"
-      ></calendar-time-item>
-    </div>
-  </section>
+    <section
+      class="wt-omni-widget-appointment-calendar-date"
+    >
+      <calendar-date-title>
+        {{ $d(new Date(value.date), 'appointments') }}
+      </calendar-date-title>
+      <div class="wt-omni-widget-appointment-calendar-date__main">
+        <calendar-time-item
+          v-for="item of value.times"
+          :key="value.date.concat(item.time)"
+          :value="item"
+          :date="value.date"
+          :selected-value="{ time: selectedValue.time, date: selectedValue.date }"
+          @click="$emit('select', { date: value.date, time: item.time })"
+        ></calendar-time-item>
+      </div>
+    </section>
 </template>
 
 <script>
-
+import { Panel } from '@egjs/vue-flicking';
 import CalendarTimeItem from '../time/wt-omni-widget-appointment-calendar-time-item.vue';
 import CalendarDateTitle from './wt-omni-widget-appointment-calendar-date-title.vue';
 
@@ -28,6 +28,7 @@ export default {
   components: {
     CalendarTimeItem,
     CalendarDateTitle,
+    Panel,
   },
   data: () => ({
   }),
