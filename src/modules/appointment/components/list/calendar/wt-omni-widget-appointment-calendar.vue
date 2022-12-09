@@ -153,32 +153,34 @@ export default {
     }
 
     &::v-deep .wt-omni-widget-appointment-calendar-date {
+      margin-right: var(--gap-md);
+
       &--count-1 {
         width: 100%;
       }
 
       &--count-2 {
-        width: 50%;
+        width: calc(50% - var(--gap-md));
       }
 
       &--count-3 {
-        width: calc(100% / 3);
+        width: calc(100% / 3 - var(--gap-md));
       }
 
       &--count-4 {
-        width: calc(100% / 4);
+        width: calc(100% / 4 - var(--gap-md));
       }
 
       &--count-5 {
-        width: calc(100% / 5);
+        width: calc(100% / 5 - var(--gap-md));
       }
 
       &--count-6 {
-        width: calc(100% / 6);
+        width: calc(100% / 6 - var(--gap-md));
       }
 
       &--count-7 {
-        width: calc(100% / 7);
+        width: calc(100% / 7 - var(--gap-md));
       }
     }
 
@@ -187,7 +189,7 @@ export default {
         &--count-5,
         &--count-6,
         &--count-7 {
-          width: calc(100% / 5);
+          width: calc(100% / 5 - var(--gap-md));
         }
       }
     }
@@ -199,7 +201,7 @@ export default {
         &--count-5,
         &--count-6,
         &--count-7 {
-          width: calc(100% / 3);
+          width: calc(100% / 3 - var(--gap-md));
         }
       }
     }

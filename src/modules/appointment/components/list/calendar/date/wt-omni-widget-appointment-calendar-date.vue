@@ -1,7 +1,5 @@
 <template>
-    <section
-      class="wt-omni-widget-appointment-calendar-date"
-    >
+    <section class="wt-omni-widget-appointment-calendar-date">
       <calendar-date-title>
         {{ $d(new Date(value.date), 'appointments') }}
       </calendar-date-title>
@@ -38,10 +36,6 @@ export default {
     },
     selectedValue: {
       type: Object,
-      required: true,
-    },
-    calendarLength: {
-      type: Number,
       required: true,
     },
   },
