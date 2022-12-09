@@ -1,0 +1,55 @@
+<template>
+  <section
+    v-show="showErrorSec"
+    class="error-section"
+  >
+    <p class="error-section__text error-section__status">{{ error.status }}</p>
+    <p class="error-section__text error-section__detail">{{ error.detail }}</p>
+  </section>
+</template>
+
+<script>
+import isEmpty from '@webitel/ui-sdk/src/scripts/isEmpty';
+import { mapState } from 'vuex';
+
+export default {
+  name: 'error-section',
+  computed: {
+    ...mapState('appointment', {
+      error: (state) => state.error,
+    }),
+    showErrorSec() {
+      return !isEmpty(this.error);
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+#wt-omni-widget {
+  .error-section {
+    padding: var(--gap-md);
+    background: var(--main-color);
+    border-radius: var(--border-radius--square);
+    width: 100%;
+  }
+
+  .error-section__text {
+    @extend %typo-body-md;
+    text-align: center;
+    max-width: 60%;
+    margin: auto;
+    color: var(--negative-color);
+
+    @media (max-width: $breakpoint-xs) {
+      max-width: 100%;
+    }
+  }
+
+  &.wt-omni-widget--rounded {
+    .error-section {
+      border-radius: var(--border-radius--rounded);
+    }
+  }
+}
+</style>
