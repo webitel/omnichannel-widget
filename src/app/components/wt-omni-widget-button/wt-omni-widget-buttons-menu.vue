@@ -2,8 +2,6 @@
   <div
     :class="{ 'wt-omni-widget-buttons-menu--expanded': isExpanded }"
     class="wt-omni-widget-buttons-menu"
-    @mouseenter="isExpanded = true"
-    @mouseleave="isExpanded = false"
   >
     <transition-expand>
       <div
@@ -21,7 +19,7 @@
     </transition-expand>
     <wt-omni-widget-button
       :type="visibleBtn.type"
-      @click="open"
+      @click="handleBtnClick"
     ></wt-omni-widget-button>
   </div>
 </template>
@@ -78,11 +76,21 @@ export default {
       const appointmentBtn = this.config.appointment ? [{
         type: ChatChannel.APPOINTMENT,
       }] : [];
-      return [
+
+      const buttons = [
         ...chatBtn,
         ...appointmentBtn,
         ...alternativeChannelButtons,
       ];
+
+      if (buttons.length > 1) {
+        const openBtn = {
+          type: this.isExpanded ? ChatChannel.CLOSE : ChatChannel.OPEN,
+        };
+        buttons.unshift(openBtn);
+      }
+
+      return buttons;
     },
     visibleBtn() {
       return this.buttons.at(0);
@@ -92,6 +100,11 @@ export default {
     },
   },
   methods: {
+    handleBtnClick(type) {
+      if (type === ChatChannel.OPEN) this.isExpanded = true;
+      else if (type === ChatChannel.CLOSE) this.isExpanded = false;
+      else this.open(type);
+    },
     open(type) {
       this.$emit('open', type);
     },

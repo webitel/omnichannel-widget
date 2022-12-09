@@ -6,7 +6,6 @@
     >
       {{ timeZone }}
     </calendar-title>
-    {{ visibleSlides }}
     <div class="wt-omni-widget-appointment-calendar__wrapper">
       <flicking
         :cameraClass="''"
@@ -19,12 +18,14 @@
         @changed="visibilitySlideArrows"
       >
         <calendar-date
+          :class="[
+            `wt-omni-widget-appointment-calendar-date--count-${calendar.length}`
+          ]"
           v-for="({ date, times }) of calendar"
           :key="date"
           ref="date"
           :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
           :value="{ date, times }"
-          :class="`wt-omni-widget-appointment-calendar-date--count-${calendar.length}`"
           @select="selectTime"
         ></calendar-date>
       </flicking>
@@ -34,9 +35,9 @@
 
 <script>
 
+import { Arrow } from '@egjs/flicking-plugins';
+import '@egjs/flicking-plugins/dist/arrow.css';
 import { Flicking } from '@egjs/vue-flicking';
-import { Arrow } from "@egjs/flicking-plugins";
-import "@egjs/flicking-plugins/dist/arrow.css";
 import CalendarDate from './date/wt-omni-widget-appointment-calendar-date.vue';
 import CalendarTitle from './wt-omni-widget-appointment-calendar-title.vue';
 
@@ -73,13 +74,11 @@ export default {
   mounted() {
     this.getMaxVisibleItems();
   },
-  computed: {
-  },
   methods: {
     selectTime({
-                 date,
-                 time,
-               }) {
+      date,
+      time,
+    }) {
       const value = {
         ...this.value,
         scheduleDate: date,
@@ -125,6 +124,7 @@ export default {
     flex-grow: 1;
     color: var(--contrast-color);
     gap: var(--gap-md);
+    min-width: 0;
 
     &__wrapper {
       @extend %wt-scrollbar;

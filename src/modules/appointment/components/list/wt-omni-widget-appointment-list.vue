@@ -13,6 +13,7 @@
         :time-zone="state.timezone"
       ></appointment-calendar>
     </div>
+    <error-section/>
     <wt-button
       :disabled="disableSend"
       @click="send"
@@ -28,6 +29,7 @@ import Vue from 'vue';
 import { validationMixin } from 'vuelidate';
 import { required } from 'vuelidate/lib/validators';
 import { mapActions, mapState } from 'vuex';
+import ErrorSection from '../_shared/error/error-section.vue';
 import AppointmentCalendar from './calendar/wt-omni-widget-appointment-calendar.vue';
 import AppointmentForm from './form/wt-omni-widget-appointment-form.vue';
 
@@ -51,6 +53,7 @@ export default Vue.extend({
   components: {
     AppointmentForm,
     AppointmentCalendar,
+    ErrorSection,
   },
   props: {
     namespace: {

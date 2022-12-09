@@ -69,18 +69,18 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-form {
-    width: 250px;
+    flex: 0 0 250px;
     display: flex;
     flex-direction: column;
     gap: var(--gap-md);
     color: var(--contrast-color);
 
     @media (max-width: $breakpoint-lg) {
-      width: 200px;
+      flex: 0 0 200px;
     }
 
     @media (max-width: $breakpoint-xs) {
-      width: 100%;
+      flex: 0 0 100%;
     }
 
     &__title {

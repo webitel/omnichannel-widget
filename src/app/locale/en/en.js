@@ -32,6 +32,13 @@ export default {
       title: 'You\'ve scheduled an appointment.',
       cancel: 'Cancel an appointment',
     },
+    error: {
+      api_valid_origin: 'Invalid request origin',
+      appointment_valid_date: 'Invalid date or time slot',
+      store_sql_member_appointment_widget_app_error: 'Database error',
+      store_sql_member_appointment_get_app_error: 'Reserved, but database error',
+      store_sql_member_appointment_cancel_app_error: 'Cancelation error',
+    },
   },
   errors: {
     fileTooLarge: 'File "{file}" is too large! Maximum size is {maxSize} Mb',
