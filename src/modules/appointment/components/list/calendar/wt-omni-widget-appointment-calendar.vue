@@ -16,6 +16,9 @@
         @reach-edge="updateChange"
       >
         <calendar-date
+          :class="[
+            `wt-omni-widget-appointment-calendar-date--count-${calendar.length}`
+          ]"
           v-for="({ date, times }) of calendar"
           :key="date"
           ref="date"

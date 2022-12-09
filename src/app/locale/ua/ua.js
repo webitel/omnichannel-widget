@@ -32,6 +32,13 @@ export default {
       title: 'Ви запланували дзвінок.',
       cancel: 'Скасувати дзвінок',
     },
+    error: {
+      api_valid_origin: 'Некорректный origin запроса',
+      appointment_valid_date: 'Некорректный слот времени или даты',
+      store_sql_member_appointment_widget_app_error: 'Ошибка базы данных',
+      store_sql_member_appointment_get_app_error: 'Зарезервировано, но ошибка базы данных',
+      store_sql_member_appointment_cancel_app_error: 'Ошибка отмены',
+    },
   },
   errors: {
     fileTooLarge: 'Файл "{file}" завеликий! Максимальний розмір файлу: {maxSize} Мб',

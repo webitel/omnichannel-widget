@@ -1,10 +1,15 @@
 <template>
   <section
-    v-show="showErrorSec"
+    v-if="showErrorSec"
     class="error-section"
   >
-    <p class="error-section__text error-section__status">{{ error.status }}</p>
-    <p class="error-section__text error-section__detail">{{ error.detail }}</p>
+    <p class="error-section__text error-section__status">
+      {{ statusLocale || error.status }}
+    </p>
+    <p
+      class="error-section__text error-section__detail"
+      v-show="showErrorDetail"
+    >{{ error.detail }}</p>
   </section>
 </template>
 
@@ -20,6 +25,13 @@ export default {
     }),
     showErrorSec() {
       return !isEmpty(this.error);
+    },
+    statusLocale() {
+      const path = 'appointment.error.'.concat(this.error.status.replaceAll('.', '_'));
+      return this.$te(path) ? this.$t(path) : false;
+    },
+    showErrorDetail() {
+      return !this.statusLocale || this.error.status === 'store.sql_member.appointment.widget.app_error';
     },
   },
 };
