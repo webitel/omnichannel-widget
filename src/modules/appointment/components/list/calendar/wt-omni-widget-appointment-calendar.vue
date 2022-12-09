@@ -1,21 +1,12 @@
 <template>
   <article class="wt-omni-widget-appointment-calendar">
-    <calendar-title
-      :visible-next="visibleNext"
-      :visible-prev="visiblePrev"
-    >
+    <calendar-title>
       {{ timeZone }}
     </calendar-title>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
       <flicking
-        :cameraClass="''"
-        :cameraTag="'div'"
         :options="{ circular: false, moveType: ['freeScroll', { stopAtEdge: true }], align: 0, bound: true }"
-        :viewportTag="'section'"
         :plugins="plugins"
-        @before-resize="beforeResize"
-        @ready="visibilitySlideArrows"
-        @changed="visibilitySlideArrows"
       >
         <calendar-date
           :class="[
@@ -61,19 +52,8 @@ export default {
     },
   },
   data: () => ({
-    visiblePrev: true,
-    visibleNext: true,
-    visibleSlides: 3,
-    breakpoints: {
-      lg: 1024,
-      md: 820,
-      sm: 648,
-    },
     plugins: [new Arrow({ parentEl: document.body })],
   }),
-  mounted() {
-    this.getMaxVisibleItems();
-  },
   methods: {
     selectTime({
       date,
@@ -85,32 +65,6 @@ export default {
         scheduleTime: time,
       };
       this.$emit('input', value);
-    },
-    visibilitySlideArrows(event) {
-      console.log(event.eventType, event);
-      if (event.eventType === 'ready') {
-        console.log('ready:', event);
-        this.visiblePrev = false;
-        this.visibleNext = this.calendar.length > this.visibleSlides;
-      }
-      if (event.eventType === 'changed') {
-        console.log('changed:', event.index, event.index !== 0);
-        this.visiblePrev = event.index !== 0;
-        this.visibleNext = event.index + this.visibleSlides !== this.calendar.length;
-      }
-    },
-    isCurrentBreakpoint(value) {
-      return window.matchMedia(`(min-width: ${value}px)`).matches;
-    },
-    beforeResize(event) {
-      console.log(event.eventType, event);
-      this.getMaxVisibleItems();
-    },
-    getMaxVisibleItems() {
-      console.log('maxVisibleItems:', this.isCurrentBreakpoint(this.breakpoints.lg), 'calendar:', this.calendar);
-      // if (this.isCurrentBreakpoint(this.breakpoints.lg)) this.visibleSlides = this.calendar.length > 7 ? 7 : this.calendar.length;
-      // if (this.isCurrentBreakpoint(this.breakpoints.md)) this.visibleSlides = this.calendar.length > 5 ? 5 : this.calendar.length;
-      // this.visibleSlides = this.calendar.length > 3 ? 3 : this.calendar.length;
     },
   },
 };
@@ -144,12 +98,6 @@ export default {
 
     &::v-deep .flicking-camera {
       height: fit-content;
-    }
-
-    @media screen and (min-width: 1408px) {
-      .flicking-camera > * {
-        width: 25%;
-      }
     }
 
     &::v-deep .wt-omni-widget-appointment-calendar-date {

@@ -1,12 +1,12 @@
 <template>
   <header class="wt-omni-widget-appointment-calendar-title">
-    <div class="wt-omni-widget-appointment-calendar-title__button-wrapper flicking-arrow-prev is-outside flicking-arrow-disabled">
+    <div class="wt-omni-widget-appointment-calendar-title__button-wrapper">
+<!--      https://naver.github.io/egjs-flicking/Plugins#options-3-->
       <wt-icon-btn
-        v-if="visiblePrev"
+        class="flicking-arrow-prev is-outside flicking-arrow-disabled"
         icon="arrow-left"
         icon-size="sm"
         size="md"
-        @click="$emit('previous')"
       ></wt-icon-btn>
     </div>
     <div class="wt-omni-widget-appointment-calendar-title__wrapper">
@@ -20,13 +20,13 @@
           </span>
       </div>
     </div>
-    <div class="wt-omni-widget-appointment-calendar-title__button-wrapper flicking-arrow-next is-outside">
+    <div class="wt-omni-widget-appointment-calendar-title__button-wrapper">
+      <!--      https://naver.github.io/egjs-flicking/Plugins#options-3-->
       <wt-icon-btn
-        v-if="visibleNext"
+        class="flicking-arrow-next is-outside flicking-arrow-disabled"
         icon="arrow-right"
         icon-size="sm"
         size="md"
-        @click="$emit('next')"
       ></wt-icon-btn>
     </div>
   </header>
@@ -98,6 +98,11 @@ export default {
         border-radius: var(--border-radius--rounded);
       }
     }
+  }
+
+  // https://naver.github.io/egjs-flicking/Plugins#options-3
+  .flicking-arrow-disabled {
+    visibility: hidden;
   }
 }
 </style>
