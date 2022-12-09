@@ -6,6 +6,7 @@
         :v="$v"
       ></appointment-form>
       <appointment-calendar
+        v-if="state.list"
         v-model="draft"
         :calendar="state.list"
         :locale="$i18n.locale"

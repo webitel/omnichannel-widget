@@ -6,6 +6,7 @@
     >
       {{ timeZone }}
     </calendar-title>
+    {{ visibleSlides }}
     <div class="wt-omni-widget-appointment-calendar__wrapper">
       <flicking
         :cameraClass="''"
@@ -13,7 +14,9 @@
         :options="{ circular: false, moveType: ['freeScroll', { stopAtEdge: true }], align: 0, bound: true }"
         :viewportTag="'section'"
         :plugins="plugins"
-        @reach-edge="updateChange"
+        @before-resize="beforeResize"
+        @ready="visibilitySlideArrows"
+        @changed="visibilitySlideArrows"
       >
         <calendar-date
           v-for="({ date, times }) of calendar"
@@ -21,6 +24,7 @@
           ref="date"
           :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
           :value="{ date, times }"
+          :class="`wt-omni-widget-appointment-calendar-date--count-${calendar.length}`"
           @select="selectTime"
         ></calendar-date>
       </flicking>
@@ -48,510 +52,29 @@ export default {
       type: Object,
       required: true,
     },
-    // calendar: {
-    //   type: Array,
-    // },
+    calendar: {
+      type: Array,
+    },
     timeZone: {
       type: String,
     },
   },
   data: () => ({
-    calendar: [
-      {
-        date: '2022-11-30',
-        times: [
-          {
-            time: '12:00',
-            reserved: false,
-          },
-          {
-            time: '12:30',
-            reserved: true,
-          },
-          {
-            time: '13:00',
-            reserved: false,
-          },
-          {
-            time: '13:30',
-            reserved: true,
-          },
-          {
-            time: '14:00',
-            reserved: false,
-          },
-          {
-            time: '14:30',
-            reserved: false,
-          },
-          {
-            time: '15:00',
-            reserved: true,
-          },
-          {
-            time: '15:30',
-            reserved: true,
-          },
-          {
-            time: '16:00',
-            reserved: false,
-          },
-          {
-            time: '16:30',
-            reserved: true,
-          },
-          {
-            time: '17:00',
-            reserved: true,
-          },
-        ],
-      },
-      {
-        date: '2022-12-01',
-        times: [
-          {
-            time: '12:00',
-            reserved: false,
-          },
-          {
-            time: '12:30',
-            reserved: false,
-          },
-          {
-            time: '13:00',
-            reserved: false,
-          },
-          {
-            time: '13:30',
-            reserved: true,
-          },
-          {
-            time: '14:00',
-            reserved: true,
-          },
-          {
-            time: '14:30',
-            reserved: true,
-          },
-          {
-            time: '15:00',
-            reserved: true,
-          },
-          {
-            time: '15:30',
-            reserved: false,
-          },
-          {
-            time: '16:00',
-            reserved: false,
-          },
-          {
-            time: '16:30',
-            reserved: false,
-          },
-          {
-            time: '17:00',
-            reserved: false,
-          },
-        ],
-      },
-      {
-        date: '2022-12-02',
-        times: [
-          {
-            time: '12:00',
-            reserved: true,
-          },
-          {
-            time: '12:30',
-            reserved: true,
-          },
-          {
-            time: '13:00',
-            reserved: true,
-          },
-          {
-            time: '13:30',
-            reserved: false,
-          },
-          {
-            time: '14:00',
-            reserved: false,
-          },
-          {
-            time: '14:30',
-            reserved: true,
-          },
-          {
-            time: '15:00',
-            reserved: false,
-          },
-          {
-            time: '15:30',
-            reserved: true,
-          },
-          {
-            time: '16:00',
-            reserved: true,
-          },
-          {
-            time: '16:30',
-            reserved: true,
-          },
-          {
-            time: '17:00',
-            reserved: true,
-          },
-        ],
-      },
-      {
-        date: '2022-12-03',
-        times: [
-          {
-            time: '12:00',
-            reserved: false,
-          },
-          {
-            time: '12:30',
-            reserved: true,
-          },
-          {
-            time: '13:00',
-            reserved: false,
-          },
-          {
-            time: '13:30',
-            reserved: true,
-          },
-          {
-            time: '14:00',
-            reserved: false,
-          },
-          {
-            time: '14:30',
-            reserved: false,
-          },
-          {
-            time: '15:00',
-            reserved: true,
-          },
-          {
-            time: '15:30',
-            reserved: true,
-          },
-          {
-            time: '16:00',
-            reserved: false,
-          },
-          {
-            time: '16:30',
-            reserved: true,
-          },
-          {
-            time: '17:00',
-            reserved: true,
-          },
-        ],
-      },
-      {
-        date: '2022-12-04',
-        times: [
-          {
-            time: '12:00',
-            reserved: false,
-          },
-          {
-            time: '12:30',
-            reserved: true,
-          },
-          {
-            time: '13:00',
-            reserved: false,
-          },
-          {
-            time: '13:30',
-            reserved: true,
-          },
-          {
-            time: '14:00',
-            reserved: false,
-          },
-          {
-            time: '14:30',
-            reserved: false,
-          },
-          {
-            time: '15:00',
-            reserved: true,
-          },
-          {
-            time: '15:30',
-            reserved: true,
-          },
-          {
-            time: '16:00',
-            reserved: false,
-          },
-          {
-            time: '16:30',
-            reserved: true,
-          },
-          {
-            time: '17:00',
-            reserved: true,
-          },
-        ],
-      },
-      {
-        date: '2022-12-05',
-        times: [
-          {
-            time: '12:00',
-            reserved: false,
-          },
-          {
-            time: '12:30',
-            reserved: true,
-          },
-          {
-            time: '13:00',
-            reserved: false,
-          },
-          {
-            time: '13:30',
-            reserved: true,
-          },
-          {
-            time: '14:00',
-            reserved: false,
-          },
-          {
-            time: '14:30',
-            reserved: false,
-          },
-          {
-            time: '15:00',
-            reserved: true,
-          },
-          {
-            time: '15:30',
-            reserved: true,
-          },
-          {
-            time: '16:00',
-            reserved: false,
-          },
-          {
-            time: '16:30',
-            reserved: true,
-          },
-          {
-            time: '17:00',
-            reserved: true,
-          },
-        ],
-      },
-      {
-        date: '2022-12-06',
-        times: [
-          {
-            time: '12:00',
-            reserved: false,
-          },
-          {
-            time: '12:30',
-            reserved: true,
-          },
-          {
-            time: '13:00',
-            reserved: false,
-          },
-          {
-            time: '13:30',
-            reserved: true,
-          },
-          {
-            time: '14:00',
-            reserved: false,
-          },
-          {
-            time: '14:30',
-            reserved: false,
-          },
-          {
-            time: '15:00',
-            reserved: true,
-          },
-          {
-            time: '15:30',
-            reserved: true,
-          },
-          {
-            time: '16:00',
-            reserved: false,
-          },
-          {
-            time: '16:30',
-            reserved: true,
-          },
-          {
-            time: '17:00',
-            reserved: true,
-          },
-        ],
-      },
-      {
-        date: '2022-12-07',
-        times: [
-          {
-            time: '12:00',
-            reserved: false,
-          },
-          {
-            time: '12:30',
-            reserved: true,
-          },
-          {
-            time: '13:00',
-            reserved: false,
-          },
-          {
-            time: '13:30',
-            reserved: true,
-          },
-          {
-            time: '14:00',
-            reserved: false,
-          },
-          {
-            time: '14:30',
-            reserved: false,
-          },
-          {
-            time: '15:00',
-            reserved: true,
-          },
-          {
-            time: '15:30',
-            reserved: true,
-          },
-          {
-            time: '16:00',
-            reserved: false,
-          },
-          {
-            time: '16:30',
-            reserved: true,
-          },
-          {
-            time: '17:00',
-            reserved: true,
-          },
-        ],
-      },
-      {
-        date: '2022-12-08',
-        times: [
-          {
-            time: '12:00',
-            reserved: false,
-          },
-          {
-            time: '12:30',
-            reserved: true,
-          },
-          {
-            time: '13:00',
-            reserved: false,
-          },
-          {
-            time: '13:30',
-            reserved: true,
-          },
-          {
-            time: '14:00',
-            reserved: false,
-          },
-          {
-            time: '14:30',
-            reserved: false,
-          },
-          {
-            time: '15:00',
-            reserved: true,
-          },
-          {
-            time: '15:30',
-            reserved: true,
-          },
-          {
-            time: '16:00',
-            reserved: false,
-          },
-          {
-            time: '16:30',
-            reserved: true,
-          },
-          {
-            time: '17:00',
-            reserved: true,
-          },
-        ],
-      },
-      {
-        date: '2022-12-09',
-        times: [
-          {
-            time: '12:00',
-            reserved: false,
-          },
-          {
-            time: '12:30',
-            reserved: true,
-          },
-          {
-            time: '13:00',
-            reserved: false,
-          },
-          {
-            time: '13:30',
-            reserved: true,
-          },
-          {
-            time: '14:00',
-            reserved: false,
-          },
-          {
-            time: '14:30',
-            reserved: false,
-          },
-          {
-            time: '15:00',
-            reserved: true,
-          },
-          {
-            time: '15:30',
-            reserved: true,
-          },
-          {
-            time: '16:00',
-            reserved: false,
-          },
-          {
-            time: '16:30',
-            reserved: true,
-          },
-          {
-            time: '17:00',
-            reserved: true,
-          },
-        ],
-      },
-    ],
     visiblePrev: true,
     visibleNext: true,
+    visibleSlides: 3,
+    breakpoints: {
+      lg: 1024,
+      md: 820,
+      sm: 648,
+    },
     plugins: [new Arrow({ parentEl: document.body })],
   }),
+  mounted() {
+    this.getMaxVisibleItems();
+  },
+  computed: {
+  },
   methods: {
     selectTime({
                  date,
@@ -564,16 +87,37 @@ export default {
       };
       this.$emit('input', value);
     },
-    updateChange(event) {
-      console.log(event.direction);
-      if (event.direction === 'NEXT') this.visibleNext = false;
-      if (event.direction === 'PREV') this.visiblePrev = false;
+    visibilitySlideArrows(event) {
+      console.log(event.eventType, event);
+      if (event.eventType === 'ready') {
+        console.log('ready:', event);
+        this.visiblePrev = false;
+        this.visibleNext = this.calendar.length > this.visibleSlides;
+      }
+      if (event.eventType === 'changed') {
+        console.log('changed:', event.index, event.index !== 0);
+        this.visiblePrev = event.index !== 0;
+        this.visibleNext = event.index + this.visibleSlides !== this.calendar.length;
+      }
+    },
+    isCurrentBreakpoint(value) {
+      return window.matchMedia(`(min-width: ${value}px)`).matches;
+    },
+    beforeResize(event) {
+      console.log(event.eventType, event);
+      this.getMaxVisibleItems();
+    },
+    getMaxVisibleItems() {
+      console.log('maxVisibleItems:', this.isCurrentBreakpoint(this.breakpoints.lg), 'calendar:', this.calendar);
+      // if (this.isCurrentBreakpoint(this.breakpoints.lg)) this.visibleSlides = this.calendar.length > 7 ? 7 : this.calendar.length;
+      // if (this.isCurrentBreakpoint(this.breakpoints.md)) this.visibleSlides = this.calendar.length > 5 ? 5 : this.calendar.length;
+      // this.visibleSlides = this.calendar.length > 3 ? 3 : this.calendar.length;
     },
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar {
     display: flex;
@@ -592,40 +136,72 @@ export default {
         padding-right: 0;
       }
     }
-  }
-
-  .flicking-viewport {
-    //height: fit-content;
-    @extend %wt-scrollbar;
-    overflow-y: auto;
-  }
-
-  .flicking-camera {
-    height: fit-content;
-  }
-
-    @media screen and (max-width: 768px) {
-      .flicking-camera > * {
-        width: 100%;
-      }
+    &::v-deep .flicking-viewport {
+      //height: fit-content;
+      @extend %wt-scrollbar;
+      overflow-y: auto;
     }
 
-    @media screen and (min-width: 1024px) {
-      .flicking-camera > * {
-        width: 50%;
-      }
-    }
-
-    @media screen and (min-width: 1216px) {
-      .flicking-camera > * {
-        width: 33.3%;
-      }
+    &::v-deep .flicking-camera {
+      height: fit-content;
     }
 
     @media screen and (min-width: 1408px) {
       .flicking-camera > * {
         width: 25%;
+      }
+    }
 
+    &::v-deep .wt-omni-widget-appointment-calendar-date {
+      &--count-1 {
+        width: 100%;
+      }
+
+      &--count-2 {
+        width: 50%;
+      }
+
+      &--count-3 {
+        width: calc(100% / 3);
+      }
+
+      &--count-4 {
+        width: calc(100% / 4);
+      }
+
+      &--count-5 {
+        width: calc(100% / 5);
+      }
+
+      &--count-6 {
+        width: calc(100% / 6);
+      }
+
+      &--count-7 {
+        width: calc(100% / 7);
+      }
+    }
+
+    @media (max-width: $breakpoint-lg) {
+      &::v-deep .wt-omni-widget-appointment-calendar-date {
+        &--count-5,
+        &--count-6,
+        &--count-7 {
+          width: calc(100% / 5);
+        }
+      }
+    }
+
+    @media (max-width: $breakpoint-md) {
+      &::v-deep .wt-omni-widget-appointment-calendar-date {
+        &--count-3,
+        &--count-4,
+        &--count-5,
+        &--count-6,
+        &--count-7 {
+          width: calc(100% / 3);
+        }
+      }
     }
   }
 }

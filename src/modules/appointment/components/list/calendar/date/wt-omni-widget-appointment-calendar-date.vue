@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { Panel } from '@egjs/vue-flicking';
+
 import CalendarTimeItem from '../time/wt-omni-widget-appointment-calendar-time-item.vue';
 import CalendarDateTitle from './wt-omni-widget-appointment-calendar-date-title.vue';
 
@@ -28,7 +28,6 @@ export default {
   components: {
     CalendarTimeItem,
     CalendarDateTitle,
-    Panel,
   },
   data: () => ({
   }),
@@ -39,6 +38,10 @@ export default {
     },
     selectedValue: {
       type: Object,
+      required: true,
+    },
+    calendarLength: {
+      type: Number,
       required: true,
     },
   },
