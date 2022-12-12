@@ -70,7 +70,7 @@ export default {
     }
 
     @media (max-width: $breakpoint-xs) {
-      width: 100%;
+      width: calc(100% - 2 * var(--main-app-padding)); // - 2 margins
       height: calc(100% - 2 * var(--main-app-padding)); // - 2 margins
     }
   }
