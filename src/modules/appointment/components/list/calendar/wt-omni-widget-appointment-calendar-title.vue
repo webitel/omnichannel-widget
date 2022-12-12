@@ -56,14 +56,11 @@ export default {
   .wt-omni-widget-appointment-calendar-title {
     display: grid;
     grid-template-columns: 32px 1fr 32px;
-    padding: var(--main-app-padding) 10px;
-
-    @media (max-width: $breakpoint-sm) {
-      padding: 5px;
-    }
+    grid-auto-rows: 44px;
+    justify-self: center;
 
     @media (max-width: $breakpoint-xs) {
-      padding: var(--main-app-padding) 0;
+      grid-auto-rows: 70px;
     }
 
     &__wrapper {
@@ -90,7 +87,13 @@ export default {
       align-items: center;
       gap: var(--gap-md);
     }
+
+    &__button-wrapper {
+      align-self: center;
+      justify-self: center;
+    }
   }
+
   &.wt-omni-widget--rounded {
     .wt-omni-widget-appointment-calendar-title {
       &__button-previous,
