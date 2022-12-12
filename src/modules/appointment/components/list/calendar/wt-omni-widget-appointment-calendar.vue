@@ -84,16 +84,16 @@ export default {
       @extend %wt-scrollbar;
       position: relative;
       overflow-y: auto;
-      padding-right: var(--gap-md);
-
-      @media (max-width: $breakpoint-xs) {
-        padding-right: 0;
-      }
     }
     &::v-deep .flicking-viewport {
       //height: fit-content;
       @extend %wt-scrollbar;
       overflow-y: auto;
+      padding-right: var(--gap-md);
+
+      @media (max-width: $breakpoint-xs) {
+        padding-right: 0;
+      }
     }
 
     &::v-deep .flicking-camera {

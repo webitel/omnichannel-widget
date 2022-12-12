@@ -102,7 +102,7 @@ export default {
 
   // https://naver.github.io/egjs-flicking/Plugins#options-3
   .flicking-arrow-disabled {
-    visibility: hidden;
+    display: none;
   }
 }
 </style>
