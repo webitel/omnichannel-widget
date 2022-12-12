@@ -7,11 +7,11 @@
     </p>
     <div class="wt-omni-widget-appointment-success__time-wrapper">
       <div class="wt-omni-widget-appointment-success__info-wrapper wt-omni-widget-appointment-success__info-wrapper--time">
-        <img src="../../assets/appointment-success-calendar.svg" alt="canedar">
+        <img alt="canedar" src="../../assets/appointment-success-calendar.svg">
         {{ new Date(appointment.scheduleDate).toLocaleDateString() }}
       </div>
       <div class="wt-omni-widget-appointment-success__info-wrapper wt-omni-widget-appointment-success__info-wrapper--time">
-        <img src="../../assets/appointment-success-clock.svg" alt="clock">
+        <img alt="clock" src="../../assets/appointment-success-clock.svg">
         {{ appointment.scheduleTime }}
       </div>
     </div>
@@ -22,25 +22,31 @@
       <p class="wt-omni-widget-appointment-success__info-line">
         <b>{{ $t('appointment.form.destination') }}:</b> {{ appointment.destination }}
       </p>
-      <p class="wt-omni-widget-appointment-success__info-line" v-if="showEmail">
+      <p v-if="showEmail" class="wt-omni-widget-appointment-success__info-line">
         <b>{{ $t('appointment.form.email') }}:</b> {{ appointment.variables.email }}
       </p>
-      <p class="wt-omni-widget-appointment-success__info-line" v-if="showMessage">
+      <p v-if="showMessage" class="wt-omni-widget-appointment-success__info-line">
         <b>{{ $t('appointment.form.message') }}:</b> {{ appointment.variables.message }}
       </p>
     </div>
-    <error-section/>
-    <wt-button
-      color="danger"
-      @click="removeAppointment"
-    >{{ $t('appointment.success.cancel') }}
-    </wt-button>
+    <error-section />
+    <div class="wt-omni-widget-appointment-success__actions">
+      <wt-button
+        color="danger"
+        @click="removeAppointment"
+      >{{ $t('appointment.success.cancel') }}
+      </wt-button>
+      <wt-button
+        @click="close"
+      >{{ $t('reusable.ok') }}
+      </wt-button>
+    </div>
   </section>
 </template>
 
 <script>
 import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
-import { mapState, mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import ErrorSection from '../_shared/error/error-section.vue';
 
 export default {
@@ -73,6 +79,9 @@ export default {
         return dispatch(`${this.namespace}/REMOVE_APPOINTMENT`, payload);
       },
     }),
+    close() {
+      this.$eventBus.$emit('close-popup');
+    },
   },
 };
 </script>
@@ -80,19 +89,21 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-appointment-success {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     box-sizing: border-box;
     min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 32px;
     padding: 32px;
+    gap: 32px;
   }
+
   .wt-omni-widget-appointment-success__title {
     @extend %typo-heading-lg;
     text-align: center;
   }
+
   .wt-omni-widget-appointment-success__info-wrapper {
     @extend %typo-heading-md;
     padding: 16px;
@@ -107,28 +118,41 @@ export default {
     }
 
     &--info {
-      flex-grow: 1;
-      width: 100%;
       display: flex;
       flex-direction: column;
+      flex-grow: 1;
+      width: 100%;
       gap: 8px;
     }
   }
+
   .wt-omni-widget-appointment-success__time-wrapper {
     display: grid;
+    width: 100%;
     gap: 32px;
     grid-template-columns: 1fr 1fr;
-    width: 100%;
 
     @media (max-width: $breakpoint-xs) {
       grid-template-columns: 1fr;
     }
   }
+
   .wt-omni-widget-appointment-success__info-line {
     @extend %typo-body-md;
   }
-  .wt-button {
-    min-width: 168px;
+
+  .wt-omni-widget-appointment-success__actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--gap-md);
+
+    .wt-button {
+      min-width: 200px;
+    }
+
+    @media (max-width: $breakpoint-xs) {
+      flex-direction: column-reverse;
+    }
   }
 
   &.wt-omni-widget--rounded {

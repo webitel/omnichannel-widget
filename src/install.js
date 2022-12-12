@@ -7,6 +7,7 @@ import store from './app/store';
 import i18n from './app/locale/i18n';
 import '@egjs/vue-flicking/dist/flicking.css';
 import '@egjs/vue-flicking/dist/flicking-inline.css';
+import eventBus from '@webitel/ui-sdk/src/scripts/eventBus';
 
 import globalConfigMixin from './app/mixins/globalConfigMixin';
 
@@ -20,6 +21,7 @@ Vue.config.productionTip = false;
 
 Vue.use(PortalVue, VueFlicking);
 Vue.mixin(globalConfigMixin);
+Vue.prototype.$eventBus = eventBus;
 
 const Instance = new Vue({
   store,

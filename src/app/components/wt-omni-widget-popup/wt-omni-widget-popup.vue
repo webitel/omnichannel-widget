@@ -2,7 +2,7 @@
   <aside class="wt-omni-widget-popup">
     <section class="wt-omni-widget-popup__popup">
       <wt-omni-widget-header
-        @close="$emit('close')"
+        @close="close"
       ></wt-omni-widget-header>
       <article class="wt-omni-widget-popup__main">
         <slot name="main">
@@ -22,6 +22,17 @@ export default {
   components: {
     WtOmniWidgetHeader,
     TheAppointment,
+  },
+  methods: {
+    close() {
+      this.$emit('close');
+    },
+  },
+  mounted() {
+    this.$eventBus.$on('close-popup', this.close);
+  },
+  destroyed() {
+    this.$eventBus.$off('close-popup', this.close);
   },
 };
 </script>

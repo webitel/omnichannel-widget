@@ -2,6 +2,7 @@ export default {
   reusable: {
     send: 'Send',
     close: 'Close',
+    ok: 'Ok',
   },
   chat: {
     inputPlaceholder: 'Message',
