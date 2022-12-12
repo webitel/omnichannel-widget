@@ -80,7 +80,7 @@ export default {
     }
 
     @media (max-width: $breakpoint-xs) {
-      flex: 0 0 100%;
+      flex: 0 0 fit-content;
     }
 
     &__title {
@@ -94,6 +94,10 @@ export default {
 
     .wt-textarea {
       flex-grow: 1;
+
+      @media (max-width: $breakpoint-xs) {
+        flex-grow: initial;
+      }
     }
   }
 }
