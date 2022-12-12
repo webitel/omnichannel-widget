@@ -114,8 +114,9 @@ export default Vue.extend({
     gap: var(--gap-md);
 
     &__wrap {
+      @extend %wt-scrollbar;
       display: flex;
-      overflow: auto; // prevent scroll bugs on small height
+      overflow-x: auto; // prevent scroll bugs on small height
       min-height: 0;
       gap: var(--gap-md);
       height: 100%;
