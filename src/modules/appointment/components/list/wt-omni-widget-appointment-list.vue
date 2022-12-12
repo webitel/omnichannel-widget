@@ -123,6 +123,7 @@ export default Vue.extend({
       @media (max-width: $breakpoint-xs) {
         overflow: auto;
         flex-direction: column;
+        padding-right: var(--gap-md);
       }
     }
 

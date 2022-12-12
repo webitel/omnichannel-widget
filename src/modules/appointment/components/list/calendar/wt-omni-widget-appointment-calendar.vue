@@ -89,11 +89,6 @@ export default {
       //height: fit-content;
       @extend %wt-scrollbar;
       overflow-y: auto;
-      padding-right: var(--gap-md);
-
-      @media (max-width: $breakpoint-xs) {
-        padding-right: 0;
-      }
     }
 
     &::v-deep .flicking-camera {
@@ -101,7 +96,6 @@ export default {
     }
 
     &::v-deep .wt-omni-widget-appointment-calendar-date {
-      margin-right: var(--gap-md);
 
       &--count-1 {
         width: 100%;
@@ -130,6 +124,10 @@ export default {
       &--count-7 {
         width: calc(100% / 7 - var(--gap-md));
       }
+    }
+
+    &::v-deep .wt-omni-widget-appointment-calendar-date:not(:last-child) {
+      margin-right: var(--gap-md);
     }
 
     @media (max-width: $breakpoint-lg) {
