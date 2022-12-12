@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import merge from 'deepmerge';
 import PortalVue from 'portal-vue';
-import VueFlicking from "@egjs/vue-flicking";
+import VueFlicking from '@egjs/vue-flicking';
 import App from './app/app.vue';
 import store from './app/store';
 import i18n from './app/locale/i18n';
-import "@egjs/vue-flicking/dist/flicking.css";
-import "@egjs/vue-flicking/dist/flicking-inline.css";
+import '@egjs/vue-flicking/dist/flicking.css';
+import '@egjs/vue-flicking/dist/flicking-inline.css';
 
 import globalConfigMixin from './app/mixins/globalConfigMixin';
 
