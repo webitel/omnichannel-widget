@@ -36,16 +36,6 @@
 
 export default {
   name: 'wt-omni-widget-appointment-calendar-title',
-  props: {
-    visiblePrev: {
-      type: Boolean,
-      default: true,
-    },
-    visibleNext: {
-      type: Boolean,
-      default: true,
-    },
-  },
   data: () => ({
   }),
 };
