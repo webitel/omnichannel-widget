@@ -29,6 +29,7 @@
         <b>{{ $t('appointment.form.message') }}:</b> {{ appointment.variables.message }}
       </p>
     </div>
+    <error-section/>
     <wt-button
       color="danger"
       @click="removeAppointment"
@@ -40,9 +41,13 @@
 <script>
 import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
 import { mapState, mapActions } from 'vuex';
+import ErrorSection from '../_shared/error/error-section.vue';
 
 export default {
   name: 'wt-omni-widget-appointment-success',
+  components: {
+    ErrorSection,
+  },
   props: {
     namespace: {
       type: String,

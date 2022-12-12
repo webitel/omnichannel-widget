@@ -1,26 +1,24 @@
 <template>
-  <section
-    class="wt-omni-widget-appointment-calendar-date"
-  >
-    <calendar-date-title>
-      {{ $d(new Date(value.date), 'appointments') }}
-    </calendar-date-title>
-    <div class="wt-omni-widget-appointment-calendar-date__main">
-      <calendar-time-item
-        v-for="item of value.times"
-        :key="value.date.concat(item.time)"
-        :value="item"
-        :date="value.date"
-        :selected-value="{ time: selectedValue.time, date: selectedValue.date }"
-        @click="$emit('select', { date: value.date, time: item.time })"
-      ></calendar-time-item>
-    </div>
-  </section>
+    <section class="wt-omni-widget-appointment-calendar-date">
+      <calendar-date-title>
+        {{ $d(new Date(value.date), 'appointments') }}
+      </calendar-date-title>
+      <div class="wt-omni-widget-appointment-calendar-date__main">
+        <calendar-time-item
+          v-for="item of value.times"
+          :key="value.date.concat(item.time)"
+          :value="item"
+          :date="value.date"
+          :selected-value="{ time: selectedValue.time, date: selectedValue.date }"
+          @click="$emit('select', { date: value.date, time: item.time })"
+        ></calendar-time-item>
+      </div>
+    </section>
 </template>
 
 <script>
 
-import CalendarTimeItem from './wt-omni-widget-appointment-calendar-time-item.vue';
+import CalendarTimeItem from '../time/wt-omni-widget-appointment-calendar-time-item.vue';
 import CalendarDateTitle from './wt-omni-widget-appointment-calendar-date-title.vue';
 
 export default {
@@ -50,8 +48,8 @@ export default {
 
   .wt-omni-widget-appointment-calendar-date {
     position: relative;
-    flex: 1;
-    height: fit-content;
+    //flex: 1;
+    //width: 33.3%;
 
     &__main {
       display: flex;

@@ -33,7 +33,7 @@ export default {
     type: {
       type: String,
       required: true,
-      options: ['chat', 'appointment', 'email', 'whatsapp', 'facebook', 'viber', 'telegram'],
+      options: ['chat', 'appointment', 'email', 'whatsapp', 'facebook', 'viber', 'telegram', 'open'],
     },
     url: {
       type: String,
