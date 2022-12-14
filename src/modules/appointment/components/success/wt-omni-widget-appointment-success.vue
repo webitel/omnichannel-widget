@@ -17,16 +17,20 @@
     </div>
     <div class="wt-omni-widget-appointment-success__info-wrapper wt-omni-widget-appointment-success__info-wrapper--info">
       <p class="wt-omni-widget-appointment-success__info-line">
-        <b>{{ $t('appointment.form.name') }}:</b> {{ appointment.name }}
+        <span class="wt-omni-widget-appointment-success__info-line-title">
+          {{ $t('appointment.form.name') }}:</span> {{ appointment.name }}
       </p>
       <p class="wt-omni-widget-appointment-success__info-line">
-        <b>{{ $t('appointment.form.destination') }}:</b> {{ appointment.destination }}
+        <span class="wt-omni-widget-appointment-success__info-line-title">
+          {{ $t('appointment.form.destination') }}:</span> {{ appointment.destination }}
       </p>
       <p v-if="showEmail" class="wt-omni-widget-appointment-success__info-line">
-        <b>{{ $t('appointment.form.email') }}:</b> {{ appointment.variables.email }}
+        <span class="wt-omni-widget-appointment-success__info-line-title">
+          {{ $t('appointment.form.email') }}:</span> {{ appointment.variables.email }}
       </p>
       <p v-if="showMessage" class="wt-omni-widget-appointment-success__info-line">
-        <b>{{ $t('appointment.form.message') }}:</b> {{ appointment.variables.message }}
+        <span class="wt-omni-widget-appointment-success__info-line-title">
+          {{ $t('appointment.form.message') }}:</span> {{ appointment.variables.message }}
       </p>
     </div>
     <error-section />
@@ -139,6 +143,10 @@ export default {
 
   .wt-omni-widget-appointment-success__info-line {
     @extend %typo-body-md;
+  }
+
+  .wt-omni-widget-appointment-success__info-line-title {
+    @extend %typo-heading-md;
   }
 
   .wt-omni-widget-appointment-success__actions {
