@@ -7,6 +7,7 @@
       :label="$t('appointment.form.name')"
       :value="value.name"
       :v="v.draft.name"
+      :name="'name'"
       required
       @input="handleInput({ prop: 'name', value: $event })"
     ></wt-input>
