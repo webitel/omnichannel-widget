@@ -3,6 +3,7 @@
     class="wt-textarea"
     :class="{
       'wt-textarea--disabled': disabled,
+      'wt-textarea--invalid': invalid,
       'wt-textarea--stretched': stretched,
     }"
   >
@@ -29,8 +30,11 @@
 </template>
 
 <script>
+  import validationMixin from '../../mixins/validationMixin/validationMixin';
+
   export default {
     name: 'wt-textarea',
+    mixins: [validationMixin],
     props: {
       /**
        * Current textarea value (`v-model`)
@@ -131,7 +135,7 @@
     color: var(--contrast-color);
     border-radius: var(--border-radius--square);
     box-shadow: var(--morf-style-down-50);
-    border: none;
+    border: 1px solid transparent;
     outline: none;
     resize: none;
   }
@@ -146,6 +150,12 @@
 
     .wt-textarea__textarea {
         height: 100%;
+    }
+  }
+
+  .wt-textarea--invalid {
+    .wt-textarea__textarea {
+      border-color: var(--negative-color);
     }
   }
 

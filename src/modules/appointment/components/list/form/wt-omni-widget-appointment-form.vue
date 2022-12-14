@@ -27,6 +27,7 @@
       v-if="showMessage"
       :label="$t('appointment.form.message')"
       :value="value.message"
+      :v="v.draft.message"
       stretched
       @input="handleInput({ prop: 'message', value: $event })"
     ></wt-textarea>

@@ -13,7 +13,7 @@
         :time-zone="state.timezone"
       ></appointment-calendar>
     </div>
-    <error-section/>
+    <error-section />
     <wt-button
       :disabled="disableSend"
       @click="send"
@@ -27,7 +27,7 @@ import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedS
 import { isValidPhoneNumber } from 'libphonenumber-js';
 import Vue from 'vue';
 import { validationMixin } from 'vuelidate';
-import { required } from 'vuelidate/lib/validators';
+import { maxLength, required } from 'vuelidate/lib/validators';
 import { mapActions, mapState } from 'vuex';
 import ErrorSection from '../_shared/error/error-section.vue';
 import AppointmentCalendar from './calendar/wt-omni-widget-appointment-calendar.vue';
@@ -73,6 +73,9 @@ export default Vue.extend({
         required,
         phone: (value) => isValidPhoneNumber(value),
       }, // required
+      message: {
+        maxLength: maxLength(1024),
+      },
     },
   },
   computed: {
@@ -116,9 +119,9 @@ export default Vue.extend({
     &__wrap {
       @extend %wt-scrollbar;
       display: flex;
+      height: 100%;
       min-height: 0;
       gap: var(--gap-md);
-      height: 100%;
 
       @media (max-width: $breakpoint-xs) {
         overflow: auto;
