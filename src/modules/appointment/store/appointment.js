@@ -33,10 +33,11 @@ const actions = {
       if (scheduleInfo.message) _scheduleInfo.variables.message = scheduleInfo.message;
 
       appointmentState = await AppointmentAPI.postAppointment(context.getters.APPOINTMENT_URL, _scheduleInfo);
+      if (state.error) context.commit('DELETE_ERROR');
     } catch (err) {
       context.commit('SET_ERROR', err);
     }
-    return context.commit('SET_APPOINTMENT_STATE', appointmentState);
+    return context.commit('SET_APPOINTMENT_STATE', appointmentState || context.state.appointmentState);
   },
   REMOVE_APPOINTMENT: async (context) => {
     try {
@@ -55,6 +56,9 @@ const mutations = {
   },
   SET_ERROR: (state, error) => {
     state.error = error;
+  },
+  DELETE_ERROR: (state) => {
+    state.error = {};
   },
 };
 
