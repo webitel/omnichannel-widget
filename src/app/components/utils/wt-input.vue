@@ -124,8 +124,7 @@ export default {
   },
   methods: {
     inputHandler(event) {
-      const value = this.name !== 'name' ? event.target.value.trim() : event.target.value.trimStart().replace(/\s{2,}/g, ' '); // leave last space if it`s name input
-      this.$emit('input', value);
+      this.$emit('input', event.target.value);
     },
   },
 };
