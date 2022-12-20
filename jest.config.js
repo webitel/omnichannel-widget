@@ -7,6 +7,7 @@ module.exports = {
   },
   transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
   reporters: ['default', 'bamboo-jest-reporter'],
+  moduleNameMapper: { '\\.(css|less)$': '<rootDir>/tests/unit/mock/fileMock.js' },
   collectCoverage: true,
   // coverageThreshold: {
   //   global: {

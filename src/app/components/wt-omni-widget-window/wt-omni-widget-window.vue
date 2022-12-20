@@ -1,6 +1,6 @@
 <template>
   <section class="wt-omni-widget-window">
-    <portal-target name="popup"></portal-target>
+    <portal-target name="in-window-popup"></portal-target>
     <wt-omni-widget-header
       @close="$emit('close')"
     ></wt-omni-widget-header>
@@ -69,7 +69,7 @@ export default {
     initSession() {
       const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel; // FIXME
       const messageClient = new MessageClient({
-        url: this.config.wsUrl,
+        url: this.config.chat.url,
         workerSupport,
       });
       this.initializeSession({ messageClient });

@@ -1,9 +1,13 @@
 import Vue from 'vue';
 import merge from 'deepmerge';
 import PortalVue from 'portal-vue';
+import VueFlicking from '@egjs/vue-flicking';
 import App from './app/app.vue';
 import store from './app/store';
 import i18n from './app/locale/i18n';
+import '@egjs/vue-flicking/dist/flicking.css';
+import '@egjs/vue-flicking/dist/flicking-inline.css';
+import eventBus from '@webitel/ui-sdk/src/scripts/eventBus';
 
 import globalConfigMixin from './app/mixins/globalConfigMixin';
 
@@ -15,8 +19,9 @@ import './app/webitel-ui/components';
 
 Vue.config.productionTip = false;
 
-Vue.use(PortalVue);
+Vue.use(PortalVue, VueFlicking);
 Vue.mixin(globalConfigMixin);
+Vue.prototype.$eventBus = eventBus;
 
 const Instance = new Vue({
   store,
@@ -25,19 +30,23 @@ const Instance = new Vue({
 });
 
 const devConfig = {
-  _previewMode: false, // [false, 'chat', 'button']
+  view: {
+    _previewMode: false, // [false, 'chat', 'button']
+  },
 };
 
-const defaultConfig = {
-  ...devConfig,
-  borderRadiusStyle: 'square', // ['square', 'rounded'],
-  lang: 'en', // ['en', 'ru', 'ua'],
-  position: 'right', // ['right', 'left', 'static']
-  accentColor: 'hsl(42, 100%, 50%)',
-  btnOpacity: 1,
-  wsUrl: 'wss://dev.webitel.com/chat/ws',
-  openTimeout: false, // numeric value in sec
-};
+const defaultConfig = merge(devConfig, {
+  view: {
+    borderRadiusStyle: 'square', // ['square', 'rounded'],
+    lang: 'en', // ['en', 'ru', 'ua'],
+    position: 'right', // ['right', 'left', 'static']
+    accentColor: 'hsl(42, 100%, 50%)',
+    btnOpacity: 1,
+  },
+  chat: null,
+  appointment: null,
+  alternativeChannels: null,
+});
 
 export default class WtOmniWidget {
   constructor(selector, _config = {}) {

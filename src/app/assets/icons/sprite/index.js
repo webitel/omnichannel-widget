@@ -1,3 +1,4 @@
+import './wt-omni-widget-appointment.svg';
 import './wt-omni-widget-attach.svg';
 import './wt-omni-widget-attention.svg';
 import './wt-omni-widget-chat.svg';
@@ -11,3 +12,7 @@ import './wt-omni-widget-telegram.svg';
 import './wt-omni-widget-viber.svg';
 import './wt-omni-widget-whatsapp.svg';
 import './wt-omni-widget-tick.svg';
+import './wt-omni-widget-time-zone.svg';
+import './wt-omni-widget-arrow-left.svg';
+import './wt-omni-widget-arrow-right.svg';
+import './wt-omni-widget-open.svg';

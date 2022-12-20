@@ -5,6 +5,10 @@ const ChatChannel = Object.freeze({
   FACEBOOK: 'facebook',
   EMAIL: 'email',
   CHAT: 'chat',
+  APPOINTMENT: 'appointment',
+
+  OPEN: 'open', // ui service btn
+  CLOSE: 'close', // ui service btn
 });
 
 export default ChatChannel;

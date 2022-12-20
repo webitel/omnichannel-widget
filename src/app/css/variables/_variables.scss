@@ -8,7 +8,18 @@
   --border-radius--square: 5px;
   --border-radius--rounded: 20px;
   --border-radius--rounded-btn: 40px;
+
+  //GAP
+  --gap-md: 10px;
+  --gap-sm: 5px;
 }
+
+// breakpoints
+$breakpoint-lg: 1024px;
+$breakpoint-md: 820px;
+$breakpoint-sm: 648px;
+$breakpoint-xs: 540px;
+
 
 .wt-omni-widget-chat-message {
   --client-message-border-radius--square: 5px 5px 0px 5px;
@@ -26,7 +37,7 @@
   --buttons-menu-padding: 10px;
 }
 
-.wt-omni-widget-window {
+.wt-omni-widget {
   --main-app-padding: 15px;
 
   .wt-omni-widget-window-header {

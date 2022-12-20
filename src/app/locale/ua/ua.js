@@ -2,6 +2,7 @@ export default {
   reusable: {
     send: 'Відправити',
     close: 'Закрити',
+    ok: 'Oк',
   },
   chat: {
     inputPlaceholder: 'Повідомлення',
@@ -14,6 +15,31 @@ export default {
     reopenSession: 'Розпочати новий чат',
     previewChatMessage1: 'Добрий день!\nЯ - Ваш чат-бот.\n\nЧим можу допомогти?',
     previewChatMessage2: 'Добрий день,\nхочу дізнатись детальніше про ваші послуги.',
+  },
+  appointment: {
+    form: {
+      title: 'Персональна інформація',
+      name: 'Ім\'я',
+      email: 'Електронна пошта',
+      destination: 'Номер телефону',
+      message: 'Повідомлення',
+    },
+    calendar: {
+      title: 'Оберіть час дзвінку',
+      timeZone: 'Часовий пояс',
+    },
+    success: {
+      congratulations: 'Вітаємо!',
+      title: 'Ви запланували дзвінок.',
+      cancel: 'Скасувати дзвінок',
+    },
+    error: {
+      api_valid_origin: 'Некорректный origin запроса',
+      appointment_valid_date: 'Некорректный слот времени или даты',
+      store_sql_member_appointment_widget_app_error: 'Ошибка базы данных',
+      store_sql_member_appointment_get_app_error: 'Зарезервировано, но ошибка базы данных',
+      store_sql_member_appointment_cancel_app_error: 'Ошибка отмены',
+    },
   },
   errors: {
     fileTooLarge: 'Файл "{file}" завеликий! Максимальний розмір файлу: {maxSize} Мб',

@@ -7,7 +7,9 @@ describe('WtOmniWidgetButtonsMenu', () => {
     const wrapper = shallowMount(WtOmniWidgetButtonsMenu, {
       computed: {
         config() {
-          return {};
+          return {
+            chat: true,
+          };
         },
       },
     });
@@ -74,7 +76,9 @@ describe('WtOmniWidgetButtonsMenu', () => {
     const wrapper = shallowMount(WtOmniWidgetButtonsMenu, {
       computed: {
         config() {
-          return {};
+          return {
+            chat: true,
+          };
         },
       },
     });
