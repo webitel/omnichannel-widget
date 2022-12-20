@@ -1,17 +1,17 @@
 export default {
-  en: {
+  'en-US': {
     appointments: {
       day: 'numeric',
       weekday: 'short',
     },
   },
-  ua: {
+  'uk-UA': {
     appointments: {
       day: 'numeric',
       weekday: 'short',
     },
   },
-  ru: {
+  'ru-RU': {
     appointments: {
       day: 'numeric',
       weekday: 'short',
