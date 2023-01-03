@@ -15,7 +15,8 @@ const sendFile = async ({
     onUploadProgress,
     cancelToken: cancelToken.token,
   });
-  return response.data;
+
+  return response;
 };
 
 export default {
