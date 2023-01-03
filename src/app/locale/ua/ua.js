@@ -34,11 +34,11 @@ export default {
       cancel: 'Скасувати дзвінок',
     },
     error: {
-      api_valid_origin: 'Некорректный origin запроса',
-      appointment_valid_date: 'Некорректный слот времени или даты',
-      store_sql_member_appointment_widget_app_error: 'Ошибка базы данных',
-      store_sql_member_appointment_get_app_error: 'Зарезервировано, но ошибка базы данных',
-      store_sql_member_appointment_cancel_app_error: 'Ошибка отмены',
+      api_valid_origin: 'Некорректний origin запиту',
+      appointment_valid_date: 'Некоректний слот дати або часу',
+      store_sql_member_appointment_widget_app_error: 'Помилка бази даних',
+      store_sql_member_appointment_get_app_error: 'Зарезервовано, але помилка бази даних',
+      store_sql_member_appointment_cancel_app_error: 'Помилка скасування',
     },
   },
   errors: {
