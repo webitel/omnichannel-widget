@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     inputHandler(event) {
-      this.$emit('input', event.target.value.trim());
+      this.$emit('input', event.target.value);
     },
   },
 };

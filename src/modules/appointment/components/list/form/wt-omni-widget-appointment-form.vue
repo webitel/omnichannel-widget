@@ -59,7 +59,7 @@ export default {
   methods: {
     handleInput({ prop, value }) {
       const draft = { ...this.value };
-      draft[prop] = value;
+      draft[prop] = prop !== 'name' ? value.trim() : value.trimStart().replace(/\s{2,}/g, ' '); // leave last space if it`s name input;
       this.$emit('input', draft);
     },
   },
