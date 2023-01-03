@@ -5,7 +5,7 @@
     </calendar-title>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
       <flicking
-        :options="{ circular: false, moveType: ['freeScroll', { stopAtEdge: true }], align: 0, bound: true, bounce: 0 }"
+        :options="{ circular: false, moveType: 'snap', align: 0, bound: true, bounce: 0 }"
         :plugins="plugins"
       >
         <calendar-date
