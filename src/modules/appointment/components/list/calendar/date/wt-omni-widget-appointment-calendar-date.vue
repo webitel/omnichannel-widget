@@ -1,7 +1,7 @@
 <template>
     <section class="wt-omni-widget-appointment-calendar-date">
       <calendar-date-title>
-        {{ $d( new Date(this.value.date), 'appointments', localeDateKey) }}
+        {{ $d( new Date(value.date), 'appointments', localeDateKey) }}
       </calendar-date-title>
       <div class="wt-omni-widget-appointment-calendar-date__main">
         <calendar-time-item
@@ -41,13 +41,8 @@ export default {
   },
   computed: {
     localeDateKey() {
-      console.log(this.$i18n);
-      switch (this.$i18n.locale) {
-        case 'en': return 'en-US';
-        case 'ua': return 'uk-UA';
-        case 'ru': return 'ru-RU';
-        default: return 'en-US';
-      }
+      if (this.$i18n.locale === 'ua') return 'uk';
+      return this.$i18n.locale;
     },
   },
 };

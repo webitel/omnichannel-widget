@@ -19,10 +19,22 @@ export default {
   appointment: {
     form: {
       title: 'Personal information',
-      name: 'Name',
-      email: 'Email',
-      destination: 'Phone number',
-      message: 'Message',
+      name: {
+        label: 'Name',
+        placeholder: 'Enter your name',
+      },
+      email: {
+          label: 'Email',
+          placeholder: 'Enter your email',
+        },
+      destination: {
+        label: 'Phone number',
+        placeholder: 'Enter phone number',
+      },
+      message: {
+        label: 'Message',
+        placeholder: 'Enter your message...',
+      },
     },
     calendar: {
       title: 'Select Appointment Time',
