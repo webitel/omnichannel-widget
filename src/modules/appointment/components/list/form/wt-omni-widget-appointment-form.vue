@@ -4,14 +4,16 @@
       {{ $t('appointment.form.title') }}
     </div>
     <wt-input
-      :label="$t('appointment.form.name')"
+      :label="$t('appointment.form.name.label')"
+      :placeholder="$t('appointment.form.name.placeholder')"
       :value="value.name"
       :v="v.draft.name"
       required
       @input="handleInput({ prop: 'name', value: $event })"
     ></wt-input>
     <tel-input
-      :label="$t('appointment.form.destination')"
+      :label="$t('appointment.form.destination.label')"
+      :placeholder="$t('appointment.form.destination.placeholder')"
       :value="value.destination"
       :v="v.draft.destination"
       required
@@ -19,13 +21,15 @@
     ></tel-input>
     <wt-input
       v-if="showEmail"
-      :label="$t('appointment.form.email')"
+      :label="$t('appointment.form.email.label')"
+      :placeholder="$t('appointment.form.email.placeholder')"
       :value="value.email"
       @input="handleInput({ prop: 'email', value: $event })"
     ></wt-input>
     <wt-textarea
       v-if="showMessage"
-      :label="$t('appointment.form.message')"
+      :label="$t('appointment.form.message.label')"
+      :placeholder="$t('appointment.form.message.placeholder')"
       :value="value.message"
       stretched
       @input="handleInput({ prop: 'message', value: $event })"

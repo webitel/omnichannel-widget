@@ -19,10 +19,22 @@ export default {
   appointment: {
     form: {
       title: 'Персональна інформація',
-      name: 'Ім\'я',
-      email: 'Електронна пошта',
-      destination: 'Номер телефону',
-      message: 'Повідомлення',
+      name: {
+        label: 'Ім\'я',
+        placeholder: 'Введіть ваше ім\'я',
+      },
+      email: {
+        label: 'Електронна пошта',
+        placeholder: 'Введіть електронну пошту',
+      },
+      destination: {
+        label: 'Номер телефону',
+        placeholder: 'Введіть номер телефону',
+      },
+      message: {
+        label: 'Повідомлення',
+        placeholder: 'Введіть ваше повідомлення...',
+      },
     },
     calendar: {
       title: 'Оберіть час дзвінку',
