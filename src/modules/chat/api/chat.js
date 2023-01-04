@@ -1,4 +1,10 @@
-import instance from '../../../app/api/instance.axios';
+import axios from 'axios';
+// import instance from '../../../app/api/instance.axios';
+
+/*
+* WE DO NOT USE INSTANCE HERE CAUSE INSTANCE HAS CAMEL-SNAKE CONVERTERS
+* ON POST REQUEST WHICH ARE INVALIDATING SENT FILE
+* */
 
 const sendFile = async ({
                           uri,
@@ -10,13 +16,14 @@ const sendFile = async ({
   const headers = {
     'Content-Type': file.type,
   };
-  const response = await instance.post(url, file, {
+  const response = await axios.post(url, file, {
+    withCredentials: true,
     headers,
     onUploadProgress,
     cancelToken: cancelToken.token,
   });
 
-  return response;
+  return response.data;
 };
 
 export default {
