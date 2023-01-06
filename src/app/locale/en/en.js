@@ -41,8 +41,8 @@ export default {
       timeZone: 'Time Zone',
     },
     success: {
-      congratulations: 'Congratulations!',
-      title: 'You\'ve scheduled an appointment.',
+      title: 'Congratulations!\nYou\'ve scheduled an appointment',
+      subTitle: 'Call us and get the rates for your airfare before you set up an appointment',
       cancel: 'Cancel an appointment',
     },
     error: {

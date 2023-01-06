@@ -5,6 +5,7 @@
         v-model="draft"
         :v="$v"
       ></appointment-form>
+      {{ consoleState }}
       <appointment-calendar
         v-if="state.list"
         v-model="draft"
@@ -84,6 +85,10 @@ export default Vue.extend({
     disableSend() {
       this.$v.$touch();
       return this.$v.$error;
+    },
+    consoleState() {
+      console.log('this.state:', this.state);
+      return 'STATE';
     },
   },
   methods: {
