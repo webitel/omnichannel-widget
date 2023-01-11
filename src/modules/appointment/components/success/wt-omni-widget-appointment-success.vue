@@ -18,19 +18,19 @@
     <div class="wt-omni-widget-appointment-success__info-wrapper wt-omni-widget-appointment-success__info-wrapper--info">
       <p class="wt-omni-widget-appointment-success__info-line">
         <span class="wt-omni-widget-appointment-success__info-line-title">
-          {{ $t('appointment.form.name') }}:</span> {{ appointment.name }}
+          {{ $t('appointment.form.name.label') }}:</span> {{ appointment.name }}
       </p>
       <p class="wt-omni-widget-appointment-success__info-line">
         <span class="wt-omni-widget-appointment-success__info-line-title">
-          {{ $t('appointment.form.destination') }}:</span> {{ appointment.destination }}
+          {{ $t('appointment.form.destination.label') }}:</span> {{ appointment.destination }}
       </p>
       <p v-if="showEmail" class="wt-omni-widget-appointment-success__info-line">
         <span class="wt-omni-widget-appointment-success__info-line-title">
-          {{ $t('appointment.form.email') }}:</span> {{ appointment.variables.email }}
+          {{ $t('appointment.form.email.label') }}:</span> {{ appointment.variables.email }}
       </p>
       <p v-if="showMessage" class="wt-omni-widget-appointment-success__info-line">
         <span class="wt-omni-widget-appointment-success__info-line-title">
-          {{ $t('appointment.form.message') }}:</span> {{ appointment.variables.message }}
+          {{ $t('appointment.form.message.label') }}:</span> {{ appointment.variables.message }}
       </p>
     </div>
     <error-section />
