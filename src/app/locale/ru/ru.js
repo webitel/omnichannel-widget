@@ -42,7 +42,7 @@ export default {
     },
     success: {
       title: 'Поздравляем!',
-      subTitle: 'Вы запланировали звонок.',
+      subtitle: 'Вы запланировали звонок.',
       cancel: 'Отменить звонок',
     },
     error: {

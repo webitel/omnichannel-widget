@@ -1,9 +1,9 @@
 <template>
   <section class="wt-omni-widget-appointment-success">
     <p class="wt-omni-widget-appointment-success__title">
-      {{ this.config.successTitle || $t('appointment.success.title') }}
+      {{ this.config.appointment.successTitle || $t('appointment.success.title') }}
       <br>
-      {{ this.config.successSubtitle || $t('appointment.success.subTitle') }}
+      {{ this.config.appointment.successSubtitle || $t('appointment.success.subtitle') }}
     </p>
     <div class="wt-omni-widget-appointment-success__time-wrapper">
       <div class="wt-omni-widget-appointment-success__info-wrapper wt-omni-widget-appointment-success__info-wrapper--time">

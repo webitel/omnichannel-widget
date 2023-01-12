@@ -42,7 +42,7 @@ export default {
     },
     success: {
       title: 'Вітаємо!',
-      subTitle: 'Ви запланували дзвінок.',
+      subtitle: 'Ви запланували дзвінок.',
       cancel: 'Скасувати дзвінок',
     },
     error: {
