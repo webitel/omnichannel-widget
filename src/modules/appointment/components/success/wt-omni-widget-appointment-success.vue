@@ -1,9 +1,13 @@
 <template>
   <section class="wt-omni-widget-appointment-success">
-    <p class="wt-omni-widget-appointment-success__title">
-      {{ this.config.appointment.successTitle || $t('appointment.success.title') }}
+    <p v-if="config.appointment.successTitle || config.appointment.successSubtitle" class="wt-omni-widget-appointment-success__title">
+      {{ config.appointment.successTitle + '\n'}}
+      {{ config.appointment.successSubtitle }}
+    </p>
+    <p v-else class="wt-omni-widget-appointment-success__title">
+      {{ $t('appointment.success.title') }}
       <br>
-      {{ this.config.appointment.successSubtitle || $t('appointment.success.subtitle') }}
+      {{ $t('appointment.success.subtitle') }}
     </p>
     <div class="wt-omni-widget-appointment-success__time-wrapper">
       <div class="wt-omni-widget-appointment-success__info-wrapper wt-omni-widget-appointment-success__info-wrapper--time">

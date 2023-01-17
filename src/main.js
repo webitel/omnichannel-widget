@@ -12,8 +12,6 @@ export default new WtOmniWidget('#wt-omni-widget', {
     url: 'https://dev.webitel.com/appointments/dania-webchat',
     showEmailField: true,
     showMessageField: true,
-    successTitle: '',
-    successSubtitle: '',
   },
   alternativeChannels: {
     [ChatChannel.FACEBOOK]: {},
