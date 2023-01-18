@@ -1,14 +1,27 @@
 <template>
   <section class="wt-omni-widget-appointment-success">
-    <p v-if="config.appointment.successTitle || config.appointment.successSubtitle" class="wt-omni-widget-appointment-success__title">
-      {{ config.appointment.successTitle + '\n'}}
-      {{ config.appointment.successSubtitle }}
-    </p>
-    <p v-else class="wt-omni-widget-appointment-success__title">
-      {{ $t('appointment.success.title') }}
-      <br>
-      {{ $t('appointment.success.subtitle') }}
-    </p>
+    <div v-if="config.appointment.successTitle || config.appointment.successSubtitle"
+       class="wt-omni-widget-appointment-success__title-wrap"
+    >
+      <p v-if="config.appointment.successTitle"
+         class="wt-omni-widget-appointment-success__title"
+      >
+        {{ config.appointment.successTitle }}
+      </p>
+      <p v-if="config.appointment.successSubtitle"
+         class="wt-omni-widget-appointment-success__subtitle"
+      >
+        {{ config.appointment.successSubtitle }}
+      </p>
+    </div>
+    <div v-else class="wt-omni-widget-appointment-success__title-wrap">
+      <p class="wt-omni-widget-appointment-success__title">
+        {{ $t('appointment.success.title') }}
+      </p>
+      <p class="wt-omni-widget-appointment-success__subtitle">
+        {{ $t('appointment.success.subtitle') }}
+      </p>
+    </div>
     <div class="wt-omni-widget-appointment-success__time-wrapper">
       <div class="wt-omni-widget-appointment-success__info-wrapper wt-omni-widget-appointment-success__info-wrapper--time">
         <img alt="canedar" src="../../assets/appointment-success-calendar.svg">
@@ -107,9 +120,19 @@ export default {
     gap: 32px;
   }
 
+  .wt-omni-widget-appointment-success__title-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px
+  }
+
   .wt-omni-widget-appointment-success__title {
     @extend %typo-heading-lg;
-    text-align: center;
+  }
+
+  .wt-omni-widget-appointment-success__subtitle {
+    @extend %typo-body-md;
   }
 
   .wt-omni-widget-appointment-success__info-wrapper {
