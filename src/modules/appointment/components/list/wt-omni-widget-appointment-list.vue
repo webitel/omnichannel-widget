@@ -9,7 +9,6 @@
         v-if="state.list"
         v-model="draft"
         :calendar="state.list"
-        :locale="$i18n.locale"
         :time-zone="state.timezone"
       ></appointment-calendar>
     </div>

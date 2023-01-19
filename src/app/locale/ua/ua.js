@@ -41,8 +41,8 @@ export default {
       timeZone: 'Часовий пояс',
     },
     success: {
-      congratulations: 'Вітаємо!',
-      title: 'Ви запланували дзвінок.',
+      title: 'Вітаємо!',
+      subtitle: 'Ви запланували дзвінок.',
       cancel: 'Скасувати дзвінок',
     },
     error: {
