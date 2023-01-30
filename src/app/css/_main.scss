@@ -39,6 +39,15 @@
     background: transparent;
     cursor: pointer;
     border: none;
+    color: unset; // reset
+    display: unset; // reset
+    font-size: unset; // reset
+    font-weight: unset; // reset
+    letter-spacing: unset; // reset
+    min-width: unset; // reset
+    text-align: unset; // reset
+    text-decoration: unset; // reset
+    text-transform: unset; // reset
   }
 
   p {

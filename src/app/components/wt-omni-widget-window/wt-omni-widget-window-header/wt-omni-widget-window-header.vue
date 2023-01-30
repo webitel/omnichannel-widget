@@ -10,7 +10,8 @@
     <div
       v-if="isBuildInfo"
       class="version-info"
-    >v{{buildInfo.release}}--{{buildInfo.build}}</div>
+    >v{{ buildInfo.release }}--{{ buildInfo.build }}
+    </div>
     <wt-icon-btn
       icon="close"
       size="sm"
@@ -48,6 +49,8 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-window-header {
+    position: relative; // reset styles
+    min-height: auto; // reset styles
     display: flex;
     align-items: center;
     justify-content: space-between;
