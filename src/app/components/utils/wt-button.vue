@@ -44,6 +44,7 @@ export default {
     --btn-padding: 11px 19px;
     //--btn-border: 1px solid;
     @extend %typo-btn;
+    text-align: center;
     position: relative;
     display: block;
     width: fit-content;
