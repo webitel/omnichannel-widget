@@ -29,12 +29,6 @@ describe('chat module: actions', () => {
     .toHaveBeenCalledWith('SET_MESSAGE_CLIENT', messageClient);
   });
 
-  it('SUBSCRIBE_TO_MESSAGES subscribes to MessageType.CLOSED', async () => {
-    await chat.actions.SUBSCRIBE_TO_MESSAGES(context, { messageClient });
-    expect(context.commit.mock.calls.some(([, params]) => deepequal(params.event, [MessageType.CLOSED])))
-    .toBe(true);
-  });
-
   it('OPEN_SESSION calls messageClient openSocket()', () => {
     messageClient.openSocket = jest.fn();
     chat.actions.OPEN_SESSION(context);
@@ -107,7 +101,8 @@ describe('chat module: actions', () => {
     expect(context.dispatch.mock.calls[index][1]).toBeInstanceOf(Message);
   });
 
-  it('ON_WEBSOCKET_INFO dispatches ADD_MESSAGE with CLOSED MessageType, if error code is 1006', async () => {
+  // no need in INFO subscription for now
+  it.skip('ON_WEBSOCKET_INFO dispatches ADD_MESSAGE with CLOSED MessageType, if error code is 1006', async () => {
     const info = { data: { code: 1006 } };
     // const message = new Message({ type: MessageType.CLOSED });
     await chat.actions.ON_WEBSOCKET_INFO(context, info);
@@ -245,10 +240,6 @@ describe('chat module: actions', () => {
     .toEqual([
       MessageType.TEXT,
       MessageType.FILE,
-      MessageType.CONTACT,
-      MessageType.JOINED,
-      MessageType.LEFT,
-      MessageType.CLOSED,
     ]);
   });
 });

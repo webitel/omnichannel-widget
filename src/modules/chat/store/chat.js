@@ -4,6 +4,7 @@ import i18n from '../../../app/locale/i18n';
 import ChatAPI from '../api/chat';
 import Message from '../classes/Message.class';
 import MessageType from '../enums/MessageType.enum';
+import MessageEvents from '../../../app/websocket/enums/MessageEvents.enum';
 import bToMb from '../scripts/bToMb';
 
 const triggerListeners = ({
@@ -24,10 +25,6 @@ const state = {
     [MessageType.INIT]: [],
     [MessageType.TEXT]: [],
     [MessageType.FILE]: [],
-    [MessageType.CONTACT]: [],
-    [MessageType.JOINED]: [],
-    [MessageType.LEFT]: [],
-    [MessageType.CLOSED]: [],
   },
 };
 
@@ -51,9 +48,9 @@ const getters = {
 
 const actions = {
   SUBSCRIBE_TO_MESSAGES: (context, { messageClient }) => {
-    messageClient.addEventListener('message', (msg) => context.dispatch('ON_WEBSOCKET_MESSAGE', msg));
-    messageClient.addEventListener('error', (msg) => context.dispatch('ON_WEBSOCKET_ERROR', msg));
-    messageClient.addEventListener('info', (msg) => context.dispatch('ON_WEBSOCKET_INFO', msg));
+    messageClient.addEventListener(MessageEvents.MESSAGE, (msg) => context.dispatch('ON_WEBSOCKET_MESSAGE', msg));
+    messageClient.addEventListener(MessageEvents.ERROR, (msg) => context.dispatch('ON_WEBSOCKET_ERROR', msg));
+    messageClient.addEventListener(MessageEvents.CLOSE, (msg) => context.dispatch('ON_WEBSOCKET_CLOSE', msg));
 
     context.commit('SET_MESSAGE_CLIENT', messageClient);
 
@@ -61,8 +58,6 @@ const actions = {
       event: [
         MessageType.TEXT,
         MessageType.FILE,
-        MessageType.CONTACT,
-        MessageType.CLOSED,
       ],
       callback: (data) => {
         if (!context.getters.IS_MY_MESSAGE(data)) {
@@ -70,11 +65,6 @@ const actions = {
         }
         return null;
       },
-    });
-
-    context.commit('ADD_LISTENER', {
-      event: [MessageType.CLOSED],
-      callback: () => context.dispatch('SET_CONNECTION_STATUS', true), // set "true" to isConnectionClosed
     });
 
     return context.dispatch('OPEN_SESSION');
@@ -98,12 +88,9 @@ const actions = {
     await context.dispatch('TRIGGER_LISTENERS', message);
   },
 
-  ON_WEBSOCKET_INFO: async (context, { data }) => {
-    if (data.code !== 1006) return;
-    const message = new Message({ type: MessageType.CLOSED });
-    await context.dispatch('ADD_MESSAGE', message);
-    await context.dispatch('TRIGGER_LISTENERS', message);
-  },
+  ON_WEBSOCKET_CLOSE: (context) => (
+    context.dispatch('SET_CONNECTION_STATUS', true) // set "true" to isConnectionClosed
+  ),
 
   ON_WEBSOCKET_MESSAGE: (context, msg) => (
     !msg.data.type && !msg.data.message
@@ -302,10 +289,6 @@ const actions = {
       event: [
         MessageType.TEXT,
         MessageType.FILE,
-        MessageType.CONTACT,
-        MessageType.JOINED,
-        MessageType.LEFT,
-        MessageType.CLOSED,
       ],
       callback,
     });

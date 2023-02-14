@@ -17,17 +17,6 @@ export default {
   computed: {
     eventMessage() {
       switch (this.message.type) {
-        case MessageType.JOINED:
-          return this.$t('chat.events.joined', {
-            members: this.message.newChatMembers?.map((member) => (member.username || member.firstName))
-              .join(', '),
-          });
-        case MessageType.LEFT:
-          return this.$t('chat.events.left', {
-            member: this.message.leftChatMember?.username || this.message.leftChatMember?.firstName,
-          });
-        case MessageType.CLOSED:
-          return this.$t('chat.events.closed');
         case MessageType.ERROR:
           return this.$t('chat.events.error', { error: this.message.error.text });
         default:

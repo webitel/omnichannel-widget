@@ -12,6 +12,7 @@ export default class MessageClient {
     [MessageEvents.MESSAGE]: [],
     [MessageEvents.ERROR]: [(e) => console.error(e)],
     [MessageEvents.WS_STATE]: [],
+    [MessageEvents.CLOSE]: [],
   };
 
   openSocket() {

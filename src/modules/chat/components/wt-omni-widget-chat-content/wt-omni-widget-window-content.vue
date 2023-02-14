@@ -40,10 +40,6 @@ export default {
     componentMap: {
       [MessageType.TEXT]: 'message',
       [MessageType.FILE]: 'message',
-      [MessageType.JOINED]: 'event-message',
-      [MessageType.LEFT]: 'event-message',
-      [MessageType.CLOSED]: 'event-message',
-      [MessageType.CONTACT]: 'event-message',
       [MessageType.ERROR]: 'event-message',
     },
   }),
