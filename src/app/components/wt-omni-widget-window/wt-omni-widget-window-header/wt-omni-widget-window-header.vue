@@ -51,6 +51,7 @@ export default {
   .wt-omni-widget-window-header {
     position: relative; // reset styles
     min-height: auto; // reset styles
+    width: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
