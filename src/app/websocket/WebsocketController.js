@@ -31,7 +31,7 @@ export default class WebsocketController {
 
   _wsOnClose(event) {
     this._callback({
-      type: MessageEvents.INFO,
+      type: MessageEvents.CLOSE,
       data: { code: event.code, reason: event.reason },
     });
   }

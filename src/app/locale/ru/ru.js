@@ -19,26 +19,38 @@ export default {
   appointment: {
     form: {
       title: 'Персональная информация',
-      name: 'Имя',
-      email: 'Электронная почта',
-      destination: 'Номер телефона',
-      message: 'Сообщение',
+      name: {
+        label: 'Имя',
+        placeholder: 'Введите ваше имя',
+      },
+      email: {
+        label: 'Электронная почта',
+        placeholder: 'Введите електронную почту',
+      },
+      destination: {
+        label: 'Номер телефона',
+        placeholder: 'Введите номер телефона',
+      },
+      message: {
+        label: 'Сообщение',
+        placeholder: 'Введите ваше сообщение...',
+      },
     },
     calendar: {
       title: 'Выберите время звонка',
       timeZone: 'Часовой пояс',
     },
     success: {
-      congratulations: 'Поздравляем!',
-      title: 'Вы запланировали звонок.',
+      title: 'Поздравляем!',
+      subtitle: 'Вы запланировали звонок.',
       cancel: 'Отменить звонок',
     },
     error: {
-      api_valid_origin: 'Некорректний origin запиту',
-      appointment_valid_date: 'Некоректний слот дати або часу',
-      store_sql_member_appointment_widget_app_error: 'Помилка бази даних',
-      store_sql_member_appointment_get_app_error: 'Зарезервовано, але помилка бази даних',
-      store_sql_member_appointment_cancel_app_error: 'Помилка скасування',
+      api_valid_origin: 'Некорректный origin запроса',
+      appointment_valid_date: 'Некорректный слот времени или даты',
+      store_sql_member_appointment_widget_app_error: 'Ошибка базы данных',
+      store_sql_member_appointment_get_app_error: 'Зарезервировано, но ошибка базы данных',
+      store_sql_member_appointment_cancel_app_error: 'Ошибка отмены',
     },
   },
   errors: {

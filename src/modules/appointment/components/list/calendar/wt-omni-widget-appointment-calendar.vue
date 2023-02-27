@@ -5,7 +5,7 @@
     </calendar-title>
     <div class="wt-omni-widget-appointment-calendar__wrapper">
       <flicking
-        :options="{ circular: false, moveType: ['freeScroll', { stopAtEdge: true }], align: 0, bound: true, bounce: 0 }"
+        :options="{ circular: false, moveType: 'snap', align: 0, bound: true, bounce: 0 }"
         :plugins="plugins"
       >
         <calendar-date
@@ -15,8 +15,8 @@
           v-for="({ date, times }) of calendar"
           :key="date"
           ref="date"
-          :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
           :value="{ date, times }"
+          :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
           @select="selectTime"
         ></calendar-date>
       </flicking>
@@ -86,7 +86,6 @@ export default {
       overflow-y: auto;
     }
     &::v-deep .flicking-viewport {
-      //height: fit-content;
       @extend %wt-scrollbar;
       overflow-y: auto;
     }
@@ -96,7 +95,6 @@ export default {
     }
 
     &::v-deep .wt-omni-widget-appointment-calendar-date {
-
       &--count-1 {
         width: 100%;
       }

@@ -1,10 +1,27 @@
 <template>
   <section class="wt-omni-widget-appointment-success">
-    <p class="wt-omni-widget-appointment-success__title">
-      {{ $t('appointment.success.congratulations') }}
-      <br>
-      {{ $t('appointment.success.title') }}
-    </p>
+    <div v-if="config.appointment.successTitle || config.appointment.successSubtitle"
+       class="wt-omni-widget-appointment-success__title-wrap"
+    >
+      <p v-if="config.appointment.successTitle"
+         class="wt-omni-widget-appointment-success__title"
+      >
+        {{ config.appointment.successTitle }}
+      </p>
+      <p v-if="config.appointment.successSubtitle"
+         class="wt-omni-widget-appointment-success__subtitle"
+      >
+        {{ config.appointment.successSubtitle }}
+      </p>
+    </div>
+    <div v-else class="wt-omni-widget-appointment-success__title-wrap">
+      <p class="wt-omni-widget-appointment-success__title">
+        {{ $t('appointment.success.title') }}
+      </p>
+      <p class="wt-omni-widget-appointment-success__subtitle">
+        {{ $t('appointment.success.subtitle') }}
+      </p>
+    </div>
     <div class="wt-omni-widget-appointment-success__time-wrapper">
       <div class="wt-omni-widget-appointment-success__info-wrapper wt-omni-widget-appointment-success__info-wrapper--time">
         <img alt="canedar" src="../../assets/appointment-success-calendar.svg">
@@ -18,19 +35,19 @@
     <div class="wt-omni-widget-appointment-success__info-wrapper wt-omni-widget-appointment-success__info-wrapper--info">
       <p class="wt-omni-widget-appointment-success__info-line">
         <span class="wt-omni-widget-appointment-success__info-line-title">
-          {{ $t('appointment.form.name') }}:</span> {{ appointment.name }}
+          {{ $t('appointment.form.name.label') }}:</span> {{ appointment.name }}
       </p>
       <p class="wt-omni-widget-appointment-success__info-line">
         <span class="wt-omni-widget-appointment-success__info-line-title">
-          {{ $t('appointment.form.destination') }}:</span> {{ appointment.destination }}
+          {{ $t('appointment.form.destination.label') }}:</span> {{ appointment.destination }}
       </p>
       <p v-if="showEmail" class="wt-omni-widget-appointment-success__info-line">
         <span class="wt-omni-widget-appointment-success__info-line-title">
-          {{ $t('appointment.form.email') }}:</span> {{ appointment.variables.email }}
+          {{ $t('appointment.form.email.label') }}:</span> {{ appointment.variables.email }}
       </p>
       <p v-if="showMessage" class="wt-omni-widget-appointment-success__info-line">
         <span class="wt-omni-widget-appointment-success__info-line-title">
-          {{ $t('appointment.form.message') }}:</span> {{ appointment.variables.message }}
+          {{ $t('appointment.form.message.label') }}:</span> {{ appointment.variables.message }}
       </p>
     </div>
     <error-section />
@@ -103,9 +120,19 @@ export default {
     gap: 32px;
   }
 
+  .wt-omni-widget-appointment-success__title-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px
+  }
+
   .wt-omni-widget-appointment-success__title {
     @extend %typo-heading-lg;
-    text-align: center;
+  }
+
+  .wt-omni-widget-appointment-success__subtitle {
+    @extend %typo-body-md;
   }
 
   .wt-omni-widget-appointment-success__info-wrapper {

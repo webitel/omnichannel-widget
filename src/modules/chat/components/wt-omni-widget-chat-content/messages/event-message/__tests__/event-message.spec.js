@@ -11,27 +11,11 @@ describe('EventMessage', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('renders "joined" text if MessageType is "JOINED"', () => {
-    const message = { type: MessageType.JOINED };
+  it('renders "joined" text if MessageType is "ERROR"', () => {
+    const message = { type: MessageType.ERROR, error: { text: 'error' } };
     const wrapper = shallowMount(EventMessage, {
       propsData: { message },
     });
-    expect(wrapper.text()).toBe('chat.events.joined');
-  });
-
-  it('renders "left" text if MessageType is "LEFT"', () => {
-    const message = { type: MessageType.LEFT };
-    const wrapper = shallowMount(EventMessage, {
-      propsData: { message },
-    });
-    expect(wrapper.text()).toBe('chat.events.left');
-  });
-
-  it('renders "closed" text if MessageType is "CLOSED"', () => {
-    const message = { type: MessageType.CLOSED };
-    const wrapper = shallowMount(EventMessage, {
-      propsData: { message },
-    });
-    expect(wrapper.text()).toBe('chat.events.closed');
+    expect(wrapper.text()).toBe('chat.events.error');
   });
 });

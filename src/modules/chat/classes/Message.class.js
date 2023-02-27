@@ -31,10 +31,6 @@ export default class Message {
       case MessageType.ERROR:
       case MessageType.TEXT:
       case MessageType.FILE:
-      case MessageType.CONTACT:
-      case MessageType.JOINED:
-      case MessageType.LEFT:
-      case MessageType.CLOSED:
       default:
         Object.assign(this, message);
     }
