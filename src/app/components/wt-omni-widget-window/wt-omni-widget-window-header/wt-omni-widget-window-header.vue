@@ -52,6 +52,7 @@ export default {
     position: relative; // reset styles
     min-height: auto; // reset styles
     height: auto; // reset
+    min-width: auto; // reset
     width: auto;
     display: flex;
     align-items: center;
