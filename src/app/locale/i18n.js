@@ -1,11 +1,8 @@
-import Vue from 'vue';
-import VueI18n from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 import en from './en/en';
 import ua from './ua/ua';
 import ru from './ru/ru';
 import datetimeFormats from './dateTimeFormats';
-
-Vue.use(VueI18n);
 
 const messages = {
   en,
@@ -13,7 +10,7 @@ const messages = {
   ru,
 };
 
-export default new VueI18n({
+export default createI18n({
   locale: 'en',
   fallbackLocale: 'en',
   datetimeFormats,

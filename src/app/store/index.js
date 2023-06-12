@@ -1,12 +1,9 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 
 // modules
 import appointment from '../../modules/appointment/store/appointment';
 import chat from '../../modules/chat/store/chat';
 import notifications from '../../modules/notifications/notifications';
-
-Vue.use(Vuex);
 
 const state = {
   config: {},
@@ -34,7 +31,7 @@ const mutations = {
   },
 };
 
-export default new Vuex.Store({
+export default createStore({
   state,
   actions,
   mutations,

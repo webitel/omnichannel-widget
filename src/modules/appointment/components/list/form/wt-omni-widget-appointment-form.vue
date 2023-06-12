@@ -6,7 +6,7 @@
     <wt-input
       :label="$t('appointment.form.name.label')"
       :placeholder="$t('appointment.form.name.placeholder')"
-      :value="value.name"
+      :value="modelValue.name"
       :v="v.draft.name"
       required
       @input="handleInput({ prop: 'name', value: $event })"
@@ -14,7 +14,7 @@
     <tel-input
       :label="$t('appointment.form.destination.label')"
       :placeholder="$t('appointment.form.destination.placeholder')"
-      :value="value.destination"
+      :value="modelValue.destination"
       :v="v.draft.destination"
       required
       @input="handleInput({ prop: 'destination', value: $event })"
@@ -23,14 +23,14 @@
       v-if="showEmail"
       :label="$t('appointment.form.email.label')"
       :placeholder="$t('appointment.form.email.placeholder')"
-      :value="value.email"
+      :value="modelValue.email"
       @input="handleInput({ prop: 'email', value: $event })"
     ></wt-input>
     <wt-textarea
       v-if="showMessage"
       :label="$t('appointment.form.message.label')"
       :placeholder="$t('appointment.form.message.placeholder')"
-      :value="value.message"
+      :value="modelValue.message"
       stretched
       @input="handleInput({ prop: 'message', value: $event })"
     ></wt-textarea>
@@ -44,7 +44,7 @@ export default {
   name: 'wt-omni-widget-appointment-form',
   components: { TelInput },
   props: {
-    value: {
+    modelValue: {
       type: Object,
       required: true,
     },
@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     handleInput({ prop, value }) {
-      const draft = { ...this.value };
+      const draft = { ...this.modelValue };
       draft[prop] = prop !== 'name' ? value.trim() : value.trimStart().replace(/\s{2,}/g, ' '); // leave last space if it`s name input;
       this.$emit('input', draft);
     },

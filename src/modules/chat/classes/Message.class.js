@@ -10,9 +10,9 @@ export default class Message {
 
   constructor(msg) {
     if (msg.id) {
-      this.#initMessage(msg);
+      this.initMessage(msg);
     } else {
-      this.#initPreview(msg);
+      this.initPreview(msg);
     }
   }
 
@@ -26,7 +26,7 @@ export default class Message {
     return MessageStatus.SENT;
   }
 
-  #initMessage(message) {
+  initMessage(message) {
     switch (message.type) {
       case MessageType.ERROR:
       case MessageType.TEXT:
@@ -36,7 +36,7 @@ export default class Message {
     }
   }
 
-  #initPreview({ seq, ...rest }) {
+  initPreview({ seq, ...rest }) {
     this.createdAt = new Date().setSeconds(0);
     Object.assign(this, rest);
     this.seq = seq;

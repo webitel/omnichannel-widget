@@ -3,7 +3,7 @@
     <div class="wt-omni-widget-appointment-list__wrap">
       <appointment-form
         v-model="draft"
-        :v="$v"
+        :v="v$"
       ></appointment-form>
       <appointment-calendar
         v-if="state.list"
@@ -24,9 +24,8 @@
 <script>
 import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
 import { isValidPhoneNumber } from 'libphonenumber-js';
-import Vue from 'vue';
-import { validationMixin } from 'vuelidate';
-import { required } from 'vuelidate/lib/validators';
+import { useVuelidate } from '@vuelidate/core';
+import { required } from '@vuelidate/validators';
 import { mapActions, mapState } from 'vuex';
 import ErrorSection from '../_shared/error/error-section.vue';
 import AppointmentCalendar from './calendar/wt-omni-widget-appointment-calendar.vue';
@@ -46,9 +45,8 @@ const generateAppointmentSchema = ({
   if (showMessageField) appointment.message = '';
   return appointment;
 };
-export default Vue.extend({
+export default {
   name: 'wt-omni-widget-appointment-list',
-  mixins: [validationMixin],
   components: {
     AppointmentForm,
     AppointmentCalendar,
@@ -60,6 +58,9 @@ export default Vue.extend({
       required: true,
     },
   },
+  setup: () => ({
+    v$: useVuelidate(),
+  }),
   data: () => ({
     draft: {},
   }),
@@ -81,8 +82,8 @@ export default Vue.extend({
       },
     }),
     disableSend() {
-      this.$v.$touch();
-      return this.$v.$error;
+      this.v$.$touch();
+      return this.v$.$error;
     },
   },
   methods: {
@@ -101,7 +102,7 @@ export default Vue.extend({
   created() {
     this.initDraft();
   },
-});
+};
 </script>
 
 <style lang="scss" scoped>

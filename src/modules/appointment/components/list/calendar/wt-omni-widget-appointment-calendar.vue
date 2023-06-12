@@ -16,7 +16,7 @@
           :key="date"
           ref="date"
           :value="{ date, times }"
-          :selected-value="{ date:value.scheduleDate, time:value.scheduleTime }"
+          :selected-value="{ date:modelValue.scheduleDate, time:modelValue.scheduleTime }"
           @select="selectTime"
         ></calendar-date>
       </flicking>
@@ -28,7 +28,10 @@
 
 import { Arrow } from '@egjs/flicking-plugins';
 import '@egjs/flicking-plugins/dist/arrow.css';
-import { Flicking } from '@egjs/vue-flicking';
+import Flicking from '@egjs/vue3-flicking';
+// import VueFlicking from '@egjs/vue-flicking';
+// import '@egjs/vue-flicking/dist/flicking.css';
+// import '@egjs/vue-flicking/dist/flicking-inline.css';
 import CalendarDate from './date/wt-omni-widget-appointment-calendar-date.vue';
 import CalendarTitle from './wt-omni-widget-appointment-calendar-title.vue';
 
@@ -40,7 +43,7 @@ export default {
     Flicking,
   },
   props: {
-    value: {
+    modelValue: {
       type: Object,
       required: true,
     },
@@ -60,7 +63,7 @@ export default {
       time,
     }) {
       const value = {
-        ...this.value,
+        ...this.modelValue,
         scheduleDate: date,
         scheduleTime: time,
       };
@@ -71,6 +74,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@egjs/vue3-flicking/dist/flicking.css';
+
 #wt-omni-widget {
   .wt-omni-widget-appointment-calendar {
     display: flex;

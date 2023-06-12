@@ -3,7 +3,7 @@
     :class="{ 'wt-omni-widget-buttons-menu--expanded': isExpanded }"
     class="wt-omni-widget-buttons-menu"
   >
-    <transition-expand>
+<!--    <transition-expand>-->
       <div
         v-if="buttons && isExpanded"
         class="wt-omni-widget-buttons-menu__hidden-buttons-wrapper"
@@ -16,7 +16,7 @@
           @click="open"
         ></wt-omni-widget-button>
       </div>
-    </transition-expand>
+<!--    </transition-expand>-->
     <wt-omni-widget-button
       :type="visibleBtn.type"
       @click="handleBtnClick"
@@ -26,7 +26,7 @@
 
 <script>
 import isEmpty from '@webitel/ui-sdk/src/scripts/isEmpty';
-import { TransitionExpand } from 'vue-transition-expand';
+// import { TransitionExpand } from 'vue-transition-expand';
 import ChatChannel from '../../enum/ChatChannel.enum';
 import WtOmniWidgetButton from './wt-omni-widget-button.vue';
 
@@ -34,7 +34,7 @@ export default {
   name: 'wt-omni-widget-buttons-menu',
   components: {
     WtOmniWidgetButton,
-    TransitionExpand,
+    // TransitionExpand,
   },
   data: () => ({
     ChatChannel,

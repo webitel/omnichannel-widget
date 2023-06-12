@@ -196,7 +196,7 @@ const actions = {
     for (const file of files) {
       try {
         if (file.size > context.state.mediaMaxSize) {
-          throw new RangeError(i18n.t('errors.fileTooLarge', {
+          throw new RangeError(i18n.global.t('errors.fileTooLarge', {
             file: file.name,
             maxSize: bToMb(context.state.mediaMaxSize),
           }));

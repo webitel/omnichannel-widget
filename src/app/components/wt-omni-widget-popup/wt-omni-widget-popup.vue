@@ -23,6 +23,7 @@ export default {
     WtOmniWidgetHeader,
     TheAppointment,
   },
+  inject: ['$eventBus'],
   methods: {
     close() {
       this.$emit('close');

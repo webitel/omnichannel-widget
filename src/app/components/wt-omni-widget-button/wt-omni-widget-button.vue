@@ -16,7 +16,7 @@
     v-else
     :class="`wt-omni-widget-btn--${type}`"
     class="wt-omni-widget-btn"
-    @click.prevent="$emit('click', type)"
+    @click="$emit('click', type)"
   >
     <wt-icon
       :icon="type"
@@ -39,6 +39,7 @@ export default {
       type: String,
     },
   },
+  emits: ['click'],
 };
 </script>
 

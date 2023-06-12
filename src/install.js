@@ -1,32 +1,30 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
 import merge from 'deepmerge';
-import PortalVue from 'portal-vue';
-import VueFlicking from '@egjs/vue-flicking';
+import eventBus from '@webitel/ui-sdk/src/scripts/eventBus';
 import App from './app/app.vue';
 import store from './app/store';
 import i18n from './app/locale/i18n';
-import '@egjs/vue-flicking/dist/flicking.css';
-import '@egjs/vue-flicking/dist/flicking-inline.css';
-import eventBus from '@webitel/ui-sdk/src/scripts/eventBus';
 
 import globalConfigMixin from './app/mixins/globalConfigMixin';
 
 import './app/assets/icons/sprite';
 import './app/css/fonts/_fonts.scss';
 
-import './app/components/utils';
-import './app/webitel-ui/components';
+import Components from './app/components/utils';
+import WebitelUIComponents from './app/webitel-ui/components';
 
-Vue.config.productionTip = false;
+const app = createApp(App)
+.use(store)
+.use(i18n)
+.mixin(globalConfigMixin)
+.provide('$eventBus', eventBus);
 
-Vue.use(PortalVue, VueFlicking);
-Vue.mixin(globalConfigMixin);
-Vue.prototype.$eventBus = eventBus;
+Object.keys(Components).forEach((name) => {
+  app.component(name, Components[name]);
+});
 
-const Instance = new Vue({
-  store,
-  i18n,
-  render: (h) => h(App),
+Object.keys(WebitelUIComponents).forEach((name) => {
+  app.component(name, WebitelUIComponents[name]);
 });
 
 const devConfig = {
@@ -56,7 +54,7 @@ export default class WtOmniWidget {
 
   async mountApp({ selector, config }) {
     await this.setConfig(config);
-    Instance.$mount(selector);
+    app.mount(selector);
   }
 
   // eslint-disable-next-line class-methods-use-this

@@ -1,5 +1,5 @@
 <template>
-  <portal to="in-window-popup">
+  <teleport to="#wt-omni-widget-teleport-in-window-popup">
     <div class="wt-omni-widget-file-upload-preview-popup">
       <file
         v-for="(file, index) of files"
@@ -19,7 +19,7 @@
         </wt-button>
       </footer>
     </div>
-  </portal>
+  </teleport>
 </template>
 
 <script>

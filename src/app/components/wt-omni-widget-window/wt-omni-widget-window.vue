@@ -1,6 +1,6 @@
 <template>
   <section class="wt-omni-widget-window">
-    <portal-target name="in-window-popup"></portal-target>
+    <div id="wt-omni-widget-teleport-in-window-popup"></div>
     <wt-omni-widget-header
       @close="$emit('close')"
     ></wt-omni-widget-header>

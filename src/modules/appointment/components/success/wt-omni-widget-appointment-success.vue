@@ -75,6 +75,7 @@ export default {
   components: {
     ErrorSection,
   },
+  inject: ['$eventBus'],
   props: {
     namespace: {
       type: String,

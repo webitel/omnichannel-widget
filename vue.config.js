@@ -51,24 +51,40 @@ module.exports = {
     },
   },
   chainWebpack: (config) => {
+    // config.resolve.alias.set('vue', '@vue/compat');
+    //
+    // config.module
+    // .rule('vue')
+    // .use('vue-loader')
+    // .tap((options) => {
+    //   return {
+    //     ...options,
+    //     compilerOptions: {
+    //       compatConfig: {
+    //         MODE: 2,
+    //       },
+    //     },
+    //   };
+    // });
+
     config.plugin('polyfills').use(NodePolyfillPlugin);
 
     config.module.rule('js').exclude.add(/\.worker\.js$/);
 
     config.module
-          .rule('fonts')
-          .type('asset/inline')
-          .set('generator', {});
+    .rule('fonts')
+    .type('asset/inline')
+    .set('generator', {});
 
     config.module
-          .rule('svg')
-          .exclude.add(/^(.*sprite).*\.svg/); // same as in svg-sprite-loader
+    .rule('svg')
+    .exclude.add(/^(.*sprite).*\.svg/); // same as in svg-sprite-loader
 
     config.module
-          .rule('svg-sprite')
-          .test(/^(.*sprite).*\.svg/) // same as in svg-url-loader
-          .use('svg-sprite-loader')
-          .loader('svg-sprite-loader')
+    .rule('svg-sprite')
+    .test(/^(.*sprite).*\.svg/) // same as in svg-url-loader
+    .use('svg-sprite-loader')
+    .loader('svg-sprite-loader')
     .options({
       /*
       https://my.webitel.com/browse/WPRO-621
