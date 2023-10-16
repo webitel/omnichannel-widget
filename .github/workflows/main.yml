@@ -1,4 +1,4 @@
-name: Workspace CI
+name: Widget CI
 
 on:
   push:
