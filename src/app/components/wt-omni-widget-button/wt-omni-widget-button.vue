@@ -33,7 +33,7 @@ export default {
     type: {
       type: String,
       required: true,
-      options: ['chat', 'appointment', 'email', 'whatsapp', 'facebook', 'viber', 'telegram', 'open'],
+      options: ['chat', 'appointment', 'email', 'whatsapp', 'messenger', 'viber', 'telegram', 'open'],
     },
     url: {
       type: String,
@@ -48,7 +48,7 @@ export default {
   $telegram: #7AA5DA;
   $email: #44ADFB;
   $whatsapp: #75B73B;
-  $facebook: #4189BE;
+  $messenger: #4189BE;
 
   .wt-omni-widget-btn {
     width: 60px;
@@ -82,8 +82,8 @@ export default {
     &--email {
       background: $email;
     }
-    &--facebook {
-      background: $facebook;
+    &--messenger {
+      background: $messenger;
     }
   }
 

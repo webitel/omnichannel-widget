@@ -2,7 +2,7 @@ const ChatChannel = Object.freeze({
   VIBER: 'viber',
   WHATSAPP: 'whatsapp',
   TELEGRAM: 'telegram',
-  FACEBOOK: 'facebook',
+  MESSENGER: 'messenger',
   EMAIL: 'email',
   CHAT: 'chat',
   APPOINTMENT: 'appointment',
