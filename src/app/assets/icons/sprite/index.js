@@ -5,7 +5,7 @@ import './wt-omni-widget-chat.svg';
 import './wt-omni-widget-close.svg';
 import './wt-omni-widget-email.svg';
 import './wt-omni-widget-emoji.svg';
-import './wt-omni-widget-facebook.svg';
+import './wt-omni-widget-messenger.svg';
 import './wt-omni-widget-link.svg';
 import './wt-omni-widget-send-arrow.svg';
 import './wt-omni-widget-telegram.svg';

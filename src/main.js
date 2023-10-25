@@ -15,7 +15,7 @@ export default new WtOmniWidget('#wt-omni-widget', {
     successSubtitle: 'some',
   },
   alternativeChannels: {
-    [ChatChannel.FACEBOOK]: {},
+    [ChatChannel.MESSENGER]: {},
     [ChatChannel.TELEGRAM]: {},
     [ChatChannel.VIBER]: 'viber://pa?chatURI=fregatcom',
   },
