@@ -42,10 +42,13 @@ export default {
   }),
   computed: {
     buttons() {
+      const alternativeChannels = [ChatChannel.MESSENGER, ChatChannel.TELEGRAM, ChatChannel.VIBER, ChatChannel.WHATSAPP, ChatChannel.EMAIL];
       const alternativeChannelButtons = isEmpty(this.config.alternativeChannels)
         ? []
         : Object.entries(this.config.alternativeChannels)
         .reduce((channels, [channelName, channelUrl]) => {
+          if (!alternativeChannels.includes(channelName)) return channels;
+
           let url = channelUrl;
 
           switch (channelName) {
