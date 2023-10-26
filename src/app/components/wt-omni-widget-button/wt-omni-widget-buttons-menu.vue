@@ -13,7 +13,7 @@
           :key="key"
           :type="button.type"
           :url="button.url"
-          @click="open"
+          @click="handleBtnClick"
         ></wt-omni-widget-button>
       </div>
     </transition-expand>
@@ -27,8 +27,20 @@
 <script>
 import isEmpty from '@webitel/ui-sdk/src/scripts/isEmpty';
 import { TransitionExpand } from 'vue-transition-expand';
-import ChatChannel from '../../enum/ChatChannel.enum';
+import AlternativeChannel from '../../enums/AlternativeChannel.enum';
+import WidgetChannel from '../../enums/WidgetChannel.enum';
 import WtOmniWidgetButton from './wt-omni-widget-button.vue';
+
+const ServiceButtons = {
+  OPEN: 'open', // ui service btn
+  CLOSE: 'close', // ui service btn
+};
+
+const ButtonMenuType = Object.freeze({
+  ...ServiceButtons,
+  ...AlternativeChannel,
+  ...WidgetChannel,
+});
 
 export default {
   name: 'wt-omni-widget-buttons-menu',
@@ -37,12 +49,11 @@ export default {
     TransitionExpand,
   },
   data: () => ({
-    ChatChannel,
     isExpanded: false,
   }),
   computed: {
     buttons() {
-      const alternativeChannels = [ChatChannel.MESSENGER, ChatChannel.TELEGRAM, ChatChannel.VIBER, ChatChannel.WHATSAPP, ChatChannel.EMAIL];
+      const alternativeChannels = Object.values(AlternativeChannel);
       const alternativeChannelButtons = isEmpty(this.config.alternativeChannels)
         ? []
         : Object.entries(this.config.alternativeChannels)
@@ -52,11 +63,11 @@ export default {
           let url = channelUrl;
 
           switch (channelName) {
-            case ChatChannel.EMAIL: {
+            case AlternativeChannel.EMAIL: {
               url = /^mailto:/.test(url) ? url : 'mailto:'.concat(url);
               break;
             }
-            case ChatChannel.VIBER: {
+            case AlternativeChannel.VIBER: {
               break;
             }
             default: {
@@ -66,19 +77,23 @@ export default {
 
           return [
             ...channels, {
-              type: channelName,
+              type: Object.values(ButtonMenuType).find((type) => type === channelName),
               url,
             },
           ];
         }, []);
 
-      const chatBtn = this.config.chat ? [{
-        type: ChatChannel.CHAT,
-      }] : [];
+      const chatBtn = this.config.chat ? [
+        {
+          type: ButtonMenuType.CHAT,
+        },
+      ] : [];
 
-      const appointmentBtn = this.config.appointment ? [{
-        type: ChatChannel.APPOINTMENT,
-      }] : [];
+      const appointmentBtn = this.config.appointment ? [
+        {
+          type: ButtonMenuType.APPOINTMENT,
+        },
+      ] : [];
 
       const buttons = [
         ...chatBtn,
@@ -88,7 +103,7 @@ export default {
 
       if (buttons.length > 1) {
         const openBtn = {
-          type: this.isExpanded ? ChatChannel.CLOSE : ChatChannel.OPEN,
+          type: this.isExpanded ? ButtonMenuType.CLOSE : ButtonMenuType.OPEN,
         };
         buttons.unshift(openBtn);
       }
@@ -104,12 +119,15 @@ export default {
   },
   methods: {
     handleBtnClick(type) {
-      if (type === ChatChannel.OPEN) this.isExpanded = true;
-      else if (type === ChatChannel.CLOSE) this.isExpanded = false;
-      else this.open(type);
+      if (type === ButtonMenuType.OPEN) this.isExpanded = true;
+      else if (type === ButtonMenuType.CLOSE) this.isExpanded = false;
+      else {
+        const channel = Object.values(WidgetChannel).find((channel) => channel === type);
+        this.open({ channel });
+      }
     },
-    open(type) {
-      this.$emit('open', type);
+    open({ channel }) {
+      this.$emit('open', { channel, options: {} });
     },
   },
 };
