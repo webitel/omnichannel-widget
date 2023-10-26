@@ -1,5 +1,5 @@
 import WtOmniWidget from './install';
-import ChatChannel from './app/enum/ChatChannel.enum';
+import ChatChannel from './app/enums/WidgetChannel.enum';
 
 export default new WtOmniWidget('#wt-omni-widget', {
   view: {
@@ -18,5 +18,9 @@ export default new WtOmniWidget('#wt-omni-widget', {
     [ChatChannel.MESSENGER]: {},
     [ChatChannel.TELEGRAM]: {},
     [ChatChannel.VIBER]: 'viber://pa?chatURI=fregatcom',
+  },
+  call: {
+    url: 'wss://dev.webitel.com/sip',
+    id: 'dania-webchat',
   },
 });

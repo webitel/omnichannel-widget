@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 import WtOmniWidgetButtonsMenu from '../wt-omni-widget-buttons-menu.vue';
-import ChatChannel from '../../../enum/ChatChannel.enum';
+import ChatChannel from '../../../enums/WidgetChannel.enum';
 
 describe('WtOmniWidgetButtonsMenu', () => {
   it('renders a component', () => {
