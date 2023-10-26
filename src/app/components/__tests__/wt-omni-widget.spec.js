@@ -32,7 +32,7 @@ describe('WtOmniWidget Component', () => {
     const wrapper = shallowMount(WtOmniWidget, {
       computed,
     });
-    wrapper.findComponent(WtOmniWidgetButtonsMenu).vm.$emit('open');
+    wrapper.findComponent(WtOmniWidgetButtonsMenu).vm.$emit('open', { channel: 'test' });
     await wrapper.vm.$nextTick();
     expect(wrapper.findComponent(WtOmniWidgetButtonsMenu).exists()).toBe(false);
     expect(wrapper.findComponent(WtOmniWidgetWindow).isVisible()).toBe(true);
