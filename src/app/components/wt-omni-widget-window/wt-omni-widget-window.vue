@@ -4,12 +4,16 @@
     <wt-omni-widget-header
       @close="$emit('close')"
     ></wt-omni-widget-header>
-    <chat-wrapper :namespace="namespace"></chat-wrapper>
+    <component
+      :is="`${channel}-wrapper`"
+      :namespace="namespace"
+    ></component>
   </section>
 </template>
 
 <script>
 import ChatWrapper from '../../../modules/chat/components/wt-omni-widget-chat-wrapper.vue';
+import CallWrapper from '../../../modules/call/wt-omni-widget-call-wrapper.vue';
 import WidgetChannel from '../../enums/WidgetChannel.enum';
 import WtOmniWidgetHeader from './wt-omni-widget-window-header/wt-omni-widget-window-header.vue';
 
@@ -18,6 +22,7 @@ export default {
   components: {
     WtOmniWidgetHeader,
     ChatWrapper,
+    CallWrapper,
   },
   props: {
     channel: {
@@ -25,7 +30,6 @@ export default {
       required: true,
     },
   },
-  data: () => ({}),
   computed: {
     namespace() {
       switch (this.channel) {

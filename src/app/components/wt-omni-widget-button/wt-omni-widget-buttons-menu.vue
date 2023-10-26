@@ -95,9 +95,16 @@ export default {
         },
       ] : [];
 
+      const callBtn = this.config.call ? [
+        {
+          type: ButtonMenuType.CALL,
+        },
+      ] : [];
+
       const buttons = [
         ...chatBtn,
         ...appointmentBtn,
+        ...callBtn,
         ...alternativeChannelButtons,
       ];
 
