@@ -1,7 +1,6 @@
-import ReactiveNowStoreModule
-  from '@webitel/ui-sdk/src/store/ReactiveNowStoreModule/ReactiveNowStoreModule';
-import prettifyTime from '@webitel/ui-sdk/src/scripts/prettifyTime';
 import JsSIP from 'jssip';
+import ReactiveNowStoreModule
+  from '../../../app/webitel-ui/store/ReactiveNowStoreModule/ReactiveNowStoreModule';
 import SessionState from '../enums/SessionState.enum';
 
 const state = {
@@ -20,12 +19,12 @@ const getters = {
   SESSION_DURATION: (state) => {
     if (!state.session) return null;
     const { start_time: startTime } = state.session;
-    const endTime = state.session.end_time || state.now.now;
-    return prettifyTime(endTime - startTime);
+    if (!startTime) return null;
+    const endTime = state.now.now;
+    const duration = endTime - new Date(startTime).getTime();
+    return duration < 0 ? 0 : duration;
   },
-  SESSION_HOLD: (state) => {
-    return state.sessionState === SessionState.HOLD;
-  },
+  SESSION_HOLD: (state) => state.sessionState === SessionState.HOLD,
 };
 
 const actions = {
@@ -50,10 +49,12 @@ const actions = {
     });
   },
   CLOSE_USER_AGENT: (context) => {
-    context.userAgent.stop();
+    context.state.userAgent.stop();
     context.commit('SET_USER_AGENT', null);
   },
   MAKE_CALL: async (context) => {
+    await context.dispatch('now/SET_NOW_WATCHER');
+
     const eventHandlers = {
       progress(event) { // ringing
         context.commit('SET_SESSION_STATE', SessionState.RINGING);
@@ -71,7 +72,7 @@ const actions = {
       unhold: () => context.commit('SET_SESSION_STATE', SessionState.ACTIVE),
       muted: () => context.commit('SET_SESSION_MUTE', true),
       unmuted: () => context.commit('SET_SESSION_MUTE', false),
-      newDTMF: (event) => context.commit('SET_SESSION_DTMF', event.dtmf),
+      newDTMF: ({ originator, dtmf }) => console.info(dtmf) && originator === 'local' && context.commit('SET_SESSION_DTMF', dtmf.tone),
       // bug
       failed: (event) => console.error('call failed with cause', event),
       // bye
@@ -83,7 +84,9 @@ const actions = {
         context.commit('SET_SESSION_AUDIO', null);
         context.commit('SET_SESSION_MUTE', false);
         context.commit('SET_SESSION_DTMF', '');
+        context.commit('SET_SESSION', null);
         context.dispatch('CLOSE_USER_AGENT');
+        context.dispatch('now/SET_NOW_WATCHER');
       },
     };
 
@@ -94,7 +97,8 @@ const actions = {
       mediaConstraints: { audio: true },
       sessionTimersExpires: 300,
     };
-    const session = context.userAgent.call('sip:call-from-web@dev.webitel.com', options);
+    const session = context.state.userAgent.call('sip:call-from-web@dev.webitel.com', options);
+    window.session = session;
     context.commit('SET_SESSION', session);
   },
   HANGUP: (context) => {
@@ -102,7 +106,7 @@ const actions = {
   },
   TOGGLE_HOLD: (context) => {
     const { session } = context.state;
-    if (session.isOnHold()) {
+    if (session.isOnHold().local) {
       session.unhold();
     } else {
       session.hold();
@@ -110,7 +114,7 @@ const actions = {
   },
   TOGGLE_MUTE: (context) => {
     const { session } = context.state;
-    if (session.isMuted()) {
+    if (session.isMuted().audio) {
       session.unmute();
     } else {
       session.mute();

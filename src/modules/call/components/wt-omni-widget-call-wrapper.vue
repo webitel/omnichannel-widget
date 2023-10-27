@@ -2,17 +2,17 @@
   <fragment>
     <content-wrapper>
       <div>State: {{ sessionState }}</div>
-        <div>Duration: {{ sessionDuration }}</div>
-        <div>Mute: {{ sessionMute }}</div>
-        <div>Hold: {{ sessionHold }}</div>
-        <div>DTMF: {{ sessionDTMF }}</div>
+      <div>Duration: {{ sessionDuration }}</div>
+      <div>Mute: {{ sessionMute }}</div>
+      <div>Hold: {{ sessionHold }}</div>
+      <div>DTMF: {{ sessionDTMF }}</div>
       <wt-button @click="makeCall">call</wt-button>
       <wt-button @click="hangup">hangup</wt-button>
       <wt-button @click="toggleMute">toggle mute</wt-button>
       <wt-button @click="toggleHold">toggle hold</wt-button>
       <input
-          type="text"
           :value="sessionDTMF"
+          type="text"
           @input="sendDTMF($event.target.value)"
       >
     </content-wrapper>
@@ -24,7 +24,7 @@
 <script>
 import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
 import { Fragment } from 'vue-fragment';
-import { mapState, mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import ContentWrapper
   from '../../../app/components/wt-omni-widget-window/wt-omni-widget-window-content-wrapper/wt-omni-widget-window-content-wrapper.vue';
 import FooterWrapper
@@ -56,19 +56,29 @@ export default {
       },
     }),
     sessionDuration() {
-      return this.$store.getters[this.namespace].SESSION_DURATION;
+      return this.$store.getters[`${this.namespace}/SESSION_DURATION`];
     },
     sessionHold() {
-      return this.$store.getters[this.namespace].SESSION_HOLD;
+      return this.$store.getters[`${this.namespace}/SESSION_HOLD`];
     },
   },
   methods: {
     ...mapActions({
-      makeCall: `${this.namespace}/MAKE_CALL`,
-      hangup: `${this.namespace}/HANGUP`,
-      toggleMute: `${this.namespace}/TOGGLE_MUTE`,
-      toggleHold: `${this.namespace}/TOGGLE_HOLD`,
-      sendDTMF: `${this.namespace}/SEND_DTMF`,
+      makeCall(dispatch, payload) {
+        return dispatch(`${this.namespace}/MAKE_CALL`, payload);
+      },
+      hangup(dispatch, payload) {
+        return dispatch(`${this.namespace}/HANGUP`, payload);
+      },
+      toggleMute(dispatch, payload) {
+        return dispatch(`${this.namespace}/TOGGLE_MUTE`, payload);
+      },
+      toggleHold(dispatch, payload) {
+        return dispatch(`${this.namespace}/TOGGLE_HOLD`, payload);
+      },
+      sendDTMF(dispatch, payload) {
+        return dispatch(`${this.namespace}/SEND_DTMF`, payload);
+      },
     }),
   },
 };
