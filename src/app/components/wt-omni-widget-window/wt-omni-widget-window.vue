@@ -13,7 +13,7 @@
 
 <script>
 import ChatWrapper from '../../../modules/chat/components/wt-omni-widget-chat-wrapper.vue';
-import CallWrapper from '../../../modules/call/wt-omni-widget-call-wrapper.vue';
+import CallWrapper from '../../../modules/call/components/wt-omni-widget-call-wrapper.vue';
 import WidgetChannel from '../../enums/WidgetChannel.enum';
 import WtOmniWidgetHeader from './wt-omni-widget-window-header/wt-omni-widget-window-header.vue';
 
