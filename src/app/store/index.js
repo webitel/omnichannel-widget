@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 // modules
 import appointment from '../../modules/appointment/store/appointment';
 import chat from '../../modules/chat/store/chat';
+import call from '../../modules/call/store/call';
 import notifications from '../../modules/notifications/notifications';
 
 Vue.use(Vuex);
@@ -41,6 +42,7 @@ export default new Vuex.Store({
   modules: {
     appointment,
     chat,
+    call,
     notifications,
   },
 });

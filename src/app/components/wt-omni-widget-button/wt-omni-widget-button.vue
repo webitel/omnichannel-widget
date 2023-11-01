@@ -19,7 +19,7 @@
     @click.prevent="$emit('click', type)"
   >
     <wt-icon
-      :icon="type"
+      :icon="icon"
       color="contrast"
       icon-prefix="wt-omni-widget"
     ></wt-icon>
@@ -33,10 +33,18 @@ export default {
     type: {
       type: String,
       required: true,
-      options: ['chat', 'appointment', 'email', 'whatsapp', 'messenger', 'viber', 'telegram', 'open'],
+      options: ['chat', 'call', 'appointment', 'email', 'whatsapp', 'messenger', 'viber', 'telegram', 'open'],
     },
     url: {
       type: String,
+    },
+  },
+  computed: {
+    icon() {
+      switch (this.type) {
+        case 'call': return 'call--filled';
+        default: return this.type;
+      }
     },
   },
 };

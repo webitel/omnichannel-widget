@@ -13,6 +13,7 @@
     >v{{ buildInfo.release }}--{{ buildInfo.build }}
     </div>
     <wt-icon-btn
+      v-show="showCloseBtn"
       icon="close"
       size="sm"
       @click="$emit('close')"
@@ -21,6 +22,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import SessionState from '../../../../modules/call/enums/SessionState.enum';
 import WebitelLogo from '../../../assets/img/logo.svg';
 
 export default {
@@ -33,9 +36,15 @@ export default {
     },
   }),
   computed: {
+    ...mapState('call', {
+      callSessionState: (state) => state.sessionState,
+    }),
     logoUrl() {
       const { logoUrl } = this.config.view;
       return logoUrl || WebitelLogo;
+    },
+    showCloseBtn() {
+      return this.callSessionState === SessionState.IDLE;
     },
   },
   methods: {
