@@ -1,11 +1,13 @@
 import { shallowMount } from '@vue/test-utils';
+import WidgetChannel from '../../../enums/WidgetChannel.enum';
 import WtOmniWidgetWindow from '../wt-omni-widget-window.vue';
 
 describe('WtOmniWidgetWindow', () => {
+
   it('renders a component', () => {
     const wrapper = shallowMount(WtOmniWidgetWindow, {
       propsData: {
-        channel: 'chat',
+        channel: WidgetChannel.CHAT,
       },
       computed: {
         config() {
@@ -22,7 +24,7 @@ describe('WtOmniWidgetWindow', () => {
   it('renders a component in preview mode', () => {
     const wrapper = shallowMount(WtOmniWidgetWindow, {
       propsData: {
-        channel: 'chat',
+        channel: WidgetChannel.CHAT,
       },
       computed: {
         config() {

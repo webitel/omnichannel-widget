@@ -10,6 +10,9 @@ describe('WtOmniWidgetWindowHeader', () => {
             view: {},
           };
         },
+        callSessionState() {
+          return null;
+        },
       },
     });
     expect(wrapper.exists()).toBe(true);

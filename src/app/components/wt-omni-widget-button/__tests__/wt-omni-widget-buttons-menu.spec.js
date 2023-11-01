@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils';
-import WtOmniWidgetButtonsMenu from '../wt-omni-widget-buttons-menu.vue';
-import AlternativeChannel from '../../../enums/AlternativeChannel.enum';
 import WidgetChannel from '../../../enums/WidgetChannel.enum';
+import WtOmniWidgetButtonsMenu from '../wt-omni-widget-buttons-menu.vue';
+import AlternativeChanne from '../../../enums/AlternativeChannel.enum';
 
 describe('WtOmniWidgetButtonsMenu', () => {
   it('renders a component', () => {
@@ -19,7 +19,7 @@ describe('WtOmniWidgetButtonsMenu', () => {
 
   it('correctly computes menu, processing urls: no "https" case', () => {
     const alternativeChannels = {
-      [AlternativeChannel.VIBER]: 'viber://co',
+      [AlternativeChanne.VIBER]: 'viber://co',
     };
     const wrapper = shallowMount(WtOmniWidgetButtonsMenu, {
       computed: {
@@ -28,12 +28,12 @@ describe('WtOmniWidgetButtonsMenu', () => {
         },
       },
     });
-    expect(wrapper.vm.buttons).toEqual([{ type: AlternativeChannel.VIBER, url: 'viber://co' }]);
+    expect(wrapper.vm.buttons).toEqual([{ type: AlternativeChanne.VIBER, url: 'viber://co' }]);
   });
 
   it('correctly computes menu, processing urls: "https" case', () => {
     const alternativeChannels = {
-      [AlternativeChannel.WHATSAPP]: 'https://whatsapp.co',
+      [AlternativeChanne.WHATSAPP]: 'https://whatsapp.co',
     };
     const wrapper = shallowMount(WtOmniWidgetButtonsMenu, {
       computed: {
@@ -42,12 +42,12 @@ describe('WtOmniWidgetButtonsMenu', () => {
         },
       },
     });
-    expect(wrapper.vm.buttons).toEqual([{type: AlternativeChannel.WHATSAPP, url: 'https://whatsapp.co' }]);
+    expect(wrapper.vm.buttons).toEqual([{type: AlternativeChanne.WHATSAPP, url: 'https://whatsapp.co' }]);
   });
 
   it('correctly computes menu, processing urls: no "mailto:" email case', () => {
     const alternativeChannels = {
-      [AlternativeChannel.EMAIL]: 'email@example.com',
+      [AlternativeChanne.EMAIL]: 'email@example.com',
     };
     const wrapper = shallowMount(WtOmniWidgetButtonsMenu, {
       computed: {
@@ -56,7 +56,7 @@ describe('WtOmniWidgetButtonsMenu', () => {
         },
       },
     });
-    expect(wrapper.vm.buttons).toEqual([{ type: AlternativeChannel.EMAIL, url: 'mailto:email@example.com' }]);
+    expect(wrapper.vm.buttons).toEqual([{ type: AlternativeChanne.EMAIL, url: 'mailto:email@example.com' }]);
   });
 
   it('correctly computes menu, processing urls: "mailto:" email case', () => {
