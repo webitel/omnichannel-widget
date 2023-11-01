@@ -4,6 +4,7 @@
       v-for="(value) of ['1', '2', '3', '4', '5', '6', '7', '8', '9']"
       :key="value"
       color="secondary"
+      wide
       @click="$emit('input', value)"
     >{{ value }}
     </wt-button>

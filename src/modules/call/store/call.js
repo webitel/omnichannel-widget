@@ -20,8 +20,7 @@ const getters = {
     if (!state.session) return null;
     const { start_time: startTime } = state.session;
     if (!startTime) return null;
-    const endTime = state.now.now;
-    const duration = endTime - new Date(startTime).getTime();
+    const duration = state.now.now - new Date(startTime).getTime();
     return duration < 0 ? 0 : duration;
   },
   SESSION_HOLD: (state) => state.sessionState === SessionState.HOLD,
@@ -72,7 +71,7 @@ const actions = {
       unhold: () => context.commit('SET_SESSION_STATE', SessionState.ACTIVE),
       muted: () => context.commit('SET_SESSION_MUTE', true),
       unmuted: () => context.commit('SET_SESSION_MUTE', false),
-      newDTMF: ({ originator, dtmf }) => console.info(dtmf) && originator === 'local' && context.commit('NEW_SESSION_DTMF', dtmf.tone),
+      newDTMF: ({ originator, dtmf }) => originator === 'local' && context.commit('NEW_SESSION_DTMF', dtmf.tone),
       // bug
       failed: (event) => console.error('call failed with cause', event),
       // bye

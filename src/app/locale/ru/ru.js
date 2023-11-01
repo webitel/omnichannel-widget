@@ -59,7 +59,7 @@ export default {
       description: 'Вы можете позвонить нам прямо отсюда!',
     },
     ringingView: {
-      title: 'Ringing',
+      title: 'Звоним',
       description: 'Ищем оператора. Пожалуйста, подождите.',
 
     },

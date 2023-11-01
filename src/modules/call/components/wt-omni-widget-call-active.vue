@@ -24,6 +24,7 @@
       <wt-icon-btn
         icon="call-decline"
         icon-size="sm"
+        color="danger"
         @click="hangup"
       ></wt-icon-btn>
     </call-actions-wrapper>
@@ -61,7 +62,7 @@ export default {
       },
     }),
     duration() {
-      return convertDuration(this.$store.getters[`${this.namespace}/SESSION_DURATION`]);
+      return convertDuration(this.$store.getters[`${this.namespace}/SESSION_DURATION`] / 1000);
     },
   },
   methods: {
