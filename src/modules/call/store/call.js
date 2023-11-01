@@ -93,7 +93,7 @@ const actions = {
 
     const options = {
       eventHandlers,
-      mediaConstraints: { audio: initWithMuted },
+      mediaConstraints: { audio: !initWithMuted },
       sessionTimersExpires: 300,
     };
     const session = context.state.userAgent.call('sip:call-from-web@dev.webitel.com', options);
