@@ -52,7 +52,7 @@ const actions = {
     context.state.userAgent.stop();
     context.commit('SET_USER_AGENT', null);
   },
-  MAKE_CALL: async (context) => {
+  MAKE_CALL: async (context, { initWithMuted }) => {
     await context.dispatch('now/SET_NOW_WATCHER');
 
     const eventHandlers = {
@@ -72,7 +72,7 @@ const actions = {
       unhold: () => context.commit('SET_SESSION_STATE', SessionState.ACTIVE),
       muted: () => context.commit('SET_SESSION_MUTE', true),
       unmuted: () => context.commit('SET_SESSION_MUTE', false),
-      newDTMF: ({ originator, dtmf }) => console.info(dtmf) && originator === 'local' && context.commit('SET_SESSION_DTMF', dtmf.tone),
+      newDTMF: ({ originator, dtmf }) => console.info(dtmf) && originator === 'local' && context.commit('NEW_SESSION_DTMF', dtmf.tone),
       // bug
       failed: (event) => console.error('call failed with cause', event),
       // bye
@@ -94,7 +94,7 @@ const actions = {
 
     const options = {
       eventHandlers,
-      mediaConstraints: { audio: true },
+      mediaConstraints: { audio: initWithMuted },
       sessionTimersExpires: 300,
     };
     const session = context.state.userAgent.call('sip:call-from-web@dev.webitel.com', options);
@@ -141,6 +141,9 @@ const mutations = {
   },
   SET_SESSION_MUTE: (state, sessionMute) => {
     state.sessionMute = sessionMute;
+  },
+  NEW_SESSION_DTMF: (state, sessionDTMF) => {
+    state.sessionDTMF += sessionDTMF;
   },
   SET_SESSION_DTMF: (state, sessionDTMF) => {
     state.sessionDTMF = sessionDTMF;

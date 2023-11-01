@@ -16,3 +16,8 @@ import './wt-omni-widget-time-zone.svg';
 import './wt-omni-widget-arrow-left.svg';
 import './wt-omni-widget-arrow-right.svg';
 import './wt-omni-widget-open.svg';
+import './wt-omni-widget-call.svg';
+import './wt-omni-widget-call--filled.svg';
+import './wt-omni-widget-call-decline.svg';
+import './wt-omni-widget-mic.svg';
+import './wt-omni-widget-mic-off.svg';
