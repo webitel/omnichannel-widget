@@ -6,12 +6,10 @@
     >
     <call-title-wrapper>
       {{ duration }}
+      <template #description>
+        {{ sessionDTMF }}
+      </template>
     </call-title-wrapper>
-    <wt-input
-      :value="sessionDTMF"
-      type="number"
-      @input="sendDTMF"
-    ></wt-input>
     <numpad
       @input="sendDTMF"
     ></numpad>
@@ -24,7 +22,7 @@
       <wt-icon-btn
         icon="call-decline"
         icon-size="sm"
-        color="danger"
+        color="error"
         @click="hangup"
       ></wt-icon-btn>
     </call-actions-wrapper>

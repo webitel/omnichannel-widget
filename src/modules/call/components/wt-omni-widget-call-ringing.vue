@@ -17,7 +17,7 @@
         @click="toggleMute"
       ></wt-icon-btn>
       <wt-icon-btn
-        color="danger"
+        color="error"
         icon="call-decline"
         icon-size="sm"
         @click="hangup"

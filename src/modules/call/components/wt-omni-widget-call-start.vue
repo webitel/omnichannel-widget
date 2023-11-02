@@ -21,6 +21,7 @@
       <wt-icon-btn
         icon="call"
         icon-size="sm"
+        color="success"
         @click="() => makeCall({ initWithMuted })"
       ></wt-icon-btn>
     </call-actions-wrapper>

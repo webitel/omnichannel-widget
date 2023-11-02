@@ -30,9 +30,13 @@ const actions = {
   START_USER_AGENT: (context) => {
     const socket = new JsSIP.WebSocketInterface(context.rootState.config.call.url);
     JsSIP.debug.enable('JsSIP:*');
+
+    const { hostname } = new URL(context.rootState.config.call.url);
+
     const configuration = {
       sockets: [socket],
-      uri: 'sip:site@dev.webitel.com',
+      // uri: 'sip:site@dev.webitel.com',
+      uri: `sip:${context.rootState.config.call.id}@${hostname}`,
       register: false,
     };
     const userAgent = new JsSIP.UA(configuration);
@@ -93,12 +97,13 @@ const actions = {
 
     const options = {
       eventHandlers,
-      mediaConstraints: { audio: !initWithMuted },
+      mediaConstraints: { audio: true },
       sessionTimersExpires: 300,
     };
     const session = context.state.userAgent.call('sip:call-from-web@dev.webitel.com', options);
     window.session = session;
     context.commit('SET_SESSION', session);
+    if (initWithMuted) await context.dispatch('TOGGLE_MUTE', true);
   },
   HANGUP: (context) => {
     context.state.session.terminate();
@@ -111,8 +116,13 @@ const actions = {
       session.hold();
     }
   },
-  TOGGLE_MUTE: (context) => {
+  TOGGLE_MUTE: (context, value) => {
     const { session } = context.state;
+    // checking typeof because toggle button can send event
+    if (value !== undefined && typeof value === 'boolean') {
+      if (value) session.mute();
+      else session.unmute();
+    }
     if (session.isMuted().audio) {
       session.unmute();
     } else {
