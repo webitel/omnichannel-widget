@@ -60,8 +60,11 @@ const actions = {
     const initAudio = () => {
       const audio = new Audio();
       audio.autoplay = true;
+      console.warn(context.state.session.connection.getReceivers(), context.state.session.connection.getRemoteStreams());
       // eslint-disable-next-line prefer-destructuring
-      audio.srcObject = context.state.session.connection.getRemoteStreams()[0];
+      const stream = new MediaStream();
+      stream.addTrack(context.state.session.connection.getReceivers()[0].track);
+      audio.srcObject = stream;
       context.commit('SET_SESSION_AUDIO', audio);
       if (initWithMuted) context.dispatch('TOGGLE_MUTE', true);
     };
@@ -93,7 +96,8 @@ const actions = {
       unhold: () => context.commit('SET_SESSION_STATE', SessionState.ACTIVE),
       muted: () => context.commit('SET_SESSION_MUTE', true),
       unmuted: () => context.commit('SET_SESSION_MUTE', false),
-      newDTMF: ({ originator, dtmf }) => originator === 'local' && context.commit('NEW_SESSION_DTMF', dtmf.tone),
+      newDTMF: ({ originator, dtmf }) => originator === 'local' &&
+        context.commit('NEW_SESSION_DTMF', dtmf.tone),
       // bug
       failed: (event) => {
         console.error('call failed with cause', event);
@@ -130,13 +134,12 @@ const actions = {
     // checking typeof because toggle button can send event
     if (value !== undefined && typeof value === 'boolean') {
       if (value) return session.mute();
-      else return session.unmute();
+      return session.unmute();
     }
     if (session.isMuted().audio) {
       return session.unmute();
-    } else {
-      return session.mute();
     }
+    return session.mute();
   },
   SEND_DTMF: (context, digit) => {
     const { session } = context.state;
