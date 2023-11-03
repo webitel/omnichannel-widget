@@ -60,7 +60,6 @@ const actions = {
     const initAudio = () => {
       const audio = new Audio();
       audio.autoplay = true;
-      console.warn(context.state.session.connection.getReceivers(), context.state.session.connection.getRemoteStreams());
       // eslint-disable-next-line prefer-destructuring
       const stream = new MediaStream();
       stream.addTrack(context.state.session.connection.getReceivers()[0].track);
