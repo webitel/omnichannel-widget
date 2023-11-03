@@ -35,7 +35,6 @@ const actions = {
 
     const configuration = {
       sockets: [socket],
-      // uri: 'sip:site@dev.webitel.com',
       uri: `sip:${context.rootState.config.call.id}@${hostname}`,
       register: false,
     };
@@ -58,39 +57,50 @@ const actions = {
   MAKE_CALL: async (context, { initWithMuted }) => {
     await context.dispatch('now/SET_NOW_WATCHER');
 
-    const eventHandlers = {
-      progress(event) { // ringing
-        context.commit('SET_SESSION_STATE', SessionState.RINGING);
-        console.warn(event, 'event');
+    const initAudio = () => {
+      const audio = new Audio();
+      audio.autoplay = true;
+      // eslint-disable-next-line prefer-destructuring
+      audio.srcObject = context.state.session.connection.getRemoteStreams()[0];
+      context.commit('SET_SESSION_AUDIO', audio);
+      if (initWithMuted) context.dispatch('TOGGLE_MUTE', true);
+    };
 
-        const audio = new Audio();
-        audio.autoplay = true;
-        // eslint-disable-next-line prefer-destructuring
-        audio.srcObject = this.connection.getRemoteStreams()[0];
-        context.commit('SET_SESSION_AUDIO', audio);
+    const closeSession = () => {
+      // https://stackoverflow.com/questions/8864617/how-do-i-remove-properly-html5-audio-without-appending-to-dom
+      // eslint-disable-next-line no-param-reassign
+      if (context.state.sessionAudio) context.state.sessionAudio.srcObject = null;
+      context.commit('SET_SESSION_STATE', SessionState.IDLE);
+      context.commit('SET_SESSION_AUDIO', null);
+      context.commit('SET_SESSION_MUTE', false);
+      context.commit('SET_SESSION_DTMF', '');
+      context.commit('SET_SESSION', null);
+      context.dispatch('CLOSE_USER_AGENT');
+      context.dispatch('now/SET_NOW_WATCHER');
+    };
+
+    const eventHandlers = {
+      progress() { // ringing
+        context.commit('SET_SESSION_STATE', SessionState.RINGING);
+        initAudio();
       },
       // 200 OK
-      confirmed: () => context.commit('SET_SESSION_STATE', SessionState.ACTIVE),
+      confirmed: () => {
+        context.commit('SET_SESSION_STATE', SessionState.ACTIVE);
+        if (!context.state.sessionAudio) initAudio();
+      },
       hold: () => context.commit('SET_SESSION_STATE', SessionState.HOLD),
       unhold: () => context.commit('SET_SESSION_STATE', SessionState.ACTIVE),
       muted: () => context.commit('SET_SESSION_MUTE', true),
       unmuted: () => context.commit('SET_SESSION_MUTE', false),
       newDTMF: ({ originator, dtmf }) => originator === 'local' && context.commit('NEW_SESSION_DTMF', dtmf.tone),
       // bug
-      failed: (event) => console.error('call failed with cause', event),
-      // bye
-      ended: () => {
-        // https://stackoverflow.com/questions/8864617/how-do-i-remove-properly-html5-audio-without-appending-to-dom
-        // eslint-disable-next-line no-param-reassign
-        context.state.sessionAudio.srcObject = null;
-        context.commit('SET_SESSION_STATE', SessionState.IDLE);
-        context.commit('SET_SESSION_AUDIO', null);
-        context.commit('SET_SESSION_MUTE', false);
-        context.commit('SET_SESSION_DTMF', '');
-        context.commit('SET_SESSION', null);
-        context.dispatch('CLOSE_USER_AGENT');
-        context.dispatch('now/SET_NOW_WATCHER');
+      failed: (event) => {
+        console.error('call failed with cause', event);
+        closeSession();
       },
+      // bye
+      ended: () => closeSession(),
     };
 
     await context.dispatch('START_USER_AGENT');
@@ -103,7 +113,6 @@ const actions = {
     const session = context.state.userAgent.call('sip:call-from-web@dev.webitel.com', options);
     window.session = session;
     context.commit('SET_SESSION', session);
-    if (initWithMuted) await context.dispatch('TOGGLE_MUTE', true);
   },
   HANGUP: (context) => {
     context.state.session.terminate();
@@ -120,13 +129,13 @@ const actions = {
     const { session } = context.state;
     // checking typeof because toggle button can send event
     if (value !== undefined && typeof value === 'boolean') {
-      if (value) session.mute();
-      else session.unmute();
+      if (value) return session.mute();
+      else return session.unmute();
     }
     if (session.isMuted().audio) {
-      session.unmute();
+      return session.unmute();
     } else {
-      session.mute();
+      return session.mute();
     }
   },
   SEND_DTMF: (context, digit) => {
