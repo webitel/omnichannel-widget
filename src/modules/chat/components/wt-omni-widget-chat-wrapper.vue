@@ -61,34 +61,21 @@ export default {
     initPreviewMode() {
       const messages = [
         {
-          type: 'message',
-          data: {
-            seq: 1,
-            id: 1,
-            message: {
-              type: 'text',
-              text: this.$t('chat.previewChatMessage1'),
-              from: {
-                channel: 'bot',
-                contact: '99',
-                firstName: 'website',
-                id: 99,
-              },
-            },
-          },
-        }, {
-          type: 'message',
-          data: {
-            id: 2,
-            seq: 2,
-            message: {
-              type: 'text',
-              text: this.$t('chat.previewChatMessage2'),
-            },
+          type: 'text',
+          text: this.$t('chat.previewChatMessage1'),
+          from: {
+            channel: 'bot',
+            contact: '99',
+            firstName: 'website',
+            id: 99,
           },
         },
+        {
+          type: 'text',
+          text: this.$t('chat.previewChatMessage2'),
+        },
       ];
-      messages.forEach((message) => this.onMessage(message));
+      messages.forEach((message) => this.onMessage({ message }));
     },
     setOnMessageListener() {
       const callback = () => eventBus.$emit(GlobalEvent.SET_ACTIVE_WIDGET_CHANNEL, { channel: WidgetChannel.CHAT });
