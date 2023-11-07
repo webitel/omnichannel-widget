@@ -1,7 +1,7 @@
 <template>
   <section class="wt-omni-widget-numpad">
     <wt-button
-      v-for="(value) of ['1', '2', '3', '4', '5', '6', '7', '8', '9']"
+      v-for="(value) of ['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#']"
       :key="value"
       color="secondary"
       wide
