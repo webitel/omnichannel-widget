@@ -1,18 +1,21 @@
 <template>
-  <fragment>
+  <!--
+why there's d: contents; and this weird wrapper?
+ see  https://my.webitel.com/browse/WTEL-4027
+-->
+  <div style="display: contents;">
     <content-wrapper>
       <chat-content :namespace="namespace"></chat-content>
     </content-wrapper>
     <footer-wrapper>
       <chat-footer :namespace="namespace"></chat-footer>
     </footer-wrapper>
-  </fragment>
+  </div>
 </template>
 
 <script>
 import eventBus from '@webitel/ui-sdk/src/scripts/eventBus';
 import { mapActions } from 'vuex';
-import { Fragment } from 'vue-fragment';
 import ContentWrapper
   from '../../../app/components/wt-omni-widget-window/wt-omni-widget-window-content-wrapper/wt-omni-widget-window-content-wrapper.vue';
 import FooterWrapper
@@ -30,7 +33,6 @@ export default {
     FooterWrapper,
     ChatContent,
     ChatFooter,
-    Fragment,
   },
   props: {
     namespace: {

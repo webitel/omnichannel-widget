@@ -8,6 +8,14 @@
       ]"
   >
     <transition name="widget-appearance-transition">
+<!--
+I don't remember why there's a keep-alive,
+  but researching through https://my.webitel.com/browse/WTEL-4027,
+  i discovered, that, at least, keep-alive prevents chat components from creating new ws connections
+  (you can see this as: messages that are duplicated as many times as connection is reinitialized)
+
+  can't say for sure, if this keep-alive is a mistake, or not :(
+  -->
       <keep-alive>
         <wt-omni-widget-buttons-menu
           v-if="!activeChannel"

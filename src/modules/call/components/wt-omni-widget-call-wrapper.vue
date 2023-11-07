@@ -1,5 +1,9 @@
 <template>
-  <fragment>
+<!--
+why there's d: contents; and this weird wrapper?
+ see  https://my.webitel.com/browse/WTEL-4027
+-->
+  <div style="display: contents;">
     <content-wrapper>
       <component
         :is="callView"
@@ -8,12 +12,11 @@
     </content-wrapper>
     <footer-wrapper>
     </footer-wrapper>
-  </fragment>
+  </div>
 </template>
 
 <script>
 import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
-import { Fragment } from 'vue-fragment';
 import { mapState } from 'vuex';
 import SessionState from '../enums/SessionState.enum';
 import ContentWrapper
@@ -27,7 +30,6 @@ import CallActive from './wt-omni-widget-call-active.vue';
 export default {
   name: 'wt-omni-widget-call-wrapper',
   components: {
-    Fragment,
     ContentWrapper,
     FooterWrapper,
     CallStart,
