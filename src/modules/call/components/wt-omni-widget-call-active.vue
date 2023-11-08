@@ -7,7 +7,9 @@
     <call-title-wrapper>
       {{ duration }}
       <template #description>
-        {{ sessionDTMF }}
+        <p class="wt-omni-widget-call-active__dtmf">
+          {{ sessionDTMF }}
+        </p>
       </template>
     </call-title-wrapper>
     <numpad
@@ -88,6 +90,10 @@ export default {
     align-items: center;
     justify-content: center;
     gap: 32px;
+  }
+
+  .wt-omni-widget-call-active__dtmf {
+    word-break: break-all;
   }
 }
 </style>

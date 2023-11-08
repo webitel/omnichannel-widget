@@ -29,7 +29,7 @@ const getters = {
 const actions = {
   START_USER_AGENT: (context) => {
     const socket = new JsSIP.WebSocketInterface(context.rootState.config.call.url);
-    JsSIP.debug.enable('JsSIP:*');
+    // JsSIP.debug.enable('JsSIP:*');
 
     const { hostname } = new URL(context.rootState.config.call.url);
 
