@@ -51,6 +51,7 @@ export default {
       return logoUrl || WebitelLogo;
     },
     hideCloseBtn() {
+      // https://my.webitel.com/browse/WTEL-4027
       return this.channel === WidgetChannel.CALL && this.callSessionState !== SessionState.IDLE;
     },
   },

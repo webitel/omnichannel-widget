@@ -14,6 +14,8 @@ const computed = {
 };
 
 describe('WtOmniWidget Component', () => {
+  jest.spyOn(WtOmniWidget.methods, 'subscribeToNetworkConnectionStatus')
+  .mockImplementation(() => {});
   it('renders a component', () => {
     const wrapper = shallowMount(WtOmniWidget, {
       computed,

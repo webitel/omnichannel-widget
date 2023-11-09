@@ -89,7 +89,7 @@ export default {
 
   methods: {
     ...mapActions({
-      subsribeToNetworkConnectionStatus: 'SUBSCRIBE_TO_NETWORK_CONNECTION_STATUS',
+      subscribeToNetworkConnectionStatus: 'SUBSCRIBE_TO_NETWORK_CONNECTION_STATUS',
     }),
     applyGlobalConfig() {
       if(this.isPreviewMode === 'chat') this.activeChannel = WidgetChannel.CHAT; // Open chat preview if configuration contains chat preview property
@@ -119,7 +119,7 @@ export default {
   },
 
   created() {
-    this.subsribeToNetworkConnectionStatus();
+    this.subscribeToNetworkConnectionStatus();
     this.applyGlobalConfig();
     eventBus.$on(GlobalEvent.SET_ACTIVE_WIDGET_CHANNEL, this.setActiveChannel);
   },
