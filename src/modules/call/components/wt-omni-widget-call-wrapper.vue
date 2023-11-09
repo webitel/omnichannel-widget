@@ -17,7 +17,7 @@ why there's d: contents; and this weird wrapper?
 
 <script>
 import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import SessionState from '../enums/SessionState.enum';
 import ContentWrapper
   from '../../../app/components/wt-omni-widget-window/wt-omni-widget-window-content-wrapper/wt-omni-widget-window-content-wrapper.vue';
@@ -26,6 +26,7 @@ import FooterWrapper
 import CallStart from './wt-omni-widget-call-start.vue';
 import CallRinging from './wt-omni-widget-call-ringing.vue';
 import CallActive from './wt-omni-widget-call-active.vue';
+import CallOffline from './wt-omni-widget-call-offline.vue';
 
 export default {
   name: 'wt-omni-widget-call-wrapper',
@@ -35,6 +36,7 @@ export default {
     CallStart,
     CallRinging,
     CallActive,
+    CallOffline,
   },
   props: {
     namespace: {
@@ -44,11 +46,16 @@ export default {
   },
   computed: {
     ...mapState({
+      offline: (state) => state.offline,
       sessionState(state) {
         return getNamespacedState(state, this.namespace).sessionState;
       },
     }),
     callView() {
+      if (this.offline) {
+        return 'call-offline';
+      }
+
       switch (this.sessionState) {
         case SessionState.RINGING:
           return 'call-ringing';
@@ -56,6 +63,20 @@ export default {
           return 'call-active';
         default:
           return 'call-start';
+      }
+    },
+  },
+  methods: {
+    ...mapActions({
+      hangup(dispatch, payload) {
+        return dispatch(`${this.namespace}/HANGUP`, payload);
+      },
+    }),
+  },
+  watch: {
+    offline(value) {
+      if (value && this.sessionState !== SessionState.IDLE) {
+        this.hangup();
       }
     },
   },

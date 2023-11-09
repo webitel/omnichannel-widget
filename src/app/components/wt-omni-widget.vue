@@ -41,6 +41,7 @@ I don't remember why there's a keep-alive,
 
 <script>
 import eventBus from '@webitel/ui-sdk/src/scripts/eventBus';
+import { mapActions } from 'vuex';
 import WtOmniWidgetButtonsMenu from './wt-omni-widget-button/wt-omni-widget-buttons-menu.vue';
 import WtOmniWidgetWindow from './wt-omni-widget-window/wt-omni-widget-window.vue';
 import WtOmniWidgetPopup from './wt-omni-widget-popup/wt-omni-widget-popup.vue';
@@ -87,6 +88,9 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      subsribeToNetworkConnectionStatus: 'SUBSCRIBE_TO_NETWORK_CONNECTION_STATUS',
+    }),
     applyGlobalConfig() {
       if(this.isPreviewMode === 'chat') this.activeChannel = WidgetChannel.CHAT; // Open chat preview if configuration contains chat preview property
       if (this.config.view.lang) this.$i18n.locale = this.config.view.lang;
@@ -115,6 +119,7 @@ export default {
   },
 
   created() {
+    this.subsribeToNetworkConnectionStatus();
     this.applyGlobalConfig();
     eventBus.$on(GlobalEvent.SET_ACTIVE_WIDGET_CHANNEL, this.setActiveChannel);
   },
