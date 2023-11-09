@@ -2,6 +2,7 @@
   <section class="wt-omni-widget-window">
     <portal-target name="in-window-popup"></portal-target>
     <wt-omni-widget-header
+      :channel="channel"
       @close="$emit('close')"
     ></wt-omni-widget-header>
     <component

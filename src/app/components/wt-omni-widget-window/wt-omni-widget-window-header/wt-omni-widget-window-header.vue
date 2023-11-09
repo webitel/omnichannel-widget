@@ -13,7 +13,7 @@
     >v{{ buildInfo.release }}--{{ buildInfo.build }}
     </div>
     <wt-icon-btn
-      v-show="showCloseBtn"
+      v-show="!hideCloseBtn"
       icon="close"
       size="sm"
       @click="$emit('close')"
@@ -25,6 +25,7 @@
 import { mapState } from 'vuex';
 import SessionState from '../../../../modules/call/enums/SessionState.enum';
 import WebitelLogo from '../../../assets/img/logo.svg';
+import WidgetChannel from '../../../enums/WidgetChannel.enum';
 
 export default {
   name: 'wt-omni-widget-window-header',
@@ -35,6 +36,12 @@ export default {
       build: process.env.VUE_APP_BUILD_NUMBER,
     },
   }),
+  props: {
+    channel: {
+      type: String, // WidgetChannel.enum
+      required: true,
+    },
+  },
   computed: {
     ...mapState('call', {
       callSessionState: (state) => state.sessionState,
@@ -43,8 +50,8 @@ export default {
       const { logoUrl } = this.config.view;
       return logoUrl || WebitelLogo;
     },
-    showCloseBtn() {
-      return this.callSessionState === SessionState.IDLE;
+    hideCloseBtn() {
+      return this.channel === WidgetChannel.CALL && this.callSessionState !== SessionState.IDLE;
     },
   },
   methods: {
