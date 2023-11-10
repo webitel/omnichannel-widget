@@ -6,9 +6,9 @@
       icon-prefix="wt-omni-widget"
     ></wt-icon>
     <call-title-wrapper>
-      unlucky
+      {{ $t('errors.offline.title') }}
       <template #description>
-        unlucky x2
+        {{ $t('errors.offline.description') }}
       </template>
     </call-title-wrapper>
   </section>

@@ -66,6 +66,10 @@ export default {
   },
   errors: {
     fileTooLarge: 'Файл "{file}" завеликий! Максимальний розмір файлу: {maxSize} Мб',
+    offline: {
+      title: 'Ох... Ви офлайн',
+      description: 'Будь ласка, перевірте ваше Інтернет-з\'єднання і спробуйте знову',
+    },
   },
   emojiPicker: {
     categoriesLabel: 'Категорії',

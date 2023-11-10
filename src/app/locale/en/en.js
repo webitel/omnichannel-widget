@@ -24,9 +24,9 @@ export default {
         placeholder: 'Enter your name',
       },
       email: {
-          label: 'Email',
-          placeholder: 'Enter your email',
-        },
+        label: 'Email',
+        placeholder: 'Enter your email',
+      },
       destination: {
         label: 'Phone number',
         placeholder: 'Enter phone number',
@@ -66,6 +66,10 @@ export default {
   },
   errors: {
     fileTooLarge: 'File "{file}" is too large! Maximum size is {maxSize} Mb',
+    offline: {
+      title: 'Ohh... You\'re offline',
+      description: 'Please check your Internet connection and try again',
+    },
   },
   emojiPicker: {
     categoriesLabel: 'Categories',
