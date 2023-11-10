@@ -15,7 +15,7 @@ why there's d: contents; and this weird wrapper?
 
 <script>
 import eventBus from '@webitel/ui-sdk/src/scripts/eventBus';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import ContentWrapper
   from '../../../app/components/wt-omni-widget-window/wt-omni-widget-window-content-wrapper/wt-omni-widget-window-content-wrapper.vue';
 import FooterWrapper
@@ -40,6 +40,11 @@ export default {
       required: true,
     },
   },
+  computed: {
+    ...mapState('chat', {
+      client: state => state.messageClient,
+    }),
+  },
   methods: {
     ...mapActions({
       initializeSession: 'INITIALIZE_SESSION',
@@ -50,6 +55,7 @@ export default {
       onMessage: 'ON_MESSAGE',
     }),
     initSession() {
+      if (this.client) return; // prevent reinitialization, but should be refactored
       const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel; // FIXME
       const messageClient = new MessageClient({
         url: this.config.chat.url,
