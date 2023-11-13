@@ -83,7 +83,7 @@ Moved to the same semantic versioning as other Webitel frontend applications
 
 - Chatting with base message types (text, files)
 - "Joined"/"left"/"close" chat events notifying
-- En/Ru/Ua locales (should be passed in config)
+- En/Ru/Ua/Kz locales (should be passed in config)
 - Square/Rounded button + chat UI style (config)
 - Received files message download
 - Sync session between tabs
