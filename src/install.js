@@ -38,7 +38,7 @@ const devConfig = {
 const defaultConfig = merge(devConfig, {
   view: {
     borderRadiusStyle: 'square', // ['square', 'rounded'],
-    lang: 'en', // ['en', 'ru', 'ua'],
+    lang: 'en', // ['en', 'ru', 'ua', 'kz'],
     position: 'right', // ['right', 'left', 'static']
     accentColor: 'hsl(42, 100%, 50%)',
     btnOpacity: 1,
