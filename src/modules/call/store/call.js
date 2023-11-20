@@ -29,7 +29,7 @@ const getters = {
 const actions = {
   START_USER_AGENT: (context) => {
     const socket = new JsSIP.WebSocketInterface(context.rootState.config.call.url);
-    // JsSIP.debug.enable('JsSIP:*');
+    JsSIP.debug.enable('JsSIP:*');
 
     const { hostname } = new URL(context.rootState.config.call.url);
 
@@ -113,9 +113,12 @@ const actions = {
       mediaConstraints: { audio: true },
       sessionTimersExpires: 300,
     };
-    const session = context.state.userAgent.call('sip:call-from-web@dev.webitel.com', options);
-    window.session = session;
-    context.commit('SET_SESSION', session);
+    // setTimeout(() => {
+
+      const session = context.state.userAgent.call('sip:call-from-web@dev.webitel.com', options);
+      window.session = session;
+      context.commit('SET_SESSION', session);
+    // }, 500);
   },
   HANGUP: (context) => {
     context.state.session.terminate();
