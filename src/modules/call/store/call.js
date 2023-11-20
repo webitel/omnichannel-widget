@@ -4,7 +4,7 @@ import ReactiveNowStoreModule
 import SessionState from '../enums/SessionState.enum';
 
 const state = {
-  // incapsulated
+  // encapsulated
   userAgent: null,
   session: null,
   sessionAudio: null,
@@ -28,26 +28,36 @@ const getters = {
 
 const actions = {
   START_USER_AGENT: (context) => {
-    const socket = new JsSIP.WebSocketInterface(context.rootState.config.call.url);
-    JsSIP.debug.enable('JsSIP:*');
+    return new Promise((resolve, reject) => {
+      try {
+        const socket = new JsSIP.WebSocketInterface(context.rootState.config.call.url);
+        // JsSIP.debug.enable('JsSIP:*');
 
-    const { hostname } = new URL(context.rootState.config.call.url);
+        const { hostname } = new URL(context.rootState.config.call.url);
 
-    const configuration = {
-      sockets: [socket],
-      uri: `sip:${context.rootState.config.call.id}@${hostname}`,
-      register: false,
-    };
-    const userAgent = new JsSIP.UA(configuration);
+        const configuration = {
+          sockets: [socket],
+          uri: `sip:${context.rootState.config.call.id}@${hostname}`,
+          register: false,
+        };
+        const userAgent = new JsSIP.UA(configuration);
 
-    userAgent.start();
+        userAgent.start();
 
-    context.commit('SET_USER_AGENT', userAgent);
+        context.commit('SET_USER_AGENT', userAgent);
 
-    window.addEventListener('beforeunload', async (event) => {
-      await context.dispatch('CLOSE_USER_AGENT');
-      // eslint-disable-next-line no-param-reassign
-      delete event.returnValue; // page will always reload
+        window.addEventListener('beforeunload', async (event) => {
+          await context.dispatch('CLOSE_USER_AGENT');
+          // eslint-disable-next-line no-param-reassign
+          delete event.returnValue; // page will always reload
+        });
+
+        userAgent.on('connected', () => {
+          resolve();
+        });
+      } catch (err) {
+        reject(err);
+      }
     });
   },
   CLOSE_USER_AGENT: (context) => {
@@ -95,7 +105,10 @@ const actions = {
       unhold: () => context.commit('SET_SESSION_STATE', SessionState.ACTIVE),
       muted: () => context.commit('SET_SESSION_MUTE', true),
       unmuted: () => context.commit('SET_SESSION_MUTE', false),
-      newDTMF: ({ originator, dtmf }) => originator === 'local' &&
+      newDTMF: ({
+                  originator,
+                  dtmf,
+                }) => originator === 'local' &&
         context.commit('NEW_SESSION_DTMF', dtmf.tone),
       // bug
       failed: (event) => {
@@ -113,12 +126,9 @@ const actions = {
       mediaConstraints: { audio: true },
       sessionTimersExpires: 300,
     };
-    // setTimeout(() => {
-
-      const session = context.state.userAgent.call('sip:call-from-web@dev.webitel.com', options);
-      window.session = session;
-      context.commit('SET_SESSION', session);
-    // }, 500);
+    const session = context.state.userAgent.call('sip:call-from-web@dev.webitel.com', options);
+    window.session = session;
+    context.commit('SET_SESSION', session);
   },
   HANGUP: (context) => {
     context.state.session.terminate();
