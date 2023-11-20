@@ -28,6 +28,7 @@ const getters = {
 
 const actions = {
   START_USER_AGENT: (context) => {
+    // why Promise? https://my.webitel.com/browse/WTEL-4036
     return new Promise((resolve, reject) => {
       try {
         const socket = new JsSIP.WebSocketInterface(context.rootState.config.call.url);
