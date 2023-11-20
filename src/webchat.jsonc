@@ -6,7 +6,7 @@
     // Unique IDentifier
     "id": 1,
     // Channel communication type
-    "channel": "bot|user|webchat", // e.g.: bot, user, phone, telegram, facebook, viber, skype ...
+    "channel": "bot|user|webchat", // e.g.: bot, user, phone, telegram, messenger, viber, skype ...
     // Channel specific contact string
     "contact": "string", // optional: channel specific contact string
 
@@ -18,7 +18,7 @@
   "type": "text|file|contact|joined|left|closed",
   // {"type": "text"} Text of the message to be sent, 1-4096
   "text": "How are you ?",
-  // {"type": "file"} Sent file document. 
+  // {"type": "file"} Sent file document.
   // Pass an HTTP .URL as a string for Webitel to get a file from the Internet,
   // or upload a new one using storage.FileService.UploadFile()
   "file": {
@@ -92,7 +92,7 @@
       "channel": "bot|user",
       // Channel specific contact string
       "contact": "string", // optional: channel specific contact string
-  
+
       "first_name": "", // required
       "last_name": "", // optional
       "username": "" // optional

@@ -2,128 +2,46 @@
   <section class="wt-omni-widget-window">
     <portal-target name="in-window-popup"></portal-target>
     <wt-omni-widget-header
+      :channel="channel"
       @close="$emit('close')"
     ></wt-omni-widget-header>
-    <wt-omni-widget-content-wrapper>
-      <component
-        :is="`${type}-content`"
-        :namespace="namespace"
-      ></component>
-    </wt-omni-widget-content-wrapper>
-    <wt-omni-widget-footer-wrapper>
-      <component
-        :is="`${type}-footer`"
-        :namespace="namespace"
-      ></component>
-    </wt-omni-widget-footer-wrapper>
+    <component
+      :is="`${channel}-wrapper`"
+      :namespace="namespace"
+    ></component>
   </section>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import ChatContent
-  from '../../../modules/chat/components/wt-omni-widget-chat-content/wt-omni-widget-window-content.vue';
-import ChatFooter
-  from '../../../modules/chat/components/wt-omni-widget-chat-footer/wt-omni-widget-window-footer.vue';
-import Type from '../../enum/Type.enum';
-import MessageClient from '../../websocket/MessageClient';
-import WtOmniWidgetContentWrapper
-  from './wt-omni-widget-window-content-wrapper/wt-omni-widget-window-content-wrapper.vue';
-import WtOmniWidgetFooterWrapper
-  from './wt-omni-widget-window-footer-wrapper/wt-omni-widget-window-footer-wrapper.vue';
+import ChatWrapper from '../../../modules/chat/components/wt-omni-widget-chat-wrapper.vue';
+import CallWrapper from '../../../modules/call/components/wt-omni-widget-call-wrapper.vue';
+import WidgetChannel from '../../enums/WidgetChannel.enum';
 import WtOmniWidgetHeader from './wt-omni-widget-window-header/wt-omni-widget-window-header.vue';
 
 export default {
   name: 'wt-omni-widget-window',
   components: {
     WtOmniWidgetHeader,
-    WtOmniWidgetContentWrapper,
-    WtOmniWidgetFooterWrapper,
-
-    ChatContent,
-    ChatFooter,
+    ChatWrapper,
+    CallWrapper,
   },
-  data: () => ({
-    type: Type.CHAT,
-  }),
+  props: {
+    channel: {
+      type: String, // WidgetChannel.enum
+      required: true,
+    },
+  },
   computed: {
     namespace() {
-      // we place namespacing in container file cause we should pass it to many components with same namespace: content, footer
-      switch (this.type) {
-        case Type.CHAT:
+      switch (this.channel) {
+        case WidgetChannel.CHAT:
           return 'chat';
+        case WidgetChannel.CALL:
+          return 'call';
         default:
-          return '';
+          throw new Error(`Unknown channel: ${this.channel}`);
       }
     },
-  },
-  methods: {
-    ...mapActions({
-      initializeSession: 'INITIALIZE_SESSION',
-      closeSession: 'CLOSE_SESSION',
-    }),
-    ...mapActions('chat', {
-      listenOnMessage: 'LISTEN_ON_MESSAGE',
-      onMessage: 'ON_MESSAGE',
-    }),
-    initSession() {
-      const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel; // FIXME
-      const messageClient = new MessageClient({
-        url: this.config.chat.url,
-        workerSupport,
-      });
-      this.initializeSession({ messageClient });
-      this.setOnMessageListener();
-    },
-    initPreviewMode() {
-      const messages = [{
-        type: 'message',
-        data: {
-          seq: 1,
-          id: 1,
-          message: {
-            type: 'text',
-            text: this.$t('chat.previewChatMessage1'),
-            from: {
-              channel: 'bot',
-              contact: '99',
-              firstName: 'website',
-              id: 99,
-            },
-          },
-        },
-      }, {
-        type: 'message',
-        data: {
-          id: 2,
-          seq: 2,
-          message: {
-            type: 'text',
-            text: this.$t('chat.previewChatMessage2'),
-          },
-        },
-      }];
-      messages.forEach((message) => this.onMessage(message));
-    },
-    setOnMessageListener() {
-      const callback = () => this.openWidget();
-      this.listenOnMessage(callback);
-    },
-    openWidget() {
-      this.$emit('open');
-    },
-  },
-
-  created() {
-    if (this.isPreviewMode) {
-      this.initPreviewMode();
-    } else {
-      this.initSession();
-      window.addEventListener('beforeunload', async (e) => {
-        await this.closeSession();
-        delete e.returnValue; // page will always reload
-      });
-    }
   },
 };
 </script>
@@ -131,28 +49,28 @@ export default {
 <style lang="scss" scoped>
 #wt-omni-widget {
   .wt-omni-widget-window {
-    box-sizing: border-box;
-    width: calc(100vw - var(--chat-offset) * 2);
-    height: calc(100vh - var(--chat-offset) * 2);
-    max-width: 390px;
-    max-height: 560px;
     display: flex;
+    align-items: stretch;
     flex-direction: column;
     justify-content: center;
-    align-items: stretch;
-    background: var(--background-color);
+    box-sizing: border-box;
+    width: calc(100vw - var(--chat-offset) * 2);
+    max-width: 390px;
+    height: calc(100vh - var(--chat-offset) * 2);
+    max-height: 560px;
     padding: var(--main-app-padding);
     border-radius: var(--border-radius--square);
+    background: var(--background-color);
     box-shadow: var(--morf-style-font);
+
+    ::v-deep .wt-omni-widget-window-content-wrapper {
+      flex-grow: 1;
+      min-height: 0;
+      margin-bottom: 10px;
+    }
   }
 
-  .wt-omni-widget-window-content-wrapper {
-    flex-grow: 1;
-    min-height: 0;
-  }
-
-  .wt-omni-widget-window-header,
-  .wt-omni-widget-window-content-wrapper {
+  .wt-omni-widget-window-header {
     margin-bottom: 10px;
   }
 

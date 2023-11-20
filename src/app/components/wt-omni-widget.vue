@@ -8,33 +8,45 @@
       ]"
   >
     <transition name="widget-appearance-transition">
+<!--
+I don't remember why there's a keep-alive,
+  but researching through https://my.webitel.com/browse/WTEL-4027,
+  i discovered, that, at least, keep-alive prevents chat components from creating new ws connections
+  (you can see this as: messages that are duplicated as many times as connection is reinitialized)
+
+  can't say for sure, if this keep-alive is a mistake, or not :(
+  -->
       <keep-alive>
+        <wt-omni-widget-buttons-menu
+          v-if="!activeChannel"
+          @open="setActiveChannel"
+        ></wt-omni-widget-buttons-menu>
         <wt-omni-widget-popup
-          v-if="isPopupOpened"
-          @close="closePopup"
+          v-else-if="activeChannel === WidgetChannel.APPOINTMENT"
+          :channel="activeChannel"
+          @close="setActiveChannel({ channel: null })"
         ></wt-omni-widget-popup>
         <wt-omni-widget-window
-          v-else-if="isWidgetOpened"
+          v-else
           :class="{
             'wt-omni-widget-window--preview-mode': isPreviewMode === 'chat',
           }"
-          @open="openWidget"
-          @close="closeWidget"
+          :channel="activeChannel"
+          @close="setActiveChannel({ channel: null })"
         ></wt-omni-widget-window>
-        <wt-omni-widget-buttons-menu
-          v-else
-          @open="handleBtnOpen"
-        ></wt-omni-widget-buttons-menu>
       </keep-alive>
     </transition>
   </aside>
 </template>
 
 <script>
+import eventBus from '@webitel/ui-sdk/src/scripts/eventBus';
+import { mapActions } from 'vuex';
 import WtOmniWidgetButtonsMenu from './wt-omni-widget-button/wt-omni-widget-buttons-menu.vue';
 import WtOmniWidgetWindow from './wt-omni-widget-window/wt-omni-widget-window.vue';
 import WtOmniWidgetPopup from './wt-omni-widget-popup/wt-omni-widget-popup.vue';
-import ChatChannel from '../enum/ChatChannel.enum';
+import WidgetChannel from '../enums/WidgetChannel.enum';
+import GlobalEvent from '../enums/GlobalEvent.enum';
 
 let openTimeoutContainer = null;
 
@@ -46,8 +58,8 @@ export default {
     WtOmniWidgetButtonsMenu,
   },
   data: () => ({
-    isPopupOpened: false,
-    isWidgetOpened: false,
+    WidgetChannel,
+    activeChannel: null,
   }),
 
   computed: {
@@ -76,8 +88,11 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      subscribeToNetworkConnectionStatus: 'SUBSCRIBE_TO_NETWORK_CONNECTION_STATUS',
+    }),
     applyGlobalConfig() {
-      this.isWidgetOpened = this.isPreviewMode === 'chat'; // Open chat preview if configuration contains chat preview property
+      if(this.isPreviewMode === 'chat') this.activeChannel = WidgetChannel.CHAT; // Open chat preview if configuration contains chat preview property
       if (this.config.view.lang) this.$i18n.locale = this.config.view.lang;
       document.documentElement.style.setProperty('--wt-omni-widget__accent-color', this.config.view.accentColor);
       document.documentElement.style.setProperty('--wt-omni-widget__buttons-menu-opacity', this.config.view.btnOpacity);
@@ -88,29 +103,12 @@ export default {
       const openTimeout = this.config.chat?.openTimeout;
       if (openTimeoutContainer) openTimeoutContainer = clearTimeout(openTimeoutContainer);
       if (typeof openTimeout === 'number' && openTimeout >= 0) {
-        openTimeoutContainer = setTimeout(() => this.openWidget(), openTimeout * 1000); // sec -> msec
+        openTimeoutContainer = setTimeout(() => this.setActiveChannel({ channel: WidgetChannel.CHAT }), openTimeout * 1000); // sec -> msec
       }
     },
-    handleBtnOpen(type) {
-      if (type === ChatChannel.APPOINTMENT) {
-        this.openPopup();
-      } else {
-        this.openWidget();
-      }
-    },
-    openWidget() {
+    setActiveChannel({ channel, options }) {
       if (this.isPreviewMode) return;
-      this.isWidgetOpened = true;
-    },
-    openPopup() {
-      this.isPopupOpened = true;
-    },
-    closePopup() {
-      this.isPopupOpened = false;
-    },
-    closeWidget() {
-      if (this.isPreviewMode) return;
-      this.isWidgetOpened = false;
+      this.activeChannel = channel;
     },
   },
 
@@ -121,7 +119,12 @@ export default {
   },
 
   created() {
+    this.subscribeToNetworkConnectionStatus();
     this.applyGlobalConfig();
+    eventBus.$on(GlobalEvent.SET_ACTIVE_WIDGET_CHANNEL, this.setActiveChannel);
+  },
+  destroyed() {
+    eventBus.$off(GlobalEvent.SET_ACTIVE_WIDGET_CHANNEL, this.setActiveChannel);
   },
 };
 </script>

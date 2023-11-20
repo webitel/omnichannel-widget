@@ -1,4 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
+import WidgetChannel from '../../enums/WidgetChannel.enum';
 import WtOmniWidget from '../wt-omni-widget.vue';
 
 import WtOmniWidgetWindow from '../wt-omni-widget-window/wt-omni-widget-window.vue';
@@ -13,6 +14,8 @@ const computed = {
 };
 
 describe('WtOmniWidget Component', () => {
+  jest.spyOn(WtOmniWidget.methods, 'subscribeToNetworkConnectionStatus')
+  .mockImplementation(() => {});
   it('renders a component', () => {
     const wrapper = shallowMount(WtOmniWidget, {
       computed,
@@ -32,7 +35,7 @@ describe('WtOmniWidget Component', () => {
     const wrapper = shallowMount(WtOmniWidget, {
       computed,
     });
-    wrapper.findComponent(WtOmniWidgetButtonsMenu).vm.$emit('open');
+    wrapper.findComponent(WtOmniWidgetButtonsMenu).vm.$emit('open', { channel: WidgetChannel.CHAT });
     await wrapper.vm.$nextTick();
     expect(wrapper.findComponent(WtOmniWidgetButtonsMenu).exists()).toBe(false);
     expect(wrapper.findComponent(WtOmniWidgetWindow).isVisible()).toBe(true);

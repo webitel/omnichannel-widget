@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils';
+import WidgetChannel from '../../../enums/WidgetChannel.enum';
 import WtOmniWidgetButtonsMenu from '../wt-omni-widget-buttons-menu.vue';
-import ChatChannel from '../../../enum/ChatChannel.enum';
+import AlternativeChanne from '../../../enums/AlternativeChannel.enum';
 
 describe('WtOmniWidgetButtonsMenu', () => {
   it('renders a component', () => {
@@ -18,7 +19,7 @@ describe('WtOmniWidgetButtonsMenu', () => {
 
   it('correctly computes menu, processing urls: no "https" case', () => {
     const alternativeChannels = {
-      [ChatChannel.VIBER]: 'viber://co',
+      [AlternativeChanne.VIBER]: 'viber://co',
     };
     const wrapper = shallowMount(WtOmniWidgetButtonsMenu, {
       computed: {
@@ -27,12 +28,12 @@ describe('WtOmniWidgetButtonsMenu', () => {
         },
       },
     });
-    expect(wrapper.vm.buttons).toEqual([{ type: ChatChannel.VIBER, url: 'viber://co' }]);
+    expect(wrapper.vm.buttons).toEqual([{ type: AlternativeChanne.VIBER, url: 'viber://co' }]);
   });
 
   it('correctly computes menu, processing urls: "https" case', () => {
     const alternativeChannels = {
-      [ChatChannel.WHATSAPP]: 'https://whatsapp.co',
+      [AlternativeChanne.WHATSAPP]: 'https://whatsapp.co',
     };
     const wrapper = shallowMount(WtOmniWidgetButtonsMenu, {
       computed: {
@@ -41,12 +42,12 @@ describe('WtOmniWidgetButtonsMenu', () => {
         },
       },
     });
-    expect(wrapper.vm.buttons).toEqual([{type: ChatChannel.WHATSAPP, url: 'https://whatsapp.co' }]);
+    expect(wrapper.vm.buttons).toEqual([{type: AlternativeChanne.WHATSAPP, url: 'https://whatsapp.co' }]);
   });
 
   it('correctly computes menu, processing urls: no "mailto:" email case', () => {
     const alternativeChannels = {
-      [ChatChannel.EMAIL]: 'email@example.com',
+      [AlternativeChanne.EMAIL]: 'email@example.com',
     };
     const wrapper = shallowMount(WtOmniWidgetButtonsMenu, {
       computed: {
@@ -55,7 +56,7 @@ describe('WtOmniWidgetButtonsMenu', () => {
         },
       },
     });
-    expect(wrapper.vm.buttons).toEqual([{ type: ChatChannel.EMAIL, url: 'mailto:email@example.com' }]);
+    expect(wrapper.vm.buttons).toEqual([{ type: AlternativeChanne.EMAIL, url: 'mailto:email@example.com' }]);
   });
 
   it('correctly computes menu, processing urls: "mailto:" email case', () => {
@@ -83,7 +84,7 @@ describe('WtOmniWidgetButtonsMenu', () => {
       },
     });
     wrapper.findAllComponents({ name: 'wt-omni-widget-button' })
-      .wrappers.find((wrapper) => wrapper.vm.$props.type === ChatChannel.CHAT)
+      .wrappers.find((wrapper) => wrapper.vm.$props.type === WidgetChannel.CHAT)
       .vm.$emit('click');
     expect(wrapper.emitted().open).toBeTruthy();
   });

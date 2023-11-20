@@ -53,8 +53,23 @@ export default {
       store_sql_member_appointment_cancel_app_error: 'Помилка скасування',
     },
   },
+  call: {
+    startView: {
+      title: 'Онлайн-дзвінок',
+      description: 'Ви можете подзвонити нам прямо звідси! ',
+    },
+    ringingView: {
+      title: 'Телефоную',
+      description: 'Шукаємо оператора. Будь ласка, зачекайте.',
+
+    },
+  },
   errors: {
     fileTooLarge: 'Файл "{file}" завеликий! Максимальний розмір файлу: {maxSize} Мб',
+    offline: {
+      title: 'Ох... Ви офлайн',
+      description: 'Будь ласка, перевірте ваше Інтернет-з\'єднання і спробуйте знову',
+    },
   },
   emojiPicker: {
     categoriesLabel: 'Категорії',

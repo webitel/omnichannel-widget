@@ -19,7 +19,7 @@
     @click.prevent="$emit('click', type)"
   >
     <wt-icon
-      :icon="type"
+      :icon="icon"
       color="contrast"
       icon-prefix="wt-omni-widget"
     ></wt-icon>
@@ -33,10 +33,18 @@ export default {
     type: {
       type: String,
       required: true,
-      options: ['chat', 'appointment', 'email', 'whatsapp', 'facebook', 'viber', 'telegram', 'open'],
+      options: ['chat', 'call', 'appointment', 'email', 'whatsapp', 'messenger', 'viber', 'telegram', 'open'],
     },
     url: {
       type: String,
+    },
+  },
+  computed: {
+    icon() {
+      switch (this.type) {
+        case 'call': return 'call--filled';
+        default: return this.type;
+      }
     },
   },
 };
@@ -48,7 +56,7 @@ export default {
   $telegram: #7AA5DA;
   $email: #44ADFB;
   $whatsapp: #75B73B;
-  $facebook: #4189BE;
+  $messenger: #4189BE;
 
   .wt-omni-widget-btn {
     width: 60px;
@@ -82,8 +90,8 @@ export default {
     &--email {
       background: $email;
     }
-    &--facebook {
-      background: $facebook;
+    &--messenger {
+      background: $messenger;
     }
   }
 

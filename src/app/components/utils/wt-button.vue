@@ -4,6 +4,7 @@
     :class="[
       `wt-button--color-${color}`,
       {
+        'wt-button--wide': wide,
         'wt-button--disabled': disabled,
       }
       ]"
@@ -22,6 +23,10 @@ export default {
       type: String,
       default: 'accent',
       options: ['accent', 'secondary', 'danger'],
+    },
+    wide: {
+      type: Boolean,
+      default: false,
     },
     disabled: {
       type: Boolean,
@@ -65,6 +70,9 @@ export default {
         color: var(--main-color);
         background: var(--negative-color);
       }
+    }
+    &--wide {
+      width: 100%;
     }
     &--disabled {
       pointer-events: none;

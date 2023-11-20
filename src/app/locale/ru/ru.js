@@ -53,8 +53,23 @@ export default {
       store_sql_member_appointment_cancel_app_error: 'Ошибка отмены',
     },
   },
+  call: {
+    startView: {
+      title: 'Онлайн-звонок',
+      description: 'Вы можете позвонить нам прямо отсюда!',
+    },
+    ringingView: {
+      title: 'Звоним',
+      description: 'Ищем оператора. Пожалуйста, подождите.',
+
+    },
+  },
   errors: {
     fileTooLarge: 'Файл "{file}" слишком большой! Максимальный размер файла: {maxSize} Мб',
+    offline: {
+      title: 'Ох... Вы офлайн',
+      description: 'Пожалуйста, проверьте ваше Интернет-соединение и попробуйте снова',
+    },
   },
   emojiPicker: {
     categoriesLabel: 'Категории',

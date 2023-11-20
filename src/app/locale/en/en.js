@@ -24,9 +24,9 @@ export default {
         placeholder: 'Enter your name',
       },
       email: {
-          label: 'Email',
-          placeholder: 'Enter your email',
-        },
+        label: 'Email',
+        placeholder: 'Enter your email',
+      },
       destination: {
         label: 'Phone number',
         placeholder: 'Enter phone number',
@@ -53,8 +53,23 @@ export default {
       store_sql_member_appointment_cancel_app_error: 'Cancelation error',
     },
   },
+  call: {
+    startView: {
+      title: 'Online Call',
+      description: 'You can call us right from here!',
+    },
+    ringingView: {
+      title: 'Ringing',
+      description: 'We are looking for an agent. Please wait.',
+
+    },
+  },
   errors: {
     fileTooLarge: 'File "{file}" is too large! Maximum size is {maxSize} Mb',
+    offline: {
+      title: 'Ohh... You\'re offline',
+      description: 'Please check your Internet connection and try again',
+    },
   },
   emojiPicker: {
     categoriesLabel: 'Categories',
