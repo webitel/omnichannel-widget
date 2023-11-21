@@ -127,7 +127,8 @@ const actions = {
       mediaConstraints: { audio: true },
       sessionTimersExpires: 300,
     };
-    const session = context.state.userAgent.call('sip:call-from-web@dev.webitel.com', options);
+    const { hostname } = new URL(context.rootState.config.call.url);
+    const session = context.state.userAgent.call(`sip:call-from-web@${hostname}`, options);
     window.session = session;
     context.commit('SET_SESSION', session);
   },
