@@ -5,16 +5,10 @@
       :channel="channel"
       @close="$emit('close')"
     ></wt-omni-widget-header>
-    <!--    <component-->
-    <!--      :is="`${channel}-wrapper`"-->
-    <!--      :namespace="namespace"-->
-    <!--    ></component>-->
-
-    <button id="cptch" type="button">click me</button>
-
-    <div id="g-recaptcha-v2"></div>
-    <button id="cptch2" type="button">click me v2</button>
-    {{ state }}
+    <component
+      :is="`${channel}-wrapper`"
+      :namespace="namespace"
+    ></component>
   </section>
 </template>
 
@@ -23,13 +17,6 @@ import ChatWrapper from '../../../modules/chat/components/wt-omni-widget-chat-wr
 import CallWrapper from '../../../modules/call/components/wt-omni-widget-call-wrapper.vue';
 import WidgetChannel from '../../enums/WidgetChannel.enum';
 import WtOmniWidgetHeader from './wt-omni-widget-window-header/wt-omni-widget-window-header.vue';
-
-const script = document.createElement('script');
-script.src = `https://www.google.com/recaptcha/api.js?render=${sitekey}`;
-// script.async = true;
-document.head.appendChild(script);
-
-import axios from 'axios';
 
 export default {
   name: 'wt-omni-widget-window',
@@ -40,7 +27,6 @@ export default {
   },
   data: () => ({
     state: 'empty',
-    sitekeyv2,
   }),
   props: {
     channel: {
@@ -59,43 +45,6 @@ export default {
           throw new Error(`Unknown channel: ${this.channel}`);
       }
     },
-  },
-  methods: {
-    onVerify(state, response) {
-      // console.info('response', state, response);
-      // this.state = state;
-    },
-  },
-  mounted() {
-    const button = document.getElementById('cptch');
-    button.addEventListener('click', () => {
-      window.grecaptcha.ready(() => {
-        window.grecaptcha.execute(sitekey, { action: 'homepage' })
-        .then(async (token) => {
-          this.onVerify('verified', token);
-          const res = await axios.post('https://dev.webitel.com/api/recaptcha', {
-            response: token,
-            version: '3',
-          });
-          console.info(res.data.success, res.data.score);
-        });
-      });
-    });
-
-    const button2 = document.getElementById('cptch2');
-    button2.addEventListener('click', () => {
-      window.grecaptcha.render(document.getElementById('g-recaptcha-v2'), {
-        sitekey: sitekeyv2,
-        callback: async (response) => {
-          this.onVerify('verified v2', response);
-          const res = await axios.post('https://dev.webitel.com/api/recaptcha', {
-            version: '2',
-            response,
-          });
-          console.info(res.data);
-        },
-      });
-    });
   },
 };
 </script>

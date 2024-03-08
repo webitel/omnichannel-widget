@@ -23,4 +23,7 @@ export default new WtOmniWidget('#wt-omni-widget', {
     url: 'wss://dev.webitel.com/sip',
     id: 'dania-webchat',
   },
+  reCAPTCHA: {
+    sitekey: '',
+  },
 });

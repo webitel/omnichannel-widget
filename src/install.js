@@ -11,6 +11,8 @@ import eventBus from '@webitel/ui-sdk/src/scripts/eventBus';
 
 import globalConfigMixin from './app/mixins/globalConfigMixin';
 
+import { initializeReCAPTCHA } from './modules/reCAPTCHA-verification/api/reCAPTCHA';
+
 import './app/assets/icons/sprite';
 import './app/css/fonts/_fonts.scss';
 
@@ -56,6 +58,7 @@ export default class WtOmniWidget {
 
   async mountApp({ selector, config }) {
     await this.setConfig(config);
+    await initializeReCAPTCHA(config.reCAPTCHA.sitekey);
     Instance.$mount(selector);
   }
 

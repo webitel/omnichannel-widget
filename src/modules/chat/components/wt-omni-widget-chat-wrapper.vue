@@ -10,6 +10,7 @@ why there's d: contents; and this weird wrapper?
     <footer-wrapper>
       <chat-footer :namespace="namespace"></chat-footer>
     </footer-wrapper>
+    err: {{ err }}
   </div>
 </template>
 
@@ -25,6 +26,7 @@ import WidgetChannel from '../../../app/enums/WidgetChannel.enum';
 import MessageClient from '../../../app/websocket/MessageClient';
 import ChatContent from './wt-omni-widget-chat-content/wt-omni-widget-window-content.vue';
 import ChatFooter from './wt-omni-widget-chat-footer/wt-omni-widget-window-footer.vue';
+import reCAPTCHify from '../../reCAPTCHA-verification/scripts/reCAPTCHify';
 
 export default {
   name: 'wt-omni-widget-chat-wrapper',
@@ -40,9 +42,12 @@ export default {
       required: true,
     },
   },
+  data: () => ({
+    err: null,
+  }),
   computed: {
     ...mapState('chat', {
-      client: state => state.messageClient,
+      client: (state) => state.messageClient,
     }),
   },
   methods: {
@@ -89,15 +94,21 @@ export default {
     },
   },
 
-  created() {
+  async created() {
     if (this.isPreviewMode) {
       this.initPreviewMode();
     } else {
-      this.initSession();
-      window.addEventListener('beforeunload', async (e) => {
-        await this.closeSession();
-        delete e.returnValue; // page will always reload
-      });
+      try {
+        await reCAPTCHify(() => {
+          this.initSession();
+          window.addEventListener('beforeunload', async (e) => {
+            await this.closeSession();
+            delete e.returnValue; // page will always reload
+          });
+        });
+      } catch (err) {
+        this.err = err;
+      }
     }
   },
 };
