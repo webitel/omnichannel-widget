@@ -23,7 +23,7 @@ export default new WtOmniWidget('#wt-omni-widget', {
     url: 'wss://dev.webitel.com/sip',
     id: 'dania-webchat',
   },
-  reCAPTCHA: {
+  captcha: {
     sitekey: '6LdTJJUpAAAAAFlzlOqs3mtaPhEnr0MOgBlc3W4N',
     verifyUrl: 'https://dev.webitel.com/chat/dania-webchat/captcha',
   },

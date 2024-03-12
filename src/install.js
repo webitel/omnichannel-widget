@@ -66,10 +66,14 @@ export default class WtOmniWidget {
                    config,
                  }) {
     await this.setConfig(config);
-    await initializeReCAPTCHA({
-      sitekey: config.reCAPTCHA.sitekey,
-      verifyUrl: config.reCAPTCHA.verifyUrl,
-    });
+
+    if (config.captcha) {
+      await initializeReCAPTCHA({
+        sitekey: config.captcha.sitekey,
+        verifyUrl: config.captcha.verifyUrl,
+      });
+    }
+
     Instance.$mount(selector);
   }
 
