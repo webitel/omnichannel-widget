@@ -26,9 +26,6 @@ export default {
     ChatWrapper,
     CallWrapper,
   },
-  data: () => ({
-    state: 'empty',
-  }),
   props: {
     channel: {
       type: String, // WidgetChannel.enum
