@@ -2,6 +2,7 @@
   <aside class="wt-omni-widget-popup">
     <section class="wt-omni-widget-popup__popup">
       <wt-omni-widget-header
+        :channel="WidgetChannel.APPOINTMENT"
         @close="close"
       ></wt-omni-widget-header>
       <article class="wt-omni-widget-popup__main">
@@ -9,16 +10,21 @@
           <the-appointment></the-appointment>
         </slot>
       </article>
+      <wt-snack-bar />
     </section>
   </aside>
 </template>
 
 <script>
 import TheAppointment from '../../../modules/appointment/components/wt-omni-widget-appointment.vue';
+import WidgetChannel from '../../enums/WidgetChannel.enum';
 import WtOmniWidgetHeader from '../wt-omni-widget-window/wt-omni-widget-window-header/wt-omni-widget-window-header.vue';
 
 export default {
   name: 'wt-omni-widget-popup',
+  data: () => ({
+    WidgetChannel,
+  }),
   components: {
     WtOmniWidgetHeader,
     TheAppointment,
@@ -53,6 +59,7 @@ export default {
   }
 
   .wt-omni-widget-popup__popup {
+    position: relative;
     z-index: 1;
     display: flex;
     flex-direction: column;

@@ -9,6 +9,7 @@
       :is="`${channel}-wrapper`"
       :namespace="namespace"
     ></component>
+    <wt-snack-bar />
   </section>
 </template>
 
@@ -62,6 +63,7 @@ export default {
     border-radius: var(--border-radius--square);
     background: var(--background-color);
     box-shadow: var(--morf-style-font);
+    position: relative;
 
     ::v-deep .wt-omni-widget-window-content-wrapper {
       flex-grow: 1;

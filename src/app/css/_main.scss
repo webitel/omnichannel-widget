@@ -4,6 +4,10 @@
 @import 'variables/scroll';
 @import 'styleguide/placeholder/placeholder';
 
+// https://developers.google.com/recaptcha/docs/faq#id-like-to-hide-the-recaptcha-badge.-what-is-allowed
+.grecaptcha-badge {
+  visibility: hidden;
+}
 
 .wt-omni-widget--reset-styles,
 .wt-omni-widget--reset-styles * {
