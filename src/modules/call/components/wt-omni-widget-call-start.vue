@@ -24,7 +24,6 @@
         color="success"
         @click="call"
       ></wt-icon-btn>
-      err: {{ err }}
     </call-actions-wrapper>
   </section>
 </template>
@@ -32,6 +31,7 @@
 <script>
 import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
 import { mapActions, mapState } from 'vuex';
+import eventBus from '@webitel/ui-sdk/src/scripts/eventBus';
 import reCAPTCHify from '../../reCAPTCHA-verification/scripts/reCAPTCHify';
 import CallActionsWrapper from './utils/wt-omni-widget-call-actions-wrapper.vue';
 import CallTitleWrapper from './utils/wt-omni-widget-call-title-wrapper.vue';
@@ -50,7 +50,6 @@ export default {
   },
   data: () => ({
     initWithMuted: false,
-    err: null,
   }),
   computed: {
     ...mapState({
@@ -71,8 +70,11 @@ export default {
           this.makeCall({ initWithMuted: this.initWithMuted });
         });
       } catch (err) {
-        console.error(err);
-        this.err = err;
+        eventBus.$emit('snack', {
+          type: 'error',
+          text: this.$t('captcha.error.text'),
+        });
+        throw err;
       }
     },
   },

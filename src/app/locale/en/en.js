@@ -4,6 +4,11 @@ export default {
     close: 'Close',
     ok: 'Ok',
   },
+  captcha: {
+    error: {
+      text: 'Oops! Something went wrong. Please, try again.',
+    },
+  },
   chat: {
     inputPlaceholder: 'Message',
     events: {

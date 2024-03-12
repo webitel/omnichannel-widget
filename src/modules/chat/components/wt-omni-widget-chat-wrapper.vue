@@ -10,7 +10,6 @@ why there's d: contents; and this weird wrapper?
     <footer-wrapper>
       <chat-footer :namespace="namespace"></chat-footer>
     </footer-wrapper>
-    err: {{ err }}
   </div>
 </template>
 
@@ -42,9 +41,6 @@ export default {
       required: true,
     },
   },
-  data: () => ({
-    err: null,
-  }),
   computed: {
     ...mapState('chat', {
       client: (state) => state.messageClient,
@@ -59,15 +55,30 @@ export default {
       listenOnMessage: 'LISTEN_ON_MESSAGE',
       onMessage: 'ON_MESSAGE',
     }),
-    initSession() {
+    async initSession() {
       if (this.client) return; // prevent reinitialization, but should be refactored
-      const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel; // FIXME
-      const messageClient = new MessageClient({
-        url: this.config.chat.url,
-        workerSupport,
-      });
-      this.initializeSession({ messageClient });
-      this.setOnMessageListener();
+      try {
+        (await reCAPTCHify(() => {
+          const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel; // FIXME
+          const messageClient = new MessageClient({
+            url: this.config.chat.url,
+            workerSupport,
+          });
+          this.initializeSession({ messageClient });
+          this.setOnMessageListener();
+
+          window.addEventListener('beforeunload', async (e) => {
+            await this.closeSession();
+            delete e.returnValue; // page will always reload
+          });
+        }))();
+      } catch (err) {
+        eventBus.$emit('snack', {
+          type: 'error',
+          text: this.$t('captcha.error.text'),
+        });
+        throw err;
+      }
     },
     initPreviewMode() {
       const messages = [
@@ -94,24 +105,18 @@ export default {
     },
   },
 
-  async created() {
+  created() {
     if (this.isPreviewMode) {
       this.initPreviewMode();
-    } else {
-      try {
-        await reCAPTCHify(() => {
-          this.initSession();
-          window.addEventListener('beforeunload', async (e) => {
-            await this.closeSession();
-            delete e.returnValue; // page will always reload
-          });
-        });
-      } catch (err) {
-        this.err = err;
-      }
+    }
+  },
+  activated() {
+    if (!this.isPreviewMode) {
+      this.initSession(); // try to init, if didn't init on created (note: initSession() has this.client check!!!)
     }
   },
 };
+
 </script>
 
 <style lang="scss" scoped>

@@ -10,8 +10,10 @@
 </template>
 
 <script>
+import eventBus from '@webitel/ui-sdk/src/scripts/eventBus';
 import { mapActions, mapState } from 'vuex';
 import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
+import reCAPTCHify from '../../reCAPTCHA-verification/scripts/reCAPTCHify';
 import AppointmentList from './list/wt-omni-widget-appointment-list.vue';
 import AppointmentSuccess from './success/wt-omni-widget-appointment-success.vue';
 import AppointmentState from '../enum/AppointmentState.enum';
@@ -39,8 +41,17 @@ export default {
       loadAppointmentData: 'LOAD_APPOINTMENT_DATA',
     }),
   },
-  created() {
-    this.loadAppointmentData();
+  async created() {
+    try {
+      (await reCAPTCHify(() => {
+        this.loadAppointmentData();
+      }))();
+    } catch (err) {
+      eventBus.$emit('snack', {
+        type: 'error',
+        text: this.$t('captcha.error.text'),
+      });
+    }
   },
 };
 </script>

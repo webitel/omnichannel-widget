@@ -24,6 +24,7 @@ export default new WtOmniWidget('#wt-omni-widget', {
     id: 'dania-webchat',
   },
   reCAPTCHA: {
-    sitekey: '',
+    sitekey: '6LdTJJUpAAAAAFlzlOqs3mtaPhEnr0MOgBlc3W4N',
+    verifyUrl: 'https://dev.webitel.com/chat/dania-webchat/captcha',
   },
 });
