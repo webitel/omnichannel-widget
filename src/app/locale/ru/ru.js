@@ -4,6 +4,11 @@ export default {
     close: 'Закрыть',
     ok: 'Oк',
   },
+  captcha: {
+    error: {
+      text: 'Йоой! Что-то пошло не так. Пожалуйста, попробуйте позже.',
+    },
+  },
   chat: {
     inputPlaceholder: 'Сообщение',
     events: {

@@ -4,6 +4,11 @@ export default {
     close: 'Закрити',
     ok: 'Oк',
   },
+  captcha: {
+    error: {
+      text: 'Йоой! Щось пішло не так. Будь ласка, спробуйте пізніше.',
+    },
+  },
   chat: {
     inputPlaceholder: 'Повідомлення',
     events: {
