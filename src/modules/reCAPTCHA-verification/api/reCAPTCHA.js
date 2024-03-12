@@ -16,7 +16,6 @@ export const initializeReCAPTCHA = async ({ sitekey: _sitekey, verifyUrl: _verif
 const executeReCAPTCHA = ({ action }) => window.grecaptcha.execute(sitekey, { action });
 
 const verifyReCAPTCHA = async (token) => {
-  throw Error('test');
   const url = `${verifyUrl}?response=${token}`;
   // if throws error, then isn't verified
   const result = await instance.get(url);
