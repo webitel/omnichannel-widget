@@ -43,14 +43,13 @@ export default {
   },
   async created() {
     try {
-      (await reCAPTCHify(() => {
-        this.loadAppointmentData();
-      }))();
+     await reCAPTCHify(this.loadAppointmentData);
     } catch (err) {
       eventBus.$emit('snack', {
         type: 'error',
         text: this.$t('captcha.error.text'),
       });
+      throw err;
     }
   },
 };

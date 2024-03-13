@@ -58,7 +58,7 @@ export default {
     async initSession() {
       if (this.client) return; // prevent reinitialization, but should be refactored
       try {
-        (await reCAPTCHify(() => {
+        await reCAPTCHify(() => {
           const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel; // FIXME
           const messageClient = new MessageClient({
             url: this.config.chat.url,
@@ -71,7 +71,7 @@ export default {
             await this.closeSession();
             delete e.returnValue; // page will always reload
           });
-        }))();
+        });
       } catch (err) {
         eventBus.$emit('snack', {
           type: 'error',
