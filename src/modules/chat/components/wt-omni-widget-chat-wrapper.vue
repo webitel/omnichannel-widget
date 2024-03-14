@@ -25,6 +25,7 @@ import WidgetChannel from '../../../app/enums/WidgetChannel.enum';
 import MessageClient from '../../../app/websocket/MessageClient';
 import ChatContent from './wt-omni-widget-chat-content/wt-omni-widget-window-content.vue';
 import ChatFooter from './wt-omni-widget-chat-footer/wt-omni-widget-window-footer.vue';
+import reCAPTCHify from '../../reCAPTCHA-verification/scripts/reCAPTCHify';
 
 export default {
   name: 'wt-omni-widget-chat-wrapper',
@@ -42,7 +43,7 @@ export default {
   },
   computed: {
     ...mapState('chat', {
-      client: state => state.messageClient,
+      client: (state) => state.messageClient,
     }),
   },
   methods: {
@@ -54,15 +55,30 @@ export default {
       listenOnMessage: 'LISTEN_ON_MESSAGE',
       onMessage: 'ON_MESSAGE',
     }),
-    initSession() {
+    async initSession() {
       if (this.client) return; // prevent reinitialization, but should be refactored
-      const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel; // FIXME
-      const messageClient = new MessageClient({
-        url: this.config.chat.url,
-        workerSupport,
-      });
-      this.initializeSession({ messageClient });
-      this.setOnMessageListener();
+      try {
+        await reCAPTCHify(() => {
+          const workerSupport = false && !!window.SharedWorker && !!window.BroadcastChannel; // FIXME
+          const messageClient = new MessageClient({
+            url: this.config.chat.url,
+            workerSupport,
+          });
+          this.initializeSession({ messageClient });
+          this.setOnMessageListener();
+
+          window.addEventListener('beforeunload', async (e) => {
+            await this.closeSession();
+            delete e.returnValue; // page will always reload
+          });
+        });
+      } catch (err) {
+        eventBus.$emit('snack', {
+          type: 'error',
+          text: this.$t('captcha.error.text'),
+        });
+        throw err;
+      }
     },
     initPreviewMode() {
       const messages = [
@@ -92,15 +108,15 @@ export default {
   created() {
     if (this.isPreviewMode) {
       this.initPreviewMode();
-    } else {
-      this.initSession();
-      window.addEventListener('beforeunload', async (e) => {
-        await this.closeSession();
-        delete e.returnValue; // page will always reload
-      });
+    }
+  },
+  activated() {
+    if (!this.isPreviewMode) {
+      this.initSession(); // try to init, if didn't init on created (note: initSession() has this.client check!!!)
     }
   },
 };
+
 </script>
 
 <style lang="scss" scoped>

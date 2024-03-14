@@ -22,7 +22,7 @@
         icon="call"
         icon-size="sm"
         color="success"
-        @click="() => makeCall({ initWithMuted })"
+        @click="call"
       ></wt-icon-btn>
     </call-actions-wrapper>
   </section>
@@ -31,6 +31,8 @@
 <script>
 import getNamespacedState from '@webitel/ui-sdk/src/store/helpers/getNamespacedState';
 import { mapActions, mapState } from 'vuex';
+import eventBus from '@webitel/ui-sdk/src/scripts/eventBus';
+import reCAPTCHify from '../../reCAPTCHA-verification/scripts/reCAPTCHify';
 import CallActionsWrapper from './utils/wt-omni-widget-call-actions-wrapper.vue';
 import CallTitleWrapper from './utils/wt-omni-widget-call-title-wrapper.vue';
 
@@ -62,6 +64,19 @@ export default {
         return dispatch(`${this.namespace}/MAKE_CALL`, payload);
       },
     }),
+    async call() {
+      try {
+        await reCAPTCHify(() => {
+          this.makeCall({ initWithMuted: this.initWithMuted });
+        });
+      } catch (err) {
+        eventBus.$emit('snack', {
+          type: 'error',
+          text: this.$t('captcha.error.text'),
+        });
+        throw err;
+      }
+    },
   },
 };
 </script>
