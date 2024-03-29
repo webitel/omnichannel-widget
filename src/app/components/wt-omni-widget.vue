@@ -92,10 +92,13 @@ export default {
       subscribeToNetworkConnectionStatus: 'SUBSCRIBE_TO_NETWORK_CONNECTION_STATUS',
     }),
     applyGlobalConfig() {
-      if(this.isPreviewMode === 'chat') this.activeChannel = WidgetChannel.CHAT; // Open chat preview if configuration contains chat preview property
+      if (this.isPreviewMode === 'chat') this.activeChannel = WidgetChannel.CHAT; // Open chat preview if configuration contains chat preview property
       if (this.config.view.lang) this.$i18n.locale = this.config.view.lang;
       document.documentElement.style.setProperty('--wt-omni-widget__accent-color', this.config.view.accentColor);
       document.documentElement.style.setProperty('--wt-omni-widget__buttons-menu-opacity', this.config.view.btnOpacity);
+      if (!this.config.captcha?.showFlag) {
+        document.styleSheets[0].insertRule('.grecaptcha-badge { visibility: hidden; }', 0);
+      }
 
       this.setupOpenTimeout();
     },
