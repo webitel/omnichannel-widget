@@ -7,10 +7,14 @@ export const initializeReCAPTCHA = async ({ sitekey: _sitekey, verifyUrl: _verif
   sitekey = _sitekey;
   verifyUrl = _verifyUrl;
 
-  const script = document.createElement('script');
-  script.src = `https://www.google.com/recaptcha/api.js?render=${sitekey}`;
-  script.async = true;
-  document.head.appendChild(script);
+  return new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${sitekey}`;
+    // script.async = true;
+    document.head.appendChild(script);
+
+    script.onload = () => resolve();
+  });
 };
 
 const executeReCAPTCHA = ({ action }) => window.grecaptcha.execute(sitekey, { action });
