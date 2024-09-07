@@ -53,10 +53,10 @@ const defaultConfig = merge(devConfig, {
 });
 
 export default class WtOmniWidget {
-  constructor(selector, _config = {}) {
+  constructor(el, _config = {}) {
     const config = merge(defaultConfig, _config);
     this.mountApp({
-      selector,
+      selector: el,
       config,
     });
   }

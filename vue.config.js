@@ -2,6 +2,7 @@
 process.env.VUE_APP_PACKAGE_VERSION = require('./package.json').version;
 
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
 module.exports = {
   lintOnSave: false,
@@ -51,6 +52,7 @@ module.exports = {
     },
   },
   chainWebpack: (config) => {
+    config.plugin('svg-sprite-loader-plugin').use(SpriteLoaderPlugin, [{ plainSprite: true }]);
     config.plugin('polyfills').use(NodePolyfillPlugin);
 
     config.module.rule('js').exclude.add(/\.worker\.js$/);
@@ -87,6 +89,8 @@ module.exports = {
       https://github.com/JetBrains/svg-mixer/blob/v1/packages/svg-baker-runtime/src/browser-sprite.js#L41
        */
       spriteModule: './spriteModuleConfig.js',
+
+      extract: process.env.NODE_ENV === 'production',
     });
   },
 };

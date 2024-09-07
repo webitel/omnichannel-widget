@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <title>Static omni-widget demo</title>
   <style>
-      @media (min-width: 768px) {
-          header, section {
-              display: none;
-              min-height: 100%;
-          }
+    @media (min-width: 768px) {
+      header, section {
+        display: none;
+        min-height: 100%;
       }
+    }
   </style>
 </head>
 <body>
@@ -17,27 +17,65 @@
 <div
   style="height: 100vh; width: 100vw; background: red;"
 ></div>
+<script src="./omni-widget/WtOmniWidget.umd.js"></script>
+
 <script>
-  const script = document.createElement('script');
-  script.src = './omni-widget/WtOmniWidget.umd.js';
-  script.onload = function () {
-    const body = document.querySelector('body');
+  // import WtOmniWidget from './omni-widget/WtOmniWidget.umd.js';
+
+  const body = document.querySelector('body');
+  const shadow = body.attachShadow({mode: 'open'});
+  const svgSprite = document.createElement('div');
+  shadow.appendChild(svgSprite);
+
+  fetch('./omni-widget/sprite.svg').then(response => response.text()).then(svg => {
+    svgSprite.innerHTML = svg;
+  });
+
+  // const script = document.createElement('script');
+  // script.src = 'https://dev.webitel.com/omni-widget/WtOmniWidget.umd.js';
+  // script.src = './omni-widget/WtOmniWidget.umd.js';
+  // script.onload = function () {
     const widgetEl = document.createElement('div');
     widgetEl.setAttribute('id', 'wt-omnichannel-widget');
-    body.appendChild(widgetEl);
+    shadow.appendChild(widgetEl);
+
     const config = {
-      logoUrl: 'https://storge.pic2.me/cm/2560x1600/891/5da31677b9809.jpg',
+      "view": {
+        "lang": "ua",
+        "btnOpacity": "1",
+        "accentColor": "hsl(153, 100%, 50%)"
+      },
+      "chat": {
+        "url": "wss://dev.webitel.com/chat/dania-webchat"
+      },
+      "appointment": {
+        "showMessageField": true,
+        "successMessage": "dddddddddddddddddddddd",
+        "successTitle": "SOOOOOME!",
+        "url": "https://dev.webitel.com/appointments/dania-webchat"
+      },
+      "call": {
+        "url": "wss://dev.webitel.com/sip",
+        "id": "dania-webchat"
+      },
+      "captcha": {
+        "sitekey": "6LdTJJUpAAAAAFlzlOqs3mtaPhEnr0MOgBlc3W4N",
+        "verifyUrl": "https://dev.webitel.com/chat/dania-webchat/captcha",
+        "showFlag": 0
+      }
     };
-    const app = new WtOmniWidget('#wt-omnichannel-widget', config);
-  };
-  document.head.appendChild(script);
+
+    const app = new WtOmniWidget(widgetEl, config);
+  // };
+  // document.head.appendChild(script);
 
   const link = document.createElement('link');
-  link.href = './omni-widget/WtOmniWidget.css';
+  link.href = 'https://dev.webitel.com/omni-widget/WtOmniWidget.css';
   link.type = 'text/css';
   link.rel = 'stylesheet';
   link.media = 'screen,print';
-  document.head.appendChild(link);
+  shadow.appendChild(link);
+
 </script>
 </body>
 </html>
