@@ -22,7 +22,6 @@
 
 <script>
 import autosize from 'autosize';
-import dompurify from 'dompurify';
 import insertTextAtCursor from 'insert-text-at-cursor';
 import { mapActions, mapState } from 'vuex';
 import ChatFooterActions from './chat-footer-actions.vue';
@@ -51,13 +50,12 @@ export default {
       },
     }),
     handleInput(value) {
-      const purifiedValue = dompurify.sanitize(value);
-      this.setDraft(purifiedValue);
+      this.setDraft(value);
     },
     handleEnter(event) {
       if (!event.shiftKey && !event.ctrlKey) {
         event.preventDefault();
-        this.sendDraft(event);
+        this.sendDraft();
       }
     },
     insertEmoji(unicode) {
