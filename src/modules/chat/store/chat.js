@@ -1,10 +1,11 @@
-import axios from 'axios';
 import { objSnakeToCamel } from '@webitel/ui-sdk/src/scripts/caseConverters';
+import axios from 'axios';
+import dompurify from 'dompurify';
 import i18n from '../../../app/locale/i18n';
+import MessageEvents from '../../../app/websocket/enums/MessageEvents.enum';
 import ChatAPI from '../api/chat';
 import Message from '../classes/Message.class';
 import MessageType from '../enums/MessageType.enum';
-import MessageEvents from '../../../app/websocket/enums/MessageEvents.enum';
 import bToMb from '../scripts/bToMb';
 
 const triggerListeners = ({
@@ -42,7 +43,8 @@ const getters = {
       }
       return -1;
     };
-    return state.messages.indexOf(message) > findLastIndexOf(state.messages)((msg) => getters.IS_MY_MESSAGE(msg));
+    return state.messages.indexOf(message) >
+      findLastIndexOf(state.messages)((msg) => getters.IS_MY_MESSAGE(msg));
   },
 };
 
@@ -175,10 +177,10 @@ const actions = {
   },
 
   SEND_DRAFT: async (context) => {
-    const text = context.state.draft.trim();
-    if (!text) return; // DO NOT send empty message
-
     try {
+      const text = dompurify.sanitize(context.state.draft.trim());
+      if (!text) return; // DO NOT send empty message
+
       const message = await context.dispatch('GENERATE_USER_MESSAGE', {
         text,
         type: MessageType.TEXT,
@@ -187,6 +189,7 @@ const actions = {
       await context.dispatch('SEND_MESSAGE', { seq: message.seq, message });
       await context.dispatch('SET_DRAFT', '');
     } catch (err) {
+      console.info(err);
       throw err;
     }
   },
