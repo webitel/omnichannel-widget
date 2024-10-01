@@ -9,8 +9,8 @@
         :placeholder="$t('chat.inputPlaceholder')"
         :value="draft"
         class="wt-omni-widget-chat-input__textarea"
-        @input="setDraft($event.target.value)"
-        @keypress.enter.prevent="handleEnter"
+        @input="handleInput($event.target.value)"
+        @keypress.enter="handleEnter"
       ></textarea>
     </div>
     <chat-footer-actions
@@ -22,6 +22,7 @@
 
 <script>
 import autosize from 'autosize';
+import dompurify from 'dompurify';
 import insertTextAtCursor from 'insert-text-at-cursor';
 import { mapActions, mapState } from 'vuex';
 import ChatFooterActions from './chat-footer-actions.vue';
@@ -49,10 +50,13 @@ export default {
         return dispatch(`${this.namespace}/SET_DRAFT`, payload);
       },
     }),
+    handleInput(value) {
+      const purifiedValue = dompurify.sanitize(value);
+      this.setDraft(purifiedValue);
+    },
     handleEnter(event) {
-      if (event.shiftKey || event.ctrlKey) {
-        this.setDraft(this.draft.concat('\n'));
-      } else {
+      if (!event.shiftKey && !event.ctrlKey) {
+        event.preventDefault();
         this.sendDraft(event);
       }
     },
