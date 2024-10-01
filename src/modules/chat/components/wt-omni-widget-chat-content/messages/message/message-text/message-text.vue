@@ -7,6 +7,8 @@
 
 <script>
 import linkifyHtml from 'linkifyjs/html';
+import dompurify from 'dompurify';
+import he from 'he';
 
 export default {
   name: 'message-text',
@@ -18,7 +20,7 @@ export default {
   },
   computed: {
     parsedText() {
-      return linkifyHtml(this.text, {
+      return linkifyHtml(he.encode(dompurify.sanitize(this.text)), {
         target: '_blank',
       });
     },
