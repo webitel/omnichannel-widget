@@ -58,4 +58,8 @@
     width: auto;
     height: auto;
   }
+
+  footer {
+    padding: unset; // reset, https://webitel.atlassian.net/browse/DEV-6552
+  }
 }
