@@ -52,7 +52,7 @@
     "husky": "^7.0.0",
     "node-polyfill-webpack-plugin": "^1.1.4",
     "sass": "^1.51.0",
-    "sass-loader": "^12.6.0",
+    "sass-loader": "^16.0.7",
     "svg-sprite-loader": "^6.0.7",
     "vue-template-compiler": "^2.7.11",
     "worker-loader": "^3.0.8"
