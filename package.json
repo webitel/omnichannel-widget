@@ -10,7 +10,8 @@
     "cp-dist-to-static": "npm run build && rm -rf static-demo/omni-widget/* || true && cp -r dist/* static-demo/omni-widget",
     "prepare": "husky install",
     "biome:ci:gh": "true",
-    "test:unit:ci": "true"
+    "test:unit:ci": "true",
+    "typecheck:ci": "true"
   },
   "dependencies": {
     "@egjs/flicking-plugins": "^4.5.0",
