@@ -50,7 +50,7 @@
     "bamboo-jest-reporter": "^1.0.3",
     "eslint": "^8.15.0",
     "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-vue": "^8.7.1",
+    "eslint-plugin-vue": "^10.9.0",
     "husky": "^7.0.0",
     "node-polyfill-webpack-plugin": "^1.1.4",
     "sass": "^1.51.0",
